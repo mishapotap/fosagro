@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import * as routes from "./constants/routes"
 import { SpaceShip, MksIcon } from "./assets/images"
-import { TimelineCircle, Button } from "./components/atoms"
+import { TimelineCircle, Button, Timer } from "./components/atoms"
 import { Flower } from "./assets/svg"
 
 function App() {
@@ -12,10 +12,11 @@ function App() {
             <Subtitle>Start</Subtitle>
             <span>{routes.HOME}</span>
             <TimelineCircle text="Суть концепции устойчивого развития" />
-			<Button text="Отправить"/>
-			<img src={SpaceShip} alt="spaceship" />
-			<img src={MksIcon} alt="mksicon" />
-			<Flower/>
+            <Button text="Отправить" />
+            <img src={SpaceShip} alt="spaceship" />
+            <img src={MksIcon} alt="mksicon" />
+            <Flower />
+            <Timer />
         </Wrapper>
     )
 }
