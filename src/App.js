@@ -58,7 +58,7 @@ const Title = styled.h1`
 
 const Wrapper = styled.section`
     padding: 4em;
-    background: papayawhip;
+    background: #99C4E7;
 `
 
 const Subtitle = styled.div`
