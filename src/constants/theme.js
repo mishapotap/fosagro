@@ -1,5 +1,5 @@
 export const COLORS = {
-    orange: "DAAA00",
+    orange: "#DAAA00",
     green_light: "#DAAA00",
     green: "#2FB457",
     green_dark: "#67823A",
@@ -10,8 +10,8 @@ export const COLORS = {
     black: "#000000"
 }
 export const FONTS = {
-    modalTitle: {fontWeight: '700', fontSize: 20, lineHeight: 30, color: COLORS.blue},
-    modalTitleWhite: {fontWeight: '700', fontSize: 23, lineHeight: 30, color: COLORS.green},
+    modalTitle: {fontWeight: '700', fontSize: "20px", lineHeight: "30px", color: COLORS.blue},
+    modalTitleWhite: {fontWeight: '700', fontSize: "23px", lineHeight: "30px", color: COLORS.green},
 }
 
 export const SIZES = {
