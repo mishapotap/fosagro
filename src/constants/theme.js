@@ -1,3 +1,5 @@
+import "./../assets/fonts/index.css"
+
 export const COLORS = {
     orange: "DAAA00",
     green_light: "#DAAA00",
@@ -6,12 +8,23 @@ export const COLORS = {
     brown_light: "#C88242",
     brown: "#94795D",
     blue: "#00529B",
+    blue_text: "#004A93",
     white: "#FFFFFF",
-    black: "#000000"
+    black: "#000000",
 }
 export const FONTS = {
-    modalTitle: {fontWeight: '700', fontSize: 20, lineHeight: 30, color: COLORS.blue},
-    modalTitleWhite: {fontWeight: '700', fontSize: 23, lineHeight: 30, color: COLORS.green},
+    modalTitle: {
+        fontWeight: "700",
+        fontSize: 20,
+        lineHeight: "30px",
+        color: COLORS.blue,
+    },
+    modalTitleWhite: {
+        fontWeight: "700",
+        fontSize: 23,
+        lineHeight: 30,
+        color: COLORS.green,
+    },
 }
 
 export const SIZES = {
@@ -24,10 +37,10 @@ export const SIZES = {
     // app dimensions
     // width,
     // height
-};
+}
 
 export default {
     COLORS,
     FONTS,
-    SIZES
+    SIZES,
 }
