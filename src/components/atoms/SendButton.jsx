@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { COLORS } from "../../constants"
 
-export default function Button({ text }) {
+export default function SendButton({ text }) {
     return <Container>{text}</Container>
 }
 
