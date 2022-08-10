@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import * as routes from "./constants/routes"
 import { SpaceShip, MksIcon } from "./assets/images"
-import { SendButton, NextQuestionButton, BackToChapterButton } from "./components/atoms"
+import { SendButton, NextQuestionButton, BackToChapterButton, Timer } from "./components/atoms"
 import { Flower, Close, Arrow, Next, Prev, Headphones } from "./assets/svg"
 import { COLORS, FONTS } from "./constants"
 import { HeadphonesIcon, Timer } from "./assets/svg/static"
@@ -25,9 +25,10 @@ function App() {
             <Arrow color={COLORS.orange} />
             <Next />
             <Prev color={COLORS.orange} />
-			<NextQuestionButton />
+			      <NextQuestionButton />
             <BackToChapterButton />
-			<Headphones/>
+			      <Headphones/>
+            <Timer />
         </Wrapper>
     )
 }
