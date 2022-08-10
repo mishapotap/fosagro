@@ -5,7 +5,7 @@ import { SpaceShip, MksIcon } from "./assets/images"
 import { SendButton, NextQuestionButton, BackToChapterButton, Timer } from "./components/atoms"
 import { Flower, Close, Arrow, Next, Prev, Headphones } from "./assets/svg"
 import { COLORS, FONTS } from "./constants"
-import { HeadphonesIcon, Timer } from "./assets/svg/static"
+import { HeadphonesIcon, TimerIcon } from "./assets/svg/static"
 
 function App() {
     return (
@@ -16,7 +16,7 @@ function App() {
             <img src={SpaceShip} alt="spaceship" />
             <img src={MksIcon} alt="mksicon" />
             <img src={HeadphonesIcon} alt="mksicon" />
-            <img src={Timer} alt="mksicon" />
+            <img src={TimerIcon} alt="mksicon" />
             <Testy style={FONTS.modalTitleWhite}>gfsjgfjdgbfsdjg</Testy>
             <SendButton text="Отправить" />
             <Flower />
@@ -25,9 +25,9 @@ function App() {
             <Arrow color={COLORS.orange} />
             <Next />
             <Prev color={COLORS.orange} />
-			      <NextQuestionButton />
+			<NextQuestionButton />
             <BackToChapterButton />
-			      <Headphones/>
+			<Headphones/>
             <Timer />
         </Wrapper>
     )

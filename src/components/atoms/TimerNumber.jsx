@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { TimerNumberBg, TimerNumberBgTop } from "../../assets/images"
+import { TimerNumberBg, TimerNumberBgTop } from "../../assets/svg/static"
 import { COLORS } from "../../constants"
 
 export default function TimerNumber({ number }) {
