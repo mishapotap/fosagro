@@ -1,5 +1,3 @@
-import "./../assets/fonts/index.css"
-
 export const COLORS = {
     orange: "#DAAA00",
     green_light: "#DAAA00",

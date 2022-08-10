@@ -1,10 +1,10 @@
 import React, { useState } from "react"
 import styled, { keyframes, css } from "styled-components"
-import { TimeIcon } from "../../assets/images"
-import { COLORS } from './../../constants/theme'
+import { TimeIcon } from "../../assets/svg/static";
+import { COLORS } from '../../constants/theme'
 
 export default function TimelineCircle({ text, color, image, time, description, rotate }) {
-    // перенести состояние в mobX
+    // TODO перенести состояние в mobX
     const [isCompleted, setIsCompleted] = useState(false);
     return (
         <Container isCompleted={isCompleted} backgroundAnimate={color} circleImg={image} onClick={() => setIsCompleted(!isCompleted) }>
@@ -44,40 +44,6 @@ const borderAnimation = keyframes`
     }
 `
 
-const Container = styled.div`
-    position: relative;
-    width: fit-content;
-    height: fit-content;
-    transition: all 0.3s;
-
-    ${(props) => {
-    switch (props.isCompleted) {
-      case true:
-        return css`
-        transform: scale(1.75);
-        ${AnimateCircle} {
-            background-color: ${props => props.backgroundAnimate || null};
-            opacity: 0.5;
-        }
-        ${Circle} {
-            background-image: url(${props => props.circleImg || null});
-            background-repeat: no-repeat;
-            background-size: contain;
-        }
-        ${CircleContetnt} {
-            top: 10px;
-            position: absolute;
-            width: 240px;
-            transform: scale(0.6);
-        }
-        `;
-      default:
-        return;
-    }
-  }}
-    
-`;
-
 const AnimateCircle = styled.div`
     z-index: 1;
     position: absolute;
@@ -87,7 +53,7 @@ const AnimateCircle = styled.div`
     height: 154px;
     background: rgba(255, 255, 255, 0.5);
     animation: ${borderAnimation} 10s linear infinite;
-    transform: rotate(${props => props.rotate + 'deg' || 0});
+    transform: rotate(${props => `${props.rotate}deg` || 0});
     transition: all 0.3s;
 `;
 
@@ -104,6 +70,42 @@ const Circle = styled.div`
     cursor: pointer;
     transition: all 0.3s;
 `
+
+const CircleContetnt = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+`
+
+const Container = styled.div`
+    position: relative;
+    width: fit-content;
+    height: fit-content;
+    transition: all 0.3s;
+
+    ${(props) => 
+    props.isCompleted === true &&
+        css`
+        transform: scale(1.75);
+        ${AnimateCircle} {
+            background-color: ${props.backgroundAnimate || null};
+            opacity: 0.5;
+        }
+        ${Circle} {
+            background-image: url(${props.circleImg || null});
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+        ${CircleContetnt} {
+            top: 10px;
+            position: absolute;
+            width: 240px;
+            transform: scale(0.6);
+        }`
+  }
+`;
+
 const Text = styled.span`
     max-width: 138px;
     text-align: center;
@@ -113,13 +115,6 @@ const Text = styled.span`
     font-size: 16px;
     line-height: 20px;
     text-align: center;
-`
-
-const CircleContetnt = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 `
 
 const Title = styled.div`

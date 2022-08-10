@@ -3,7 +3,13 @@ import styled from "styled-components"
 import * as routes from "./constants/routes"
 import "./assets/fonts/index.css"
 import { SpaceShip, MksIcon, Introduction } from "./assets/images"
-import { TimelineCircle, SendButton, NextQuestionButton, BackToChapterButton, Timer } from "./components/atoms"
+import {
+    TimelineCircle,
+    SendButton,
+    NextQuestionButton,
+    BackToChapterButton,
+    Timer,
+} from "./components/atoms"
 import { Flower, Close, Arrow, Next, Prev, Headphones } from "./assets/svg"
 import { COLORS, FONTS } from "./constants"
 import { HeadphonesIcon, TimerIcon } from "./assets/svg/static"
@@ -34,9 +40,9 @@ function App() {
             <Arrow color={COLORS.orange} />
             <Next />
             <Prev color={COLORS.orange} />
-			      <NextQuestionButton />
+            <NextQuestionButton />
             <BackToChapterButton />
-			      <Headphones/>
+            <Headphones />
             <Timer />
         </Wrapper>
     )
@@ -52,7 +58,7 @@ const Title = styled.h1`
 
 const Wrapper = styled.section`
     padding: 4em;
-    /* background: papayawhip; */
+    background: papayawhip;
 `
 
 const Subtitle = styled.div`
