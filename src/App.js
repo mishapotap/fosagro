@@ -1,8 +1,9 @@
 import React from "react"
 import styled from "styled-components"
 import * as routes from "./constants/routes"
-import { SpaceShip, MksIcon } from "./assets/images"
-import { SendButton, NextQuestionButton, BackToChapterButton, Timer } from "./components/atoms"
+import "./assets/fonts/index.css"
+import { SpaceShip, MksIcon, Introduction } from "./assets/images"
+import { TimelineCircle, SendButton, NextQuestionButton, BackToChapterButton, Timer } from "./components/atoms"
 import { Flower, Close, Arrow, Next, Prev, Headphones } from "./assets/svg"
 import { COLORS, FONTS } from "./constants"
 import { HeadphonesIcon, TimerIcon } from "./assets/svg/static"
@@ -13,6 +14,14 @@ function App() {
             <Title>Hello World!</Title>
             <Subtitle>Start</Subtitle>
             <span>{routes.HOME}</span>
+            <TimelineCircle
+                text="Введение"
+                description="Краткая выжимка в несколько слов о чем будет в разделе"
+                time="50 сек"
+                color="rgba(218, 170, 0)"
+                image={Introduction}
+                rotate={45}
+            />
             <img src={SpaceShip} alt="spaceship" />
             <img src={MksIcon} alt="mksicon" />
             <img src={HeadphonesIcon} alt="mksicon" />
@@ -25,9 +34,9 @@ function App() {
             <Arrow color={COLORS.orange} />
             <Next />
             <Prev color={COLORS.orange} />
-			<NextQuestionButton />
+			      <NextQuestionButton />
             <BackToChapterButton />
-			<Headphones/>
+			      <Headphones/>
             <Timer />
         </Wrapper>
     )

@@ -1,0 +1,11 @@
+@font-face {
+  font-family: "FocoBold";
+  src: url("./Foco/Foco_W_Bd.woff2") format("woff2");
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "CalibriRegular";
+  src: url("./Calibri/Calibri.woff2") format("woff2");
+  font-weight: normal;
+}
