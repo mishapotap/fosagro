@@ -9,8 +9,17 @@ import {
     NextQuestionButton,
     BackToChapterButton,
     Timer,
+    ProgressButton,
 } from "./components/atoms"
-import { Flower, Close, Arrow, Next, Prev, Headphones } from "./assets/svg"
+import {
+    Flower,
+    Close,
+    Arrow,
+    Next,
+    Prev,
+    Headphones,
+    Letter,
+} from "./assets/svg"
 import { COLORS, FONTS } from "./constants"
 import { HeadphonesIcon, TimerIcon } from "./assets/svg/static"
 
@@ -44,6 +53,12 @@ function App() {
             <BackToChapterButton />
             <Headphones />
             <Timer />
+            <ProgressButton rotate="135" size="m">
+                10 %
+            </ProgressButton>
+            <ProgressButton rotate="15" size="s">
+                <Letter />
+            </ProgressButton>
         </Wrapper>
     )
 }

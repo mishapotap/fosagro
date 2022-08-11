@@ -9,3 +9,9 @@
   src: url("./Calibri/Calibri.woff2") format("woff2");
   font-weight: normal;
 }
+
+@font-face {
+  font-family: "CalibriLight";
+  src: url("./Calibri/Calibri-Light.woff2") format("woff2");
+  font-weight: normal;
+}
