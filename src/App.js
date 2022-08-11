@@ -10,6 +10,7 @@ import {
     BackToChapterButton,
     Timer,
     ProgressButton,
+    MenuProgressBar,
 } from "./components/atoms"
 import {
     Flower,
@@ -59,6 +60,10 @@ function App() {
             <ProgressButton rotate="15" size="s">
                 <Letter />
             </ProgressButton>
+            <MenuProgressBar max={100} value={25} color={COLORS.orange}/>
+            <MenuProgressBar max={100} value={50} color={COLORS.brown_light}/>
+            <MenuProgressBar max={100} value={100} color={COLORS.green_light}/>
+            <MenuProgressBar max={100} value={78} color={COLORS.green_dark}/>
         </Wrapper>
     )
 }
@@ -73,7 +78,7 @@ const Title = styled.h1`
 
 const Wrapper = styled.section`
     padding: 4em;
-    background: #99C4E7;
+    background: #99c4e7;
 `
 
 const Subtitle = styled.div`
