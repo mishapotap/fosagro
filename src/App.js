@@ -8,6 +8,8 @@ import {
     NextQuestionButton,
     BackToChapterButton,
     Timer,
+    MenuProgressBar,
+    StepProgressBar,
 } from "./components/atoms"
 import {
     MailButton,
@@ -17,7 +19,15 @@ import {
     CourseStepPoint,
     MenuButton,
 } from "./components/molecules"
-import { Flower, Close, Arrow, Next, Prev, Headphones } from "./assets/svg"
+import {
+    Flower,
+    Close,
+    Arrow,
+    Next,
+    Prev,
+    Headphones,
+    Tree,
+} from "./assets/svg"
 import { COLORS, FONTS } from "./constants"
 import { HeadphonesIcon, TimerIcon } from "./assets/svg/static"
 // eslint-disable-next-line import/named
@@ -75,6 +85,15 @@ function App() {
                     />
                 ))}
             </ButtonContainer>
+            <StepProgressBar width="608" slidesAmount="7" />
+            <StepProgressBar width="608" slidesAmount="5" />
+            <StepProgressBar width="608" slidesAmount="8" />
+            <StepProgressBar width="608" slidesAmount="3" />
+            <Tree />
+            <MenuProgressBar max={100} value={25} color={COLORS.orange} />
+            <MenuProgressBar max={100} value={50} color={COLORS.brown_light} />
+            <MenuProgressBar max={100} value={100} color={COLORS.green_light} />
+            <MenuProgressBar max={100} value={78} color={COLORS.green_dark} />
         </Wrapper>
     )
 }
