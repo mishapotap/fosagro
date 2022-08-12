@@ -1,6 +1,7 @@
 import React from "react"
-import styled, { keyframes,css } from "styled-components" 
+import styled, { css } from "styled-components" 
 import { COLORS } from '../../constants/theme'
+import { borderAnimationS, borderAnimationM } from "../../constants/animations"
 
 export default function AnimatedBlueButton({children, rotate = 0, size, onClick}) {
   return (
@@ -12,42 +13,6 @@ export default function AnimatedBlueButton({children, rotate = 0, size, onClick}
     </Container>
   )
 }
-
-const borderAnimationM = keyframes`
-  0% {
-      border-radius: 68% 32% 26% 74% / 44% 52% 48% 56%;
-  }
-  25% {
-      border-radius: 54% 46% 54% 46% / 76% 74% 26% 24%;
-  }
-  50% {
-      border-radius: 31% 69% 68% 32% / 48% 60% 40% 52%;
-  }
-  75% {
-      border-radius: 59% 41% 49% 51% / 23% 24% 76% 77%;
-  }
-  100% {
-      border-radius: 68% 32% 26% 74% / 44% 52% 48% 56%;
-  }
-`
-
-const borderAnimationS = keyframes`
-  0% {
-    border-radius: 45% 55% 51% 49% / 63% 65% 35% 37%;
-  }
-  25% {
-    border-radius: 73% 27% 41% 59% / 52% 50% 50% 48%;
-  }
-  50% {
-    border-radius: 46% 54% 47% 53% / 30% 41% 59% 70%;
-  }
-  75% {
-    border-radius: 39% 61% 65% 35% / 47% 41% 59% 53%;
-  }
-  100% {
-    border-radius: 45% 55% 51% 49% / 63% 65% 35% 37%;
-  }
-`
 
 const Content = styled.div`
   font-family: 'FocoBold';

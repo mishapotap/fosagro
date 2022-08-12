@@ -1,5 +1,6 @@
 import React from "react"
-import styled, { keyframes } from "styled-components"
+import styled from "styled-components"
+import { leavesAnimation } from "../../constants/animations"
 
 export default function Tree() {
     return (
@@ -737,17 +738,6 @@ export default function Tree() {
         </Wrapper>
     )
 }
-
-const leavesAnimation = keyframes`
-  0% {
-    -webkit-transform: scale(0.5);
-    transform: scale(0.5);
-  }
-  100% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-  }
-`
 
 const Wrapper = styled.svg``
 const TreeThunk = styled.path``
