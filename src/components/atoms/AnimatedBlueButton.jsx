@@ -2,9 +2,9 @@ import React from "react"
 import styled, { keyframes,css } from "styled-components" 
 import { COLORS } from '../../constants/theme'
 
-export default function ProgressButton({children, rotate, size}) {
+export default function AnimatedBlueButton({children, rotate = 0, size, onClick}) {
   return (
-    <Container background={COLORS.blue} hover={COLORS.white} size={size}>
+    <Container background={COLORS.blue} hover={COLORS.white} size={size} onClick={onClick}>
       <Circle rotate={rotate} color={COLORS.white}>
         <Content>{children}</Content> 
       </Circle>
@@ -64,18 +64,18 @@ const Circle = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 68% 32% 26% 74% / 44% 52% 48% 56%;
-  transform: rotate(${props => `${props.rotate}deg` || 0});
+  transform: rotate(${props => `${props.rotate}deg`});
   transition: all 0.3s;
   ${Content} {
-    color: ${props => props.color || null};
-    transform: rotate(${props => `-${props.rotate}deg` || 0});
+    color: ${props => props.color};
+    transform: rotate(${props => `-${props.rotate}deg`});
   }
 `;
 
 const AnimateCircle = styled.div`
   z-index: 1;
   position: absolute;
-  transform: rotate(${props => `-${props.rotate}deg` || 0});
+  transform: rotate(${props => `-${props.rotate}deg`});
   opacity: 0.5;
   transition: all 0.3s;
 `;
@@ -107,15 +107,15 @@ const Container = styled.div`
     height: 58px;
     &:hover {
       ${AnimateCircle} {
-        background: ${props.hover || null};
+        background: ${props.hover};
       }
       ${Circle} {
-        background: ${props.hover || null};
+        background: ${props.hover};
       }
       svg {
         path {
-          fill: ${props.background || null};
-          stroke: ${props.hover || null};
+          fill: ${props.background};
+          stroke: ${props.hover};
         }
       }
     }
@@ -137,9 +137,9 @@ const Container = styled.div`
     }
   `}
   ${AnimateCircle} {
-    background: ${props => props.background || null};
+    background: ${props => props.background};
   }
   ${Circle} {
-    background: ${props => props.background || null};
+    background: ${props => props.background};
   }
 `;

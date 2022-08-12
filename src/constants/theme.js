@@ -11,8 +11,18 @@ export const COLORS = {
     black: "#000000",
 }
 export const FONTS = {
-    modalTitle: {fontWeight: '700', fontSize: "20px", lineHeight: "30px", color: COLORS.blue},
-    modalTitleWhite: {fontWeight: '700', fontSize: "23px", lineHeight: "30px", color: COLORS.green},
+    modalTitle: {
+        fontWeight: "700",
+        fontSize: "20px",
+        lineHeight: "30px",
+        color: COLORS.blue,
+    },
+    modalTitleWhite: {
+        fontWeight: "700",
+        fontSize: "23px",
+        lineHeight: "30px",
+        color: COLORS.green,
+    },
 }
 
 export const SIZES = {

@@ -2,16 +2,23 @@ import React from "react"
 import styled from "styled-components"
 import * as routes from "./constants/routes"
 import "./assets/fonts/index.css"
-import { SpaceShip, MksIcon, Introduction } from "./assets/images"
+import { SpaceShip, MksIcon } from "./assets/images"
 import {
-    TimelineCircle,
     SendButton,
     NextQuestionButton,
     BackToChapterButton,
     Timer,
-    ProgressButton,
-    MenuProgressBar, StepProgressBar
+    MenuProgressBar,
+    StepProgressBar,
 } from "./components/atoms"
+import {
+    MailButton,
+    CourseProgressButton,
+    SoundButton,
+    CourseStepButton,
+    CourseStepPoint,
+    MenuButton,
+} from "./components/molecules"
 import {
     Flower,
     Close,
@@ -19,10 +26,12 @@ import {
     Next,
     Prev,
     Headphones,
-    Letter, Tree
+    Tree,
 } from "./assets/svg"
 import { COLORS, FONTS } from "./constants"
 import { HeadphonesIcon, TimerIcon } from "./assets/svg/static"
+// eslint-disable-next-line import/named
+import { menuButtonData, courseStepButtonData1 } from "./data"
 
 function App() {
     return (
@@ -30,14 +39,20 @@ function App() {
             <Title>Hello World!</Title>
             <Subtitle>Start</Subtitle>
             <span>{routes.HOME}</span>
-            <TimelineCircle
-                text="Введение"
-                description="Краткая выжимка в несколько слов о чем будет в разделе"
-                time="50 сек"
-                color="rgba(218, 170, 0)"
-                image={Introduction}
-                rotate={45}
-            />
+            <ButtonContainer>
+                {courseStepButtonData1.map((item) => (
+                    <CourseStepButton
+                        key={item.rotate}
+                        title={item.title}
+                        description={item.description}
+                        time={item.time}
+                        bgColor={item.bgColor}
+                        image={item.image}
+                        rotate={item.rotate}
+                    />
+                ))}
+            </ButtonContainer>
+            {/*  */}
             <img src={SpaceShip} alt="spaceship" />
             <img src={MksIcon} alt="mksicon" />
             <img src={HeadphonesIcon} alt="mksicon" />
@@ -54,24 +69,37 @@ function App() {
             <BackToChapterButton />
             <Headphones />
             <Timer />
-            <ProgressButton rotate="135" size="m">
-                10 %
-            </ProgressButton>
-            <ProgressButton rotate="15" size="s">
-                <Letter />
-            </ProgressButton>
-			<StepProgressBar width = "608" slidesAmount = "7"/>
-			<StepProgressBar width = "608" slidesAmount = "5"/>
-			<StepProgressBar width = "608" slidesAmount = "8"/>
-			<StepProgressBar width = "608" slidesAmount = "3"/>
-			<Tree/>
-            <MenuProgressBar max={100} value={25} color={COLORS.orange}/>
-            <MenuProgressBar max={100} value={50} color={COLORS.brown_light}/>
-            <MenuProgressBar max={100} value={100} color={COLORS.green_light}/>
-            <MenuProgressBar max={100} value={78} color={COLORS.green_dark}/>
+            <CourseProgressButton />
+            <MailButton />
+            <SoundButton />
+            <CourseStepPoint color="rgba(218, 170, 0)" />
+            <ButtonContainer>
+                {menuButtonData.map((item) => (
+                    <MenuButton
+                        key={item.index}
+                        index={item.index}
+                        text={item.text}
+                        bgColor={item.bgColor}
+                        bgAnimateColor={item.bgAnimateColor}
+                        rotate={item.rotate}
+                    />
+                ))}
+            </ButtonContainer>
+            <StepProgressBar width="608" slidesAmount="7" />
+            <StepProgressBar width="608" slidesAmount="5" />
+            <StepProgressBar width="608" slidesAmount="8" />
+            <StepProgressBar width="608" slidesAmount="3" />
+            <Tree />
+            <MenuProgressBar max={100} value={25} color={COLORS.orange} />
+            <MenuProgressBar max={100} value={50} color={COLORS.brown_light} />
+            <MenuProgressBar max={100} value={100} color={COLORS.green_light} />
+            <MenuProgressBar max={100} value={78} color={COLORS.green_dark} />
         </Wrapper>
     )
 }
+const ButtonContainer = styled.div`
+    display: flex;
+`
 
 const Testy = styled.div``
 
@@ -83,7 +111,7 @@ const Title = styled.h1`
 
 const Wrapper = styled.section`
     padding: 4em;
-    /* background: #99c4e7; */
+    background: #99c4e7;
 `
 
 const Subtitle = styled.div`
