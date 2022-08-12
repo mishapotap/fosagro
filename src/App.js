@@ -10,7 +10,7 @@ import {
     BackToChapterButton,
     Timer,
     ProgressButton,
-    MenuProgressBar,
+    MenuProgressBar, StepProgressBar
 } from "./components/atoms"
 import {
     Flower,
@@ -19,7 +19,7 @@ import {
     Next,
     Prev,
     Headphones,
-    Letter,
+    Letter, Tree
 } from "./assets/svg"
 import { COLORS, FONTS } from "./constants"
 import { HeadphonesIcon, TimerIcon } from "./assets/svg/static"
@@ -60,6 +60,11 @@ function App() {
             <ProgressButton rotate="15" size="s">
                 <Letter />
             </ProgressButton>
+			<StepProgressBar width = "608" slidesAmount = "7"/>
+			<StepProgressBar width = "608" slidesAmount = "5"/>
+			<StepProgressBar width = "608" slidesAmount = "8"/>
+			<StepProgressBar width = "608" slidesAmount = "3"/>
+			<Tree/>
             <MenuProgressBar max={100} value={25} color={COLORS.orange}/>
             <MenuProgressBar max={100} value={50} color={COLORS.brown_light}/>
             <MenuProgressBar max={100} value={100} color={COLORS.green_light}/>
@@ -78,7 +83,7 @@ const Title = styled.h1`
 
 const Wrapper = styled.section`
     padding: 4em;
-    background: #99c4e7;
+    /* background: #99c4e7; */
 `
 
 const Subtitle = styled.div`
