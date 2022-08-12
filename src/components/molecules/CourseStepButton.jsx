@@ -3,22 +3,30 @@ import styled, { keyframes, css } from "styled-components"
 import { TimeIcon } from "../../assets/svg/static";
 import { COLORS } from '../../constants/theme'
 
-export default function TimelineCircle({ text, color, image, time, description, rotate }) {
+export default function CourseStepButton({ title, bgColor = null, image = null, time, description, rotate = 0}) {
     // TODO перенести состояние в mobX
+    const [isActive, setIsАсtive] = useState(false);
     const [isCompleted, setIsCompleted] = useState(false);
     return (
-        <Container isCompleted={isCompleted} backgroundAnimate={color} circleImg={image} onClick={() => setIsCompleted(!isCompleted) }>
+        <Container 
+            isCompleted={isCompleted} 
+            isActive={isActive}
+            bgColor={bgColor} 
+            image={image} 
+            onMouseOver={() => setIsАсtive(true)}    
+            onMouseOut={() => setIsАсtive(false)}
+            onClick={() => setIsCompleted(!isCompleted)}>
             <Circle>
-                {isCompleted
+                {isActive
                     ? <CircleContetnt style={{color: COLORS.white}}>
-                        <Title>{text}</Title>
+                        <Title>{title}</Title>
                         <Description>{description}</Description>
                         <Time>
                             <img src={TimeIcon} alt="timeIcon"/>
                             <TimeText>{time}</TimeText>
                         </Time>
                     </CircleContetnt>
-                    : <Text style={{color: COLORS.blue_text}}>{text}</Text>
+                    : <Text style={isCompleted === true ? {color: COLORS.white} : {color: COLORS.blue_text}}>{title}</Text>
                 }
             </Circle>
             <AnimateCircle rotate={rotate}/>
@@ -53,7 +61,7 @@ const AnimateCircle = styled.div`
     height: 154px;
     background: rgba(255, 255, 255, 0.5);
     animation: ${borderAnimation} 10s linear infinite;
-    transform: rotate(${props => `${props.rotate}deg` || 0});
+    transform: rotate(${props => `${props.rotate}deg`});
     transition: all 0.3s;
 `;
 
@@ -74,7 +82,7 @@ const Circle = styled.div`
 const CircleContetnt = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
 `
 
@@ -85,25 +93,37 @@ const Container = styled.div`
     transition: all 0.3s;
 
     ${(props) => 
-    props.isCompleted === true &&
+    props.isActive === true &&
         css`
         transform: scale(1.75);
         ${AnimateCircle} {
-            background-color: ${props.backgroundAnimate || null};
+            background-color: ${props.bgColor};
             opacity: 0.5;
         }
         ${Circle} {
-            background-image: url(${props.circleImg || null});
+            background-image: url(${props.image});
             background-repeat: no-repeat;
             background-size: contain;
         }
         ${CircleContetnt} {
-            top: 10px;
+            bottom: -10px;
             position: absolute;
+            min-height: 160px;
             width: 240px;
             transform: scale(0.6);
         }`
   }
+  ${(props) => 
+    props.isCompleted === true &&
+        css`
+        ${AnimateCircle} {
+            background-color: ${props.bgColor};
+            opacity: 0.5;
+        }
+        ${Circle} {
+            background-color: ${props.bgColor};
+        }`
+    }
 `;
 
 const Text = styled.span`
@@ -118,7 +138,8 @@ const Text = styled.span`
 `
 
 const Title = styled.div`
-    margin-bottom: 26px;
+    max-width: 215px;
+    margin-bottom: 13px;
     font-family: 'FocoBold';
     font-size: 21px;
     line-height: 27px;
