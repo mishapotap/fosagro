@@ -19,7 +19,7 @@ const Container = styled.div`
     height: 15px;
     border-radius: 50%;
     opacity: 0.75;
-    background: ${props => props.defaultColor || null};
+    background: ${props => props.defaultColor};
     transition: all .3s;
     &:hover {
         transform: scale(1.2)

@@ -17,10 +17,8 @@ const Container = styled.button`
     background-color: ${COLORS.blue};
     border: 1px solid ${COLORS.blue};
     /* text */
-    font-family: Calibri, sans-serif;
+    font-family: "CalibriRegular";
     text-align: center;
-    font-style: normal;
-    font-weight: 400;
     font-size: 18px;
     color: ${COLORS.white};
     /* transition */
