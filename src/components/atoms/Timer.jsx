@@ -16,6 +16,7 @@ export default function Timer() {
     const day = getDayOfYear()
     const numbers = day.split('').map((item, index) => ({number: item, id: index}))
 
+    // TODO Сделать чтобы компонент был observable (следили за состоянием дня) Не обновляется в 00:00
     return (
         <Container>
             {numbers.map(({ number, id }) => (

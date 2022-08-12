@@ -1,6 +1,6 @@
 export const COLORS = {
     orange: "#DAAA00",
-    green_light: "#DAAA00",
+    green_light: "#A8AD00",
     green: "#2FB457",
     green_dark: "#67823A",
     brown_light: "#C88242",
