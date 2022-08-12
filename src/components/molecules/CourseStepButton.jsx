@@ -3,7 +3,7 @@ import styled, { keyframes, css } from "styled-components"
 import { TimeIcon } from "../../assets/svg/static";
 import { COLORS } from '../../constants/theme'
 
-export default function CourseStepButton({ title, bgColor = null, image = null, time, description, rotate = 0}) {
+export default function CourseStepButton({ title, bgColor = COLORS.white, image = null, time, description, rotate = 0}) {
     // TODO перенести состояние в mobX
     const [isActive, setIsАсtive] = useState(false);
     const [isCompleted, setIsCompleted] = useState(false);
