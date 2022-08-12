@@ -2,7 +2,7 @@ import React from "react"
 import styled, { keyframes } from "styled-components"
 import { COLORS } from "../../constants"
 
-export default function MenuButton({rotate, bgColor, bgAnimateColor, index, text}) {
+export default function MenuButton({rotate = 0, bgColor = COLORS.white, bgAnimateColor = COLORS.white, index, text}) {
     return(
         <Container>
         <Circle bgColor={bgColor}>
@@ -42,9 +42,9 @@ const AnimateCircle = styled.div`
     left: -7px;
     width: 275px;
     height: 259px;
-    background: ${props => props.bgAnimateColor || null};
+    background: ${props => props.bgAnimateColor};
     animation: ${borderAnimation} 10s linear infinite;
-    transform: rotate(${props => `${props.rotate}deg` || 0});
+    transform: rotate(${props => `${props.rotate}deg`});
     transition: all 0.3s;
 `;
 
@@ -55,7 +55,7 @@ const Circle = styled.div`
     justify-content: center;
     width: 257px;
     height: 257px;
-    background: ${props => props.bgColor || null};
+    background: ${props => props.bgColor};
     border-radius: 50%;
     cursor: pointer;
     transition: all 0.3s;

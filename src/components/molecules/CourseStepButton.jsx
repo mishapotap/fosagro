@@ -18,14 +18,14 @@ export default function CourseStepButton({ title, bgColor = COLORS.white, image 
             onClick={() => setIsCompleted(!isCompleted)}>
             <Circle>
                 {isActive
-                    ? <CircleContetnt style={{color: COLORS.white}}>
+                    ? <CircleContent style={{color: COLORS.white}}>
                         <Title>{title}</Title>
                         <Description>{description}</Description>
                         <Time>
                             <img src={TimeIcon} alt="timeIcon"/>
                             <TimeText>{time}</TimeText>
                         </Time>
-                    </CircleContetnt>
+                    </CircleContent>
                     : <Text style={isCompleted === true ? {color: COLORS.white} : {color: COLORS.blue_text}}>{title}</Text>
                 }
             </Circle>
@@ -79,7 +79,7 @@ const Circle = styled.div`
     transition: all 0.3s;
 `
 
-const CircleContetnt = styled.div`
+const CircleContent = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -104,8 +104,9 @@ const Container = styled.div`
             background-image: url(${props.image});
             background-repeat: no-repeat;
             background-size: contain;
+            background-color: unset;
         }
-        ${CircleContetnt} {
+        ${CircleContent} {
             bottom: -10px;
             position: absolute;
             min-height: 160px;
