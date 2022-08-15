@@ -3,7 +3,6 @@ import styled from "styled-components"
 import * as routes from "./constants/routes"
 import "./assets/fonts/index.css"
 import GlobalStyle from "./globalStyles"
-import { SpaceShip, MksIcon } from "./assets/images"
 import {
     SendButton,
     NextQuestionButton,
@@ -11,6 +10,7 @@ import {
     Timer,
     MenuProgressBar,
     StepProgressBar,
+	Slider
 } from "./components/atoms"
 import {
     MailButton,
@@ -56,8 +56,6 @@ function App() {
 					))}
 				</ButtonContainer>
 				{/*  */}
-				<img src={SpaceShip} alt="spaceship" />
-				<img src={MksIcon} alt="mksicon" />
 				<img src={HeadphonesIcon} alt="mksicon" />
 				<img src={TimerIcon} alt="mksicon" />
 				<Testy style={FONTS.modalTitleWhite}>gfsjgfjdgbfsdjg</Testy>
@@ -97,6 +95,7 @@ function App() {
 				<MenuProgressBar max={100} value={50} color={COLORS.brown_light} />
 				<MenuProgressBar max={100} value={100} color={COLORS.green_light} />
 				<MenuProgressBar max={100} value={78} color={COLORS.green_dark} />
+				<Slider/>
 			</Wrapper>
 		</>
     )
