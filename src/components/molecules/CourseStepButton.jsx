@@ -1,7 +1,8 @@
 import React, { useState } from "react"
-import styled, { keyframes, css } from "styled-components"
+import styled, { css } from "styled-components"
 import { TimeIcon } from "../../assets/svg/static";
 import { COLORS } from '../../constants/theme'
+import { borderAnimationM } from "../../constants/animations";
 
 export default function CourseStepButton({ title, bgColor = COLORS.white, image = null, time, description, rotate = 0}) {
     // TODO перенести состояние в mobX
@@ -34,23 +35,6 @@ export default function CourseStepButton({ title, bgColor = COLORS.white, image 
     )
 }
 
-const borderAnimation = keyframes`
-    0% {
-        border-radius: 68% 32% 26% 74% / 44% 52% 48% 56%;
-    }
-    25% {
-        border-radius: 54% 46% 54% 46% / 76% 74% 26% 24%;
-    }
-    50% {
-        border-radius: 31% 69% 68% 32% / 48% 60% 40% 52%;
-    }
-    75% {
-        border-radius: 59% 41% 49% 51% / 23% 24% 76% 77%;
-    }
-    100% {
-        border-radius: 68% 32% 26% 74% / 44% 52% 48% 56%;
-    }
-`
 
 const AnimateCircle = styled.div`
     z-index: 1;
@@ -60,7 +44,7 @@ const AnimateCircle = styled.div`
     width: 164px;
     height: 154px;
     background: rgba(255, 255, 255, 0.5);
-    animation: ${borderAnimation} 10s linear infinite;
+    animation: ${borderAnimationM} 10s linear infinite;
     transform: rotate(${props => `${props.rotate}deg`});
     transition: all 0.3s;
 `;

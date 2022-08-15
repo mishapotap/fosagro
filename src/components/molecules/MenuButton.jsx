@@ -1,6 +1,7 @@
 import React from "react"
-import styled, { keyframes } from "styled-components"
+import styled from "styled-components"
 import { COLORS } from "../../constants"
+import { borderAnimationM } from "../../constants/animations"
 
 export default function MenuButton({rotate = 0, bgColor = COLORS.white, bgAnimateColor = COLORS.white, index, text}) {
     return(
@@ -17,24 +18,6 @@ export default function MenuButton({rotate = 0, bgColor = COLORS.white, bgAnimat
     )
 }
 
-const borderAnimation = keyframes`
-    0% {
-        border-radius: 68% 32% 26% 74% / 44% 52% 48% 56%;
-    }
-    25% {
-        border-radius: 54% 46% 54% 46% / 76% 74% 26% 24%;
-    }
-    50% {
-        border-radius: 31% 69% 68% 32% / 48% 60% 40% 52%;
-    }
-    75% {
-        border-radius: 59% 41% 49% 51% / 23% 24% 76% 77%;
-    }
-    100% {
-        border-radius: 68% 32% 26% 74% / 44% 52% 48% 56%;
-    }
-`
-
 const AnimateCircle = styled.div`
     z-index: 1;
     position: absolute;
@@ -42,9 +25,9 @@ const AnimateCircle = styled.div`
     left: -7px;
     width: 275px;
     height: 259px;
-    background: ${props => props.bgAnimateColor};
-    animation: ${borderAnimation} 10s linear infinite;
-    transform: rotate(${props => `${props.rotate}deg`});
+    background: ${props => props.bgAnimateColor || null};
+    animation: ${borderAnimationM} 10s linear infinite;
+    transform: rotate(${props => `${props.rotate}deg` || 0});
     transition: all 0.3s;
 `;
 
