@@ -47,9 +47,28 @@ export const borderAnimationM = keyframes`
   }
 `
 
+export const circleStroke = (dashoffsetStart, dashoffsetEnd) => keyframes`
+    from {
+        stroke-dashoffset: ${dashoffsetStart};
+    }
+    to {
+        stroke-dashoffset: ${dashoffsetEnd};
+    }
+`
+
+export const rotateInteractiveCircle = (from, to) => keyframes`
+    from {
+        transform: rotate(${from}deg);
+    }
+    to {
+        transform: rotate(${to}deg);
+    }
+`
 
 export default {
     leavesAnimation,
     borderAnimationS,
     borderAnimationM,
+    circleStroke,
+    rotateInteractiveCircle,
 }
