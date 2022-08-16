@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { COLORS } from "../../constants"
 import { borderAnimationM } from "../../constants/animations"
 
-export default function MenuButton({rotate, bgColor, bgAnimateColor, index, text}) {
+export default function MenuButton({rotate = 0, bgColor = COLORS.white, bgAnimateColor = COLORS.white, index, text}) {
     return(
         <Container>
         <Circle bgColor={bgColor}>
@@ -38,7 +38,7 @@ const Circle = styled.div`
     justify-content: center;
     width: 257px;
     height: 257px;
-    background: ${props => props.bgColor || null};
+    background: ${props => props.bgColor};
     border-radius: 50%;
     cursor: pointer;
     transition: all 0.3s;
