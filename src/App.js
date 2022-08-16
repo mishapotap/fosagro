@@ -10,6 +10,7 @@ import {
     Timer,
     MenuProgressBar,
     StepProgressBar,
+	  VideoPlayer,
     Slider,
     InteractiveContainer,
 } from "./components/atoms"
@@ -35,6 +36,7 @@ import {
 import { COLORS, FONTS } from "./constants"
 import { HeadphonesIcon, TimerIcon } from "./assets/svg/static"
 // eslint-disable-next-line import/named
+import { TepkVideo } from './assets/video'
 import { menuButtonData, courseStepButtonData1, testData } from "./data"
 
 function App() {
@@ -118,6 +120,7 @@ function App() {
                 <Slider size="s" sliderColor={COLORS.orange} data={testData}>
                     <SliderCircleS />
                 </Slider>
+                <VideoPlayer src={TepkVideo} />
             </Wrapper>
         </>
     )

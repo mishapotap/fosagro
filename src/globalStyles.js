@@ -6,6 +6,10 @@ const GlobalStyle = createGlobalStyle`
 	margin: 0;
 	box-sizing: border-box;
 	font-family: "FocoBold";
+
+	&:focus {
+		outline: none;
+	}
 }
 
 /* *::before,
@@ -19,9 +23,17 @@ body {
 	padding: 0;
 	margin: 0;
 	box-sizing: border-box;
+
+	&.lock {
+		overflow: hidden;
+	}
 }
 button {
 	/* outline: 0; */
+	border: 0;
+	transition: 0.3s;
+	cursor: pointer;
+	background: transparent;
 }
 a {
 	text-decoration: none;

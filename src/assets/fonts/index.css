@@ -5,6 +5,12 @@
 }
 
 @font-face {
+  font-family: "FocoLight";
+  src: url("./Foco/Foco_W_Lt.woff2") format("woff2");
+  font-weight: 300;
+}
+
+@font-face {
   font-family: "CalibriRegular";
   src: url("./Calibri/Calibri.woff2") format("woff2");
   font-weight: normal;

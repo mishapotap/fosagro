@@ -42,7 +42,7 @@ const Wrapper = styled.svg`
                 }
                 ${Path} {
                     transition: all 0.3s;
-                    stroke: ${COLORS.white};
+                    stroke: ${color === COLORS.white ? COLORS.blue : COLORS.white};
                 }
             }
         `}
