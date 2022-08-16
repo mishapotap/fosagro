@@ -12,7 +12,7 @@ export default function Slider({size, children, sliderColor, data}) {
     const [isActive, setIsActive] = useState(1);
 
     const addActivePath = ( swiper ) => {
-        setIsActive(swiper.activeIndex + 1);
+        setIsActive(swiper.realIndex + 1);
     };
 
     const delayTime = 10000;
@@ -24,9 +24,11 @@ export default function Slider({size, children, sliderColor, data}) {
                 <Swiper
                     modules={[Pagination, EffectFade, Autoplay]}
                     effect="fade"
+                    loop="true"
                     autoplay={{
                         delay: delayTime,
                         disableOnInteraction: false,
+                        waitForTransition: false
                     }}
                     slidesPerView={1}
                     onSlideChange={(swiper) => addActivePath(swiper)}

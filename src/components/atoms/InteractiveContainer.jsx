@@ -32,7 +32,6 @@ const Container = styled.div`
 `
 
 const OverflowInteractive = styled.div`
-    /* position: absolute; */
     max-width: 1095px;
     max-height: 985px;
     height: 100%;
