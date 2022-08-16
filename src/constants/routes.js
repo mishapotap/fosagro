@@ -1,3 +1,9 @@
 export const HOME = '/';
+export const TUTORIAL = '/tutorial';
 export const MENU = '/menu';
-export const A0 = '/pnr/a0';
+export const COURSE01 = '/course01';
+export const COURSE02 = '/course02';
+export const COURSE03 = '/course03';
+export const COURSE04 = '/course04';
+export const COURSE05 = '/course05';
+export const COURSE06 = '/course06';

@@ -1,3 +1,5 @@
+import * as routes from "../constants/routes"
+
 const menuButtonData = [
     {
         index: "01",
@@ -5,6 +7,8 @@ const menuButtonData = [
         bgColor: "rgba(218, 170, 0, 0.8)",
         bgAnimateColor: "rgba(218, 170, 0, 0.5)",
         rotate: "9",
+        href: routes.COURSE01,
+        progress: 26,
     },
     {
         index: "02",
@@ -12,6 +16,8 @@ const menuButtonData = [
         bgColor: "rgba(200, 130, 66, 0.8)",
         bgAnimateColor: "rgba(200, 130, 66, 0.5)",
         rotate: "-94",
+        href: routes.COURSE02,
+        progress: 50,
     },
     {
         index: "03",
@@ -19,6 +25,8 @@ const menuButtonData = [
         bgColor: "rgba(112, 115, 114, 0.8)",
         bgAnimateColor: "rgba(112, 115, 114, 0.5)",
         rotate: "26",
+        href: routes.COURSE03,
+        progress: 10,
     },
     {
         index: "04",
@@ -26,6 +34,8 @@ const menuButtonData = [
         bgColor: "rgba(182, 186, 41, 0.8)",
         bgAnimateColor: "rgba(182, 186, 41, 0.5)",
         rotate: "26",
+        href: routes.COURSE04,
+        progress: 100,
     },
     {
         index: "05",
@@ -33,6 +43,8 @@ const menuButtonData = [
         bgColor: "rgba(103, 130, 58, 0.8)",
         bgAnimateColor: "rgba(103, 130, 58, 0.5)",
         rotate: "-65",
+        href: routes.COURSE05,
+        progress: 78,
     },
     {
         index: "06",
@@ -40,6 +52,8 @@ const menuButtonData = [
         bgColor: "rgba(113, 178, 201, 0.8)",
         bgAnimateColor: "rgba(113, 178, 201, 0.5)",
         rotate: "55",
+        href: routes.COURSE06,
+        progress: 90,
     },
 ]
 
