@@ -23,14 +23,15 @@ export default function Course01() {
                 Устойчивое развитие - модный термин или реальность, которая
                 касается каждого?
             </div>
-            <Link to={routes.HOME}>
-                <Close color={COLORS.blue} />
-            </Link>
+            <TempSvgContainer>
+                <Link to={routes.HOME}>
+                    <Close color={COLORS.blue} />
+                </Link>
+            </TempSvgContainer>
             <MenuContainer>
                 {courseStepButtonData1.map((item) => (
-                    <Link to={routes.HOME}>
+                    <Link to={routes.HOME} key={item.rotate}>
                         <CourseStepButton
-                            key={item.rotate}
                             title={item.title}
                             description={item.description}
                             time={item.time}
@@ -41,7 +42,8 @@ export default function Course01() {
                     </Link>
                 ))}
             </MenuContainer>
-            <CourseStepPoint color="rgba(218, 170, 0)" />
+            <CourseStepPoint color="rgba(218, 170, 0)" text="Все взаимосвязано" position="top"/>
+            <CourseStepPoint color="rgba(218, 170, 0)" text="Все взаимосвязано" position="bottom"/>
             <div
                 style={{
                     display: "flex",
@@ -57,6 +59,8 @@ export default function Course01() {
     )
 }
 
+const TempSvgContainer = styled.div``
+
 const Layout = styled.div`
     display: flex;
     flex-direction: column;
@@ -65,12 +69,13 @@ const Layout = styled.div`
     background: url(${MenuBackground}) no-repeat center center / cover;
     overflow-x: hidden;
     overflow-y: hidden;
-    svg {
+    ${ TempSvgContainer } {
         position: absolute;
         right: 0;
-        top: 0;
+        top: 0; 
     }
 `
+
 const Logo = styled.div`
     position: absolute;
     left: 0;

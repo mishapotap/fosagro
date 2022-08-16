@@ -5,6 +5,12 @@
 }
 
 @font-face {
+  font-family: "FocoRegular";
+  src: url("./Foco/Foco_W_Rg.woff2") format("woff2");
+  font-weight: 400;
+}
+
+@font-face {
   font-family: "FocoLight";
   src: url("./Foco/Foco_W_Lt.woff2") format("woff2");
   font-weight: 300;

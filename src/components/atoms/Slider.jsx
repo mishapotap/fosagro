@@ -9,6 +9,8 @@ import 'swiper/css';
 import 'swiper/css/effect-fade';
 
 export default function Slider({size, children, sliderColor, data}) {
+
+    // TODO сделать адаптив
     const [isActive, setIsActive] = useState(1);
 
     const addActivePath = ( swiper ) => {
