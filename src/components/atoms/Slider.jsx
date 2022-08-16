@@ -1,52 +1,89 @@
 import React, { useState } from "react"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination } from 'swiper';
+import { Pagination, EffectFade, Autoplay } from 'swiper';
 
 // eslint-disable-next-line
 import 'swiper/css';
 // eslint-disable-next-line
-import 'swiper/css/pagination';
+import 'swiper/css/effect-fade';
 
-import { CourseSlider1, CourseSlider2, CourseSlider3 } from "../../assets/images"
+export default function Slider({size, children, sliderColor, data}) {
+    const [isActive, setIsActive] = useState(1);
 
-export default function Slider({count = 3}) {
+    const addActivePath = ( swiper ) => {
+        setIsActive(swiper.activeIndex + 1);
+    };
 
-    const [paginationRef, setPaginationRef] = useState(null);
+    const delayTime = 10000;
 
-    // const pagination = {
-    //     "clickable": true,
-    //     // eslint-disable-next-line
-    //     "renderBullet": function (index, className) {
-    //         // eslint-disable-next-line
-    //         return `<span class=${className}>${(index + 1)}</span>`;
-    //     }
-    // }
     return(
-        <SwiperContainer>
-            <Swiper
-                modules={[Pagination]}
-                spaceBetween={50}
-                slidesPerView={1}
-                pagination={{
-                    el: paginationRef,
-                }}
-                // onSwiper={(swiper) => console.log(swiper)}
-                // onSlideChange={() => console.log('slide change')}
-                count={count}
-            >
-                <SwiperSlide><img src={CourseSlider1} alt="image1"/></SwiperSlide>
-                <SwiperSlide><img src={CourseSlider2} alt="image1"/></SwiperSlide>
-                <SwiperSlide><img src={CourseSlider3} alt="image1"/></SwiperSlide>
-            </Swiper>
-            <div ref={(node) => setPaginationRef(node)} className='pagination'/>
-
-        </SwiperContainer>
+        <SliderContainer size={size}>
+            {React.cloneElement(children, {color: sliderColor, time: delayTime, activePathItem: isActive})}
+            <SwiperContainer>
+                <Swiper
+                    modules={[Pagination, EffectFade, Autoplay]}
+                    effect="fade"
+                    autoplay={{
+                        delay: delayTime,
+                        disableOnInteraction: false,
+                    }}
+                    slidesPerView={1}
+                    onSlideChange={(swiper) => addActivePath(swiper)}
+                >
+                    { data.map(item => 
+                        <SwiperSlide key={item.alt}>
+                            <img src={item.source} alt={item.alt}/>
+                        </SwiperSlide>)
+                    }
+                </Swiper>
+            </SwiperContainer>
+        </SliderContainer>
     )
 }
 
 const SwiperContainer = styled.div`
-    .swiper-pagination-bullet {
-      display: block;
+    position: absolute;
+    width: 100%;
+    img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: contain;
     }
+`;
+
+const SliderContainer = styled.div`
+    position: relative;
+    width: 100%;
+    height: 100%;
+    ${(props) => props.size === "m" && css`
+        max-width: 970px;
+        max-height: 900px;
+        overflow: hidden;
+        ${SwiperContainer} {
+            top: 45px;
+            right: 96px;
+            max-width: 732px;
+            img {
+                max-width: 732px;
+                max-height: 732px;
+            }
+        }
+  `}
+  ${(props) => props.size === "s" && css`
+        max-width: 795px;
+        max-height: 790px;
+        overflow: hidden;
+        ${SwiperContainer} {
+            top: 63px;
+            right: 70px;
+            max-width: 655px;
+            img {
+                max-width: 655px;
+                max-height: 655px;
+            }
+        }
+  `}
 `
