@@ -79,6 +79,7 @@ const Container = styled.div`
     ${(props) => 
     props.isActive === true &&
         css`
+        z-index: 3;
         transform: scale(1.75);
         ${AnimateCircle} {
             background-color: ${props.bgColor};
