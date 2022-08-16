@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { COLORS } from "../../constants"
 
-export default function MenuProgressBar({ value, max, color, width = "295px" }) {
+export default function MenuProgressBar({ value, max, color, width = "220px" }) {
     // TODO Проверка на if > 100
     return (
         <Container color={color} width={width}>
