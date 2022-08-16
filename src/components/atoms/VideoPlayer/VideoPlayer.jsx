@@ -124,6 +124,7 @@ export default function VideoPlayer({
         return () => {
             document.removeEventListener("keydown", handleKeydown)
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     // получение положения элемента относительно окна
