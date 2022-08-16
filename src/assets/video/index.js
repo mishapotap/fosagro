@@ -1,2 +1,2 @@
 // eslint-disable-next-line import/prefer-default-export
-export { default as AvtVideo } from "./avt.mp4"
+export { default as TepkVideo } from "./tepk.mp4"

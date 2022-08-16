@@ -34,7 +34,7 @@ import { COLORS, FONTS } from "./constants"
 import { HeadphonesIcon, TimerIcon } from "./assets/svg/static"
 // eslint-disable-next-line import/named
 import { menuButtonData, courseStepButtonData1 } from "./data"
-import { AvtVideo } from './assets/video'
+import { TepkVideo } from './assets/video'
 
 function App() {
     return (
@@ -62,6 +62,7 @@ function App() {
 				<img src={MksIcon} alt="mksicon" />
 				<img src={HeadphonesIcon} alt="mksicon" />
 				<img src={TimerIcon} alt="mksicon" />
+				<VideoPlayer src={TepkVideo} />
 				<Testy style={FONTS.modalTitleWhite}>gfsjgfjdgbfsdjg</Testy>
 				<SendButton text="Отправить" />
 				<Flower />
@@ -99,7 +100,6 @@ function App() {
 				<MenuProgressBar max={100} value={50} color={COLORS.brown_light} />
 				<MenuProgressBar max={100} value={100} color={COLORS.green_light} />
 				<MenuProgressBar max={100} value={78} color={COLORS.green_dark} />
-				<VideoPlayer src={AvtVideo} />
 			</Wrapper>
 		</>
     )

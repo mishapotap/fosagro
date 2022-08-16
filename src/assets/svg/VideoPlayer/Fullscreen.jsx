@@ -2,14 +2,13 @@ import React from "react"
 import styled from "styled-components"
 import { COLORS } from "../../../constants"
 
-export default function Fullscreen({ width, height }) {
+export default function Fullscreen({ width = '77px' }) {
     return (
         <Wrapper
             viewBox="0 0 77 56"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             width={width}
-            height={height}
         >
             <path
                 d="M1 37V6C1 3.23858 3.23858 1 6 1L50.6132 1"

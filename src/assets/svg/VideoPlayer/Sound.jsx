@@ -2,11 +2,10 @@ import React from "react"
 import styled from "styled-components"
 import { COLORS } from "../../../constants"
 
-export default function Sound({width, height}) {
+export default function Sound({width = '25px'}) {
     return (
         <Wrapper
             width={width}
-            height={height}
             viewBox="0 0 25 22"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
