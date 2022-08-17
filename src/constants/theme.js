@@ -44,24 +44,26 @@ const DEVICE_SIZE = {
     mobileM: "375px",
     mobileL: "425px",
     tablet: "768px",
-    laptop: "1024px",
-    laptopL: "1440px",
+    laptopS: "1024px",
+    laptopM: "1440px",
+    laptopL: "1920px",
     desktop: "2560px",
 }
 
-export const device = {
+export const DEVICE = {
     mobileS: `(max-width: ${DEVICE_SIZE.mobileS})`,
     mobileM: `(max-width: ${DEVICE_SIZE.mobileM})`,
     mobileL: `(max-width: ${DEVICE_SIZE.mobileL})`,
     tablet: `(max-width: ${DEVICE_SIZE.tablet})`,
-    laptop: `(max-width: ${DEVICE_SIZE.laptop})`,
+    laptopS: `(max-width: ${DEVICE_SIZE.laptopS})`,
+    laptopM: `(max-width: ${DEVICE_SIZE.laptopM})`,
     laptopL: `(max-width: ${DEVICE_SIZE.laptopL})`,
     desktop: `(max-width: ${DEVICE_SIZE.desktop})`,
-    desktopL: `(max-width: ${DEVICE_SIZE.desktop})`,
 }
 
 export default {
     COLORS,
     FONTS,
     SIZES,
+    DEVICE,
 }
