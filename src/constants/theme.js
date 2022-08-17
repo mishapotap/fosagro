@@ -11,6 +11,7 @@ export const COLORS = {
     white: "#FFFFFF",
     black: "#000000",
 }
+
 export const FONTS = {
     modalTitle: {
         fontWeight: "700",
@@ -36,6 +37,27 @@ export const SIZES = {
     // app dimensions
     // width,
     // height
+}
+
+const DEVICE_SIZE = {
+    mobileS: "320px",
+    mobileM: "375px",
+    mobileL: "425px",
+    tablet: "768px",
+    laptop: "1024px",
+    laptopL: "1440px",
+    desktop: "2560px",
+}
+
+export const device = {
+    mobileS: `(max-width: ${DEVICE_SIZE.mobileS})`,
+    mobileM: `(max-width: ${DEVICE_SIZE.mobileM})`,
+    mobileL: `(max-width: ${DEVICE_SIZE.mobileL})`,
+    tablet: `(max-width: ${DEVICE_SIZE.tablet})`,
+    laptop: `(max-width: ${DEVICE_SIZE.laptop})`,
+    laptopL: `(max-width: ${DEVICE_SIZE.laptopL})`,
+    desktop: `(max-width: ${DEVICE_SIZE.desktop})`,
+    desktopL: `(max-width: ${DEVICE_SIZE.desktop})`,
 }
 
 export default {
