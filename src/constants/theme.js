@@ -51,14 +51,14 @@ const DEVICE_SIZE = {
 }
 
 export const DEVICE = {
-    mobileS: `(max-width: ${DEVICE_SIZE.mobileS})`,
-    mobileM: `(max-width: ${DEVICE_SIZE.mobileM})`,
-    mobileL: `(max-width: ${DEVICE_SIZE.mobileL})`,
-    tablet: `(max-width: ${DEVICE_SIZE.tablet})`,
-    laptopS: `(max-width: ${DEVICE_SIZE.laptopS})`,
-    laptopM: `(max-width: ${DEVICE_SIZE.laptopM})`,
-    laptopL: `(max-width: ${DEVICE_SIZE.laptopL})`,
-    desktop: `(max-width: ${DEVICE_SIZE.desktop})`,
+    mobileS: `(min-width: ${DEVICE_SIZE.mobileS})`,
+    mobileM: `(min-width: ${DEVICE_SIZE.mobileM})`,
+    mobileL: `(min-width: ${DEVICE_SIZE.mobileL})`,
+    tablet: `(min-width: ${DEVICE_SIZE.tablet})`,
+    laptopS: `(min-width: ${DEVICE_SIZE.laptopS})`,
+    laptopM: `(min-width: ${DEVICE_SIZE.laptopM})`,
+    laptopL: `(min-width: ${DEVICE_SIZE.laptopL})`,
+    desktop: `(min-width: ${DEVICE_SIZE.desktop})`,
 }
 
 export default {
