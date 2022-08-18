@@ -19,6 +19,12 @@
 }
 
 @font-face {
+  font-family: "CalibriBold";
+  src: url("./Calibri/Calibri-Bold.woff") format("woff2");
+  font-weight: normal;
+}
+
+@font-face {
   font-family: "CalibriRegular";
   src: url("./Calibri/Calibri.woff2") format("woff2");
   font-weight: normal;
