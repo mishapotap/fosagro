@@ -1,6 +1,7 @@
 import React from "react"
 import styled, { css } from "styled-components"
 import { circleStroke } from "../../constants/animations"
+import { DEVICE } from "../../constants"
 
 export default function SliderCircleS({ color, time, activePathItem }) {
   return (
@@ -122,13 +123,17 @@ const WrapperAbsolute = styled.svg`
 
 const Container = styled.div`
   position: relative;
-  max-width: 795px;
-  max-height: 795px;
+  display: none;
+  max-width: 41.4vw;
+  max-height: 41.4vw;
   width: 100%;
   height: 100%;
   svg {
     max-width: calc(100% - 2px);
     height: calc(100% - 2px);
+  }
+  @media ${DEVICE.mobileL} {
+    display: block;
   }
 `
 

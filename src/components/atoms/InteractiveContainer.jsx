@@ -1,5 +1,6 @@
 import React from "react"
 import styled, { css } from "styled-components"
+import { DEVICE } from "../../constants"
 
 import { InteractiveCircle } from "../../assets/svg"
 
@@ -22,19 +23,26 @@ const Container = styled.div`
     position: relative;
     ${(props) => props.type === "slider" && css`
         ${ Content } {
-            position: absolute;
-            top: 100px;
-            left: 125px;
-            max-width: 970px;
             width: 100%;
+            @media ${DEVICE.mobileL} {
+                position: absolute;
+                top: 5.2vw;
+                left: 6.5vw;
+                max-width: 50.5vw;
+            }
         }
     `}
 `
 
 const OverflowInteractive = styled.div`
-    max-width: 1095px;
-    max-height: 985px;
+    display: none;
+    width: 100%;
     height: 100%;
     overflow: hidden;
+    @media ${DEVICE.mobileL} {
+        display: block;
+        max-width: 57vw;
+        max-height: 51.3vw;
+    }
 `
 

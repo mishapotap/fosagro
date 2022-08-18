@@ -47,12 +47,12 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 1250px;
-  height: 1200px;
+  width: 65.1vw;
+  height: 62.5vw;
 
   ${Wrapper} {
-    max-width: calc(100% - 40px);
-    max-height: calc(100% - 75px);
+    max-width: calc(100% - 2.1vw);
+    max-height: calc(100% - 3.74vw);
     width: 100%;
     height: 100%;
     overflow: overlay;

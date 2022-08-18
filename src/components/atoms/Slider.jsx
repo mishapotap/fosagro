@@ -1,7 +1,8 @@
 import React, { useState } from "react"
 import styled, { css } from "styled-components"
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, EffectFade, Autoplay } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Pagination, EffectFade, Autoplay } from 'swiper'
+import { DEVICE } from "../../constants"
 
 // eslint-disable-next-line
 import 'swiper/css';
@@ -47,7 +48,7 @@ export default function Slider({size, children, sliderColor, data}) {
 }
 
 const SwiperContainer = styled.div`
-    position: absolute;
+    position: static;
     width: 100%;
     img {
         display: block;
@@ -56,6 +57,9 @@ const SwiperContainer = styled.div`
         border-radius: 50%;
         object-fit: contain;
     }
+    @media ${DEVICE.mobileL} {
+        position: absolute;
+    }
 `;
 
 const SliderContainer = styled.div`
@@ -63,30 +67,34 @@ const SliderContainer = styled.div`
     width: 100%;
     height: 100%;
     ${(props) => props.size === "m" && css`
-        max-width: 970px;
-        max-height: 900px;
+        @media ${DEVICE.mobileL} {
+        max-width: 50vw;
+        max-height: 47vw;
         overflow: hidden;
         ${SwiperContainer} {
-            top: 45px;
-            right: 96px;
-            max-width: 732px;
+            max-width: 38vw;
+            top: 2.3vw;
+            right: 5vw;
             img {
-                max-width: 732px;
-                max-height: 732px;
+                max-width: 38vw;
+                max-height: 38vw;
             }
         }
+    }
   `}
   ${(props) => props.size === "s" && css`
-        max-width: 795px;
-        max-height: 790px;
-        overflow: hidden;
-        ${SwiperContainer} {
-            top: 63px;
-            right: 70px;
-            max-width: 655px;
-            img {
-                max-width: 655px;
-                max-height: 655px;
+        @media ${DEVICE.mobileL} {
+            max-width: 41.4vw;
+            max-height: 41.1vw;
+            overflow: hidden;
+            ${SwiperContainer} {
+                top: 3.3vw;
+                right: 3.65vw;
+                max-width: 34vw;
+                img {
+                    max-width: 34vw;
+                    max-height: 34vw;
+                }
             }
         }
   `}
