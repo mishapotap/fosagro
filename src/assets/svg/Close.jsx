@@ -6,8 +6,6 @@ export default function Close({ color }) {
     return (
         <Wrapper
             color={color}
-            width="52"
-            height="52"
             viewBox="0 0 52 52"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -34,6 +32,20 @@ const Wrapper = styled.svg`
     height: 52px;
     cursor: pointer;
     transition: all 0.3s;
+
+    @media ${DEVICE.mobileS} {
+        width: 40px;
+    }
+
+    @media ${DEVICE.laptopL} {
+        width: 52px;
+    }
+    
+    @media ${DEVICE.laptop} { 
+        width: 36px;
+        height: 36px;
+    }
+
     ${({ color }) =>
         color &&
         css`
@@ -48,8 +60,4 @@ const Wrapper = styled.svg`
                 }
             }
         `}
-    @media ${DEVICE.laptop} { 
-        width: 36px;
-        height: 36px;
-    }
 `
