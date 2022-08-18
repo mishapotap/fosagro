@@ -1,19 +1,19 @@
 import React from "react"
-import styled, { css } from "styled-components"
+import styled from "styled-components"
 import { COLORS, DEVICE } from "../../constants"
 import { borderAnimationM } from "../../constants/animations"
 
-export default function MenuButton({rotate = 0, bgColor = COLORS.white, bgAnimateColor = COLORS.white, index, text, type="menu"}) {
+export default function MenuButton({rotate = 0, bgColor = COLORS.white, bgAnimateColor = COLORS.white, index, text}) {
     return(
         <Container>
-        <Circle bgColor={bgColor} type={type}>
-            <CircleContetnt style={{color: COLORS.white}} type={type}>
-                <Index type={type}>{index}</Index>
-                <Text type={type}>{text}</Text>
+        <Circle bgColor={bgColor}>
+            <CircleContetnt style={{color: COLORS.white}}>
+                <Index>{index}</Index>
+                <Text>{text}</Text>
             </CircleContetnt>
                        
         </Circle>
-        <AnimateCircle rotate={rotate} bgAnimateColor={bgAnimateColor} type={type}/>
+        <AnimateCircle rotate={rotate} bgAnimateColor={bgAnimateColor}/>
         </Container>
     )
 }
@@ -23,34 +23,22 @@ const AnimateCircle = styled.div`
     position: absolute;
     top: -2px;
     left: -7px;
-    width: 39.3vw;
-    height: 38.5vw;
+    width: 14.3vw;
+    height: 13.5vw;
     background: ${props => props.bgAnimateColor || null};
     animation: ${borderAnimationM} 10s linear infinite;
     transform: rotate(${props => `${props.rotate}deg` || 0});
     transition: all 0.3s;
-    @media ${DEVICE.tablet} { 
-        width: 26.3vw;
-        height: 25.5vw;
-    }
+
     @media ${DEVICE.laptopS} { 
-        width: 14.3vw;
-        height: 13.5vw;
+        width: 22.3vw;
+        height: 21.5vw;
     }
-    ${(props) => props.type === "index" && css`
-        @media ${DEVICE.tablet} { 
-            width: 35.3vw;
-            height: 34.5vw;
-        }
-        @media ${DEVICE.laptopS} { 
-            width: 22.3vw;
-            height: 21.5vw;
-        }
-        @media ${DEVICE.laptopM} { 
-            width: 14.3vw;
-            height: 13.5vw;
-        }
-    `}
+    
+    @media ${DEVICE.mobile} { 
+        width: 35.3vw;
+        height: 34.5vw;
+    }
 `;
 
 const Circle = styled.div`
@@ -58,137 +46,77 @@ const Circle = styled.div`
     position: relative;
     display: flex;
     justify-content: center;
-    width: 38vw;
-    height: 38vw;
+    width: 13.4vw;
+    height: 13.4vw;
     background: ${props => props.bgColor};
     border-radius: 50%;
     cursor: pointer;
     transition: all 0.3s;
-    @media ${DEVICE.tablet} { 
-        width: 25.4vw;
-        height: 25.4vw;
-    }
+    
     @media ${DEVICE.laptopS} { 
-        width: 13.4vw;
-        height: 13.4vw;
+        width: 21vw;
+        height: 21vw;
     }
-    ${(props) => props.type === "index" && css`
-        @media ${DEVICE.tablet} { 
-            width: 34vw;
-            height: 34vw;
-        }
-        @media ${DEVICE.laptopS} { 
-            width: 21vw;
-            height: 21vw;
-        }
-        @media ${DEVICE.laptopM} { 
-            width: 13.4vw;
-            height: 13.4vw;
-        }
-    `}
+
+    @media ${DEVICE.mobile} { 
+        width: 34vw;
+        height: 34vw;
+    }
 `
 
 const CircleContetnt = styled.div`
-    position: relative;
-    top: 7.7vw;
-    left: 0.25vw;
+    margin-top: 1.3vw;
+    margin-left: 0.25vw;
     display: flex;
     flex-direction: column;
     width: 100%;
     max-width: 75%;
 
-    @media ${DEVICE.tablet} { 
-        top: 3.5vw;
-    }
-
     @media ${DEVICE.laptopS} { 
-        top: 1.3vw;
+        margin-top: 3vw;
     }
 
-    ${(props) => props.type === "index" && css`
-        @media ${DEVICE.tablet} { 
-            top: 4.3vw;
-        }
-
-        @media ${DEVICE.laptopS} { 
-            top: 3vw;
-        }
-
-        @media ${DEVICE.laptopM} { 
-            top: 1.3vw;
-        }
-    `}
+    @media ${DEVICE.mobile} { 
+        margin-top: 6vw;
+    }
 `
 
 const Index = styled.div`
     width: 100%;
-    font-family: 'FocoBold';
     font-weight: 800;
-    font-size: 7.1vw;
-    line-height: 8.1vw;
-
-    @media ${DEVICE.tablet} { 
-        font-size: 6.1vw;
-        line-height: 7.1vw;
-    }
+    font-size: 3.6vw;
+    line-height: 4.6vw;
 
     @media ${DEVICE.laptopS} { 
-        font-size: 3.6vw;
-        line-height: 4.6vw;
+        font-size: 6vw;
+        line-height: 7vw;
     }
-    ${(props) => props.type === "index" && css`
-        @media ${DEVICE.tablet} { 
-            font-size: 9.1vw;
-            line-height: 10.1vw;
-        }
 
-        @media ${DEVICE.laptopS} { 
-            font-size: 6vw;
-            line-height: 7vw;
-        }
-
-        @media ${DEVICE.laptopM} { 
-            font-size: 3.6vw;
-            line-height: 4.6vw;
-        }
-    `}
+    @media ${DEVICE.mobile} { 
+        font-size: 8.1vw;
+        line-height: 9.1vw;
+    }
+    
 `;
 
 const Text = styled.div`
     width: 100%;
-    font-family: 'FocoBold';
     font-weight: 700;
-    font-size: 2.72vw;
-    line-height: 3.15vw;
+    font-size: 0.94vw;
+    line-height: 1.25vw;
     text-align: left;
     text-transform: uppercase;
 
-    @media ${DEVICE.tablet} { 
-        font-size: 1.82vw;
-        line-height: 2.45vw;
-    }
-
     @media ${DEVICE.laptopS} { 
-        font-size: 0.94vw;
-        line-height: 1.25vw;
+        font-size: 1.42vw;
+        line-height: 1.95vw;
     }
 
-    ${(props) => props.type === "index" && css`
-        @media ${DEVICE.tablet} { 
-            font-size: 2.42vw;
-            line-height: 3.05vw;
-        }
+    @media ${DEVICE.mobile} { 
+        font-size: 2.4vw;
+        line-height: 2.9vw;
+    }
 
-        @media ${DEVICE.laptopS} { 
-            font-size: 1.42vw;
-            line-height: 1.95vw;
-        }
-
-        @media ${DEVICE.laptopM} { 
-            font-size: 0.94vw;
-            line-height: 1.25vw;
-        }
-    `}
 `;
 
 const Container = styled.div`

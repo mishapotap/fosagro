@@ -20,14 +20,15 @@ const Container = styled.div`
     }
     /* Значение  */
     progress[value]{
-        width: 42vw;
+        
+        width: ${props => props.width};
         -webkit-appearance: none;
         appearance: none;
-        @media ${DEVICE.tablet} { 
-            width: 27vw;
-        }
         @media ${DEVICE.laptopS} { 
-            width: ${props => props.width};
+            width: 23vw;
+        }
+        @media ${DEVICE.mobile} { 
+            width: 33vw;
         }
     }
     /* Задний фон */
@@ -47,16 +48,19 @@ const Container = styled.div`
 const Persent = styled.div`
     width: fit-content;
     font-family: 'FocoBold';
-    font-size: 5.3vw;
-    line-height: 5.67vw;
+    font-size: 1.3vw;
+    line-height: 1.67vw;
+    /* font-size: 5.3vw;
+    line-height: 5.67vw; */
     color: ${props => props.color};
-    @media ${DEVICE.tablet} { 
-        font-size: 3.3vw;
-        line-height: 3.67vw;
-    }
+
     @media ${DEVICE.laptopS} { 
-        font-size: 1.3vw;
-        line-height: 1.67vw;
+        font-size: 2.3vw;
+        line-height: 2.67vw;
+    }
+    @media ${DEVICE.tablet} { 
+        font-size: 3.8vw;
+        line-height: 4.5vw;
     }
 `
 const Progress = styled.progress`

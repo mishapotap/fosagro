@@ -64,9 +64,9 @@ export default function Fosagro({ onClick }) {
 }
 
 const Wrapper = styled.svg`
-    width: 145px;
+    width: 240px;
     cursor: pointer;
-    @media ${DEVICE.tablet} { 
-        width: 240px;
+    @media ${DEVICE.laptopS} { 
+        width: 145px;
     }
 `

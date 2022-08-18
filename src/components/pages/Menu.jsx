@@ -19,37 +19,37 @@ export default function Menu() {
 
     return (
         <ModalLayout>
-            <Link to={routes.HOME}>
-                <Logo>
+            <TopNavigate>
+                <Link to={routes.HOME}>
                     <Fosagro />
-                </Logo>
-            </Link>
-            <Link to={routes.HOME} onClick={() => removeClass()}>
-                <CloseWrapper>
+                </Link>
+                <Link to={routes.HOME} onClick={() => removeClass()}>
                     <Close color={COLORS.white}/>
-                </CloseWrapper>
-            </Link>
+                </Link>
+            </TopNavigate>
             <MenuContainer>
-                {menuButtonData.map((item) => (
-                    <MenuButtonContainer  key={item.index}>
-                        <Link to={item.href}>
-                            <MenuButton
-                                index={item.index}
-                                text={item.text}
-                                bgColor={item.bgColor}
-                                bgAnimateColor={item.bgAnimateColor}
-                                rotate={item.rotate}
-                            />
-                            <MenuProgressBarContainer>
-                                <MenuProgressBar
-                                    max={100}
-                                    value={item.progress}
-                                    color={item.bgColor}
+                <MenuWrap>
+                    {menuButtonData.map((item) => (
+                        <MenuButtonContainer  key={item.index}>
+                            <Link to={item.href}>
+                                <MenuButton
+                                    index={item.index}
+                                    text={item.text}
+                                    bgColor={item.bgColor}
+                                    bgAnimateColor={item.bgAnimateColor}
+                                    rotate={item.rotate}
                                 />
-                            </MenuProgressBarContainer>
-                        </Link>
-                    </MenuButtonContainer>
-                ))}
+                                <MenuProgressBarContainer>
+                                    <MenuProgressBar
+                                        max={100}
+                                        value={item.progress}
+                                        color={item.bgColor}
+                                    />
+                                </MenuProgressBarContainer>
+                            </Link>
+                        </MenuButtonContainer>
+                    ))}
+                </MenuWrap>
             </MenuContainer>
         </ModalLayout>
     )
@@ -70,51 +70,56 @@ const ModalLayout = styled.div`
     overflow-y: hidden;
 `
 
-const Logo = styled.div`
-    position: absolute;
-    left: 25px;
-    top: 32px;
-    @media ${DEVICE.tablet} { 
-        left: 80px;
-        top: 37px;
+const TopNavigate = styled.div`
+    display: flex;
+    justify-content: space-between;
+    padding: 38px 45px 0 80px;
+
+    @media ${DEVICE.laptopS} {
+        padding: 32px 3vw 0 6vw;
     }
 `
-const CloseWrapper = styled.div`
-    position: absolute;
-    right: 25px;
-    top: 35px;
-    @media ${DEVICE.tablet} { 
-        right: 45px;
-        top: 38px;
-    }
-`
+
 const MenuContainer = styled.div`
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    padding: 0 3vw 7vw;
+    overflow: hidden;
+    @media ${DEVICE.laptopS} { 
+        padding: 5vw 12vw;
+    }
+
+    @media ${DEVICE.mobile} {
+        align-items: flex-start;
+        padding: 3vw 8vw;
+    }
+`
+
+const MenuWrap = styled.div`
     display: flex;
     flex: 1;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    padding: 100px 5vw 10vw;
-    overflow: hidden;
-    @media ${DEVICE.tablet} { 
-        padding: 160px 18vw 0;
-    }
-    @media ${DEVICE.laptopS} { 
-        padding: 160px 45px 0;
-    }
 `
 
 const MenuButtonContainer = styled.div`
-    margin-bottom: 3vw;
     @media ${DEVICE.laptopS} { 
-        margin-bottom: 0;
+        margin-bottom: 5vw;
     }
 `
 
 const MenuProgressBarContainer = styled.div`
-    margin-top: 10px;
+    margin-top: 80px;
+    
     @media ${DEVICE.laptopS} { 
-        margin-top: 80px;
+        margin-top: 3vw;
+    }
+
+    @media ${DEVICE.mobile} {
+        margin-top: 1vw;
     }
 `
 

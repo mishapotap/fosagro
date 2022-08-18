@@ -55,7 +55,6 @@ function App() {
                                     bgColor={item.bgColor}
                                     bgAnimateColor={item.bgAnimateColor}
                                     rotate={item.rotate}
-                                    type="index"
                                 />
                             </Link>
                         ))}
@@ -126,21 +125,30 @@ const TopNavigate = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 32px 25px 0;
+    padding: 40px 49px 0 85px;
+
+    @media ${DEVICE.laptopS} {
+        padding: 32px 3vw 0 6vw;
+    }
+
+    @media ${DEVICE.mobile} {
+        padding: 32px 3vw 0 25px;
+    }
 `
 
 const Language = styled.div`
-    font-family: "FocoBold";
     font-weight: 700;
-    font-size: 5vw;
-    line-height: 5.7vw;
-    @media ${DEVICE.tablet} {
-        font-size: 3vw;
-        line-height: 3.7vw;
+    font-size: 1.2vw;
+    line-height: 1.51vw;
+
+    @media ${DEVICE.laptopS} {
+        font-size: 2vw;
+        line-height: 2.7vw;
     }
-    @media ${DEVICE.laptopM} {
-        font-size: 1.2vw;
-        line-height: 1.51vw;
+
+    @media ${DEVICE.mobile} {
+        font-size: 4vw;
+        line-height: 4.7vw;
     }
 `
 
@@ -148,28 +156,32 @@ const LanguageContainer = styled.div`
     display: flex;
     ${Language} {
         margin-left: 16px;
+
         &:first-child {
             position: relative;
 
             &:after {
                 content: "";
                 position: absolute;
-                top: 1.7vw;
+                top: 0.6vw;
                 left: calc(100% + 5px);
                 display: block;
                 width: 6px;
                 height: 6px;
                 border-radius: 50%;
                 background: ${(props) => props.color};
-                @media ${DEVICE.tablet} {
-                    top: 1.5vw;
+
+                @media ${DEVICE.laptopS} {
+                    top: 1vw;
                 }
-                @media ${DEVICE.laptopM} {
-                    top: 0.5vw;
+
+                @media ${DEVICE.mobile} {
+                    top: 1.5vw;
                 }
             }
         }
     }
+
     a {
         color: ${(props) => props.color};
     }
@@ -180,20 +192,31 @@ const LanguageContainer = styled.div`
 `
 
 const Content = styled.div`
+    display: flex;
+    align-items: center;
+    min-height: calc(100vh - 81px);
     padding: 5vw 0;
-    @media ${DEVICE.laptopM} {
-        display: flex;
-        align-items: center;
-        min-height: calc(100vh - 75px);
+
+    @media ${DEVICE.laptopS} {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 5vw 0 0;
+    }
+
+    @media ${DEVICE.mobile} {
+        justify-content: flex-start;
     }
 `
 
 const TextContainer = styled.div`
-    padding: 0 5vw;
+    max-width: 52%;
+    padding: 0 0 0 60px;
     color: ${(props) => props.color};
-    @media ${DEVICE.laptopM} {
-        max-width: 52%;
-        padding: 0 0 0 60px;
+
+    @media ${DEVICE.laptopS} {
+        max-width: unset;
+        padding: 0 6vw;
     }
 `
 
@@ -203,88 +226,96 @@ const MenuContainer = styled.div`
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    padding: 0 5vw;
+    margin-top: 0;
+    padding: 2vw;
     overflow: hidden;
+
     a {
-        margin: 3vw;
+        margin: 0.5vw;
     }
-    @media ${DEVICE.tablet} {
-        padding: 0 8vw;
-    }
-    @media ${DEVICE.laptopM} {
-        margin-top: 0;
-        padding: 2vw;
+
+    @media ${DEVICE.laptopS} {
+        padding: 6vw;
+        max-height: 65vw;
         a {
-            margin: 0.5vw;
+            margin: 2vw;
         }
+    }
+
+    @media ${DEVICE.mobile} {
+        max-height: 125vw;
     }
 `
 const Title = styled.h1`
     display: block;
-    font-family: "FocoBold";
     font-weight: 700;
-    font-size: 7vw;
-    line-height: 8vw;
-    @media ${DEVICE.tablet} {
-        font-size: 6vw;
-        line-height: 7vw;
+    font-size: 3.65vw;
+    line-height: 4.6vw;
+
+    @media ${DEVICE.laptopM} {
+        font-size: 3.55vw;
     }
+
     @media ${DEVICE.laptopS} {
         font-size: 5vw;
         line-height: 6vw;
     }
-    @media ${DEVICE.laptopM} {
-        font-size: 3.65vw;
-        line-height: 4.6vw;
+
+    @media ${DEVICE.mobile} {
+        font-size: 6.5vw;
+        line-height: 7.5vw;
     }
 `
 
 const Description = styled.div`
     position: relative;
     display: block;
+
     h3 {
-        margin-top: 5vw;
+        max-width: 35vw;
+        margin-top: 73px;
         font-family: "CalibriRegular";
         font-weight: 400;
-        font-size: 5vw;
-        line-height: 6vw;
+        font-size: 1.56vw;
+        line-height: 1.93vw;
+
         span {
             font-family: "CalibriBold";
         }
-        @media ${DEVICE.tablet} {
-            margin-top: 3vw;
-            font-size: 4vw;
-            line-height: 5vw;
-        }
+
         @media ${DEVICE.laptopS} {
             max-width: 70vw;
+            margin-top: 3vw;
             font-size: 3vw;
             line-height: 4vw;
         }
-        @media ${DEVICE.laptopM} {
-            max-width: 35vw;
-            margin-top: 73px;
-            font-size: 1.56vw;
-            line-height: 1.93vw;
+
+        @media ${DEVICE.mobile} {
+            max-width: 85vw;
+            margin-top: 3vw;
+            font-size: 4vw;
+            line-height: 5vw;
         }
     }
 `
 
 const OOHLogo = styled.img`
     position: absolute;
-    top: 3.5vw;
-    right: 19vw;
-    display: none;
-    width: 4.85vw;
-    height: 4.85vw;
+    top: 1vw;
+    left: 73%;
+    display: block;
+    width: 3.85vw;
+    height: 3.85vw;
+
     @media ${DEVICE.laptopS} {
-        display: inline-block;
+        top: 3vw;
+        left: 92%;
+        width: 5.85vw;
+        height: 5.85vw;
     }
-    @media ${DEVICE.laptopM} {
-        top: 1vw;
-        right: 10vw;
-        width: 3.85vw;
-        height: 3.85vw;
+
+    @media ${DEVICE.mobile} {
+        display: none;
     }
 `
 

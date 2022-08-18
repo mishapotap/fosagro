@@ -30,8 +30,8 @@ export default function Close({ color }) {
 const Path = styled.path``
 const Circle = styled.circle``
 const Wrapper = styled.svg`
-    width: 36px;
-    height: 36px;
+    width: 52px;
+    height: 52px;
     cursor: pointer;
     transition: all 0.3s;
     ${({ color }) =>
@@ -48,8 +48,8 @@ const Wrapper = styled.svg`
                 }
             }
         `}
-    @media ${DEVICE.tablet} { 
-        width: 52px;
-        height: 52px;
+    @media ${DEVICE.laptop} { 
+        width: 36px;
+        height: 36px;
     }
 `
