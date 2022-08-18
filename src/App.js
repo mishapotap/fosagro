@@ -5,8 +5,8 @@ import * as routes from "./constants/routes"
 import { menuButtonData } from "./data"
 import { MenuButton } from "./components/molecules"
 import { Fosagro } from "./assets/svg"
+import { OOH } from "./assets/svg/static"
 import { MainBG } from "./assets/video"
-import { OOH } from "./assets/images"
 import { COLORS, DEVICE } from "./constants"
 
 function App() {
@@ -203,7 +203,6 @@ const MenuContainer = styled.div`
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    margin-top: 10vw;
     padding: 0 5vw;
     overflow: hidden;
     a {
@@ -211,9 +210,6 @@ const MenuContainer = styled.div`
     }
     @media ${DEVICE.tablet} {
         padding: 0 8vw;
-    }
-    @media ${DEVICE.laptopS} {
-        margin-top: 5vw;
     }
     @media ${DEVICE.laptopM} {
         margin-top: 0;
@@ -227,8 +223,8 @@ const Title = styled.h1`
     display: block;
     font-family: "FocoBold";
     font-weight: 700;
-    font-size: 8vw;
-    line-height: 9vw;
+    font-size: 7vw;
+    line-height: 8vw;
     @media ${DEVICE.tablet} {
         font-size: 6vw;
         line-height: 7vw;
@@ -250,8 +246,8 @@ const Description = styled.div`
         margin-top: 5vw;
         font-family: "CalibriRegular";
         font-weight: 400;
-        font-size: 6vw;
-        line-height: 7vw;
+        font-size: 5vw;
+        line-height: 6vw;
         span {
             font-family: "CalibriBold";
         }
@@ -276,17 +272,19 @@ const Description = styled.div`
 
 const OOHLogo = styled.img`
     position: absolute;
-    top: 4.5vw;
-    right: 21vw;
+    top: 3.5vw;
+    right: 19vw;
     display: none;
-    width: 3.85vw;
-    height: 3.85vw;
+    width: 4.85vw;
+    height: 4.85vw;
     @media ${DEVICE.laptopS} {
         display: inline-block;
     }
     @media ${DEVICE.laptopM} {
         top: 1vw;
         right: 10vw;
+        width: 3.85vw;
+        height: 3.85vw;
     }
 `
 
