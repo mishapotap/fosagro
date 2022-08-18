@@ -1,5 +1,6 @@
 import React from "react"
 import styled from "styled-components"
+import { DEVICE } from "../../constants"
 
 export default function Fosagro({ onClick }) {
     return (
@@ -63,5 +64,9 @@ export default function Fosagro({ onClick }) {
 }
 
 const Wrapper = styled.svg`
+    width: 145px;
     cursor: pointer;
+    @media ${DEVICE.tablet} { 
+        width: 240px;
+    }
 `

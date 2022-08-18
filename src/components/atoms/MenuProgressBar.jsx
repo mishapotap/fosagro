@@ -1,8 +1,8 @@
 import React from "react"
 import styled from "styled-components"
-import { COLORS } from "../../constants"
+import { COLORS, DEVICE } from "../../constants"
 
-export default function MenuProgressBar({ value, max, color, width = "220px" }) {
+export default function MenuProgressBar({ value, max, color, width = "15vw" }) {
     // TODO Проверка на if > 100
     return (
         <Container color={color} width={width}>
@@ -20,9 +20,15 @@ const Container = styled.div`
     }
     /* Значение  */
     progress[value]{
-        width: ${props => props.width};
+        width: 42vw;
         -webkit-appearance: none;
         appearance: none;
+        @media ${DEVICE.tablet} { 
+            width: 27vw;
+        }
+        @media ${DEVICE.laptopS} { 
+            width: ${props => props.width};
+        }
     }
     /* Задний фон */
     progress[value]::-webkit-progress-bar {
@@ -41,9 +47,17 @@ const Container = styled.div`
 const Persent = styled.div`
     width: fit-content;
     font-family: 'FocoBold';
-    font-size: 25px;
-    line-height: 32px;
+    font-size: 5.3vw;
+    line-height: 5.67vw;
     color: ${props => props.color};
+    @media ${DEVICE.tablet} { 
+        font-size: 3.3vw;
+        line-height: 3.67vw;
+    }
+    @media ${DEVICE.laptopS} { 
+        font-size: 1.3vw;
+        line-height: 1.67vw;
+    }
 `
 const Progress = styled.progress`
 `
