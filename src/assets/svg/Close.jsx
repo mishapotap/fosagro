@@ -1,6 +1,6 @@
 import React from "react"
 import styled, { css } from "styled-components"
-import { COLORS } from "../../constants"
+import { COLORS, DEVICE } from "../../constants"
 
 export default function Close({ color }) {
     return (
@@ -30,6 +30,8 @@ export default function Close({ color }) {
 const Path = styled.path``
 const Circle = styled.circle``
 const Wrapper = styled.svg`
+    width: 52px;
+    height: 52px;
     cursor: pointer;
     transition: all 0.3s;
     ${({ color }) =>
@@ -46,4 +48,8 @@ const Wrapper = styled.svg`
                 }
             }
         `}
+    @media ${DEVICE.laptop} { 
+        width: 36px;
+        height: 36px;
+    }
 `

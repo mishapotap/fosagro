@@ -43,22 +43,26 @@ const DEVICE_SIZE = {
     mobileS: "320px",
     mobileM: "375px",
     mobileL: "425px",
+    mobile: "600px",
     tablet: "768px",
     laptopS: "1024px",
+    laptop: "1280px",
     laptopM: "1440px",
     laptopL: "1920px",
     desktop: "2560px",
 }
 
 export const DEVICE = {
-    mobileS: `(min-width: ${DEVICE_SIZE.mobileS})`,
-    mobileM: `(min-width: ${DEVICE_SIZE.mobileM})`,
-    mobileL: `(min-width: ${DEVICE_SIZE.mobileL})`,
-    tablet: `(min-width: ${DEVICE_SIZE.tablet})`,
-    laptopS: `(min-width: ${DEVICE_SIZE.laptopS})`,
-    laptopM: `(min-width: ${DEVICE_SIZE.laptopM})`,
-    laptopL: `(min-width: ${DEVICE_SIZE.laptopL})`,
-    desktop: `(min-width: ${DEVICE_SIZE.desktop})`,
+    mobileS: `(max-width: ${DEVICE_SIZE.mobileS})`,
+    mobileM: `(max-width: ${DEVICE_SIZE.mobileM})`,
+    mobileL: `(max-width: ${DEVICE_SIZE.mobileL})`,
+    mobile: `(max-width: ${DEVICE_SIZE.mobile})`,
+    tablet: `(max-width: ${DEVICE_SIZE.tablet})`,
+    laptopS: `(max-width: ${DEVICE_SIZE.laptopS})`,
+    laptop: `(max-width: ${DEVICE_SIZE.laptop})`,
+    laptopM: `(max-width: ${DEVICE_SIZE.laptopM})`,
+    laptopL: `(max-width: ${DEVICE_SIZE.laptopL})`,
+    desktop: `(max-width: ${DEVICE_SIZE.desktop})`,
 }
 
 export default {
