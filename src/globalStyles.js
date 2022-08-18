@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components"
+import "./assets/fonts/index.css"
 
 const GlobalStyle = createGlobalStyle`
 * {
@@ -10,6 +11,11 @@ const GlobalStyle = createGlobalStyle`
 	&:focus {
 		outline: none;
 	}
+}
+
+/* TODO удалить это! для проверки как на моб */
+#root {
+	overflow: hidden;
 }
 
 /* *::before,
@@ -29,7 +35,6 @@ body {
 	}
 }
 button {
-	/* outline: 0; */
 	border: 0;
 	transition: 0.3s;
 	cursor: pointer;

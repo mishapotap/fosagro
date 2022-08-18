@@ -1,4 +1,6 @@
-import React from "react"
+/* eslint-disable react/button-has-type */
+/* eslint-disable no-unused-vars */
+import React, { useEffect, useRef, useState } from "react"
 import styled from "styled-components"
 import { Link } from "react-router-dom"
 import * as routes from "../../constants/routes"
@@ -12,11 +14,14 @@ import {
     InteractiveContainer,
     Slider,
     VideoPlayer,
+    Instruction,
+    DocsLink,
 } from "../atoms"
 import {
     Flower,
     Close,
-    Arrow,
+    ArrowLeft,
+    ArrowRight,
     Next,
     Prev,
     Headphones,
@@ -28,13 +33,29 @@ import { COLORS, FONTS } from "../../constants"
 import { HeadphonesIcon, TimerIcon } from "../../assets/svg/static"
 import { TepkVideo } from "../../assets/video"
 import { testData } from "../../data"
+import Modal from "../atoms/Modal"
 
 export default function NotFound() {
+    const [isInstrModalOpened, setIsInstrModalOpened] = useState(false)
+
     return (
         <Container>
             <Text>СТРАНИЦА НЕ НАЙДЕНА! ЭТО 404 ОШИБКА</Text>
             <Title>Hello World!</Title>
             <Subtitle>Start</Subtitle>
+            <button
+                style={{
+                    fontSize: "18px",
+                    margin: '20px 0'
+                }}
+                onClick={() => setIsInstrModalOpened(true)}
+            >
+                Открыть инструкцию
+            </button>
+            <Modal isOpen={isInstrModalOpened}>
+                <Instruction onClose={() => setIsInstrModalOpened(false)} />
+            </Modal>
+            <DocsLink />
             <span>{routes.HOME}</span>
             <img src={HeadphonesIcon} alt="mksicon" />
             <img src={TimerIcon} alt="mksicon" />
@@ -48,7 +69,8 @@ export default function NotFound() {
             <Flower />
             <Close color={COLORS.orange} />
             <Close color={COLORS.blue} />
-            <Arrow color={COLORS.orange} />
+            <ArrowLeft color={COLORS.orange} />
+            <ArrowRight color={COLORS.blue} />
             <Next />
             <Prev color={COLORS.orange} />
             <NextQuestionButton />

@@ -1,0 +1,5 @@
+export { default as IconAttention } from "./IconAttention.svg"
+export { default as IconBlueBtnMail } from "./IconBlueBtnMail.svg"
+export { default as IconBlueBtnSound } from "./IconBlueBtnSound.svg"
+export { default as IconOpenCourseBtn } from "./IconOpenCourseBtn.svg"
+export { default as IconOpenCourseBtnMob } from "./IconOpenCourseBtnMob.svg"
