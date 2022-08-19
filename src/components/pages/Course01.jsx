@@ -1,18 +1,18 @@
 import React from "react"
 import styled from "styled-components"
 import { Link } from "react-router-dom"
-import { courseStepButtonData1 } from "../../data"
 import {
-    CourseStepButton,
-    CourseStepPoint,
     MailButton,
     CourseProgressButton,
-    SoundButton,
+    SoundButton, 
 } from "../molecules"
 import { COLORS } from "../../constants"
 import { Close } from "../../assets/svg"
 import * as routes from "../../constants/routes"
 import { MenuBackground } from "../../assets/images"
+import timelineData from "../../data/timelineData"
+import modules from "../modules"
+import { ContentModule } from "../atoms"
 
 export default function Course01() {
     return (
@@ -29,21 +29,13 @@ export default function Course01() {
                 </Link>
             </TempSvgContainer>
             <MenuContainer>
-                {courseStepButtonData1.map((item) => (
-                    <Link to={routes.HOME} key={item.rotate}>
-                        <CourseStepButton
-                            title={item.title}
-                            description={item.description}
-                            time={item.time}
-                            bgColor={item.bgColor}
-                            image={item.image}
-                            rotate={item.rotate}
-                        />
-                    </Link>
+                {timelineData.map((section, index) => (
+                    // TODO обернуть компоненты в link и дописать его в data
+                    // eslint-disable-next-line react/no-array-index-key
+                    <ContentModule key={index} data={section} modules={modules.base} />
                 ))}
             </MenuContainer>
-            <CourseStepPoint color="rgba(218, 170, 0)" text="Все взаимосвязано" position="top"/>
-            <CourseStepPoint color="rgba(218, 170, 0)" text="Все взаимосвязано" position="bottom"/>
+            
             <div
                 style={{
                     display: "flex",
@@ -86,4 +78,8 @@ const MenuContainer = styled.div`
     flex: 1;
     justify-content: space-between;
     align-items: center;
+    overflow-x: auto;
+    ::-webkit-scrollbar {
+        width: 0;
+    }
 `
