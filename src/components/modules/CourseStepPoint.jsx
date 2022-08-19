@@ -2,7 +2,8 @@ import React, { useState } from "react"
 import styled, { css } from "styled-components";
 import { COLORS } from "../../constants";
 
-export default function CourseStepPoint({color = null, text, position}) {
+function CourseStepPoint({data}) {
+    const { color, text, position } = data
     // TODO перенести состояние в mobX
     const [isActive, setIsАсtive] = useState(false);
     const [isCompleted, setIsCompleted] = useState(false);;
@@ -23,10 +24,16 @@ export default function CourseStepPoint({color = null, text, position}) {
     )
 }
 
+export default {
+    name: 'CourseStepPoint',
+    Component: CourseStepPoint,
+}
+
 const Text = styled.div`
     position: absolute;
     left: -50px;
-    max-width: 130px;
+    /* max-width: 130px; */
+    min-width: 130px;
     font-family: 'FocoRegular';
     font-weight: 400;
     font-size: 16px;
