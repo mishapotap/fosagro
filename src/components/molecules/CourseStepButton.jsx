@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import styled, { css } from "styled-components"
 import { TimeIcon } from "../../assets/svg/static";
-import { COLORS } from '../../constants/theme'
+import { COLORS } from '../../constants'
 import { borderAnimationM } from "../../constants/animations";
 
 export default function CourseStepButton({ title, bgColor = COLORS.white, image = null, time, description, rotate = 0}) {

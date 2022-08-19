@@ -1,7 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { COLORS } from "../../constants"
-import { DEVICE } from "../../constants/theme"
+import { COLORS, DEVICE } from "../../constants"
 
 export default function SendButton({ text, size = "s" }) {
     return <Container size={size}>{text}</Container>
@@ -21,6 +20,7 @@ const Container = styled.button`
     font-family: "CalibriRegular";
     text-align: center;
     color: ${COLORS.white};
+    font-size: ${({ size }) => (size === "s" ? "18px" : "23px")};
     line-height: 1;
 
     /* transition */
@@ -33,15 +33,7 @@ const Container = styled.button`
         color: ${COLORS.blue};
     }
 
-    @media ${DEVICE.mobileS} {
-        font-size: 15.5px;
-    }
-
-    @media ${DEVICE.laptopS} {
+    @media ${DEVICE.laptop} {
         font-size: 16px;
-    }
-
-    @media ${DEVICE.laptopM} {
-        font-size: ${({ size }) => (size === "s" ? "18px" : "23px")};
-    }
+    } 
 `

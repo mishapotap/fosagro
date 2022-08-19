@@ -1,6 +1,6 @@
 import React from "react"
 import styled, { css } from "styled-components" 
-import { COLORS } from '../../constants/theme'
+import { COLORS } from '../../constants'
 import { borderAnimationS, borderAnimationM } from "../../constants/animations"
 
 export default function AnimatedBlueButton({children, rotate = 0, size, onClick}) {

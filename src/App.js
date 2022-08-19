@@ -195,7 +195,6 @@ const Content = styled.div`
     display: flex;
     align-items: center;
     min-height: calc(100vh - 81px);
-    padding: 5vw 0;
 
     @media ${DEVICE.laptopS} {
         flex-direction: column;

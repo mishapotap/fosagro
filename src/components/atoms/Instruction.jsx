@@ -22,12 +22,11 @@ import {
     Fosagro,
     Close,
 } from "../../assets/svg"
-import { COLORS } from "../../constants"
+import { COLORS, DEVICE } from "../../constants"
 import { MenuBackground } from "../../assets/images"
 import SendButton from "./SendButton"
 import * as routes from "../../constants/routes"
 import DocsLink from "./DocsLink"
-import { DEVICE } from "../../constants/theme"
 
 // eslint-disable-next-line
 import "swiper/css"

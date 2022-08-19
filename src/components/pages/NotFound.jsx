@@ -15,7 +15,7 @@ import {
     Slider,
     VideoPlayer,
     Instruction,
-    DocsLink,
+    DocsLink, Modal
 } from "../atoms"
 import {
     Flower,
@@ -28,12 +28,12 @@ import {
     Tree,
     SliderCircleM,
     SliderCircleS,
+    LinkIcon,
 } from "../../assets/svg"
 import { COLORS, FONTS } from "../../constants"
-import { HeadphonesIcon, TimerIcon } from "../../assets/svg/static"
+import { HeadphonesIcon } from "../../assets/svg/static"
 import { TepkVideo } from "../../assets/video"
 import { testData } from "../../data"
-import Modal from "../atoms/Modal"
 
 export default function NotFound() {
     const [isInstrModalOpened, setIsInstrModalOpened] = useState(false)
@@ -46,7 +46,7 @@ export default function NotFound() {
             <button
                 style={{
                     fontSize: "18px",
-                    margin: '20px 0'
+                    margin: "20px 0",
                 }}
                 onClick={() => setIsInstrModalOpened(true)}
             >
@@ -58,7 +58,6 @@ export default function NotFound() {
             <DocsLink />
             <span>{routes.HOME}</span>
             <img src={HeadphonesIcon} alt="mksicon" />
-            <img src={TimerIcon} alt="mksicon" />
             <Testy style={FONTS.modalTitleWhite}>gfsjgfjdgbfsdjg</Testy>
             <Link to={routes.HOME}>
                 <SendButton text="Перейти в home" />

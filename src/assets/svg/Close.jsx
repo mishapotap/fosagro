@@ -29,21 +29,11 @@ const Path = styled.path``
 const Circle = styled.circle``
 const Wrapper = styled.svg`
     width: 52px;
-    height: 52px;
     cursor: pointer;
     transition: all 0.3s;
 
-    @media ${DEVICE.mobileS} {
-        width: 40px;
-    }
-
-    @media ${DEVICE.laptopL} {
-        width: 52px;
-    }
-    
     @media ${DEVICE.laptop} { 
         width: 36px;
-        height: 36px;
     }
 
     ${({ color }) =>
