@@ -123,17 +123,17 @@ const WrapperAbsolute = styled.svg`
 
 const Container = styled.div`
   position: relative;
-  display: none;
-  max-width: 1045px;
-  max-height: 1045px;
+  display: block;
+  max-width: 54.4vw;
+  max-height: 54.4vw;
   width: 100%;
   height: 100%;
   svg {
     max-width: calc(100% - 2px);
     height: calc(100% - 2px);
   }
-  @media ${DEVICE.mobileL} {
-    display: block;
+  @media ${DEVICE.mobile} {
+    display: none;
   }
 `
 

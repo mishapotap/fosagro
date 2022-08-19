@@ -1,6 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { rotateInteractiveCircle } from "../../constants/animations"
+import { DEVICE } from "../../constants"
 
 export default function InteractiveCircle({color}) {
   return (
@@ -41,9 +42,6 @@ const Wrapper = styled.svg`
 `
 
 const Container = styled.div`
-  position: relative;
-  top: 0;
-  left: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -56,6 +54,10 @@ const Container = styled.div`
     width: 100%;
     height: 100%;
     overflow: overlay;
+  }
+
+  @media ${DEVICE.mobile} {
+    display: none;
   }
 `
 

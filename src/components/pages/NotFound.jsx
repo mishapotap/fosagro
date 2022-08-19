@@ -11,11 +11,12 @@ import {
     BackToChapterButton,
     Timer,
     StepProgressBar,
-    InteractiveContainer,
     Slider,
     VideoPlayer,
     Instruction,
-    DocsLink, Modal
+    DocsLink, 
+    Modal,
+    CourseAnimateScience
 } from "../atoms"
 import {
     Flower,
@@ -28,7 +29,7 @@ import {
     Tree,
     SliderCircleM,
     SliderCircleS,
-    LinkIcon,
+    InteractiveCircle
 } from "../../assets/svg"
 import { COLORS, FONTS } from "../../constants"
 import { HeadphonesIcon } from "../../assets/svg/static"
@@ -81,15 +82,15 @@ export default function NotFound() {
             <StepProgressBar width="608" slidesAmount="8" />
             <StepProgressBar width="608" slidesAmount="3" />
             <Tree />
-            <InteractiveContainer type="slider" color={COLORS.green_circle}>
-                <Slider size="m" data={testData}>
-                    <SliderCircleM />
-                </Slider>
-            </InteractiveContainer>
+            <InteractiveCircle color={COLORS.green_circle}/>
+            <Slider size="m" data={testData} sliderColor={COLORS.green_circle}>
+                <SliderCircleM />
+            </Slider>
             <Slider size="s" sliderColor={COLORS.orange} data={testData}>
                 <SliderCircleS />
             </Slider>
             <VideoPlayer src={TepkVideo} />
+            <CourseAnimateScience/>
         </Container>
     )
 }
