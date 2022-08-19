@@ -15,7 +15,9 @@ import {
     Slider,
     VideoPlayer,
     Instruction,
-    DocsLink, Modal
+    DocsLink,
+    Modal,
+    Header,
 } from "../atoms"
 import {
     Flower,
@@ -40,6 +42,26 @@ export default function NotFound() {
 
     return (
         <Container>
+            {/* примеры как настроить хэдэр */}
+            {/* по умолчанию - только с белым лого (как в меню и инструкции) */}
+            {/* <Header /> */}
+
+            {/* с белым лого и выбором языка (как на главной) */}
+            {/* <Header language /> */}
+
+            {/* с белыми лого и кнопкой Курс "Устойчивое развитие"
+            (как на странице раздела с таймлайном, там где кружочки на волнах) */}
+            {/* <Header course/> */}
+
+            {/* с цветными лого, кнопкой Курс "Устойчивое развитие", и заголовком секции
+            (как внутри темы раздела, где слайды с текстом, картинками, анимацией и пр) */}
+            {/* <Header
+                colored
+                course
+                sectTitle="Суть концепции устойчивого развития"
+                sectTitleColor={COLORS.green_light}
+            /> */}
+
             <Text>СТРАНИЦА НЕ НАЙДЕНА! ЭТО 404 ОШИБКА</Text>
             <Title>Hello World!</Title>
             <Subtitle>Start</Subtitle>
