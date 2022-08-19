@@ -1,13 +1,11 @@
 import React from "react"
 import styled, { css } from "styled-components"
-import { COLORS } from "../../constants"
+import { COLORS, DEVICE } from "../../constants"
 
 export default function Close({ color }) {
     return (
         <Wrapper
             color={color}
-            width="52"
-            height="52"
             viewBox="0 0 52 52"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -30,8 +28,14 @@ export default function Close({ color }) {
 const Path = styled.path``
 const Circle = styled.circle``
 const Wrapper = styled.svg`
+    width: 52px;
     cursor: pointer;
     transition: all 0.3s;
+
+    @media ${DEVICE.laptop} { 
+        width: 36px;
+    }
+
     ${({ color }) =>
         color &&
         css`

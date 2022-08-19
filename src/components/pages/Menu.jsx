@@ -4,49 +4,59 @@ import { Link } from "react-router-dom"
 import { menuButtonData } from "../../data"
 import { MenuButton } from "../molecules"
 import { MenuProgressBar } from "../atoms"
-import { COLORS } from "../../constants"
+import { COLORS, DEVICE } from "../../constants"
 import { Close, Fosagro } from "../../assets/svg"
 import * as routes from "../../constants/routes"
 import { MenuBackground } from "../../assets/images"
 
 export default function Menu() {
+
+    document.body.classList.add('lock');
+
+    const removeClass = () => {
+        document.body.classList.remove('lock');
+    }
+
     return (
         <ModalLayout>
-            <Link to={routes.HOME}>
-                <Logo>
+            <TopNavigate>
+                <Link to={routes.HOME}>
                     <Fosagro />
-                </Logo>
-            </Link>
-            <Link to={routes.HOME}>
-                <CloseWrapper>
-                    <Close color={COLORS.blue}/>
-                </CloseWrapper>
-            </Link>
+                </Link>
+                <Link to={routes.HOME} onClick={() => removeClass()}>
+                    <Close color={COLORS.white}/>
+                </Link>
+            </TopNavigate>
             <MenuContainer>
-                {menuButtonData.map((item) => (
-                    <Link to={item.href}>
-                        <MenuButton
-                            key={item.index}
-                            index={item.index}
-                            text={item.text}
-                            bgColor={item.bgColor}
-                            bgAnimateColor={item.bgAnimateColor}
-                            rotate={item.rotate}
-                        />
-                        <MenuProgressBar
-                            max={100}
-                            value={item.progress}
-                            color={item.bgColor}
-                        />
-                    </Link>
-                ))}
+                <MenuWrap>
+                    {menuButtonData.map((item) => (
+                        <MenuButtonContainer  key={item.index}>
+                            <Link to={item.href}>
+                                <MenuButton
+                                    index={item.index}
+                                    text={item.text}
+                                    bgColor={item.bgColor}
+                                    bgAnimateColor={item.bgAnimateColor}
+                                    rotate={item.rotate}
+                                />
+                                <MenuProgressBarContainer>
+                                    <MenuProgressBar
+                                        max={100}
+                                        value={item.progress}
+                                        color={item.bgColor}
+                                    />
+                                </MenuProgressBarContainer>
+                            </Link>
+                        </MenuButtonContainer>
+                    ))}
+                </MenuWrap>
             </MenuContainer>
         </ModalLayout>
     )
 }
 
 const ModalLayout = styled.div`
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
     z-index: 5;
@@ -59,19 +69,57 @@ const ModalLayout = styled.div`
     overflow-x: hidden;
     overflow-y: hidden;
 `
-const Logo = styled.div`
-    position: absolute;
-    left: 80px;
-    top: 35px;
+
+const TopNavigate = styled.div`
+    display: flex;
+    justify-content: space-between;
+    padding: 38px 45px 0 80px;
+
+    @media ${DEVICE.laptopS} {
+        padding: 32px 3vw 0 6vw;
+    }
 `
-const CloseWrapper = styled.div`
-    position: absolute;
-    right: 80px;
-    top: 35px;
-`
+
 const MenuContainer = styled.div`
     display: flex;
     flex: 1;
     justify-content: center;
     align-items: center;
+    padding: 0 3vw 7vw;
+    overflow: hidden;
+    @media ${DEVICE.laptopS} { 
+        padding: 5vw 12vw;
+    }
+
+    @media ${DEVICE.mobile} {
+        align-items: flex-start;
+        padding: 3vw 8vw;
+    }
 `
+
+const MenuWrap = styled.div`
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+`
+
+const MenuButtonContainer = styled.div`
+    @media ${DEVICE.laptopS} { 
+        margin-bottom: 5vw;
+    }
+`
+
+const MenuProgressBarContainer = styled.div`
+    margin-top: 80px;
+    
+    @media ${DEVICE.laptopS} { 
+        margin-top: 3vw;
+    }
+
+    @media ${DEVICE.mobile} {
+        margin-top: 1vw;
+    }
+`
+
