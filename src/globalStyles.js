@@ -49,6 +49,10 @@ h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: 400;}
 /* #root {
 	overflow: hidden;
 } */
+
+a {
+	display: block;
+}
 `
 
 export default GlobalStyle
