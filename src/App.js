@@ -8,6 +8,7 @@ import { Fosagro } from "./assets/svg"
 import { OOH } from "./assets/svg/static"
 import { MainBG } from "./assets/video"
 import { COLORS, DEVICE } from "./constants"
+import { Header } from "./components/atoms"
 
 function App() {
     return (
@@ -16,6 +17,7 @@ function App() {
                 <Video src={MainBG} loop muted autoPlay playsInline />
             </Background>
             <Container>
+                <Header />
                 <TopNavigate>
                     <Link to={routes.HOME}>
                         <Fosagro />
