@@ -1,6 +1,4 @@
-/* eslint-disable no-use-before-define */
 /* eslint-disable react/jsx-no-bind */
-/* eslint-disable no-unused-vars */
 import "wicg-inert"
 import React from "react"
 import styled from "styled-components"
@@ -15,26 +13,21 @@ import {
     IconBlueBtnSound,
 } from "../../assets/svg/static/Instruction"
 
-import {
-    Headphones,
-    ArrowRight,
-    ArrowLeft,
-    Fosagro,
-    Close,
-} from "../../assets/svg"
+import { Headphones, ArrowRight, ArrowLeft } from "../../assets/svg"
 import { COLORS, DEVICE } from "../../constants"
 import { MenuBackground } from "../../assets/images"
 import SendButton from "./SendButton"
 import * as routes from "../../constants/routes"
 import DocsLink from "./DocsLink"
+import Modal from "./Modal"
+import Layout from "./Layout"
 
 // eslint-disable-next-line
 import "swiper/css"
 // eslint-disable-next-line
 import "swiper/css/effect-fade"
-// eslint-disable-next-line
 
-export default function Instruction({ onClose }) {
+export default function Instruction({ isOpen, onClose }) {
     function renderCustom(swiper, current, total) {
         const getFormattedNumber = (number) =>
             number < 10 ? `0${number}` : `${number}`
@@ -49,225 +42,207 @@ export default function Instruction({ onClose }) {
     }
 
     return (
-        <Container>
-            <CloseBtn onClick={onClose}>
-                <Close color={COLORS.blue} />
-            </CloseBtn>
-            <Logo>
-                <Link to={routes.HOME}>
-                    <Fosagro />
-                </Link>
-            </Logo>
-            <SliderContainer>
-                <Swiper
-                    modules={[Pagination, Navigation, EffectFade]}
-                    navigation={{
-                        prevEl: ".button-prev",
-                        nextEl: ".button-next",
-                    }}
-                    pagination={{ type: "custom", renderCustom }}
-                    effect="fade"
-                    fadeEffect={{ crossFade: true }}
-                    speed={400}
-                >
-                    <SwiperSlide>
-                        <SlideInner>
-                            <Slide1Cols>
-                                <Column>
-                                    <Title>
-                                        Инструкция по прохождению курса
-                                        <TitleAccent>
-                                            «Устойчивое развитие»
-                                        </TitleAccent>
-                                    </Title>
-                                </Column>
-                                <Column>
-                                    <Text>
-                                        Уважаемые пользователи, в нашем курсе 6
-                                        разделов, каждый из которых поделен на
-                                        темы. Вы можете выбрать какой раздел
-                                        изучать, вне зависимости от их
-                                        последовательности.
-                                    </Text>
-                                    <Row>
-                                        <AttentionImage
-                                            src={IconAttention}
-                                            alt="внимание"
-                                        />
-                                        <Text>
-                                            Однако прохождение курса внутри
-                                            раздела идет последовательно, Вы не
-                                            можете перейти к следующей теме, не
-                                            изучив предыдущую.
-                                        </Text>
-                                    </Row>
-                                    <Text>
-                                        В конце каждого раздела Вас ждет простой
-                                        тест на несколько вопросов для проверки
-                                        усвоенных знаний.
-                                    </Text>
-                                </Column>
-                            </Slide1Cols>
-                        </SlideInner>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <SlideInner>
-                            <Slide2Cols>
-                                <Column>
-                                    <Title>Краткая справка по навигации</Title>
-                                </Column>
-                                <Column>
-                                    <ColBlock>
-                                        <Text>
-                                            Переход между страницами
-                                            осуществляется прокруткой
-                                            мыши/тачпада.
-                                        </Text>
-                                    </ColBlock>
-                                    <ColBlock>
-                                        <CourseImage />
-                                        <Text>Кнопка открытия меню курса.</Text>
-                                    </ColBlock>
-                                    <ColBlock inert="true">
-                                        <DocsLink showCursor={false} />
-                                        <Text>
-                                            Ссылки на дополнительные материалы
-                                            вынесены в виде такого элемента.
-                                        </Text>
-                                    </ColBlock>
-                                </Column>
-                                <Column>
-                                    <IconRow>
-                                        <IconHeadphones inert="true">
-                                            <Headphones />
-                                        </IconHeadphones>
-                                        <Text>
-                                            В нашем курсе предполагается
-                                            звуковое сопровождение, аудиогид,
-                                            управление им осуществляется при
-                                            нажатии на данный элемент.
-                                        </Text>
-                                    </IconRow>
-                                    <IconRow>
-                                        <ElIcon>
-                                            <img
-                                                src={IconBlueBtnSound}
-                                                alt=""
+        <StyledModal isOpen={isOpen} onClose={onClose}>
+            <StyledLayout page="instruction">
+                <Container>
+                    <SliderContainer>
+                        <Swiper
+                            modules={[Pagination, Navigation, EffectFade]}
+                            navigation={{
+                                prevEl: ".button-prev",
+                                nextEl: ".button-next",
+                            }}
+                            pagination={{ type: "custom", renderCustom }}
+                            effect="fade"
+                            fadeEffect={{ crossFade: true }}
+                            speed={400}
+                        >
+                            <SwiperSlide>
+                                <SlideInner>
+                                    <Slide1Cols>
+                                        <SlideColsInner>
+                                            <Column>
+                                                <Title>
+                                                    Инструкция по прохождению
+                                                    курса
+                                                    <TitleAccent>
+                                                        «Устойчивое развитие»
+                                                    </TitleAccent>
+                                                </Title>
+                                            </Column>
+                                            <Column>
+                                                <Text>
+                                                    Уважаемые пользователи, в
+                                                    нашем курсе 6 разделов,
+                                                    каждый из которых поделен на
+                                                    темы. Вы можете выбрать
+                                                    какой раздел изучать, вне
+                                                    зависимости от их
+                                                    последовательности.
+                                                </Text>
+                                                <Row>
+                                                    <AttentionImage
+                                                        src={IconAttention}
+                                                        alt="внимание"
+                                                    />
+                                                    <Text>
+                                                        Однако прохождение курса
+                                                        внутри раздела идет
+                                                        последовательно, Вы не
+                                                        можете перейти к
+                                                        следующей теме, не
+                                                        изучив предыдущую.
+                                                    </Text>
+                                                </Row>
+                                                <Text>
+                                                    В конце каждого раздела Вас
+                                                    ждет простой тест на
+                                                    несколько вопросов для
+                                                    проверки усвоенных знаний.
+                                                </Text>
+                                            </Column>
+                                        </SlideColsInner>
+                                    </Slide1Cols>
+                                </SlideInner>
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <SlideInner>
+                                    <Slide2Cols>
+                                        <SlideColsInner>
+                                            <Column>
+                                                <Title>
+                                                    Краткая справка по навигации
+                                                </Title>
+                                            </Column>
+                                            <Column>
+                                                <ColBlock>
+                                                    <Text>
+                                                        Переход между страницами
+                                                        осуществляется
+                                                        прокруткой мыши/тачпада.
+                                                    </Text>
+                                                </ColBlock>
+                                                <ColBlock>
+                                                    <CourseImage />
+                                                    <Text>
+                                                        Кнопка открытия меню
+                                                        курса.
+                                                    </Text>
+                                                </ColBlock>
+                                                <ColBlock inert="true">
+                                                    <DocsLink
+                                                        showCursor={false}
+                                                    />
+                                                    <Text>
+                                                        Ссылки на дополнительные
+                                                        материалы вынесены в
+                                                        виде такого элемента.
+                                                    </Text>
+                                                </ColBlock>
+                                            </Column>
+                                            <Column>
+                                                <IconRow>
+                                                    <IconHeadphones inert="true">
+                                                        <Headphones />
+                                                    </IconHeadphones>
+                                                    <Text>
+                                                        В нашем курсе
+                                                        предполагается звуковое
+                                                        сопровождение, аудиогид,
+                                                        управление им
+                                                        осуществляется при
+                                                        нажатии на данный
+                                                        элемент.
+                                                    </Text>
+                                                </IconRow>
+                                                <IconRow>
+                                                    <ElIcon>
+                                                        <img
+                                                            src={
+                                                                IconBlueBtnSound
+                                                            }
+                                                            alt="зыук"
+                                                        />
+                                                    </ElIcon>
+                                                    <Text>
+                                                        Элемент
+                                                        отключения/включения
+                                                        музыки в проекте.
+                                                    </Text>
+                                                </IconRow>
+                                                <IconRow>
+                                                    <ElIcon>
+                                                        <img
+                                                            src={
+                                                                IconBlueBtnMail
+                                                            }
+                                                            alt="письмо"
+                                                        />
+                                                    </ElIcon>
+                                                    <Text>
+                                                        Элемент обратной связи,
+                                                        будем рады ваши отзывам
+                                                        и предложениям по
+                                                        улучшению контента!
+                                                    </Text>
+                                                </IconRow>
+                                            </Column>
+                                        </SlideColsInner>
+                                    </Slide2Cols>
+                                    <StartLearn>
+                                        <Link to={routes.COURSE01}>
+                                            <SendButton
+                                                text="Начать обучение"
+                                                size="m"
                                             />
-                                        </ElIcon>
-                                        <Text>
-                                            Элемент отключения/включения музыки
-                                            в проекте.
-                                        </Text>
-                                    </IconRow>
-                                    <IconRow>
-                                        <ElIcon>
-                                            <img src={IconBlueBtnMail} alt="" />
-                                        </ElIcon>
-                                        <Text>
-                                            Элемент обратной связи, будем рады
-                                            ваши отзывам и предложениям по
-                                            улучшению контента!
-                                        </Text>
-                                    </IconRow>
-                                </Column>
-                            </Slide2Cols>
-                            <StartLearn>
-                                <Link to={routes.COURSE01}>
-                                    <SendButton
-                                        text="Начать обучение"
-                                        size="m"
-                                    />
-                                </Link>
-                            </StartLearn>
-                        </SlideInner>
-                    </SwiperSlide>
-                    <CircleBtn className="button-prev">
-                        <ArrowLeft color={COLORS.blue} />
-                    </CircleBtn>
-                    <CircleBtn className="button-next">
-                        <ArrowRight color={COLORS.blue} />
-                    </CircleBtn>
-                </Swiper>
-            </SliderContainer>
-        </Container>
+                                        </Link>
+                                    </StartLearn>
+                                </SlideInner>
+                            </SwiperSlide>
+                            <CircleBtn className="button-prev">
+                                <ArrowLeft color={COLORS.blue} />
+                            </CircleBtn>
+                            <CircleBtn className="button-next">
+                                <ArrowRight color={COLORS.blue} />
+                            </CircleBtn>
+                        </Swiper>
+                    </SliderContainer>
+                </Container>
+            </StyledLayout>
+        </StyledModal>
     )
 }
 
-const CloseBtn = styled.button`
-    position: absolute;
-    top: 20px;
-    right: 20px;
+// мне здесь не подходит min-height, поэтому чтобы работало корректно, перезаписываю
+const StyledLayout = styled(Layout)`
+    height: 100%;
 `
 
-const SliderContainer = styled.div`
-    margin: 0 auto;
+const StyledModal = styled(Modal)`
     height: 100%;
 
-    @media ${DEVICE.mobileS} {
-        max-width: 100%;
-        max-height: 88%;
+    .modal-window {
+        background-color: transparent;
+        background: url(${MenuBackground}) no-repeat center/cover;
     }
 
-    @media ${DEVICE.mobileS} and (orientation: landscape) {
-        max-height: 82%;
+    .content {
+        padding-top: 0;
     }
-
-    @media ${DEVICE.laptopS} {
-        max-width: 85%;
-        max-height: 90%;
-    }
-
-    @media ${DEVICE.laptopM} {
-        max-height: 82%;
-    }
-`
-
-const Logo = styled.div`
-    position: absolute;
-    top: 20px;
-    left: 20px;
-
-    svg {
-        max-width: 100%;
-    }
-
-    @media ${DEVICE.mobileS} {
-        width: 150px;
-    }
-
-    @media ${DEVICE.laptopS} {
-        width: 12.5vw;
-    }
-`
-
-const SlideInner = styled.div`
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 `
 
 const Container = styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 400;
-
     display: flex;
-    padding: 16px;
+    align-items: center;
 
-    width: 100%;
     height: 100%;
-
-    background: url(${MenuBackground}) no-repeat center/cover;
-
-    @media ${DEVICE.mobileS} {
-        align-items: flex-end;
-    }
+    padding-top: 5vh;
+    padding-bottom: 3vh;
 
     @media ${DEVICE.laptopS} {
-        align-items: center;
+        align-items: flex-end;
+        padding-top: 0;
+        padding-bottom: 0;
     }
 
     .swiper {
@@ -275,16 +250,18 @@ const Container = styled.div`
     }
 
     .cur-slide-number {
-        font-family: "FocoBold";
-        color: ${COLORS.blue};
         display: inline-block;
 
-        @media ${DEVICE.mobileS} {
-            font-size: 28px;
+        font-family: "FocoBold";
+        color: ${COLORS.blue};
+        font-size: 3.15vw;
+
+        @media ${DEVICE.laptopM} {
+            font-size: 2.5vw;
         }
 
         @media ${DEVICE.laptopS} {
-            font-size: 3.15vw;
+            font-size: 28px;
         }
     }
 
@@ -293,12 +270,14 @@ const Container = styled.div`
         color: ${COLORS.white};
         display: inline-block;
 
-        @media ${DEVICE.mobileS} {
-            font-size: 24px;
+        font-size: 2.1vw;
+
+        @media ${DEVICE.laptopM} {
+            font-size: 1.7vw;
         }
 
         @media ${DEVICE.laptopS} {
-            font-size: 2.1vw;
+            font-size: 24px;
         }
     }
 
@@ -307,13 +286,14 @@ const Container = styled.div`
         margin-right: 2px;
 
         color: ${COLORS.white};
+        font-size: 2.1vw;
 
-        @media ${DEVICE.mobileS} {
-            font-size: 24px;
+        @media ${DEVICE.laptopM} {
+            font-size: 1.7vw;
         }
 
         @media ${DEVICE.laptopS} {
-            font-size: 2.1vw;
+            font-size: 24px;
         }
     }
 
@@ -342,23 +322,49 @@ const Container = styled.div`
     }
 `
 
+const SliderContainer = styled.div`
+    margin: 0 auto;
+    height: 100%;
+    max-width: 81.8%;
+
+    @media ${DEVICE.laptopM} {
+        max-width: 85%;
+    }
+
+    @media ${DEVICE.mobile} {
+        max-width: 100%;
+    }
+`
+
+const SlideColsInner = styled.div`
+    overflow: auto;
+    max-height: 100%;
+
+    &::-webkit-scrollbar {
+        width: 0;
+    }
+`
+
+const SlideInner = styled.div`
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`
+
 const CourseImage = styled.div`
-    @media ${DEVICE.mobileS} {
+    max-width: 311px;
+    height: 28px;
+
+    font-size: 1.3vw;
+    background: url(${IconOpenCourseBtn}) no-repeat center/contain;
+
+    @media ${DEVICE.laptopS} {
         max-width: 24px;
         height: 22px;
         margin: 0 auto;
 
         background: url(${IconOpenCourseBtnMob}) no-repeat center/contain;
-    }
-
-    /* TODO узнать на какой ширине меню будет сменяться на бургер, и написать правильный брейкпоинт  */
-    @media ${DEVICE.laptopS} {
-        max-width: 311px;
-        height: 28px;
-        margin: 0;
-
-        font-size: 1.3vw;
-        background: url(${IconOpenCourseBtn}) no-repeat center/contain;
     }
 `
 
@@ -373,14 +379,11 @@ const Text = styled.p`
 
     font-family: "CalibriLight", sans-serif;
     line-height: 1.64;
+    font-size: 1.3vw;
     color: ${COLORS.black};
 
-    @media ${DEVICE.mobileS} {
-        font-size: 16px;
-    }
-
     @media ${DEVICE.laptopS} {
-        font-size: 1.3vw;
+        font-size: 16px;
     }
 `
 
@@ -396,20 +399,17 @@ const CircleBtn = styled.button`
 
 const Row = styled.div`
     display: flex;
-
-    @media ${DEVICE.mobileS} {
-        flex-direction: column;
-        align-items: center;
-    }
+    flex-direction: row;
+    align-items: normal;
 
     @media ${DEVICE.laptopS} {
-        flex-direction: row;
-        align-items: normal;
+        flex-direction: column;
+        align-items: center;
     }
 `
 
 const Column = styled.div`
-    @media ${DEVICE.mobileS} {
+    @media ${DEVICE.laptopS} {
         display: block;
         height: auto;
 
@@ -418,27 +418,6 @@ const Column = styled.div`
         &:last-child {
             margin-bottom: 0;
         }
-
-        & > * {
-            margin-bottom: 40px;
-
-            @media ${DEVICE.laptopS} {
-                margin-bottom: 18px;
-            }
-        }
-
-        & > *:last-child {
-            margin-bottom: 0;
-        }
-    }
-
-    @media ${DEVICE.laptopS} {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-
-        margin-bottom: 0;
-        height: 100%;
     }
 `
 
@@ -453,13 +432,11 @@ const Title = styled.div`
 
     font-family: "FocoBold";
     color: ${COLORS.blue};
-
-    @media ${DEVICE.mobileS} {
-        font-size: 23px;
-    }
+    font-size: 2.24vw;
+    line-height: 1.3;
 
     @media ${DEVICE.laptopS} {
-        font-size: 2.24vw;
+        font-size: 23px;
     }
 
     .accent {
@@ -468,65 +445,70 @@ const Title = styled.div`
 `
 
 const SlideCols = styled.div`
+    width: 100%;
     height: 100%;
+    padding: 9vh 0;
 
-    @media ${DEVICE.mobileS} {
-        display: block;
-        overflow: auto;
-        max-width: 600px;
-        max-height: 82%;
-
-        margin-left: auto;
-        margin-right: auto;
-        padding-bottom: 30px;
-
-        &::-webkit-scrollbar {
-            width: 0;
-        }
+    @media ${DEVICE.laptopM} {
+        padding-top: 8vh;
     }
 
     @media ${DEVICE.laptopS} {
-        overflow: visible;
-        max-width: none;
-        padding-bottom: 0;
+        padding-bottom: 9vh;
+        padding-top: 8vh;
     }
 `
 
 const Slide1Cols = styled(SlideCols)`
-    @media ${DEVICE.laptopS} {
+    ${SlideColsInner} {
         display: flex;
         align-items: center;
-
-        max-height: 48.7%;
-    }
-
-    ${SlideInner} {
         height: 100%;
-        display: flex;
-        align-items: center;
+
+        @media ${DEVICE.laptopS} {
+            display: block;
+        }
     }
 
     ${Column} {
         &:first-child {
+            display: flex;
             justify-content: center;
             align-items: center;
-
-            @media ${DEVICE.mobileS} {
-                margin-right: 0;
-            }
+            margin-right: 7vw;
 
             @media ${DEVICE.laptopS} {
-                margin-right: 7vw;
+                margin-right: 0;
             }
         }
 
         &:last-child {
-            @media ${DEVICE.mobileS} {
-                max-width: none;
-            }
+            max-width: 42vw;
 
             @media ${DEVICE.laptopS} {
-                max-width: 42vw;
+                max-width: none;
+            }
+        }
+
+        & > * {
+            &:first-child {
+                margin-bottom: 4.16vh;
+
+                @media ${DEVICE.laptopS} {
+                    margin-bottom: 40px;
+                }
+            }
+
+            &:nth-child(2) {
+                margin-bottom: 5.09vh;
+
+                @media ${DEVICE.laptopS} {
+                    margin-bottom: 40px;
+                }
+            }
+
+            &:last-child {
+                margin-bottom: 0;
             }
         }
     }
@@ -534,80 +516,78 @@ const Slide1Cols = styled(SlideCols)`
 
 const Slide2Cols = styled(SlideCols)`
     ${Text} {
-        @media ${DEVICE.mobileS} {
-            max-width: none;
-        }
+        max-width: 31.6vw;
 
         @media ${DEVICE.laptopS} {
-            max-width: 31.6vw;
+            max-width: none;
         }
     }
 
-    @media ${DEVICE.mobileS} {
-        margin-top: 0;
-    }
-
-    @media ${DEVICE.laptopS} {
+    ${SlideColsInner} {
+        height: 100%;
         display: grid;
         grid-template: repeat(2, auto) / repeat(2, 1fr);
-        row-gap: 5vh;
 
-        max-height: 70%;
-
-        ${Column} {
-            &:nth-child(1) {
-                grid-area: 1 / 1 / 2 / 2;
-            }
-
-            &:nth-child(2) {
-                grid-area: 2 / 1 / 3 / 2;
-            }
-
-            &:nth-child(3) {
-                grid-area: 2 / 2 / 3 / 3;
-            }
+        @media ${DEVICE.laptopS} {
+            display: block;
         }
     }
 
-    @media ${DEVICE.laptopS} and (orientation: landscape) and (max-width: 1200px) {
-        max-height: 54%;
-    }
+    ${Column} {
+        &:nth-child(1) {
+            grid-area: 1 / 1 / 2 / 2;
+            margin-bottom: 2vh;
+        }
 
-    @media ${DEVICE.laptopM} {
-        max-height: 55.7%;
+        &:nth-child(2) {
+            grid-area: 2 / 1 / 3 / 2;
+        }
+
+        &:nth-child(3) {
+            grid-area: 2 / 2 / 3 / 3;
+        }
+
+        & > * {
+            margin-bottom: 4vh;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            @media ${DEVICE.laptopS} {
+                margin-bottom: 40px;
+            }
+        }
     }
 `
 
 const AttentionImage = styled.img`
-    @media ${DEVICE.mobileS} {
+    width: 4.6vw;
+    margin-right: 1.3vw;
+    margin-left: -4%;
+
+    @media ${DEVICE.laptopS} {
         width: 60px;
         margin-bottom: 15px;
         margin-right: 0;
         margin-left: 0;
-    }
-
-    @media ${DEVICE.laptopS} {
-        width: 4.6vw;
-        margin-right: 1.3vw;
-        margin-bottom: 0;
-        margin-left: -4%;
     }
 `
 
 const ElIcon = styled.div`
     flex-shrink: 0;
 
-    @media ${DEVICE.mobileS} {
-        margin-right: 0;
-        margin-bottom: 15px;
+    width: 60px;
+    margin-right: 2.5vw;
+
+    @media ${DEVICE.laptopM} {
         width: 55px;
     }
 
-    @media ${DEVICE.laptopS} {
+    @media ${DEVICE.mobileS} {
+        width: 55px;
         margin-right: 0;
-        margin-bottom: 0;
-        margin-right: 2.5vw;
-        width: 60px;
+        margin-bottom: 15px;
     }
 `
 
@@ -625,13 +605,9 @@ const IconRow = styled.div`
     display: flex;
     align-items: center;
 
-    @media ${DEVICE.mobileS} {
+    @media ${DEVICE.laptopS} {
         flex-direction: column;
         justify-content: center;
-    }
-
-    @media ${DEVICE.laptopS} {
-        flex-direction: row;
     }
 `
 

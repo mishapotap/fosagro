@@ -3,11 +3,13 @@ import styled from "styled-components"
 import Header from "./Header"
 import { COLORS, DEVICE } from "../../constants"
 
-export default function Layout({ page = 'start', children }) {
+export default function Layout({ page = "start", children, className }) {
     return (
-        <Container>
-            {/* страница с меню или инструкция */}
-            {(page === "menu" || page === "instruction") && <Header />}
+        <Container className={className}>
+            {/* инструкция */}
+            {page === "instruction" && <Header />}
+            {/* меню */}
+            {page === "menu" && <Header goBackToMain />}
             {/* входная страница */}
             {page === "start" && <Header language />}
             {/* страница раздела с плавающими кружочками */}
@@ -22,16 +24,15 @@ export default function Layout({ page = 'start', children }) {
                     sectTitleColor={COLORS.green_light}
                 />
             )}
-            <Content>
-                {children}
-            </Content>
+            <Content className="content">{children}</Content>
         </Container>
     )
 }
 
 const Container = styled.div`
+    position: relative;
     width: 100%;
-    height: 100%;
+    min-height: 100vh;
 
     /* отступ на высоту хэдэра */
     padding-top: 92px;

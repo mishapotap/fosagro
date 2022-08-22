@@ -33,7 +33,11 @@ const Container = styled.button`
         color: ${COLORS.blue};
     }
 
-    @media ${DEVICE.laptop} {
+    @media ${DEVICE.laptopM} {
         font-size: 16px;
-    } 
+    }
+
+    @media ${DEVICE.laptopS} {
+        font-size: 15.5px;
+    }
 `
