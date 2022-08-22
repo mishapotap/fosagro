@@ -33,7 +33,8 @@ import {
     SliderCircleM,
     SliderCircleS,
     InteractiveCircle,
-    Ecology
+    Ecology,
+    Test
 } from "../../assets/svg"
 import { COLORS, FONTS } from "../../constants"
 import { HeadphonesIcon } from "../../assets/svg/static"
@@ -121,6 +122,7 @@ export default function NotFound() {
             <VideoPlayer src={TepkVideo} />
             <CourseAnimateScience/>
             <Ecology/>
+            <Test/>
         </Layout>
     )
 }

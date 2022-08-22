@@ -18,8 +18,8 @@ export default function Mute({ color = COLORS.white }) {
       <Path
         d="M21.5596 5.20361C24.3156 10.0451 23.9802 12.4308 21.5596 16.3551" 
         stroke={color} 
-        stroke-width="2" 
-        stroke-linecap="round"
+        strokeWidth="2" 
+        strokeLinecap="round"
       />
       <Rect 
         width="21.5595" 

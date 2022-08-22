@@ -32,7 +32,7 @@ export default function Layout({ page = "start", children, className }) {
 const Container = styled.div`
     position: relative;
     width: 100%;
-    min-height: 100vh;
+    height: 100vh;
 
     /* отступ на высоту хэдэра */
     padding-top: 92px;

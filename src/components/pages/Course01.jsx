@@ -1,17 +1,20 @@
-import React from "react"
+import React, {useState} from "react"
 import styled from "styled-components"
 import {
     MailButton,
     CourseProgressButton,
-    SoundButton, 
+    SoundButton,
+    InstructionButton, 
 } from "../molecules"
 import timelineData from "../../data/timelineData"
 import modules from "../modules"
-import { ContentModule, Layout } from "../atoms"
+import { Instruction, ContentModule, Layout, CurvedModal } from "../atoms"
 import { COLORS } from "../../constants"
 import { MenuBackground } from "../../assets/images"
 
 export default function Course01() {
+    const [isInstrOpened, setIsInstrOpened] = useState(false)
+    const [isCurvedModalOpened, setIsCurvedModalOpened] = useState(false)
     return (
         <Layout page="course">
             <Background/>
@@ -26,21 +29,30 @@ export default function Course01() {
                     ))}
                 </MenuContainer>
                 
-                <div
-                    style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                    }}
-                >
+                <Grid>
                     <CourseProgressButton />
-                    <MailButton />
+                    <InstructionButton onClick={() => setIsInstrOpened(true)}/>
                     <SoundButton />
-                </div>
+                    <MailButton onClick={() => setIsCurvedModalOpened(true)}/>
+                </Grid>
             </Container>
+            <Instruction
+                isOpen={isInstrOpened}
+                onClose={() => setIsInstrOpened(false)}
+            />
+            <CurvedModal type="review"
+                isOpen={isCurvedModalOpened}
+                onClose={() => setIsCurvedModalOpened(false)}
+            />
         </Layout>
     )
 }
+
+const Grid = styled.div`
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr auto auto auto;
+`
 
 const Background = styled.div`
     position: absolute;
