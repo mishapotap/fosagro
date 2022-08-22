@@ -5,53 +5,59 @@ import {
     CourseProgressButton,
     SoundButton, 
 } from "../molecules"
-import { MenuBackground } from "../../assets/images"
 import timelineData from "../../data/timelineData"
 import modules from "../modules"
-import { ContentModule, Header } from "../atoms"
+import { ContentModule, Layout } from "../atoms"
 import { COLORS } from "../../constants"
+import { MenuBackground } from "../../assets/images"
 
 export default function Course01() {
     return (
-        <Layout>
-            <Header course/>
-            <CourseNumber>01</CourseNumber>
-            <CourseTitle>
-                Устойчивое развитие - модный термин или реальность, которая
-                касается каждого?
-            </CourseTitle>
-            <MenuContainer>
-                {timelineData.map((section, index) => (
-                    // TODO обернуть компоненты в link и дописать его в data
-                    // eslint-disable-next-line react/no-array-index-key
-                    <ContentModule key={index} data={section} modules={modules.base} />
-                ))}
-            </MenuContainer>
-            
-            <div
-                style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                }}
-            >
-                <CourseProgressButton />
-                <MailButton />
-                <SoundButton />
-            </div>
+        <Layout page="course">
+            <Background/>
+            <Container>
+                <CourseNumber>01</CourseNumber>
+                <CourseTitle>Устойчивое развитие - модный термин или реальность, которая касается каждого?</CourseTitle>
+                <MenuContainer>
+                    {timelineData.map((section, index) => (
+                        // TODO обернуть компоненты в link и дописать его в data
+                        // eslint-disable-next-line react/no-array-index-key
+                        <ContentModule key={index} data={section} modules={modules.base} />
+                    ))}
+                </MenuContainer>
+                
+                <div
+                    style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                    }}
+                >
+                    <CourseProgressButton />
+                    <MailButton />
+                    <SoundButton />
+                </div>
+            </Container>
         </Layout>
     )
 }
 
-const Layout = styled.div`
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    height: 100vh;
-    /* padding-top: 80px; */
+const Background = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background: url(${MenuBackground}) no-repeat center center / cover;
-    overflow-x: hidden;
-    overflow-y: hidden;
+    z-index: -1;
+`
+
+const Container = styled.div`
+    display: flex;
+    flex: 1;
+    height: 100%;
+    flex-direction: column;
+    /* justify-content: space-between; */
 `
 
 const CourseNumber = styled.div`
