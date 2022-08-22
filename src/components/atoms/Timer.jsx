@@ -1,20 +1,25 @@
 import React from "react"
 import styled from "styled-components"
-import { COLORS } from "../../constants"
+import { COLORS, DEVICE } from "../../constants"
 import { TimerNumberBg, TimerNumberBgTop } from "../../assets/svg/static"
 
 export default function Timer() {
     function getDayOfYear() {
         const now = new Date()
         const start = new Date(now.getFullYear(), 0, 0)
-        const diff = now - start + (start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000
+        const diff =
+            now -
+            start +
+            (start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000
         const oneDay = 1000 * 60 * 60 * 24
         const day = Math.floor(diff / oneDay)
         return day.toString()
     }
 
     const day = getDayOfYear()
-    const numbers = day.split('').map((item, index) => ({number: item, id: index}))
+    const numbers = day
+        .split("")
+        .map((item, index) => ({ number: item, id: index }))
 
     // TODO Сделать чтобы компонент был observable (следили за состоянием дня) Не обновляется в 00:00
     return (
@@ -45,6 +50,10 @@ const Number = styled.div`
     font-weight: bold;
     color: ${COLORS.white};
     z-index: 1;
+
+    @media ${DEVICE.laptopM} {
+        font-size: 55px;
+    }
 `
 
 const NumberContainer = styled.div`
@@ -58,6 +67,11 @@ const NumberContainer = styled.div`
 
     background: url(${TimerNumberBg}) no-repeat center/contain;
 
+    @media ${DEVICE.laptopM} {
+        width: 40px;
+        height: 58px;
+    }
+
     &::after {
         position: absolute;
         top: 50%;
@@ -70,7 +84,7 @@ const NumberContainer = styled.div`
         border-radius: 5px;
         background-color: ${COLORS.blue};
         content: "";
-        z-index:4;
+        z-index: 4;
     }
 
     &::before {
@@ -81,9 +95,8 @@ const NumberContainer = styled.div`
         height: 50%;
         width: 100%;
 
-        content: '';
+        content: "";
         background: url(${TimerNumberBgTop}) no-repeat center/contain;
         z-index: 3;
     }
 `
-
