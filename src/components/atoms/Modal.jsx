@@ -1,13 +1,59 @@
 /* eslint-disable react/jsx-no-bind */
-/* eslint-disable no-unused-vars */
-import React, { useRef } from "react"
+import React, { useRef, useEffect } from "react"
 import { CSSTransition } from "react-transition-group"
 import { createPortal } from "react-dom"
 import styled from "styled-components"
-import { COLORS } from "../../constants"
+import { COLORS, DEVICE } from "../../constants"
+import { Close } from "../../assets/svg"
 
-export default function Modal({ children, isOpen }) {
-    const nodeRef = useRef(null)
+export default function Modal({
+    children,
+    isOpen,
+    onClose,
+    closeBtnColor = COLORS.blue,
+    className,
+}) {
+    const modalRef = useRef(null)
+
+    function handleKeyDown({ key }) {
+        if (key === "Escape") onClose()
+    }
+
+    function makeBodyChildrenInert(el) {
+        Array.from(document.body.children).forEach((child) => {
+            if (child !== el) {
+                // eslint-disable-next-line no-param-reassign
+                child.inert = true
+            }
+        })
+    }
+
+    function resetBodyChildrenInert(el) {
+        Array.from(document.body.children).forEach((child) => {
+            // eslint-disable-next-line no-param-reassign
+            if (child !== el) child.inert = false
+        })
+    }
+
+    function handleOpenModal() {
+        makeBodyChildrenInert(modalRef.current)
+        document.body.classList.add("lock")
+    }
+
+    function handleCloseModal() {
+        resetBodyChildrenInert(modalRef.current)
+        document.body.classList.remove("lock")
+    }
+
+    useEffect(() => {
+        document.addEventListener("keydown", handleKeyDown)
+
+        return () => {
+            document.removeEventListener("keydown", handleKeyDown)
+            handleCloseModal()
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return createPortal(
         <CSSTransition
@@ -15,10 +61,18 @@ export default function Modal({ children, isOpen }) {
             timeout={200}
             unmountOnExit
             classNames="modal"
-            nodeRef={nodeRef}
+            nodeRef={modalRef}
+            onEnter={handleOpenModal}
+            onExited={handleCloseModal}
         >
-            <Container className="modal" ref={nodeRef}>
-                это тест ${children}
+            <Container className={`${className} modal`} ref={modalRef}>
+                <ModalWindow className="modal-window" ref={modalRef}>
+                    <CloseBtn className="modal-close-btn" onClick={onClose}>
+                        <Close color={closeBtnColor} />
+                    </CloseBtn>
+                    {children}
+                </ModalWindow>
+                <ModalMask className="modal-mask" onClick={onClose} />
             </Container>
         </CSSTransition>,
         document.body
@@ -34,8 +88,8 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
 
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
 
     z-index: 200;
     transition: 0.5s;
@@ -56,6 +110,32 @@ const Container = styled.div`
     }
 `
 
+const CloseBtn = styled.div`
+    position: absolute;
+    top: 3.5%;
+    right: 2%;
+    z-index: 110;
+
+    @media ${DEVICE.laptopS} {
+        top: 20px;
+        right: 20px;
+    }
+`
+
 const ModalWindow = styled.div`
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    z-index: 20;
     background-color: ${COLORS.white};
+`
+
+const ModalMask = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
 `

@@ -32,8 +32,8 @@ const Wrapper = styled.svg`
     cursor: pointer;
     transition: all 0.3s;
 
-    @media ${DEVICE.laptop} { 
-        width: 36px;
+    @media ${DEVICE.laptopM} {
+        width: 40px;
     }
 
     ${({ color }) =>

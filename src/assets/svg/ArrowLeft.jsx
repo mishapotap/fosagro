@@ -22,8 +22,8 @@ const Wrapper = styled.svg`
     transition: all 0.3s;
     width: 52px;
 
-    @media ${DEVICE.laptop} { 
-        width: 36px;
+    @media ${DEVICE.laptopM} {
+        width: 40px;
     }
 
     ${({ color }) =>
