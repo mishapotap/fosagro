@@ -6,6 +6,7 @@ import { DEVICE, COLORS } from "../../constants"
 import { Fosagro, FosagroColored, BurgerIcon } from "../../assets/svg"
 
 // TODO сделать ссылки RU EN рабочими
+// TODO сделать фиксированный хэдэр при скролле на моб?
 
 export default function Header({
     // цветной ли (если нет, то все будет белое)
@@ -22,48 +23,48 @@ export default function Header({
 }) {
     return (
         <Container>
-            <Logo>
-                <Link to={routes.HOME}>
-                    {colored ? <FosagroColored /> : <Fosagro />}
-                </Link>
-            </Logo>
-            {sectTitle && (
-                <HeaderCenter>
-                    <SectTitle>
-                        <SectTitleDecor />
-                        <SectTitleText color={sectTitleColor}>
-                            {sectTitle}
-                        </SectTitleText>
-                    </SectTitle>
-                </HeaderCenter>
-            )}
-            {language && (
-                <LanguageContainer
-                    color={COLORS.white}
-                    colorActive={COLORS.blue}
-                >
-                    <Language>
-                        <Link to="/" className="active">
-                            RU
-                        </Link>
-                    </Language>
-                    <Language>
-                        <Link to="/">EN</Link>
-                    </Language>
-                </LanguageContainer>
-            )}
-            {course && (
-                <CourseLink>
-                    <Link to={routes.MENU}>
-                        <CourseLinkText colored={colored}>
-                            Курс “Устойчивое развитие”
-                        </CourseLinkText>
-                        <CourseLinkIcon>
-                            <BurgerIcon colored={colored} />
-                        </CourseLinkIcon>
+            <HeaderInner>
+                <Logo>
+                    <Link to={routes.HOME}>
+                        {colored ? <FosagroColored /> : <Fosagro />}
                     </Link>
-                </CourseLink>
-            )}
+                </Logo>
+                {sectTitle && (
+                    <HeaderCenter>
+                        <SectTitle>
+                            <SectTitleDecor />
+                            <SectTitleText color={sectTitleColor}>
+                                {sectTitle}
+                            </SectTitleText>
+                        </SectTitle>
+                    </HeaderCenter>
+                )}
+                {language && (
+                    <LanguageContainer
+                        color={COLORS.white}
+                        colorActive={COLORS.blue}
+                    >
+                        <Language>
+                            <Link to="/" className="active">
+                                RU
+                            </Link>
+                        </Language>
+                        <Language>
+                            <Link to="/">EN</Link>
+                        </Language>
+                    </LanguageContainer>
+                )}
+                {course && (
+                    <CourseLink>
+                        <Link to={routes.MENU}>
+                            <CourseLinkText colored={colored}>
+                                Курс “Устойчивое развитие”
+                            </CourseLinkText>
+                            <BurgerIcon colored={colored} />
+                        </Link>
+                    </CourseLink>
+                )}
+            </HeaderInner>
         </Container>
     )
 }
@@ -157,7 +158,19 @@ const CourseLinkText = styled.div`
     }
 `
 
-const CourseLinkIcon = styled.div``
+const HeaderInner = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 100%;
+    margin-top: 1.3vh;
+
+    @media ${DEVICE.laptopS} {
+        margin-top: 0;
+        flex-wrap: wrap;
+    }
+`
 
 const Container = styled.div`
     position: absolute;
@@ -166,15 +179,20 @@ const Container = styled.div`
     width: 100%;
 
     display: flex;
-    justify-content: space-between;
     align-items: center;
 
-    padding: 2.51vh 2.3vw 1.1vh 4.27vw;
+    padding: 0 2.3vw 0 4.3vw;
+    height: 92px;
     z-index: 100;
 
+    @media ${DEVICE.laptopM} {
+        height: 70px;
+        padding-left: 3vw;
+    }
+
     @media ${DEVICE.laptopS} {
-        flex-wrap: wrap;
-        padding: 25px 25px 10px 20px;
+        padding: 0 23px;
+        height: 95px;
     }
 `
 
