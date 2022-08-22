@@ -31,7 +31,8 @@ import {
     Tree,
     SliderCircleM,
     SliderCircleS,
-    InteractiveCircle
+    InteractiveCircle,
+    Ecology
 } from "../../assets/svg"
 import { COLORS, FONTS } from "../../constants"
 import { HeadphonesIcon } from "../../assets/svg/static"
@@ -93,6 +94,7 @@ export default function NotFound() {
             </Slider>
             <VideoPlayer src={TepkVideo} />
             <CourseAnimateScience/>
+            <Ecology/>
         </Layout>
     )
 }
