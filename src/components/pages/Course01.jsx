@@ -1,78 +1,79 @@
 import React from "react"
 import styled from "styled-components"
-import { Link } from "react-router-dom"
 import {
     MailButton,
     CourseProgressButton,
     SoundButton, 
 } from "../molecules"
-import { COLORS } from "../../constants"
-import { Close } from "../../assets/svg"
-import * as routes from "../../constants/routes"
-import { MenuBackground } from "../../assets/images"
 import timelineData from "../../data/timelineData"
 import modules from "../modules"
-import { ContentModule } from "../atoms"
+import { ContentModule, Layout } from "../atoms"
+import { COLORS } from "../../constants"
+import { MenuBackground } from "../../assets/images"
 
 export default function Course01() {
     return (
-        <Layout>
-            <Logo>ЗНАЧЕК ФОСАГРО</Logo>
-            <div>01</div>
-            <div>
-                Устойчивое развитие - модный термин или реальность, которая
-                касается каждого?
-            </div>
-            <TempSvgContainer>
-                <Link to={routes.HOME}>
-                    <Close color={COLORS.blue} />
-                </Link>
-            </TempSvgContainer>
-            <MenuContainer>
-                {timelineData.map((section, index) => (
-                    // TODO обернуть компоненты в link и дописать его в data
-                    // eslint-disable-next-line react/no-array-index-key
-                    <ContentModule key={index} data={section} modules={modules.base} />
-                ))}
-            </MenuContainer>
-            
-            <div
-                style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                }}
-            >
-                <CourseProgressButton />
-                <MailButton />
-                <SoundButton />
-            </div>
+        <Layout page="course">
+            <Background/>
+            <Container>
+                <CourseNumber>01</CourseNumber>
+                <CourseTitle>Устойчивое развитие - модный термин или реальность, которая касается каждого?</CourseTitle>
+                <MenuContainer>
+                    {timelineData.map((section, index) => (
+                        // TODO обернуть компоненты в link и дописать его в data
+                        // eslint-disable-next-line react/no-array-index-key
+                        <ContentModule key={index} data={section} modules={modules.base} />
+                    ))}
+                </MenuContainer>
+                
+                <div
+                    style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                    }}
+                >
+                    <CourseProgressButton />
+                    <MailButton />
+                    <SoundButton />
+                </div>
+            </Container>
         </Layout>
     )
 }
 
-const TempSvgContainer = styled.div``
-
-const Layout = styled.div`
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    height: 100vh;
-    background: url(${MenuBackground}) no-repeat center center / cover;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    ${ TempSvgContainer } {
-        position: absolute;
-        right: 0;
-        top: 0; 
-    }
-`
-
-const Logo = styled.div`
+const Background = styled.div`
     position: absolute;
-    left: 0;
     top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url(${MenuBackground}) no-repeat center center / cover;
+    z-index: -1;
 `
+
+const Container = styled.div`
+    display: flex;
+    flex: 1;
+    height: 100%;
+    flex-direction: column;
+    /* justify-content: space-between; */
+`
+
+const CourseNumber = styled.div`
+    font-family: "FocoBold";
+    font-size: 70px;
+    line-height: 88px;
+    color: ${COLORS.white};
+`
+
+const CourseTitle = styled.div`
+    font-family: "FocoBold";
+    font-size: 43px;
+    line-height: 54px;
+    color: ${COLORS.blue};
+`
+
 const MenuContainer = styled.div`
     display: flex;
     flex: 1;
