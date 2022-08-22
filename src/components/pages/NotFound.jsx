@@ -11,12 +11,12 @@ import {
     BackToChapterButton,
     Timer,
     StepProgressBar,
-    InteractiveContainer,
     Slider,
     VideoPlayer,
     Instruction,
-    DocsLink,
+    DocsLink, 
     Modal,
+    CourseAnimateScience,
     Header,
     Layout,
 } from "../atoms"
@@ -31,7 +31,7 @@ import {
     Tree,
     SliderCircleM,
     SliderCircleS,
-    LinkIcon,
+    InteractiveCircle
 } from "../../assets/svg"
 import { COLORS, FONTS } from "../../constants"
 import { HeadphonesIcon } from "../../assets/svg/static"
@@ -43,58 +43,56 @@ export default function NotFound() {
 
     return (
         <Layout page="section">
-            <Container>
-                <Text>СТРАНИЦА НЕ НАЙДЕНА! ЭТО 404 ОШИБКА</Text>
-                <Title>Hello World!</Title>
-                <Subtitle>Start</Subtitle>
-                <button
-                    style={{
-                        fontSize: "18px",
-                        margin: "20px 0",
-                    }}
-                    onClick={() => setIsInstrModalOpened(true)}
-                >
-                    Открыть инструкцию
-                </button>
-                <Modal isOpen={isInstrModalOpened}>
-                    <Instruction onClose={() => setIsInstrModalOpened(false)} />
-                </Modal>
-                <DocsLink />
-                <span>{routes.HOME}</span>
-                <img src={HeadphonesIcon} alt="mksicon" />
-                <Testy style={FONTS.modalTitleWhite}>gfsjgfjdgbfsdjg</Testy>
-                <Link to={routes.HOME}>
-                    <SendButton text="Перейти в home" />
-                </Link>
-                <Link to={routes.MENU}>
-                    <SendButton text="Перейти в меню" />
-                </Link>
-                <Flower />
-                <Close color={COLORS.orange} />
-                <Close color={COLORS.blue} />
-                <ArrowLeft color={COLORS.orange} />
-                <ArrowRight color={COLORS.blue} />
-                <Next />
-                <Prev color={COLORS.orange} />
-                <NextQuestionButton />
-                <BackToChapterButton />
-                <Headphones />
-                <Timer />
-                <StepProgressBar width="608" slidesAmount="7" />
-                <StepProgressBar width="608" slidesAmount="5" />
-                <StepProgressBar width="608" slidesAmount="8" />
-                <StepProgressBar width="608" slidesAmount="3" />
-                <Tree />
-                <InteractiveContainer type="slider" color={COLORS.green_circle}>
-                    <Slider size="m" data={testData}>
-                        <SliderCircleM />
-                    </Slider>
-                </InteractiveContainer>
-                <Slider size="s" sliderColor={COLORS.orange} data={testData}>
-                    <SliderCircleS />
-                </Slider>
-                <VideoPlayer src={TepkVideo} />
-            </Container>
+            <Text>СТРАНИЦА НЕ НАЙДЕНА! ЭТО 404 ОШИБКА</Text>
+            <Title>Hello World!</Title>
+            <Subtitle>Start</Subtitle>
+            <button
+                style={{
+                    fontSize: "18px",
+                    margin: "20px 0",
+                }}
+                onClick={() => setIsInstrModalOpened(true)}
+            >
+                Открыть инструкцию
+            </button>
+            <Modal isOpen={isInstrModalOpened}>
+                <Instruction onClose={() => setIsInstrModalOpened(false)} />
+            </Modal>
+            <DocsLink />
+            <span>{routes.HOME}</span>
+            <img src={HeadphonesIcon} alt="mksicon" />
+            <Testy style={FONTS.modalTitleWhite}>gfsjgfjdgbfsdjg</Testy>
+            <Link to={routes.HOME}>
+                <SendButton text="Перейти в home" />
+            </Link>
+            <Link to={routes.MENU}>
+                <SendButton text="Перейти в меню" />
+            </Link>
+            <Flower />
+            <Close color={COLORS.orange} />
+            <Close color={COLORS.blue} />
+            <ArrowLeft color={COLORS.orange} />
+            <ArrowRight color={COLORS.blue} />
+            <Next />
+            <Prev color={COLORS.orange} />
+            <NextQuestionButton />
+            <BackToChapterButton />
+            <Headphones />
+            <Timer />
+            <StepProgressBar width="608" slidesAmount="7" />
+            <StepProgressBar width="608" slidesAmount="5" />
+            <StepProgressBar width="608" slidesAmount="8" />
+            <StepProgressBar width="608" slidesAmount="3" />
+            <Tree />
+            <InteractiveCircle color={COLORS.green_circle}/>
+            <Slider size="m" data={testData} sliderColor={COLORS.green_circle}>
+                <SliderCircleM />
+            </Slider>
+            <Slider size="s" sliderColor={COLORS.orange} data={testData}>
+                <SliderCircleS />
+            </Slider>
+            <VideoPlayer src={TepkVideo} />
+            <CourseAnimateScience/>
         </Layout>
     )
 }
