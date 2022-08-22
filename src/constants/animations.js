@@ -85,6 +85,47 @@ export const CursorAnim = keyframes`
     }
 `
 
+export const animateScience = keyframes`
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+    10% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+`
+
+export const animateScienceShowBlocks = keyframes`
+    0% {
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+`
+
+export const animateScienceShowLast = keyframes`
+    0% {
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 1;
+    }
+`
 
 export default {
     leavesAnimation,
@@ -93,4 +134,7 @@ export default {
     circleStroke,
     rotateInteractiveCircle,
     CursorAnim,
+    animateScience,
+    animateScienceShowBlocks,
+    animateScienceShowLast,
 }

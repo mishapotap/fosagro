@@ -11,13 +11,14 @@ import {
     BackToChapterButton,
     Timer,
     StepProgressBar,
-    InteractiveContainer,
     Slider,
     VideoPlayer,
     Instruction,
-    DocsLink,
+    DocsLink, 
     Modal,
+    CourseAnimateScience,
     Header,
+    Layout,
 } from "../atoms"
 import {
     Flower,
@@ -30,7 +31,7 @@ import {
     Tree,
     SliderCircleM,
     SliderCircleS,
-    LinkIcon,
+    InteractiveCircle
 } from "../../assets/svg"
 import { COLORS, FONTS } from "../../constants"
 import { HeadphonesIcon } from "../../assets/svg/static"
@@ -41,27 +42,7 @@ export default function NotFound() {
     const [isInstrModalOpened, setIsInstrModalOpened] = useState(false)
 
     return (
-        <Container>
-            {/* примеры как настроить хэдэр */}
-            {/* по умолчанию - только с белым лого (как в меню и инструкции) */}
-            {/* <Header /> */}
-
-            {/* с белым лого и выбором языка (как на главной) */}
-            {/* <Header language /> */}
-
-            {/* с белыми лого и кнопкой Курс "Устойчивое развитие"
-            (как на странице раздела с таймлайном, там где кружочки на волнах) */}
-            {/* <Header course/> */}
-
-            {/* с цветными лого, кнопкой Курс "Устойчивое развитие", и заголовком секции
-            (как внутри темы раздела, где слайды с текстом, картинками, анимацией и пр) */}
-            {/* <Header
-                colored
-                course
-                sectTitle="Суть концепции устойчивого развития"
-                sectTitleColor={COLORS.green_light}
-            /> */}
-
+        <Layout page="section">
             <Text>СТРАНИЦА НЕ НАЙДЕНА! ЭТО 404 ОШИБКА</Text>
             <Title>Hello World!</Title>
             <Subtitle>Start</Subtitle>
@@ -103,21 +84,21 @@ export default function NotFound() {
             <StepProgressBar width="608" slidesAmount="8" />
             <StepProgressBar width="608" slidesAmount="3" />
             <Tree />
-            <InteractiveContainer type="slider" color={COLORS.green_circle}>
-                <Slider size="m" data={testData}>
-                    <SliderCircleM />
-                </Slider>
-            </InteractiveContainer>
+            <InteractiveCircle color={COLORS.green_circle}/>
+            <Slider size="m" data={testData} sliderColor={COLORS.green_circle}>
+                <SliderCircleM />
+            </Slider>
             <Slider size="s" sliderColor={COLORS.orange} data={testData}>
                 <SliderCircleS />
             </Slider>
             <VideoPlayer src={TepkVideo} />
-        </Container>
+            <CourseAnimateScience/>
+        </Layout>
     )
 }
 
 const Container = styled.div`
-    padding: 20px;
+    /* padding: 20px; */
 `
 const Text = styled.span``
 const Testy = styled.div``
