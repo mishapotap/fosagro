@@ -80,6 +80,7 @@ const Wpap = styled.div`
     }
 
     &.second {
+        position: static;
         animation-delay: 16s;
         ${ImagePeople} {
             max-width: 25vw;
