@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { COLORS } from "../../constants"
 
-export default function Spinner({width = '200px', height = '200px', color = COLORS.blue}) {
+export default function Spinner({width = '200px', color = COLORS.blue}) {
     return (
         <Wrapper
             version="1.1"
@@ -13,7 +13,6 @@ export default function Spinner({width = '200px', height = '200px', color = COLO
             viewBox="0 0 100 100"
             enable-background="new 0 0 0 0"
             width={width}
-            height={height}
             color={color}
         >
             <path

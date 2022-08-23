@@ -11,7 +11,6 @@ export default function Loader({
         <Container bgColor={bgColor}>
             <Spinner
                 width={spinnerSize}
-                height={spinnerSize}
                 color={spinnerColor}
             />
         </Container>
