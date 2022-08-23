@@ -2,11 +2,10 @@
 /* eslint-disable react/jsx-no-bind */
 import React, { useState, useEffect, useRef } from "react"
 import styled from "styled-components"
-import { COLORS } from "../../../constants"
+import { COLORS, DEVICE } from "../../../constants"
 import VideoControls from "./VideoControls"
 import Loader from "../Loader"
 
-// TODO сделать адаптив (позже)
 // TODO сделать автоматический выход из полноэкранного режима при окончании видео?
 // TODO показать состояние фокуса?
 
@@ -115,17 +114,23 @@ export default function VideoPlayer({
     // добавляем и удаляем обработчик keydown, определяем устройство по размеру экрана
     useEffect(() => {
         document.addEventListener("keydown", handleKeydown)
+        setValIsMob()
+        window.addEventListener("resize", setValIsMob)
+
+        return () => {
+            document.removeEventListener("keydown", handleKeydown)
+            window.removeEventListener("resize", setValIsMob)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    function setValIsMob() {
         if (document.documentElement.clientWidth < 767) {
             setIsMob(true)
         } else {
             setIsMob(false)
         }
-
-        return () => {
-            document.removeEventListener("keydown", handleKeydown)
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }
 
     // получение положения элемента относительно окна
     function getElPos(el) {
@@ -275,7 +280,7 @@ export default function VideoPlayer({
 
     // управление видеоплеером с помощью клавиш
     // в обработчике событий используем рефы, чтобы получать актуальное значение
-    function handleKeydown({key, target, code}) {
+    function handleKeydown({ key, target, code }) {
         if (!isFullscreenRef.current) return
 
         if (key === " " && target === document.body) {
@@ -406,10 +411,30 @@ export default function VideoPlayer({
         }
     }
 
+    function toggleControls() {
+        if (isControlsShown) {
+            setIsControlsShown(false)
+        } else {
+            setIsControlsShown(true)
+        }
+    }
+
+    function handleVideoContClick() {
+        if (isMob) {
+            if (isStart) {
+                togglePlay()
+            } else {
+                toggleControls()
+            }
+        } else {
+            togglePlay()
+        }
+    }
+
     return (
         <Container className={isFullscreen && "fullscreen"} maxWidth={width}>
             <VideoPlayerContainer
-                onClick={togglePlay}
+                onClick={handleVideoContClick}
                 style={videoContStyle}
                 ref={videoPlayerContRef}
                 onMouseMove={handleMouseMove}
@@ -417,7 +442,7 @@ export default function VideoPlayer({
                     isError ? "error" : ""
                 }`}
             >
-                {isLoading && <Loader />}
+                {isLoading && <Loader spinnerSize="22%" />}
                 {isError ? (
                     <VideoError>
                         <VideoErrorText>{errorText}</VideoErrorText>
@@ -510,6 +535,14 @@ const VideoPlayerContainer = styled.div`
 
     border-radius: 30px;
 
+    @media ${DEVICE.laptopM} {
+        border-radius: 20px;
+    }
+
+    @media ${DEVICE.mobile} {
+        border-radius: 10px;
+    }
+
     &.loaded {
         ${Video} {
             opacity: 1;
@@ -524,7 +557,6 @@ const Container = styled.div`
 
     overflow: hidden;
     transition: 0.3s;
-    border-radius: 30px;
 
     &:after {
         display: block;

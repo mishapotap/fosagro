@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-bind */
 import React, { useRef, useState } from "react"
 import styled from "styled-components"
-import { COLORS } from "../../../constants"
+import { COLORS, DEVICE } from "../../../constants"
 import {
     Play,
     Pause,
@@ -53,11 +53,20 @@ export default function VideoControls({
         setShouldShowTooltip(false)
     }
 
+    function onBigBtnClick(e) {
+        e.stopPropagation()
+        onTogglePlay()
+    }
+
     return (
-        <Container className={`${!isControlsShown ? "hide" : ''} ${isLoaded ? 'loaded' : ''}`}>
+        <Container
+            className={`${!isControlsShown ? "hide" : ""} ${
+                isLoaded ? "loaded" : ""
+            }`}
+        >
             <BigPlayBtn
                 isFullscreen={isFullscreen}
-                onClick={onTogglePlay}
+                onClick={onBigBtnClick}
                 className={!isBigBtnShown && "hide"}
             >
                 <Play width="100%" />
@@ -74,7 +83,7 @@ export default function VideoControls({
 
             <BottomControls
                 onClick={(e) => e.stopPropagation()}
-                className={(isStart || !isBottomControlsShown) && 'hide'}
+                className={(isStart || !isBottomControlsShown) && "hide"}
             >
                 <ToggleMutedBtn
                     onClick={onToggleMuted}
@@ -127,7 +136,6 @@ export default function VideoControls({
 
                 <FullscreenBtn
                     onClick={onToggleFullscreen}
-                    width={isFullscreen ? "74px" : "54px"}
                     isFullscreen={isFullscreen}
                 >
                     <Fullscreen />
@@ -149,6 +157,14 @@ const VideoPlayerBtn = styled.button`
 
     background: transparent;
 
+    @media ${DEVICE.laptopS} {
+        width: 27px;
+    }
+
+    @media ${DEVICE.mobile} {
+        width: 23px;
+    }
+
     svg {
         max-width: 100%;
     }
@@ -156,15 +172,34 @@ const VideoPlayerBtn = styled.button`
 
 const FullscreenBtn = styled(VideoPlayerBtn)`
     margin-left: 30px;
+    width: ${({ isFullscreen }) => (isFullscreen ? "74px" : "54px")};
+
+    @media ${DEVICE.laptopS} {
+        width: 45px;
+        margin-left: 15px;
+    }
+
+    @media ${DEVICE.mobile} {
+        width: 35px;
+        margin-left: 15px;
+    }
 `
 
 const ToggleMutedBtn = styled(VideoPlayerBtn)`
     justify-content: flex-start;
     margin-right: 10px;
+
+    @media ${DEVICE.mobile} {
+        margin-right: 5px;
+    }
 `
 
 const TogglePlayBtn = styled(VideoPlayerBtn)`
     margin-right: 18px;
+
+    @media ${DEVICE.mobile} {
+        margin-right: 8px;
+    }
 `
 
 const CloseFullscreenBtn = styled.button`
@@ -211,6 +246,14 @@ const BottomControls = styled.div`
 
     button {
         flex-shrink: 0;
+    }
+
+    @media ${DEVICE.laptopS} {
+        height: 18%;
+    }
+
+    @media ${DEVICE.mobile} {
+        height: 22%;
     }
 `
 
@@ -280,7 +323,12 @@ const Tooltip = styled.div`
     &.active {
         opacity: 1;
     }
+
+    @media ${DEVICE.laptopS} {
+        display: none;
+    }
 `
+
 const PlayerProgress = styled.div`
     position: relative;
 
@@ -298,6 +346,10 @@ const Time = styled.div`
     display: flex;
     align-items: center;
 
+    @media ${DEVICE.laptopS} {
+        bottom: 5px;
+    }
+
     span {
         display: inline-block;
         width: 13px;
@@ -314,12 +366,20 @@ const ProgressTime = styled.div`
     font-size: 18px;
     font-weight: bold;
     color: ${COLORS.white};
+
+    @media ${DEVICE.laptopS} {
+        font-size: 16px;
+    }
 `
 
 const FullTime = styled.div`
     font-family: "FocoLight";
     font-size: 18px;
     color: ${COLORS.white};
+
+    @media ${DEVICE.laptopS} {
+        font-size: 16px;
+    }
 `
 
 const TimeLineWrapper = styled.div`

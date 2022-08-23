@@ -14,12 +14,13 @@ import {
     Slider,
     VideoPlayer,
     Instruction,
-    DocsLink, 
+    DocsLink,
     Modal,
     CourseAnimateScience,
-    Header,
+    CurvedModal,
     Layout,
 } from "../atoms"
+
 import {
     Flower,
     Close,
@@ -31,7 +32,9 @@ import {
     Tree,
     SliderCircleM,
     SliderCircleS,
-    InteractiveCircle
+    InteractiveCircle,
+    Ecology,
+    Test
 } from "../../assets/svg"
 import { COLORS, FONTS } from "../../constants"
 import { HeadphonesIcon } from "../../assets/svg/static"
@@ -39,25 +42,50 @@ import { TepkVideo } from "../../assets/video"
 import { testData } from "../../data"
 
 export default function NotFound() {
-    const [isInstrModalOpened, setIsInstrModalOpened] = useState(false)
+    const [isInstrOpened, setIsInstrOpened] = useState(false)
+    const [isCurvedModalOpened, setIsCurvedModalOpened] = useState(false)
+    const [isModalOpened, setIsModalOpened] = useState(false)
 
     return (
         <Layout page="section">
             <Text>СТРАНИЦА НЕ НАЙДЕНА! ЭТО 404 ОШИБКА</Text>
             <Title>Hello World!</Title>
             <Subtitle>Start</Subtitle>
+
+            <button onClick={() => setIsModalOpened(true)}>
+                Открыть modal
+            </button>
+            <Modal
+                isOpen={isModalOpened}
+                onClose={() => setIsModalOpened(false)}
+            >
+                Проверка Modal
+            </Modal>
+
+            <button onClick={() => setIsCurvedModalOpened(true)}>
+                Открыть curved modal
+            </button>
+            <CurvedModal
+                isOpen={isCurvedModalOpened}
+                onClose={() => setIsCurvedModalOpened(false)}
+            >
+                Проверка CurvedModal
+            </CurvedModal>
+
             <button
                 style={{
                     fontSize: "18px",
                     margin: "20px 0",
                 }}
-                onClick={() => setIsInstrModalOpened(true)}
+                onClick={() => setIsInstrOpened(true)}
             >
                 Открыть инструкцию
             </button>
-            <Modal isOpen={isInstrModalOpened}>
-                <Instruction onClose={() => setIsInstrModalOpened(false)} />
-            </Modal>
+            <Instruction
+                isOpen={isInstrOpened}
+                onClose={() => setIsInstrOpened(false)}
+            />
+
             <DocsLink />
             <span>{routes.HOME}</span>
             <img src={HeadphonesIcon} alt="mksicon" />
@@ -93,6 +121,8 @@ export default function NotFound() {
             </Slider>
             <VideoPlayer src={TepkVideo} />
             <CourseAnimateScience/>
+            <Ecology/>
+            <Test/>
         </Layout>
     )
 }

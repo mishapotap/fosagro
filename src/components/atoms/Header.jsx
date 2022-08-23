@@ -11,7 +11,7 @@ import { Fosagro, FosagroColored, BurgerIcon } from "../../assets/svg"
 export default function Header({
     // цветной ли (если нет, то все будет белое)
     colored = false,
-    // кнопка Курс "Устойчивое развитие"
+    // ссылка Курс "Устойчивое развитие"
     course = false,
     // смена языка
     language = false,
@@ -20,6 +20,8 @@ export default function Header({
     sectTitle = false,
     // цвет заголовка части
     sectTitleColor = COLORS.blue,
+    // ссылка "вернуться на главную"
+    goBackToMain = false,
 }) {
     return (
         <Container>
@@ -64,6 +66,11 @@ export default function Header({
                         </Link>
                     </CourseLink>
                 )}
+                {goBackToMain && (
+                    <BackToMain>
+                        <Link to={routes.HOME}>Вернуться на главную</Link>
+                    </BackToMain>
+                )}
             </HeaderInner>
         </Container>
     )
@@ -80,6 +87,34 @@ const Logo = styled.div`
 
     @media ${DEVICE.laptopS} {
         width: 150px;
+    }
+`
+
+const BackToMain = styled.div`
+    margin-right: 100px;
+    margin-top: 20px;
+
+    @media ${DEVICE.laptopM} {
+        margin-right: 80px;
+    }
+
+    a {
+        font-family: "FocoBold";
+        color: ${COLORS.white};
+        font-size: 18px;
+
+        &:hover,
+        &:focus {
+            text-decoration: underline;
+        }
+
+        @media ${DEVICE.laptopM} {
+            font-size: 16px;
+        }
+    }
+
+    @media ${DEVICE.laptopS} {
+        display: none;
     }
 `
 
