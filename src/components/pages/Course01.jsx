@@ -2,9 +2,10 @@ import React, {useState} from "react"
 import styled from "styled-components"
 import {
     MailButton,
-    CourseProgressButton,
+    // CourseProgressButton,
     SoundButton,
-    InstructionButton, 
+    InstructionButton,
+    CourseProgressBar, 
 } from "../molecules"
 import timelineData from "../../data/timelineData"
 import modules from "../modules"
@@ -30,7 +31,7 @@ export default function Course01() {
                 </MenuContainer>
                 
                 <Grid>
-                    <CourseProgressButton />
+                    <CourseProgressBar value={10} max={100} color={COLORS.blue}/>
                     <InstructionButton onClick={() => setIsInstrOpened(true)}/>
                     <SoundButton />
                     <MailButton onClick={() => setIsCurvedModalOpened(true)}/>
@@ -52,6 +53,7 @@ const Grid = styled.div`
     display: grid;
     gap: 20px;
     grid-template-columns: 1fr auto auto auto;
+    align-items: center;
 `
 
 const Background = styled.div`
