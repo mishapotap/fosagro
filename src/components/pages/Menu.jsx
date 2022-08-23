@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import styled from "styled-components"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { menuButtonData } from "../../data"
 import { MenuButton } from "../molecules"
 import { Header, MenuProgressBar, Layout, Modal } from "../atoms"
@@ -9,8 +9,10 @@ import { MenuBackground } from "../../assets/images"
 
 export default function Menu({isOpen = true}) {
     const [isMenu, setIsMenu] = useState(isOpen);
+    const navigate = useNavigate();
 
     const onClose = () => {
+        navigate("/");
         setIsMenu(false);
     }
     return (
@@ -68,15 +70,16 @@ const MenuContainer = styled.div`
     flex: 1;
     justify-content: center;
     align-items: center;
-    padding: 0 3vw 7vw;
+    height: 100%;
+    padding: 0 2vw;
     overflow: hidden;
     @media ${DEVICE.laptopS} { 
-        padding: 5vw 12vw;
+        padding: 0 5vw;
     }
 
     @media ${DEVICE.mobile} {
         align-items: flex-start;
-        padding: 3vw 8vw;
+        padding: 4vw 6vw;
     }
 `
 
