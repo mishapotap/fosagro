@@ -1,21 +1,13 @@
-import React, {useState} from "react"
+import React from "react"
 import styled from "styled-components"
-import {
-    MailButton,
-    // CourseProgressButton,
-    SoundButton,
-    InstructionButton,
-    CourseProgressBar, 
-} from "../molecules"
 import timelineData from "../../data/timelineData"
 import modules from "../modules"
-import { Instruction, ContentModule, Layout, CurvedModal } from "../atoms"
-import { COLORS } from "../../constants"
+import { ContentModule, Layout } from "../atoms"
+import { COLORS, DEVICE } from "../../constants"
 import { MenuBackground } from "../../assets/images"
+import {TimelineFooter} from "../organisms"
 
 export default function Course01() {
-    const [isInstrOpened, setIsInstrOpened] = useState(false)
-    const [isCurvedModalOpened, setIsCurvedModalOpened] = useState(false)
     return (
         <Layout page="course">
             <Background/>
@@ -29,32 +21,11 @@ export default function Course01() {
                         <ContentModule key={index} data={section} modules={modules.base} />
                     ))}
                 </MenuContainer>
-                
-                <Grid>
-                    <CourseProgressBar value={10} max={100} color={COLORS.blue}/>
-                    <InstructionButton onClick={() => setIsInstrOpened(true)}/>
-                    <SoundButton />
-                    <MailButton onClick={() => setIsCurvedModalOpened(true)}/>
-                </Grid>
+                <TimelineFooter />
             </Container>
-            <Instruction
-                isOpen={isInstrOpened}
-                onClose={() => setIsInstrOpened(false)}
-            />
-            <CurvedModal type="review"
-                isOpen={isCurvedModalOpened}
-                onClose={() => setIsCurvedModalOpened(false)}
-            />
         </Layout>
     )
 }
-
-const Grid = styled.div`
-    display: grid;
-    gap: 20px;
-    grid-template-columns: 1fr auto auto auto;
-    align-items: center;
-`
 
 const Background = styled.div`
     position: absolute;
@@ -79,6 +50,18 @@ const CourseNumber = styled.div`
     font-size: 70px;
     line-height: 88px;
     color: ${COLORS.white};
+    @media ${DEVICE.laptopS} {
+        font-size: 60px;
+        line-height: 78px;
+    }
+    @media ${DEVICE.tablet} {
+        font-size: 50px;
+        line-height: 68px;
+    }
+    @media ${DEVICE.mobile} {
+        font-size: 40px;
+        line-height: 58px;
+    }
 `
 
 const CourseTitle = styled.div`
@@ -86,6 +69,18 @@ const CourseTitle = styled.div`
     font-size: 43px;
     line-height: 54px;
     color: ${COLORS.blue};
+    @media ${DEVICE.laptopS} {
+        font-size: 33px;
+        line-height: 44px;
+    }
+    @media ${DEVICE.tablet} {
+        font-size: 28px;
+        line-height: 38px;
+    }
+    @media ${DEVICE.mobile} {
+        font-size: 22px;
+        line-height: 30px;
+    }
 `
 
 const MenuContainer = styled.div`
@@ -95,6 +90,6 @@ const MenuContainer = styled.div`
     align-items: center;
     overflow-x: auto;
     ::-webkit-scrollbar {
-        width: 0;
+        display: none;
     }
 `

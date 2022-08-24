@@ -16,7 +16,6 @@ import {
     Instruction,
     DocsLink,
     Modal,
-    CourseAnimateScience,
     CurvedModal,
     Layout,
     ReviewModal,
@@ -35,7 +34,7 @@ import {
     SliderCircleS,
     InteractiveCircle,
     Ecology,
-    Test,
+    AnimateScience
 } from "../../assets/svg"
 import { COLORS, FONTS } from "../../constants"
 import { HeadphonesIcon } from "../../assets/svg/static"
@@ -50,6 +49,7 @@ export default function NotFound() {
 
     return (
         <Layout page="section">
+            <AnimateScience/>
             <Text>СТРАНИЦА НЕ НАЙДЕНА! ЭТО 404 ОШИБКА</Text>
             <Title>Hello World!</Title>
             <Subtitle>Start</Subtitle>
@@ -106,6 +106,7 @@ export default function NotFound() {
             <Link to={routes.MENU}>
                 <SendButton text="Перейти в меню" />
             </Link>
+
             <Flower />
             <Close color={COLORS.orange} />
             <Close color={COLORS.blue} />
@@ -130,9 +131,7 @@ export default function NotFound() {
                 <SliderCircleS />
             </Slider>
             <VideoPlayer src={TepkVideo} />
-            <CourseAnimateScience />
             <Ecology />
-            <Test />
         </Layout>
     )
 }

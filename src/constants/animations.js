@@ -85,90 +85,6 @@ export const CursorAnim = keyframes`
     }
 `
 
-export const animateScience = keyframes`
-    0% {
-        opacity: 0;
-        transform: scale(0);
-    }
-    10% {
-        opacity: 1;
-        transform: scale(1);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-`
-
-export const animateScienceShowBlocks = keyframes`
-    0% {
-        opacity: 0;
-    }
-    10% {
-        opacity: 1;
-    }
-    90% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
-`
-
-export const animateScienceShowLast = keyframes`
-    0% {
-        opacity: 0;
-    }
-    10% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 1;
-    }
-`
-
-export const showContent = keyframes`
-    0% {
-        opacity: 0;
-    }
-    70% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-`
-
-export const shartShowContent = keyframes`
-    0% {
-        opacity: 0;
-        transform: scale(0);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-`
-
-export const circleAnimate = keyframes`
-    0% {
-        stroke-dasharray: 1200 0; 
-        stroke-dashoffset: 1450;
-    }
-    33% {
-        stroke-dasharray: 850 350; 
-        stroke-dashoffset: 1180;
-    }
-    66% {
-        stroke-dasharray: 350 850; 
-        stroke-dashoffset: 700;
-    }
-    100% {
-        stroke-dasharray: 0 1200; 
-        stroke-dashoffset: 300;
-    }
-`
-
 export default {
     leavesAnimation,
     borderAnimationS,
@@ -176,10 +92,4 @@ export default {
     circleStroke,
     rotateInteractiveCircle,
     CursorAnim,
-    animateScience,
-    animateScienceShowBlocks,
-    animateScienceShowLast,
-    showContent,
-    shartShowContent,
-    circleAnimate,
 }
