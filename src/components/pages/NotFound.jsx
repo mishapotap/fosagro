@@ -16,7 +16,6 @@ import {
     Instruction,
     DocsLink,
     Modal,
-    CourseAnimateScience,
     CurvedModal,
     Layout,
 } from "../atoms"
@@ -34,7 +33,7 @@ import {
     SliderCircleS,
     InteractiveCircle,
     Ecology,
-    Test
+    AnimateScience
 } from "../../assets/svg"
 import { COLORS, FONTS } from "../../constants"
 import { HeadphonesIcon } from "../../assets/svg/static"
@@ -48,6 +47,7 @@ export default function NotFound() {
 
     return (
         <Layout page="section">
+            <AnimateScience/>
             <Text>СТРАНИЦА НЕ НАЙДЕНА! ЭТО 404 ОШИБКА</Text>
             <Title>Hello World!</Title>
             <Subtitle>Start</Subtitle>
@@ -121,9 +121,8 @@ export default function NotFound() {
                 <SliderCircleS />
             </Slider>
             <VideoPlayer src={TepkVideo} />
-            <CourseAnimateScience/>
             <Ecology/>
-            <Test/>
+            
         </Layout>
     )
 }
