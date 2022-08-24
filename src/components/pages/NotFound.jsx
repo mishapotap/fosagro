@@ -96,6 +96,7 @@ export default function NotFound() {
             <Link to={routes.MENU}>
                 <SendButton text="Перейти в меню" />
             </Link>
+
             <Flower />
             <Close color={COLORS.orange} />
             <Close color={COLORS.blue} />
