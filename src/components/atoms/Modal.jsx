@@ -59,6 +59,8 @@ export default function Modal({
         <CSSTransition
             in={isOpen}
             timeout={200}
+            mountOnEnter
+            appear
             unmountOnExit
             classNames="modal"
             nodeRef={modalRef}
