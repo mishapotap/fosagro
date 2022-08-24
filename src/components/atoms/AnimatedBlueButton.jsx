@@ -1,11 +1,11 @@
 import React from "react"
 import styled, { css } from "styled-components" 
-import { COLORS } from '../../constants/theme'
+import { COLORS } from '../../constants'
 import { borderAnimationS, borderAnimationM } from "../../constants/animations"
 
-export default function AnimatedBlueButton({children, rotate = 0, size, onClick}) {
+export default function AnimatedBlueButton({children, rotate = 0, size, onClick, className}) {
   return (
-    <Container background={COLORS.blue} hover={COLORS.white} size={size} onClick={onClick}>
+    <Container className={className} background={COLORS.blue} hover={COLORS.white} size={size} onClick={onClick}>
       <Circle rotate={rotate} color={COLORS.white}>
         <Content>{children}</Content> 
       </Circle>

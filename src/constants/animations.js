@@ -47,9 +47,49 @@ export const borderAnimationM = keyframes`
   }
 `
 
+export const circleStroke = (dashoffsetStart, dashoffsetEnd) => keyframes`
+    from {
+        stroke-dashoffset: ${dashoffsetStart};
+    }
+    to {
+        stroke-dashoffset: ${dashoffsetEnd};
+    }
+`
+
+export const rotateInteractiveCircle = (from, to) => keyframes`
+    from {
+        transform: rotate(${from}deg);
+    }
+    to {
+        transform: rotate(${to}deg);
+    }
+`
+export const CursorAnim = keyframes`
+    0% {
+        opacity: 0;
+    }
+
+    30% {
+        opacity: 1;
+        transform: translateY(20%) translateX(-100%);
+    }
+
+    50% {
+        opacity: 0;
+        transform: translateY(20%) translateX(-100%);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(20%) translateX(-100%);
+    }
+`
 
 export default {
     leavesAnimation,
     borderAnimationS,
     borderAnimationM,
+    circleStroke,
+    rotateInteractiveCircle,
+    CursorAnim,
 }
