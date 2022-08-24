@@ -1,12 +1,11 @@
 import React from "react"
 import styled from "styled-components"
-import { COLORS } from "../../constants"
+import { COLORS, DEVICE } from "../../constants"
 
-export default function Flower() {
+export default function Flower({ active, className }) {
     return (
         <Wrapper
-            width="60"
-            height="51"
+            className={`${active ? "active" : ""} ${className}`}
             viewBox="0 0 60 51"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -54,12 +53,19 @@ const Leaf = styled.path``
 const Circle = styled.path``
 const Wrapper = styled.svg`
     cursor: pointer;
-    &:hover {
+    /* &:hover, */
+    &.active {
         ${Leaf} {
             fill: ${COLORS.green};
         }
         ${Circle} {
             fill: ${COLORS.blue};
         }
+    }
+
+    width: 60px;
+
+    @media ${DEVICE.laptopM} {
+        width: 40px;
     }
 `

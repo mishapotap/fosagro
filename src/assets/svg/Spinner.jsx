@@ -32,7 +32,5 @@ export default function Spinner({width = '200px', color = COLORS.blue}) {
     )
 }
 const Wrapper = styled.svg`
-    cursor: pointer;
-
     fill: ${({color}) => color}
 `

@@ -18,6 +18,7 @@ import {
     Modal,
     CurvedModal,
     Layout,
+    ReviewModal,
 } from "../atoms"
 
 import {
@@ -44,6 +45,7 @@ export default function NotFound() {
     const [isInstrOpened, setIsInstrOpened] = useState(false)
     const [isCurvedModalOpened, setIsCurvedModalOpened] = useState(false)
     const [isModalOpened, setIsModalOpened] = useState(false)
+    const [isReviewModalOpened, setIsReviewModalOpened] = useState(false)
 
     return (
         <Layout page="section">
@@ -61,6 +63,14 @@ export default function NotFound() {
             >
                 Проверка Modal
             </Modal>
+
+            <button onClick={() => setIsReviewModalOpened(true)}>
+                Открыть ReviewModal
+            </button>
+            <ReviewModal
+                isOpen={isReviewModalOpened}
+                onClose={() => setIsReviewModalOpened(false)}
+            />
 
             <button onClick={() => setIsCurvedModalOpened(true)}>
                 Открыть curved modal
@@ -113,7 +123,7 @@ export default function NotFound() {
             <StepProgressBar width="608" slidesAmount="8" />
             <StepProgressBar width="608" slidesAmount="3" />
             <Tree />
-            <InteractiveCircle color={COLORS.green_circle}/>
+            <InteractiveCircle color={COLORS.green_circle} />
             <Slider size="m" data={testData} sliderColor={COLORS.green_circle}>
                 <SliderCircleM />
             </Slider>
@@ -121,8 +131,7 @@ export default function NotFound() {
                 <SliderCircleS />
             </Slider>
             <VideoPlayer src={TepkVideo} />
-            <Ecology/>
-            
+            <Ecology />
         </Layout>
     )
 }
