@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from "react"
 import styled from "styled-components"
 import { COLORS, DEVICE } from "../../constants"
@@ -18,7 +19,11 @@ export default function CurvedModal({
     const color = type === "intro" ? COLORS.orange : COLORS.blue
 
     return (
-        <Container closeBtnColor={color} isOpen={isOpen} onClose={onClose}>
+        <Container
+            closeBtnColor={color}
+            isOpen={isOpen}
+            onClose={onClose}
+        >
             <StyledBg borderColor={color} />
             <ModalContent>{children}</ModalContent>
         </Container>
@@ -34,9 +39,9 @@ const Container = styled(Modal)`
         overflow: hidden;
         background-color: transparent;
 
-        @media ${DEVICE.laptopS} {
-            width: 100%;
-            height: 100%;
+        @media ${DEVICE.laptop} {
+            width: 100vw;
+            height: 100vh;
             max-width: none;
             background: ${COLORS.white};
         }
@@ -46,7 +51,7 @@ const Container = styled(Modal)`
         top: 9.6%;
         right: 5%;
 
-        @media ${DEVICE.laptopS} {
+        @media ${DEVICE.laptop} {
             top: 20px;
             right: 20px;
         }
@@ -54,7 +59,7 @@ const Container = styled(Modal)`
 `
 
 const StyledBg = styled(CurvedModalBg)`
-    @media ${DEVICE.laptopS} {
+    @media ${DEVICE.laptop} {
         display: none;
     }
 `

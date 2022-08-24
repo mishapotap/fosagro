@@ -129,7 +129,7 @@ export default function Instruction({ isOpen, onClose }) {
                                                         курса.
                                                     </Text>
                                                 </ColBlock>
-                                                <ColBlock inert="true">
+                                                <ColBlock inert="">
                                                     <DocsLink
                                                         showCursor={false}
                                                     />
@@ -142,7 +142,7 @@ export default function Instruction({ isOpen, onClose }) {
                                             </Column>
                                             <Column>
                                                 <IconRow>
-                                                    <IconHeadphones inert="true">
+                                                    <IconHeadphones inert="">
                                                         <Headphones />
                                                     </IconHeadphones>
                                                     <Text>
@@ -260,7 +260,7 @@ const Container = styled.div`
             font-size: 2.5vw;
         }
 
-        @media ${DEVICE.laptopS} {
+        @media ${DEVICE.laptop} {
             font-size: 28px;
         }
     }
@@ -276,7 +276,7 @@ const Container = styled.div`
             font-size: 1.7vw;
         }
 
-        @media ${DEVICE.laptopS} {
+        @media ${DEVICE.laptop} {
             font-size: 24px;
         }
     }
@@ -292,7 +292,7 @@ const Container = styled.div`
             font-size: 1.7vw;
         }
 
-        @media ${DEVICE.laptopS} {
+        @media ${DEVICE.laptop} {
             font-size: 24px;
         }
     }
@@ -382,7 +382,7 @@ const Text = styled.p`
     font-size: 1.3vw;
     color: ${COLORS.black};
 
-    @media ${DEVICE.laptopS} {
+    @media ${DEVICE.laptop} {
         font-size: 16px;
     }
 `
@@ -435,7 +435,7 @@ const Title = styled.div`
     font-size: 2.24vw;
     line-height: 1.3;
 
-    @media ${DEVICE.laptopS} {
+    @media ${DEVICE.laptop} {
         font-size: 23px;
     }
 
