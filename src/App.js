@@ -6,7 +6,7 @@ import { MenuButton } from "./components/molecules"
 import { OOH } from "./assets/svg/static"
 import { MainBG } from "./assets/video"
 import { COLORS, DEVICE } from "./constants"
-import { Header } from "./components/atoms"
+import { Layout } from "./components/atoms"
 
 function App() {
     return (
@@ -14,53 +14,44 @@ function App() {
             <Background>
                 <Video src={MainBG} loop muted autoPlay playsInline />
             </Background>
-            <Container>
-                <Header language="true" />
-                <Content>
-                    <TextContainer color={COLORS.white}>
-                        <Title>Курс «Устойчивое развитие»</Title>
-                        <Description>
-                            <h3>
-                                Компания ФосАгро напрямую способствует
-                                достижению
-                                <span> 11 целей</span> устойчивого развития ООН
-                            </h3>
-                            <OOHLogo src={OOH} alt="OOH" />
-                        </Description>
-                    </TextContainer>
-                    <MenuContainer>
-                        {menuButtonData.map((item) => (
-                            <Link to={item.href} key={item.index}>
-                                <MenuButton
-                                    index={item.index}
-                                    text={item.text}
-                                    bgColor={item.bgColor}
-                                    bgAnimateColor={item.bgAnimateColor}
-                                    rotate={item.rotate}
-                                />
-                            </Link>
-                        ))}
-                    </MenuContainer>
-                </Content>
-            </Container>
+            <Content>
+                <TextContainer>
+                    <Title>Курс «Устойчивое развитие»</Title>
+                    <Suptitle>
+                        <div>Компания ФосАгро напрямую способствует</div>
+                        <div>
+                            достижению <span> 11 целей</span> устойчивого
+                            развития ООН
+                            <img src={OOH} alt="OOH" />
+                        </div>
+                    </Suptitle>
+                </TextContainer>
+                <MenuContainer>
+                    {menuButtonData.map((item) => (
+                        <Link to={item.href} key={item.index}>
+                            <MenuButton
+                                index={item.index}
+                                text={item.text}
+                                bgColor={item.bgColor}
+                                bgAnimateColor={item.bgAnimateColor}
+                                rotate={item.rotate}
+                            />
+                        </Link>
+                    ))}
+                </MenuContainer>
+            </Content>
             <Outlet />
         </Layout>
     )
 }
 
-const Layout = styled.div`
-    position: relative;
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    width: 100%;
-`
-
 const Background = styled.div`
     position: absolute;
-    z-index: 1;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
+    z-index: -1;
     &:after {
         content: "";
         position: absolute;
@@ -97,138 +88,101 @@ const Video = styled.video`
     object-fit: cover;
 `
 
-const Container = styled.div`
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    min-height: 100vh;
-`
-
 const Content = styled.div`
     display: flex;
     align-items: center;
-    min-height: 100vh;
+    min-height: 100%;
 
     @media ${DEVICE.laptopS} {
         flex-direction: column;
-        align-items: flex-start;
         justify-content: center;
-        padding: 5vw 0 0;
     }
 
     @media ${DEVICE.mobile} {
         justify-content: flex-start;
-        padding: 20vw 0 0;
     }
 `
 
 const TextContainer = styled.div`
-    max-width: 52%;
-    padding: 0 0 0 60px;
-    color: ${(props) => props.color};
+    max-width: 50%;
+    padding-left: 3vw;
 
     @media ${DEVICE.laptopS} {
-        max-width: unset;
-        padding: 0 6vw;
+        max-width: 100%;
+        padding: 0;
     }
 `
 
 const MenuContainer = styled.div`
     display: flex;
     flex: 1;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
     flex-wrap: wrap;
-    margin-top: 0;
-    padding: 2vw;
-    overflow: hidden;
+    @media ${DEVICE.laptopS} {
+        padding: 6vw;
+    }
 
     a {
         margin: 0.5vw;
-    }
-
-    @media ${DEVICE.laptopS} {
-        padding: 6vw;
-        max-height: 65vw;
-        a {
+        @media ${DEVICE.laptopS} {
             margin: 2vw;
         }
     }
-
-    @media ${DEVICE.mobile} {
-        max-height: 125vw;
-    }
 `
-const Title = styled.h1`
-    display: block;
-    font-weight: 700;
-    font-size: 3.65vw;
-    line-height: 4.6vw;
 
-    @media ${DEVICE.laptopM} {
-        font-size: 3.55vw;
-    }
+const Title = styled.div`
+    font-family: "FocoBold";
+    font-size: 3vw;
+    line-height: 4.5vw;
+    color: ${COLORS.white};
 
     @media ${DEVICE.laptopS} {
-        font-size: 5vw;
-        line-height: 6vw;
+        font-size: 6.3vw;
+        line-height: 8.5vw;
     }
 
     @media ${DEVICE.mobile} {
-        font-size: 6.5vw;
+        font-size: 6vw;
         line-height: 7.5vw;
     }
 `
 
-const Description = styled.div`
+const Suptitle = styled.div`
     position: relative;
-    display: block;
+    font-family: "CalibriRegular";
+    color: ${COLORS.white};
 
-    h3 {
-        max-width: 35vw;
-        margin-top: 73px;
-        font-family: "CalibriRegular";
-        font-weight: 400;
-        font-size: 1.56vw;
-        line-height: 1.93vw;
-
-        span {
-            font-family: "CalibriBold";
-        }
-
-        @media ${DEVICE.laptopS} {
-            max-width: 70vw;
-            margin-top: 3vw;
-            font-size: 3vw;
-            line-height: 4vw;
-        }
-
-        @media ${DEVICE.mobile} {
-            max-width: 85vw;
-            margin-top: 3vw;
-            font-size: 4vw;
-            line-height: 5vw;
-        }
-    }
-`
-
-const OOHLogo = styled.img`
-    position: absolute;
-    top: 1vw;
-    left: 73%;
-    display: block;
-    width: 3.85vw;
-    height: 3.85vw;
-
+    margin-top: 73px;
+    font-size: 1.5vw;
     @media ${DEVICE.laptopS} {
-        top: 3vw;
-        left: 92%;
-        width: 5.85vw;
-        height: 5.85vw;
+        margin-top: 30px;
+        font-size: 3vw;
     }
 
     @media ${DEVICE.mobile} {
-        display: none;
+        font-size: 3.5vw;
+    }
+
+    div:nth-child(2) {
+        display: inline-block;
+        line-height: 3.8vw;
+        position: relative;
+        @media ${DEVICE.laptopS} {
+            line-height: 7vw;
+        }
+        img {
+            position: absolute;
+            height: 3.8vw;
+            right: -5.5vw;
+            @media ${DEVICE.laptopS} {
+                height: 7vw;
+                right: -10vw;
+            }
+        }
+        span {
+            font-family: "CalibriBold";
+        }
     }
 `
 
