@@ -1,24 +1,17 @@
-import React, { useState } from "react"
+import React from "react"
 import styled from "styled-components"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { menuButtonData } from "../../data"
 import { MenuButton } from "../molecules"
-import { Header, MenuProgressBar, Layout, Modal } from "../atoms"
+import { MenuProgressBar, Layout, Modal } from "../atoms"
 import { DEVICE } from "../../constants"
 import { MenuBackground } from "../../assets/images"
 
-export default function Menu({isOpen = true}) {
-    const [isMenu, setIsMenu] = useState(isOpen);
-    const navigate = useNavigate();
+export default function MenuModal({isOpen, onClose}) {
 
-    const onClose = () => {
-        navigate("/");
-        setIsMenu(false);
-    }
     return (
-        <StyledModal isOpen={isMenu} onClose={onClose}>
+        <StyledModal isOpen={isOpen} onClose={onClose}>
             <StyledLayout page="menu">
-                <Header goBackToMain />
                 <MenuContainer>
                     <MenuWrap>
                         {menuButtonData.map((item) => (
