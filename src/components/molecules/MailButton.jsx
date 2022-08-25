@@ -1,24 +1,23 @@
 import React, { useState } from "react"
 import styled from "styled-components"
-import { AnimatedBlueButton, CurvedModal } from "../atoms"
+import { AnimatedBlueButton, ReviewModal } from "../atoms"
 import { Letter } from "../../assets/svg"
 
 export default function MailButton() {
     // TODO перенести состояние в mobX
-    const [isCurvedModalOpened, setIsCurvedModalOpened] = useState(false)
+    const [isReviewModalOpened, setIsReviewModalOpened] = useState(false)
     return (
         <Wrapper>
             <AnimatedBlueButton
                 size="s"
                 rotate="20"
-                onClick={() => setIsCurvedModalOpened(true)}
+                onClick={() => setIsReviewModalOpened(true)}
             >
                 <Letter />
             </AnimatedBlueButton>
-            <CurvedModal
-                type="review"
-                isOpen={isCurvedModalOpened}
-                onClose={() => setIsCurvedModalOpened(false)}
+            <ReviewModal
+                isOpen={isReviewModalOpened}
+                onClose={() => setIsReviewModalOpened(false)}
             />
         </Wrapper>
     )
