@@ -10,6 +10,7 @@ export const COLORS = {
     blue_text: "#004A93",
     white: "#FFFFFF",
     black: "#000000",
+    color_animate: "white",
     red: "#9b0000",
 }
 
