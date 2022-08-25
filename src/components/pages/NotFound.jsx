@@ -13,7 +13,7 @@ import {
     StepProgressBar,
     Slider,
     VideoPlayer,
-    Instruction,
+    InstructionModal,
     DocsLink,
     Modal,
     CurvedModal,
@@ -91,7 +91,7 @@ export default function NotFound() {
             >
                 Открыть инструкцию
             </button>
-            <Instruction
+            <InstructionModal
                 isOpen={isInstrOpened}
                 onClose={() => setIsInstrOpened(false)}
             />
