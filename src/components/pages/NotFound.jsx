@@ -33,7 +33,8 @@ import {
     SliderCircleS,
     InteractiveCircle,
     Ecology,
-    AnimateScience
+    AnimateScience,
+    AnimateMap
 } from "../../assets/svg"
 import { COLORS, FONTS } from "../../constants"
 import { HeadphonesIcon } from "../../assets/svg/static"
@@ -48,6 +49,7 @@ export default function NotFound() {
     return (
         <Layout page="section">
             <AnimateScience/>
+            <AnimateMap/>
             <Text>СТРАНИЦА НЕ НАЙДЕНА! ЭТО 404 ОШИБКА</Text>
             <Title>Hello World!</Title>
             <Subtitle>Start</Subtitle>
