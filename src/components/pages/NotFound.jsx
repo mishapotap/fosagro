@@ -19,6 +19,7 @@ import {
     CurvedModal,
     Layout,
     ReviewModal,
+    IntroModal,
 } from "../atoms"
 
 import {
@@ -30,12 +31,10 @@ import {
     Prev,
     Headphones,
     Tree,
-    SliderCircleM,
-    SliderCircleS,
     InteractiveCircle,
     Ecology,
     AnimateScience,
-    AnimateMap
+    AnimateMap,
 } from "../../assets/svg"
 import { COLORS, FONTS } from "../../constants"
 import { HeadphonesIcon } from "../../assets/svg/static"
@@ -47,6 +46,7 @@ export default function NotFound() {
     const [isCurvedModalOpened, setIsCurvedModalOpened] = useState(false)
     const [isModalOpened, setIsModalOpened] = useState(false)
     const [isReviewModalOpened, setIsReviewModalOpened] = useState(false)
+    const [isIntroModalOpened, setIsIntroModalOpened] = useState(false)
 
     return (
         <Layout page="section">
@@ -96,6 +96,21 @@ export default function NotFound() {
                 onClose={() => setIsInstrOpened(false)}
             />
 
+            <button
+                style={{
+                    fontSize: "18px",
+                    margin: "20px 0",
+                }}
+                onClick={() => setIsIntroModalOpened(true)}
+            >
+                Открыть введение
+            </button>
+            <IntroModal
+                isOpen={isIntroModalOpened}
+                onClose={() => setIsIntroModalOpened(false)}
+                items={testData.introSlider}
+            />
+
             <DocsLink />
             <span>{routes.HOME}</span>
             <img src={HeadphonesIcon} alt="mksicon" />
@@ -124,16 +139,27 @@ export default function NotFound() {
             <StepProgressBar width="608" slidesAmount="3" />
             <Tree />
             <InteractiveCircle color={COLORS.green_circle} />
-            <Slider size="m" data={testData} sliderColor={COLORS.green_circle}>
-                <SliderCircleM />
-            </Slider>
-            <Slider size="s" sliderColor={COLORS.orange} data={testData}>
-                <SliderCircleS />
-            </Slider>
+
+            <Slider
+                size="m"
+                data={testData.circleSlider[0]}
+                sliderColor={COLORS.green_circle}
+                time={5000}
+                width="50%"
+            />
+
+            <Slider
+                size="s"
+                data={testData.circleSlider[0]}
+                sliderColor={COLORS.orange}
+                time={5000}
+                width="40vw"
+            />
+
             <VideoPlayer src={TepkVideo} />
             <Ecology />
-            <AnimateScience/>
-            <AnimateMap/>
+            <AnimateScience />
+            <AnimateMap />
         </Layout>
     )
 }
