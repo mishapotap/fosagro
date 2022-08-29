@@ -28,7 +28,7 @@ function App() {
                 </TextContainer>
                 <MenuContainer>
                     {menuButtonData.map((item) => (
-                        <Link to={item.href} key={item.index}>
+                        <Link to={`/course/${item.id}`} key={item.index}>
                             <MenuButton
                                 index={item.index}
                                 text={item.text}

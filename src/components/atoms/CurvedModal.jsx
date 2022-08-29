@@ -1,11 +1,8 @@
-/* eslint-disable no-unused-vars */
 import React from "react"
 import styled from "styled-components"
 import { COLORS, DEVICE } from "../../constants"
 import Modal from "./Modal"
 import { CurvedModalBg } from "../../assets/svg"
-
-// TODO постараться сделать что-нибудь, чтобы контент не выходил за пределы линий svg :/
 
 // type:
 // intro - то что на введении, оранжевое
@@ -15,6 +12,7 @@ export default function CurvedModal({
     type = "intro",
     isOpen,
     onClose,
+    className,
 }) {
     const color = type === "intro" ? COLORS.orange : COLORS.blue
 
@@ -23,9 +21,10 @@ export default function CurvedModal({
             closeBtnColor={color}
             isOpen={isOpen}
             onClose={onClose}
+            className={className}
         >
             <StyledBg borderColor={color} />
-            <ModalContent>{children}</ModalContent>
+            <ModalContent className="modal-content">{children}</ModalContent>
         </Container>
     )
 }
@@ -64,7 +63,6 @@ const StyledBg = styled(CurvedModalBg)`
     }
 `
 
-// TODO сделать отступы? (но в введении слайдер вплотную к правому краю)
 const ModalContent = styled.div`
     position: absolute;
     top: 0;
@@ -77,6 +75,5 @@ const ModalContent = styled.div`
     width: 100%;
     height: 100%;
 
-    overflow: auto;
     z-index: 2;
 `

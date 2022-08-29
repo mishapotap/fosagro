@@ -1,26 +1,28 @@
-import React, { useState } from "react"
+import React from "react"
 import styled from "styled-components"
-import { AnimatedBlueButton, Instruction } from "../atoms"
+import { observer } from "mobx-react-lite"
+import { ModalStore } from "../../store"
+import { AnimatedBlueButton, InstructionModal } from "../atoms"
 import { InstructionIcon } from "../../assets/svg"
 
-export default function InstructionButton() {
-    // TODO перенести состояние в mobX
-    const [isInstrOpened, setIsInstrOpened] = useState(false)
+ function InstructionButton() {
     return (
         <Wrapper>
             <AnimatedBlueButton
                 size="s"
                 rotate="40"
-                onClick={() => setIsInstrOpened(true)}
+                onClick={() => ModalStore.showModal("instruction")}
             >
                 <InstructionIcon />
             </AnimatedBlueButton>
-            <Instruction
-                isOpen={isInstrOpened}
-                onClose={() => setIsInstrOpened(false)}
+            <InstructionModal
+                isOpen={ModalStore.isVisible.instruction}
+                onClose={() => ModalStore.closeModal("instruction")}
             />
         </Wrapper>
     )
 }
 
 const Wrapper = styled.div``
+
+export default observer(InstructionButton)

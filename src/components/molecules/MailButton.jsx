@@ -1,27 +1,28 @@
-import React, { useState } from "react"
+import React from "react"
 import styled from "styled-components"
-import { AnimatedBlueButton, CurvedModal } from "../atoms"
+import { observer } from "mobx-react-lite"
+import { ModalStore } from "../../store"
+import { AnimatedBlueButton, ReviewModal } from "../atoms"
 import { Letter } from "../../assets/svg"
 
-export default function MailButton() {
-    // TODO перенести состояние в mobX
-    const [isCurvedModalOpened, setIsCurvedModalOpened] = useState(false)
+function MailButton() {
     return (
         <Wrapper>
             <AnimatedBlueButton
                 size="s"
                 rotate="20"
-                onClick={() => setIsCurvedModalOpened(true)}
+                onClick={() => ModalStore.showModal("mail")}
             >
                 <Letter />
             </AnimatedBlueButton>
-            <CurvedModal
-                type="review"
-                isOpen={isCurvedModalOpened}
-                onClose={() => setIsCurvedModalOpened(false)}
+            <ReviewModal
+                isOpen={ModalStore.isVisible.mail}
+                onClose={() => ModalStore.closeModal("mail")}
             />
         </Wrapper>
     )
 }
 
 const Wrapper = styled.div``
+
+export default observer(MailButton)

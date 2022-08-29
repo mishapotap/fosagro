@@ -1,7 +1,8 @@
 import * as routes from "../constants/routes"
 
 const menuButtonData = [
-    {
+    {   
+        id: 1,
         index: "01",
         text: "введение и личный вклад в устойчивое развитие",
         bgColor: "rgba(218, 170, 0, 0.8)",
@@ -11,6 +12,7 @@ const menuButtonData = [
         progress: 26,
     },
     {
+        id: 2,
         index: "02",
         text: "Цели устойчивого развития (ЦУР) ООН для компании ФосАгро",
         bgColor: "rgba(200, 130, 66, 0.8)",
@@ -20,6 +22,7 @@ const menuButtonData = [
         progress: 50,
     },
     {
+        id: 3,
         index: "03",
         text: "потребители и управление продукцией",
         bgColor: "rgba(112, 115, 114, 0.8)",
@@ -29,6 +32,7 @@ const menuButtonData = [
         progress: 10,
     },
     {
+        id: 4,
         index: "04",
         text: "экология",
         bgColor: "rgba(182, 186, 41, 0.8)",
@@ -38,6 +42,7 @@ const menuButtonData = [
         progress: 100,
     },
     {
+        id: 5,
         index: "05",
         text: "климат и энергоэффективность",
         bgColor: "rgba(103, 130, 58, 0.8)",
@@ -47,6 +52,7 @@ const menuButtonData = [
         progress: 78,
     },
     {
+        id: 6,
         index: "06",
         text: "человек и социальная среда",
         bgColor: "rgba(113, 178, 201, 0.8)",
