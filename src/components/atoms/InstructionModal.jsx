@@ -11,7 +11,7 @@ import {
     IconOpenCourseBtn,
     IconOpenCourseBtnMob,
     IconBlueBtnSound,
-} from "../../assets/svg/static/Instruction"
+} from "../../assets/svg/static/InstructionModal"
 
 import { Headphones, ArrowRight, ArrowLeft } from "../../assets/svg"
 import { COLORS, DEVICE } from "../../constants"
@@ -27,7 +27,7 @@ import "swiper/css"
 // eslint-disable-next-line
 import "swiper/css/effect-fade"
 
-export default function Instruction({ isOpen, onClose }) {
+export default function InstructionModal({ isOpen, onClose }) {
     function renderCustom(swiper, current, total) {
         const getFormattedNumber = (number) =>
             number < 10 ? `0${number}` : `${number}`
@@ -40,6 +40,10 @@ export default function Instruction({ isOpen, onClose }) {
             )}</span>
         `
     }
+
+    // const baseUrl = "http://localhost:3000/course01/"
+    // const instructionUrl = new URL("instruction", baseUrl)
+    // console.log(instructionUrl.href)
 
     return (
         <StyledModal isOpen={isOpen} onClose={onClose}>
