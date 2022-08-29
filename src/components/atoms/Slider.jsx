@@ -1,122 +1,162 @@
-import React, { useState } from "react"
+import React, { useEffect, useState, useRef } from "react"
 import styled, { css } from "styled-components"
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Pagination, EffectFade, Autoplay } from 'swiper'
+import { Swiper, SwiperSlide } from "swiper/react"
+import { Pagination, EffectFade, Autoplay } from "swiper"
+import { SliderCircleM, SliderCircleS } from "../../assets/svg"
 import { DEVICE } from "../../constants"
 
 // eslint-disable-next-line
-import 'swiper/css';
+import "swiper/css"
 // eslint-disable-next-line
-import 'swiper/css/effect-fade';
+import "swiper/css/effect-fade"
 
-export default function Slider({size, children, sliderColor, data}) {
+export default function Slider({
+    // size - это не про размер самого слайдера, слайдер занимает все пространство родителя
+    // это про размер внешнего круга, s - маленький (такой как в введении), m - большой
+    // (как в общем слайдере раздела)
+    size = "s",
+    sliderColor,
+    data,
+    makeAutoplay = true,
+    className,
+    delayTime = 10000,
+    width = "100%",
+}) {
+    const [isActive, setIsActive] = useState(0)
+    const swiperRef = useRef(null)
 
-    // TODO сделать адаптив
-    const [isActive, setIsActive] = useState(1);
+    const addActivePath = (swiper) => {
+        setIsActive(swiper.realIndex + 1)
+    }
 
-    const addActivePath = ( swiper ) => {
-        setIsActive(swiper.realIndex + 1);
-    };
+    useEffect(() => {
+        if (makeAutoplay) {
+            swiperRef.current.autoplay.start()
+            setIsActive(swiperRef.current.realIndex + 1)
+        } else {
+            swiperRef.current.autoplay.stop()
+            setIsActive(0)
+        }
+    }, [makeAutoplay])
 
-    const delayTime = 10000;
+    // для автоплэя
+    const onInit = (swiper) => {
+        swiperRef.current = swiper
+    }
 
-    return(
-        <SliderContainer size={size}>
-            {React.cloneElement(children, {color: sliderColor, time: delayTime, activePathItem: isActive})}
-            <SwiperContainer>
-                <Swiper
-                    modules={[Pagination, EffectFade, Autoplay]}
-                    effect="fade"
-                    loop="true"
-                    autoplay={{
-                        delay: delayTime,
-                        disableOnInteraction: false,
-                        waitForTransition: false
-                    }}
-                    slidesPerView={1}
-                    onSlideChange={(swiper) => addActivePath(swiper)}
-                >
-                    { data.map(item => 
-                        <SwiperSlide key={item.alt}>
-                            <img src={item.source} alt={item.alt}/>
-                        </SwiperSlide>)
-                    }
-                </Swiper>
-            </SwiperContainer>
-        </SliderContainer>
+    return (
+        <Container width={width}>
+            <SliderContainer className={className} size={size}>
+                {size === "s" ? (
+                    <SliderCircleS
+                        color={sliderColor}
+                        time={delayTime}
+                        activePathItem={isActive}
+                    />
+                ) : (
+                    <SliderCircleM
+                        color={sliderColor}
+                        time={delayTime}
+                        activePathItem={isActive}
+                    />
+                )}
+                <SwiperContainer>
+                    <Swiper
+                        modules={[Pagination, EffectFade, Autoplay]}
+                        effect="fade"
+                        loop="true"
+                        onInit={onInit}
+                        autoplay={{
+                            delay: delayTime,
+                            disableOnInteraction: false,
+                            waitForTransition: false,
+                        }}
+                        slidesPerView={1}
+                        onSlideChange={(swiper) => addActivePath(swiper)}
+                    >
+                        {data.map((item) => (
+                            <SwiperSlide key={item.alt}>
+                                <img src={item.source} alt={item.alt} />
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
+                </SwiperContainer>
+            </SliderContainer>
+        </Container>
     )
 }
 
+const Container = styled.div`
+    max-width: ${({ width }) => width};
+`
+
 const SwiperContainer = styled.div`
     position: absolute;
-    width: 100%;
-    img {
-        display: block;
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        object-fit: contain;
-    }
-    @media ${DEVICE.mobile} {
-        position: static;
-    }
-`;
+    top: 0;
+    left: 0;
 
-const SliderContainer = styled.div`
-    position: relative;
     width: 100%;
     height: 100%;
 
-    ${(props) => props.size === "m" && css`
-        max-width: 50vw;
-        max-height: 47vw;
-        overflow: hidden;
-        ${SwiperContainer} {
-            max-width: 38vw;
-            top: 2.3vw;
-            right: 5vw;
-            img {
-                max-width: 38vw;
-                max-height: 38vw;
-            }
-            @media ${DEVICE.mobile} {
-                max-width: 100%;
-                img {
-                    max-width: 100%;
-                    max-height: 100%;
-                }
-            }
-            
-        }
-        @media ${DEVICE.mobile} {
-            max-width: 100%;
-            max-height: 100%;
-        }
-    `}
+    .swiper {
+        width: 100%;
+        height: 100%;
+    }
 
-    ${(props) => props.size === "s" && css`
-        max-width: 41.4vw;
-        max-height: 41.1vw;
-        overflow: hidden;
-        ${SwiperContainer} {
-            top: 3.3vw;
-            right: 3.65vw;
-            max-width: 34vw;
+    .swiper-wrapper,
+    .swiper-slide {
+        height: 100%;
+        width: 100%;
+    }
+
+    .swiper-slide {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    img {
+        display: block;
+        border-radius: 50%;
+        object-fit: contain;
+    }
+
+    @media ${DEVICE.mobile} {
+        position: static;
+    }
+`
+
+const SliderContainer = styled.div`
+    position: relative;
+    max-width: 100%;
+    max-height: 100%;
+    width: 100%;
+    overflow: hidden;
+
+    ${(props) =>
+        props.size === "s" &&
+        css`
             img {
-                max-width: 34vw;
-                max-height: 34vw;
-            }
-            @media ${DEVICE.mobile} {
-                max-width: 100%;
-                img {
-                    max-width: 100%;
-                    max-height: 100%;
+                width: 83%;
+
+                @media ${DEVICE.mobile} {
+                    width: 95%;
                 }
             }
-        }
-        @media ${DEVICE.mobile} {
-            max-width: 100%;
-            max-height: 100%;
-        }
-  `}
+        `}
+
+    ${(props) =>
+        props.size === "m" &&
+        css`
+            img {
+                width: 76%;
+                margin-top: -7%;
+                margin-right: -6%;
+
+                @media ${DEVICE.mobile} {
+                    margin: 0;
+                    width: 95%;
+                }
+            }
+        `}
 `
