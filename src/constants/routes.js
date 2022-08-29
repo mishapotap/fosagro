@@ -1,9 +1,9 @@
 export const HOME = '/';
 export const TUTORIAL = '/tutorial';
 export const MENU = '/menu';
-export const COURSE01 = '/course01';
-export const COURSE02 = '/course02';
-export const COURSE03 = '/course03';
-export const COURSE04 = '/course04';
-export const COURSE05 = '/course05';
-export const COURSE06 = '/course06';
+export const COURSE01 = '/course/1';
+export const COURSE02 = '/course/2';
+export const COURSE03 = '/course/3';
+export const COURSE04 = '/course/4';
+export const COURSE05 = '/course/5';
+export const COURSE06 = '/course/6';

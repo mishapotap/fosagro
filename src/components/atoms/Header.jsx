@@ -3,7 +3,8 @@ import styled from "styled-components"
 import { Link } from "react-router-dom"
 import * as routes from "../../constants/routes"
 import { DEVICE, COLORS } from "../../constants"
-import { Fosagro, FosagroColored, BurgerIcon } from "../../assets/svg"
+import { Fosagro, FosagroColored } from "../../assets/svg"
+import { CourseMenuButton } from "../molecules"
 
 // TODO сделать ссылки RU EN рабочими
 // TODO сделать фиксированный хэдэр при скролле на моб?
@@ -56,16 +57,7 @@ export default function Header({
                         </Language>
                     </LanguageContainer>
                 )}
-                {course && (
-                    <CourseLink>
-                        <Link to={routes.MENU}>
-                            <CourseLinkText colored={colored}>
-                                Курс “Устойчивое развитие”
-                            </CourseLinkText>
-                            <BurgerIcon colored={colored} />
-                        </Link>
-                    </CourseLink>
-                )}
+                {course && <CourseMenuButton colored={colored}/>}
                 {goBackToMain && (
                     <BackToMain>
                         <Link to={routes.HOME}>Вернуться на главную</Link>
@@ -165,31 +157,6 @@ const SectTitleText = styled.div`
 
     @media ${DEVICE.laptopS} {
         font-size: 12px;
-    }
-`
-
-const CourseLink = styled.div`
-    flex-shrink: 0;
-
-    a {
-        display: flex;
-        align-items: center;
-    }
-`
-
-const CourseLinkText = styled.div`
-    margin-right: 15px;
-
-    font-family: "FocoBold", sans-serif;
-    font-size: 18px;
-    color: ${({ colored }) => (colored ? COLORS.blue : COLORS.white)};
-
-    @media ${DEVICE.laptopM} {
-        font-size: 16px;
-    }
-
-    @media ${DEVICE.laptopS} {
-        display: none;
     }
 `
 

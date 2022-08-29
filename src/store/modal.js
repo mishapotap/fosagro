@@ -3,6 +3,7 @@ import { makeAutoObservable } from "mobx";
 class Modal {
     isVisible = {
         instruction: false,
+        menu: false,
         mail: false,
     };
 

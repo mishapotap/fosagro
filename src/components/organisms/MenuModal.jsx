@@ -1,6 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { Link } from "react-router-dom"
+import { observer } from "mobx-react-lite"
 import { menuButtonData } from "../../data"
 import { MenuButton } from "../molecules"
 import { MenuProgressBar, Layout, Modal } from "../atoms"
@@ -8,7 +9,7 @@ import { DEVICE } from "../../constants"
 import { MenuBackground } from "../../assets/images"
 
 export default function MenuModal({isOpen, onClose}) {
-
+    
     return (
         <StyledModal isOpen={isOpen} onClose={onClose}>
             <StyledLayout page="menu">
@@ -40,6 +41,8 @@ export default function MenuModal({isOpen, onClose}) {
         </StyledModal> 
     )
 }
+
+observer(MenuModal)
 
 const StyledLayout = styled(Layout)`
     height: 100%;

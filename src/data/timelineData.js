@@ -61,6 +61,14 @@ const timelineData = [
         },
     },
     {
+        slug: "courseStepPoint",
+        value: {
+            color: COLORS.green_light,
+            position: "bottom",
+            text: "Концепция устойчивого развития - не брать у природы в долг",
+        },
+    },
+    {
         slug: "courseStepButton",
         value: {
             title: "Концепции ESG",
