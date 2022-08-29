@@ -35,7 +35,8 @@ import {
     InteractiveCircle,
     Ecology,
     AnimateScience,
-    AnimateMap
+    AnimateMap,
+    AnimateEarth
 } from "../../assets/svg"
 import { COLORS, FONTS } from "../../constants"
 import { HeadphonesIcon } from "../../assets/svg/static"
@@ -50,6 +51,7 @@ export default function NotFound() {
 
     return (
         <Layout page="section">
+            <AnimateEarth/>
             <Text>СТРАНИЦА НЕ НАЙДЕНА! ЭТО 404 ОШИБКА</Text>
             <Title>Hello World!</Title>
             <Subtitle>Start</Subtitle>
