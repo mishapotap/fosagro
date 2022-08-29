@@ -3,7 +3,7 @@ import styled, { keyframes } from "styled-components"
 
 export default function AnimateScience() {
   return(
-    <SVG width="723" height="817" 
+    <SVG width="37.7vw" height="817" 
       viewBox="0 0 723 817" fill="none" 
       xmlns="http://www.w3.org/2000/svg" 
       xmlnsXlink="http://www.w3.org/1999/xlink">
@@ -132,8 +132,6 @@ const animateScienceShowLast = keyframes`
 `
 
 const SVG = styled.svg`
-  width: 37.7vw;
-  height: 42.6vw;
 
   .container {
     opacity: 0;
