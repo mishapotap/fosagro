@@ -8,7 +8,7 @@ import { COLORS } from "../../constants"
 export default function AnimateMap() {
   const bgColor = COLORS.color_animate;
   return(
-    <SVG width="44vw" height="778" 
+    <SVG width="44vw" height="40.5vw" 
       viewBox="0 0 844 778" fill="none" 
       xmlns="http://www.w3.org/2000/svg" 
       xmlnsXlink="http://www.w3.org/1999/xlink">

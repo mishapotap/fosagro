@@ -4,7 +4,7 @@ import styled, { keyframes } from "styled-components"
 export default function AnimateEarth() {
   return(
     <SVG width="39.4vw" 
-      height="470" viewBox="0 0 757 470" 
+      height="24.5vw" viewBox="0 0 757 470" 
       fill="none" xmlns="http://www.w3.org/2000/svg">
       <mask id="mask0_1285_2" style={{maskType:"alpha"}} 
         maskUnits="userSpaceOnUse" x="223" y="100" width="288" height="287">
@@ -470,10 +470,6 @@ const SVG = styled.svg`
     animation-fill-mode: forwards;
   }
 
-  .arrow {
-    
-  }
-
   .arrowGreen {
     transform-origin: bottom;
     opacity: 0;
@@ -488,10 +484,6 @@ const SVG = styled.svg`
     animation: ${showArrow} 6s linear;
     animation-delay: 8s;
     animation-fill-mode: forwards;
-  }
-
-  .left {
-    
   }
 
   .left_1 {
@@ -541,10 +533,6 @@ const SVG = styled.svg`
     animation: ${showContent} 2s ease-out;
     animation-delay: 6.5s;
     animation-fill-mode: forwards;
-  }
-
-  .right {
-
   }
 
   .right_1 {
