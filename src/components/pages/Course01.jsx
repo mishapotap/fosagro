@@ -5,7 +5,7 @@ import modules from "../modules"
 import { ContentModule, Layout } from "../atoms"
 import { COLORS, DEVICE } from "../../constants"
 import { MenuBackground } from "../../assets/images"
-// import {TimelineFooter} from "../organisms"
+import {TimelineFooter} from "../organisms"
 
 export default function Course01() {
     return (
@@ -21,7 +21,7 @@ export default function Course01() {
                         <ContentModule key={index} data={section} modules={modules.base} />
                     ))}
                 </MenuContainer>
-                {/* <TimelineFooter /> */}
+                <TimelineFooter />
             </Container>
         </Layout>
     )
