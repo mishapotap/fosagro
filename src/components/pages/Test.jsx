@@ -46,7 +46,7 @@ import { TepkVideo } from "../../assets/video"
 import { SpeakerAudio } from "../../assets/audio"
 import { testData } from "../../data"
 
-export default function NotFound() {
+export default function Test() {
     const [isInstrOpened, setIsInstrOpened] = useState(false)
     const [isCurvedModalOpened, setIsCurvedModalOpened] = useState(false)
     const [isModalOpened, setIsModalOpened] = useState(false)
