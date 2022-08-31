@@ -2,10 +2,11 @@ import React from "react"
 import styled from "styled-components"
 import { COLORS } from "../../../constants"
 
-export default function Sound({width = '25px'}) {
+export default function Sound({ width = "25px", color = COLORS.white }) {
     return (
         <Wrapper
             width={width}
+            color={color}
             viewBox="0 0 25 22"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -34,11 +35,11 @@ const Wrapper = styled.svg`
 
     path,
     rect {
-        fill: ${COLORS.white};
+        fill: ${({ color }) => color};
     }
 
     #arc {
-        stroke: ${COLORS.white};
+        stroke: ${({ color }) => color};
         fill: none;
     }
 `

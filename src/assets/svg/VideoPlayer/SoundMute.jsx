@@ -2,10 +2,11 @@ import React from "react"
 import styled from "styled-components"
 import { COLORS } from "../../../constants"
 
-export default function SoundMute({ width = '29px' }) {
+export default function SoundMute({ width = "29px", color = COLORS.white }) {
     return (
         <Wrapper
             width={width}
+            color={color}
             viewBox="0 0 29 22"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -28,5 +29,5 @@ export default function SoundMute({ width = '29px' }) {
 }
 const Wrapper = styled.svg`
     cursor: pointer;
-    fill: ${COLORS.white};
+    fill: ${({ color }) => color};
 `

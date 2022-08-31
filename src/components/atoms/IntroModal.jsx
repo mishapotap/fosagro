@@ -5,10 +5,14 @@ import styled from "styled-components"
 import { Pagination, Navigation, EffectFade } from "swiper"
 import { Swiper, SwiperSlide } from "swiper/react"
 import CurvedModal from "./CurvedModal"
-import { ArrowLeft, ArrowRight, Headphones } from "../../assets/svg"
+import { ArrowLeft, ArrowRight } from "../../assets/svg"
 import Slider from "./Slider"
 import { COLORS, DEVICE } from "../../constants"
 import { ContentBlock, Title, Text, Note } from "./Content"
+import AudioPlayer from "./AudioPlayer"
+
+// TODO уточнить, как должно вести себя аудио при переключении слайдов, и добавить логику
+// (может при возвращении на прошлые слайды не включать аудио автоматически?)
 
 export default function IntroModal({ isOpen, onClose, items }) {
     function renderCustom(swiper, current, total) {
@@ -20,23 +24,46 @@ export default function IntroModal({ isOpen, onClose, items }) {
     }
 
     const [slidersAutoplay, setSlidersAutoplay] = useState({})
+    const [slidersAudio, setSlidersAudio] = useState({})
     const modalContent = useRef(null)
 
-    useEffect(() => {
-        const initState = {}
+    function setInitialState() {
+        const initSliderAutoplState = {}
+        const initAudiosState = {}
 
         // изначально выключить автоплэй у каждого круглого слайдера кроме того, что на первом слайде
         items.forEach((i, index) => {
             if (index === 0) {
-                initState[index] = true
+                initSliderAutoplState[index] = true
             } else {
-                initState[index] = false
+                initSliderAutoplState[index] = false
             }
         })
 
-        setSlidersAutoplay(initState)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // изначально выключить проигрывание аудио у всех слайдов, кроме первого
+        items.forEach((i, index) => {
+            if (index === 0) {
+                initAudiosState[index] = true
+            } else {
+                initAudiosState[index] = false
+            }
+        })
+
+        setSlidersAudio(initAudiosState)
+        setSlidersAutoplay(initSliderAutoplState)
+    }
+
+    useEffect(() => {
+        setInitialState()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    useEffect(() => {
+        if (isOpen) {
+            setInitialState()
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isOpen])
 
     // при смене слайда
     function handleSlideChange(swiper) {
@@ -50,7 +77,13 @@ export default function IntroModal({ isOpen, onClose, items }) {
             [previousIndex]: false,
         }))
 
-        modalContent.current.scrollTop = 0
+        setSlidersAudio((prevState) => ({
+            ...prevState,
+            // включаем аудио у нового слайда
+            [activeIndex]: true,
+            // выключаем аудио у старого слайда
+            [previousIndex]: false,
+        }))
     }
 
     return (
@@ -95,7 +128,14 @@ export default function IntroModal({ isOpen, onClose, items }) {
                                 <SlideInner>
                                     <SlideCols>
                                         <SlideCol className="player">
-                                            <AudioPlayer src={audio} />
+                                            {audio && (
+                                                <AudioPlayer
+                                                    src={audio}
+                                                    isPlaying={
+                                                        slidersAudio[index]
+                                                    }
+                                                />
+                                            )}
                                         </SlideCol>
 
                                         <SlideCol className="title">
@@ -229,18 +269,6 @@ const Controls = styled.div`
     }
 `
 
-// TODO подключить норм аудиоплеер и добавить ему нужные стили
-const AudioPlayer = styled(Headphones)`
-    svg {
-        position: absolute;
-        left: 1.56vw;
-
-        @media ${DEVICE.laptop} {
-            left: 10px;
-        }
-    }
-`
-
 const StyledContentBlock = styled(ContentBlock)`
     .content > * {
         margin-bottom: 23px;
@@ -332,7 +360,7 @@ const SlideCol = styled.div`
         @media ${DEVICE.laptopS} {
             justify-self: flex-start;
             grid-area: 4 / 1 / 5 / 2;
-            margin-bottom: 230px;
+            margin-bottom: 300px;
         }
     }
 

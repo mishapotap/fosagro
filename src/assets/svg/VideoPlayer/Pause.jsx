@@ -2,10 +2,11 @@ import React from "react"
 import styled from "styled-components"
 import { COLORS } from "../../../constants"
 
-export default function Pause({ width = '22px' }) {
+export default function Pause({ width = "22px", color = COLORS.white }) {
     return (
         <Wrapper
             width={width}
+            color={color}
             viewBox="0 0 22 30"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -17,6 +18,6 @@ export default function Pause({ width = '22px' }) {
 const Wrapper = styled.svg`
     cursor: pointer;
     path {
-        fill: ${COLORS.white};
+        fill: ${({ color }) => color};
     }
 `
