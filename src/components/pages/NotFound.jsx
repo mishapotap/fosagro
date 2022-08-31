@@ -20,6 +20,7 @@ import {
     Layout,
     ReviewModal,
     IntroModal,
+    AudioPlayer,
 } from "../atoms"
 
 import {
@@ -42,6 +43,7 @@ import {
 import { COLORS, FONTS } from "../../constants"
 import { HeadphonesIcon } from "../../assets/svg/static"
 import { TepkVideo } from "../../assets/video"
+import { SpeakerAudio } from "../../assets/audio"
 import { testData } from "../../data"
 
 export default function NotFound() {
@@ -56,6 +58,7 @@ export default function NotFound() {
             <AnimateGlobalContract/>
             <AnimateChart/>
             <AnimateEarth/>
+            <AudioPlayer src={SpeakerAudio} />
             <Text>СТРАНИЦА НЕ НАЙДЕНА! ЭТО 404 ОШИБКА</Text>
             <Title>Hello World!</Title>
             <Subtitle>Start</Subtitle>
