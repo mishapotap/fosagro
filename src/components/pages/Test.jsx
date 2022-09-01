@@ -21,6 +21,7 @@ import {
     ReviewModal,
     IntroModal,
     AudioPlayer,
+    ObjectSlider
 } from "../atoms"
 
 import {
@@ -55,6 +56,8 @@ export default function Test() {
 
     return (
         <Layout page="section">
+            <ObjectSlider color={COLORS.orange}/>
+            <ObjectSlider color={COLORS.red} type="fosagro"/>
             <AnimateGlobalContract/>
             <AnimateChart/>
             <AnimateEarth/>
