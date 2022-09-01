@@ -33,6 +33,7 @@ const CourseLink = styled.div`
     flex-shrink: 0;
     display: flex;
     align-items: center;
+    width: max-content;
 `
 
 const CourseLinkText = styled.div`
