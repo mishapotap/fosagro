@@ -2,9 +2,9 @@ import React from "react"
 import styled from "styled-components"
 import { DEVICE } from "../../constants"
 
-export default function SliderIcons({name, clas}) {
+export default function SliderIcons({name, className}) {
     return(
-        <Container className={clas}>
+        <Container className={className}>
             {
                 name === "aim_2" && 
                 <svg width="42" height="42" viewBox="0 0 42 42" fill="none">
