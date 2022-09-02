@@ -5,6 +5,7 @@ import styled from "styled-components"
 import { Link } from "react-router-dom"
 import { Pagination, Navigation, EffectFade } from "swiper"
 import { Swiper, SwiperSlide } from "swiper/react"
+import { ModalStore } from "../../store"
 import {
     IconAttention,
     IconBlueBtnMail,
@@ -194,7 +195,7 @@ export default function InstructionModal({ isOpen, onClose }) {
                                         </SlideColsInner>
                                     </Slide2Cols>
                                     <StartLearn>
-                                        <Link to={routes.COURSE01}>
+                                        <Link to={routes.COURSE01} onClick={() => ModalStore.closeModal("instruction")}>
                                             <SendButton
                                                 text="Начать обучение"
                                                 size="m"

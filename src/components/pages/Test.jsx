@@ -56,17 +56,19 @@ export default function Test() {
 
     return (
         <Layout page="section">
-            <ObjectSlider color={COLORS.orange}/>
-            <ObjectSlider color={COLORS.red} type="fosagro"/>
-            <AnimateGlobalContract/>
+            {/* <ObjectSlider color={COLORS.orange}/> */}
+            {/* <ObjectSlider color={COLORS.red} type="fosagro"/> */}
+            {/* <AnimateGlobalContract/> */}
             <AnimateChart/>
             <AnimateEarth/>
-            <AudioPlayer src={SpeakerAudio} />
-            <Text>СТРАНИЦА НЕ НАЙДЕНА! ЭТО 404 ОШИБКА</Text>
-            <Title>Hello World!</Title>
-            <Subtitle>Start</Subtitle>
+            <Ecology />
 
-            <button onClick={() => setIsModalOpened(true)}>
+            {/* <AudioPlayer src={SpeakerAudio} /> */}
+            {/* <Text>СТРАНИЦА НЕ НАЙДЕНА! ЭТО 404 ОШИБКА</Text>
+            <Title>Hello World!</Title>
+            <Subtitle>Start</Subtitle> */}
+
+            {/* <button onClick={() => setIsModalOpened(true)}>
                 Открыть modal
             </button>
             <Modal
@@ -106,7 +108,7 @@ export default function Test() {
             <InstructionModal
                 isOpen={isInstrOpened}
                 onClose={() => setIsInstrOpened(false)}
-            />
+            /> */}
 
             <button
                 style={{
@@ -123,7 +125,7 @@ export default function Test() {
                 items={testData.introSlider}
             />
 
-            <DocsLink />
+            {/* <DocsLink />
             <span>{routes.HOME}</span>
             <img src={HeadphonesIcon} alt="mksicon" />
             <Testy style={FONTS.modalTitleWhite}>gfsjgfjdgbfsdjg</Testy>
@@ -143,22 +145,22 @@ export default function Test() {
             <Prev color={COLORS.orange} />
             <NextQuestionButton />
             <BackToChapterButton />
-            <Headphones />
-            <Timer />
-            <StepProgressBar width="608" slidesAmount="7" />
+            <Headphones /> */}
+            {/* <Timer /> */}
+            {/* <StepProgressBar width="608" slidesAmount="7" />
             <StepProgressBar width="608" slidesAmount="5" />
             <StepProgressBar width="608" slidesAmount="8" />
             <StepProgressBar width="608" slidesAmount="3" />
-            <Tree />
-            <InteractiveCircle color={COLORS.green_circle} />
+            <Tree /> */}
+            {/* <InteractiveCircle color={COLORS.green_circle} /> */}
 
-            <Slider
+            {/* <Slider
                 size="m"
                 data={testData.circleSlider[0]}
                 sliderColor={COLORS.green_circle}
                 time={5000}
                 width="50%"
-            />
+            /> */}
 
             <Slider
                 size="s"
@@ -168,10 +170,9 @@ export default function Test() {
                 width="40vw"
             />
 
-            <VideoPlayer src={TepkVideo} />
-            <Ecology />
-            <AnimateScience />
-            <AnimateMap />
+            {/* <VideoPlayer src={TepkVideo} /> */}
+            {/* <AnimateScience /> */}
+            {/* <AnimateMap /> */}
         </Layout>
     )
 }

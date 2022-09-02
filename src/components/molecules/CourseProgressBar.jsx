@@ -18,8 +18,7 @@ export default function CourseProgressBar({value = 20, max = 100, color = COLORS
 const Container = styled.div`
     position: relative;
     height: 100%;
-    padding-left: 40px;
-    margin-right: 40px;
+    margin: 0 40px;
     progress {
         min-width: 100%;
         color: ${props => props.color};
@@ -45,6 +44,7 @@ const Container = styled.div`
 `
 // Кнопка с %
 const Button = styled(AnimatedBlueButton)`
+    margin-left: -40px;
     position: absolute;
     top: 8px;
     left: ${(props) => `${props.value}%`};
