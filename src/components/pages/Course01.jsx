@@ -1,11 +1,13 @@
 import React from "react"
 import styled from "styled-components"
-import timelineData from "../../data/timelineData"
+import { Link } from "react-router-dom"
 import modules from "../modules"
 import { ContentModule, Layout } from "../atoms"
 import { COLORS, DEVICE } from "../../constants"
 import { MenuBackground } from "../../assets/images"
 import {TimelineFooter} from "../organisms"
+import * as routes from "../../constants/routes"
+import timelineData from "../../data/timelineData"
 
 export default function Course01() {
     return (
@@ -14,6 +16,8 @@ export default function Course01() {
             <Container>
                 <CourseNumber>01</CourseNumber>
                 <CourseTitle>Устойчивое развитие - модный термин или реальность, которая касается каждого?</CourseTitle>
+                <Link to={routes.TEST}>НА СТРАНИЦУ TEST (АНИМАЦИИ)</Link>
+                <Link to={routes.TO404}>НА 404 СТРАНИЦУ</Link>
                 <MenuContainer>
                     {timelineData.map((section, index) => (
                         // TODO обернуть компоненты в link и дописать его в data

@@ -3,36 +3,47 @@ import styled, { css } from "styled-components"
 import { TimeIcon } from "../../assets/svg/static";
 import { COLORS } from '../../constants'
 import { borderAnimationM } from "../../constants/animations";
+import { IntroModal } from "../atoms";
+import { testData } from "../../data";
 
 function CourseStepButton({ data }) {
     const { title, bgColor, image, time, description, rotate } = data
     // TODO перенести состояние в mobX
     const [isActive, setIsАсtive] = useState(false);
     const [isCompleted, setIsCompleted] = useState(false);
+    const [isIntroModalOpened, setIsIntroModalOpened] = useState(false)
     return (
-        <Container 
-            isCompleted={isCompleted} 
-            isActive={isActive}
-            bgColor={bgColor} 
-            image={image} 
-            onMouseOver={() => setIsАсtive(true)}
-            onMouseOut={() => setIsАсtive(false)}
-            onClick={() => setIsCompleted(!isCompleted)}>
-            <Circle>
-                {isActive
-                    ? <CircleContent style={{color: COLORS.white}}>
-                        <Title>{title}</Title>
-                        <Description>{description}</Description>
-                        <Time>
-                            <img src={TimeIcon} alt="timeIcon"/>
-                            <TimeText>{time}</TimeText>
-                        </Time>
-                    </CircleContent>
-                    : <Text style={isCompleted === true ? {color: COLORS.white} : {color: COLORS.blue_text}}>{title}</Text>
-                }
-            </Circle>
-            <AnimateCircle rotate={rotate}/>
-        </Container>
+        <>
+            <Container 
+                isCompleted={isCompleted} 
+                isActive={isActive}
+                bgColor={bgColor} 
+                image={image} 
+                onMouseOver={() => setIsАсtive(true)}
+                onMouseOut={() => setIsАсtive(false)}
+                onClick={() => {setIsCompleted(!isCompleted); setIsIntroModalOpened(true)}}>
+                <Circle>
+                    {isActive
+                        ? <CircleContent style={{color: COLORS.white}}>
+                            <Title>{title}</Title>
+                            <Description>{description}</Description>
+                            <Time>
+                                <img src={TimeIcon} alt="timeIcon"/>
+                                <TimeText>{time}</TimeText>
+                            </Time>
+                        </CircleContent>
+                        : <Text style={isCompleted === true ? {color: COLORS.white} : {color: COLORS.blue_text}}>{title}</Text>
+                    }
+                </Circle>
+                <AnimateCircle rotate={rotate}/>
+                
+            </Container>
+            <IntroModal
+            isOpen={isIntroModalOpened}
+            onClose={() => setIsIntroModalOpened(false)}
+            items={testData.introSlider}
+        />
+        </>
     )
 }
 

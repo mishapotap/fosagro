@@ -1,5 +1,7 @@
 export const HOME = '/';
 export const TUTORIAL = '/tutorial';
+export const TEST = '/test';
+export const TO404 = '/404page';
 export const MENU = '/menu';
 export const COURSE01 = '/course/1';
 export const COURSE02 = '/course/2';

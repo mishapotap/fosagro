@@ -110,7 +110,7 @@ export default function Test() {
                 onClose={() => setIsInstrOpened(false)}
             /> */}
 
-            <button
+            {/* <button
                 style={{
                     fontSize: "18px",
                     margin: "20px 0",
@@ -123,7 +123,7 @@ export default function Test() {
                 isOpen={isIntroModalOpened}
                 onClose={() => setIsIntroModalOpened(false)}
                 items={testData.introSlider}
-            />
+            /> */}
 
             {/* <DocsLink />
             <span>{routes.HOME}</span>
