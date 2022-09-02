@@ -10,7 +10,6 @@ import {
     NextQuestionButton,
     BackToChapterButton,
     Timer,
-    StepProgressBar,
     Slider,
     VideoPlayer,
     InstructionModal,
@@ -23,6 +22,8 @@ import {
     AudioPlayer,
     ObjectSlider
 } from "../atoms"
+
+import { StepProgressBar } from "../modules"
 
 import {
     Flower,
@@ -145,10 +146,16 @@ export default function Test() {
             <BackToChapterButton />
             <Headphones />
             <Timer />
-            <StepProgressBar width="608" slidesAmount="7" />
-            <StepProgressBar width="608" slidesAmount="5" />
-            <StepProgressBar width="608" slidesAmount="8" />
-            <StepProgressBar width="608" slidesAmount="3" />
+            <StepProgressBar slidesAmount="2" color={COLORS.green_light}/>
+            <StepProgressBar slidesAmount="3" type="canyons" color={COLORS.brown_light}/>
+            <StepProgressBar slidesAmount="4" type="rocks" />
+            <StepProgressBar slidesAmount="5" type="wave"/>
+            <StepProgressBar slidesAmount="3" type="flowers"/>
+            <StepProgressBar slidesAmount="5" type="tropics" color={COLORS.green}/>
+            <StepProgressBar slidesAmount="4" type="desert"/>
+            <StepProgressBar slidesAmount="3" type="planeWaves"/>
+            <StepProgressBar slidesAmount="4" type="mountains"/>
+            <StepProgressBar slidesAmount="4" type="ground"/>
             <Tree />
             <InteractiveCircle color={COLORS.green_circle} />
 
