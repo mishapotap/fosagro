@@ -17,7 +17,6 @@ export default function ObjectSlider({type = "OOH", color}) {
             <Swiper
                 modules={[Navigation]}
                 loop="true"
-                // onInit={onInit}
                 slidesPerView={1}
                 navigation={{
                     prevEl: ".button-prev",
@@ -48,7 +47,7 @@ export default function ObjectSlider({type = "OOH", color}) {
                             {item.data.map(dataItem => 
                                 <CustomLink href={dataItem.link} key={dataItem.color} target='_blank' className="fosagro">
                                     <LinkContant color={dataItem.color} border={color}>
-                                        <SliderIcons name={dataItem.icon} clas="icon"/>
+                                        <SliderIcons name={dataItem.name} className="icon"/>
                                         <Title>{dataItem.title}</Title>
                                         <Description>{dataItem.description}</Description>
                                     </LinkContant>
@@ -137,7 +136,13 @@ const CustomLink = styled.a`
 
 const SliderButton = styled.button`
     width: 3vw;
+    transition: all 0.3s;
     cursor: pointer;
+
+    &:hover {
+        transform: scale(1.1);
+    }
+
     svg {
         width: 100%;
     }

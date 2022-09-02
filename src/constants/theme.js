@@ -12,6 +12,7 @@ export const COLORS = {
     black: "#000000",
     color_animate: "white",
     red: "#9b0000",
+    grey: "#D9D9D9",
 }
 
 export const FONTS = {
