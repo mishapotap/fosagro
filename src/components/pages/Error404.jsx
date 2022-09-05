@@ -4,8 +4,7 @@ import { Link } from "react-router-dom"
 import { COLORS, DEVICE } from "../../constants"
 import { Layout, SendButton } from "../atoms"
 import * as routes from "../../constants/routes"
-import { InteractiveCircle } from "../../assets/svg"
-import { Waves } from "../../assets/svg/static"
+import { InteractiveCircle, Waves } from "../../assets/svg"
 
 // TODO вставить анимацию волн вместо картинки (когда будет готова)
 
@@ -32,7 +31,7 @@ export default function Error404() {
                     </Content>
                 </Inner>
                 <WavesBlock>
-                    <img src={Waves} alt="волны" />
+                    <Waves/>
                 </WavesBlock>
             </Container>
         </StyledLayout>
