@@ -26,6 +26,7 @@ export default observer(CourseMenuButton)
 
 const Wrapper = styled.div`
     cursor: pointer;
+    flex-shrink: 0;
 `
 
 

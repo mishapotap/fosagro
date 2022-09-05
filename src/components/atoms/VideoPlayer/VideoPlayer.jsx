@@ -8,12 +8,14 @@ import Loader from "../Loader"
 
 // TODO сделать автоматический выход из полноэкранного режима при окончании видео?
 // TODO показать состояние фокуса?
+// TODO проверить работу установки паузы/плэй снаружи
 
 export default function VideoPlayer({
     src,
     width = "914px",
     loop = false,
     poster = null,
+    isPlaying = false,
 }) {
     const [isMuted, _setIsMuted] = useState(false)
     const [isFullscreen, _setIsFullscreen] = useState(false)
@@ -43,7 +45,7 @@ export default function VideoPlayer({
     const videoPlayerContRef = useRef(null)
     const intervalId = useRef(null)
     const mouseMoveTimeoutId = useRef(null)
-    const isPlaying = useRef(false)
+    const isPlayingLocal = useRef(false)
 
     const isFullscreenRef = useRef(false)
     const isLoadedRef = useRef(false)
@@ -93,6 +95,20 @@ export default function VideoPlayer({
             setFormattedFullTime(formatted)
         }
     }, [fullTime])
+
+    useEffect(() => {
+        isPlayingLocal.current = isPlaying
+    }, [isPlaying])
+
+    useEffect(() => {
+        if (isLoaded) {
+            if (isPlaying) {
+                play()
+            } else {
+                pause()
+            }
+        }
+    }, [isPlaying, isLoaded])
 
     // устанавливаем форматированное время для tooltip при изменении времени tooltip
     useEffect(() => {
@@ -216,7 +232,7 @@ export default function VideoPlayer({
 
     // обработка события play видео
     function handleVideoPlay() {
-        isPlaying.current = true
+        isPlayingLocal.current = true
         if (isStart) {
             setIsStart(false)
         }
@@ -232,7 +248,7 @@ export default function VideoPlayer({
 
     // обработка события pause видео
     function handleVideoPause() {
-        isPlaying.current = false
+        isPlayingLocal.current = false
         setIsBigBtnShown(true)
         clearInterval(intervalId.current)
         if (!isControlsShown) setIsControlsShown(true)
@@ -331,9 +347,9 @@ export default function VideoPlayer({
         }
 
         // используем ref, чтобы было актуальное значение в settimeout
-        if (isPlaying.current) {
+        if (isPlayingLocal.current) {
             const timeoutId = setTimeout(() => {
-                if (isControlsShown && isPlaying.current) {
+                if (isControlsShown && isPlayingLocal.current) {
                     setIsControlsShown(false)
                     setIsBottomControlsShown(false)
                 }
@@ -357,7 +373,7 @@ export default function VideoPlayer({
     function togglePlay() {
         if (!isLoadedRef.current) return
 
-        if (isPlaying.current) {
+        if (isPlayingLocal.current) {
             pause()
         } else {
             play()
@@ -450,7 +466,7 @@ export default function VideoPlayer({
                 ) : (
                     <>
                         <VideoControls
-                            isPlaying={isPlaying.current}
+                            isPlaying={isPlayingLocal.current}
                             isMuted={isMuted}
                             isLoaded={isLoaded}
                             isFullscreen={isFullscreen}

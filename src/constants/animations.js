@@ -1,16 +1,5 @@
 import { keyframes } from "styled-components"
 
-export const leavesAnimation = keyframes`
-0% {
-  -webkit-transform: scale(0.5);
-  transform: scale(0.5);
-}
-100% {
-  -webkit-transform: scale(1);
-  transform: scale(1);
-}
-`
-
 export const borderAnimationS = keyframes`
   0% {
     border-radius: 45% 55% 51% 49% / 63% 65% 35% 37%;
@@ -86,7 +75,6 @@ export const CursorAnim = keyframes`
 `
 
 export default {
-    leavesAnimation,
     borderAnimationS,
     borderAnimationM,
     circleStroke,
