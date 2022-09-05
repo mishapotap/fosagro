@@ -31,7 +31,7 @@ export default function Error404() {
                     </Content>
                 </Inner>
                 <WavesBlock>
-                    <AnimateLine/>
+                    <AnimateLine color={COLORS.blue}/>
                 </WavesBlock>
             </Container>
         </StyledLayout>
