@@ -4,8 +4,7 @@ import { Link } from "react-router-dom"
 import { COLORS, DEVICE } from "../../constants"
 import { Layout, SendButton } from "../atoms"
 import * as routes from "../../constants/routes"
-import { InteractiveCircle } from "../../assets/svg"
-import { Waves } from "../../assets/svg/static"
+import { AnimateLine, InteractiveCircle } from "../../assets/svg"
 
 // TODO вставить анимацию волн вместо картинки (когда будет готова)
 
@@ -32,7 +31,7 @@ export default function Error404() {
                     </Content>
                 </Inner>
                 <WavesBlock>
-                    <img src={Waves} alt="волны" />
+                    <AnimateLine color={COLORS.blue}/>
                 </WavesBlock>
             </Container>
         </StyledLayout>
@@ -48,11 +47,6 @@ const WavesBlock = styled.div`
     width: 100%;
     min-height: 80px;
     overflow: hidden;
-
-    img {
-        height: 100%;
-        max-width: none;
-    }
 
     @media ${DEVICE.laptopS} {
         bottom: 2%;

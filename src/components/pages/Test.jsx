@@ -20,7 +20,7 @@ import {
     ReviewModal,
     IntroModal,
     AudioPlayer,
-    ObjectSlider
+    ObjectSlider, 
 } from "../atoms"
 
 import { StepProgressBar } from "../molecules";
@@ -39,7 +39,8 @@ import {
     AnimateMap,
     AnimateEarth,
     AnimateChart,
-    AnimateGlobalContract
+    AnimateGlobalContract, 
+    AnimateLine 
 } from "../../assets/svg"
 import { COLORS, FONTS } from "../../constants"
 import { HeadphonesIcon } from "../../assets/svg/static"
@@ -56,6 +57,7 @@ export default function Test() {
 
     return (
         <Layout page="section">
+        <AnimateLine color={COLORS.red}/>
             <ObjectSlider color={COLORS.orange}/>
             <ObjectSlider color={COLORS.red} type="fosagro"/>
             <AnimateGlobalContract/>

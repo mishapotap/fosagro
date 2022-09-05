@@ -22,6 +22,8 @@ const timelineData = [
             bgColor: COLORS.orange,
             image: CourseButtonImage1,
             rotate: "-64",
+            top: "calc(50% - 150px + 110px)",
+            left: "40px",
         },
     },
     {
@@ -34,6 +36,8 @@ const timelineData = [
             bgColor: COLORS.green_light,
             image: CourseButtonImage2,
             rotate: "-127",
+            top: "calc(50% - 150px + 55px)",
+            left: "240px",
         },
     },
     {
@@ -42,6 +46,8 @@ const timelineData = [
             color: COLORS.green_light,
             position: "top",
             text: "Экология Средневековья",
+            top: "calc(50% - 150px + 120px)",
+            left: "425px",
         },
     },
     {
@@ -50,6 +56,8 @@ const timelineData = [
             color: COLORS.green_light,
             position: "bottom",
             text: "Нужен баланс",
+            top: "calc(50% - 150px + 140px)",
+            left: "495px",
         },
     },
     {
@@ -58,6 +66,8 @@ const timelineData = [
             color: COLORS.green_light,
             position: "top",
             text: "Делать больше, ресурсов тратить меньше",
+            top: "calc(50% - 150px + 145px)",
+            left: "560px",
         },
     },
     {
@@ -66,6 +76,8 @@ const timelineData = [
             color: COLORS.green_light,
             position: "bottom",
             text: "Концепция устойчивого развития - не брать у природы в долг",
+            top: "calc(50% - 150px + 120px)",
+            left: "620px",
         },
     },
     {
@@ -78,6 +90,8 @@ const timelineData = [
             bgColor: COLORS.green_dark,
             image: CourseButtonImage3,
             rotate: "105",
+            top: "calc(50% - 150px + 45px)",
+            left: "675px",
         },
     },
     {
@@ -86,6 +100,8 @@ const timelineData = [
             color: COLORS.green_dark,
             position: "top",
             text: "Все взаимосвязано",
+            top: "calc(50% - 150px + 145px)",
+            left: "860px",
         },
     },
     {
@@ -98,6 +114,8 @@ const timelineData = [
             bgColor: COLORS.brown_light,
             image: CourseButtonImage4,
             rotate: "165",
+            top: "calc(50% - 150px + 80px)",
+            left: "930px",
         },
     },
     {
@@ -106,6 +124,8 @@ const timelineData = [
             color: COLORS.brown_light,
             position: "bottom",
             text: "Наши задачи",
+            top: "calc(50% - 150px + 120px)",
+            left: "1120px",
         },
     },
     {
@@ -114,6 +134,8 @@ const timelineData = [
             color: COLORS.brown_light,
             position: "top",
             text: "Наши результаты, снизили выбросы",
+            top: "calc(50% - 150px + 95px)",
+            left: "1180px",
         },
     },
     {
@@ -122,6 +144,8 @@ const timelineData = [
             color: COLORS.brown_light,
             position: "bottom",
             text: "Наши результаты, снизили сброс сточных вод",
+            top: "calc(50% - 150px + 90px)",
+            left: "1255px",
         },
     },
     {
@@ -130,6 +154,8 @@ const timelineData = [
             color: COLORS.brown_light,
             position: "top",
             text: "Наши результаты, проекты",
+            top: "calc(50% - 150px + 95px)",
+            left: "1340px",
         },
     },
     {
@@ -138,6 +164,8 @@ const timelineData = [
             color: COLORS.brown_light,
             position: "bottom",
             text: "Новые вызовы. Наша сила",
+            top: "calc(50% - 150px + 115px)",
+            left: "1430px",
         },
     },
     {
@@ -150,6 +178,8 @@ const timelineData = [
             bgColor: COLORS.brown,
             image: CourseButtonImage5,
             rotate: "76",
+            top: "calc(50% - 150px + 25px)",
+            left: "1530px",
         },
     },
     {
@@ -158,6 +188,8 @@ const timelineData = [
             color: COLORS.brown,
             position: "top",
             text: "Зеленый стандарт",
+            top: "calc(50% - 150px + 95px)",
+            left: "1710px",
         },
     },
     {
@@ -166,6 +198,8 @@ const timelineData = [
             color: COLORS.brown,
             position: "bottom",
             text: "Кодекс поставщика",
+            top: "calc(50% - 150px + 110px)",
+            left: "1780px",
         },
     },
     {
@@ -178,6 +212,8 @@ const timelineData = [
             bgColor: COLORS.blue,
             image: CourseButtonImage6,
             rotate: "-150",
+            top: "calc(50% - 150px + 60px)",
+            left: "1840px",
         },
     },
 ]
