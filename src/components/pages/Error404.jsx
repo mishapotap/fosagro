@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import { COLORS, DEVICE } from "../../constants"
 import { Layout, SendButton } from "../atoms"
 import * as routes from "../../constants/routes"
-import { AnimateLine, InteractiveCircle } from "../../assets/svg"
+import { InteractiveCircle, AnimateLine } from "../../assets/svg"
 
 // TODO вставить анимацию волн вместо картинки (когда будет готова)
 
@@ -31,7 +31,7 @@ export default function Error404() {
                     </Content>
                 </Inner>
                 <WavesBlock>
-                    <AnimateLine color={COLORS.blue}/>
+                    <AnimateLine/>
                 </WavesBlock>
             </Container>
         </StyledLayout>

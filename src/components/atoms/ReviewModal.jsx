@@ -44,7 +44,7 @@ export default function ReviewModal({ isOpen, onClose }) {
 
         // ------ для проверки
 
-        console.log("data", data)
+        // console.log("data", data)
 
         // eslint-disable-next-line no-new
         return new Promise((resolve, reject) => {
@@ -234,6 +234,10 @@ const Title = styled.div`
     }
 
     @media ${DEVICE.laptop} {
+        font-size: 25px;
+    }
+
+    @media ${DEVICE.mobile} {
         font-size: 23px;
     }
 `
