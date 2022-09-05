@@ -1,13 +1,16 @@
 import React from "react"
 import styled from "styled-components"
-import { COLORS } from "../../constants"
+import { COLORS, DEVICE } from "../../constants"
 import { Prev } from "../../assets/svg"
 
-export default function BackToChapterButton() {
+export default function BackToChapterButton({
+    className,
+    text = "Вернуться в раздел",
+}) {
     return (
-        <Container>
+        <Container className={className}>
             <Prev />
-            <Text>Вернуться в раздел</Text>
+            <Text>{text}</Text>
         </Container>
     )
 }
@@ -31,10 +34,10 @@ const Container = styled.div`
     cursor: pointer;
     & svg {
         margin-right: -20px;
-    }
-    &:hover svg{
         transition: all 0.3s;
-        transform: scale(1.3);
+    }
+    &:hover svg {
+        transform: scale(1.15);
     }
 `
 
@@ -46,4 +49,8 @@ const Text = styled.span`
     font-weight: 400;
     font-size: 18px;
     color: ${COLORS.blue};
+
+    @media ${DEVICE.laptopM} {
+        font-size: 16px;
+    }
 `

@@ -1,13 +1,13 @@
 import React from "react"
-import styled, { css } from "styled-components" 
-import { COLORS } from '../../constants'
+import styled, { css } from "styled-components"
+import { COLORS, DEVICE } from '../../constants'
 import { borderAnimationS, borderAnimationM } from "../../constants/animations"
 
 export default function AnimatedBlueButton({children, rotate = 0, size, onClick, className}) {
   return (
     <Container className={className} background={COLORS.blue} hover={COLORS.white} size={size} onClick={onClick}>
       <Circle rotate={rotate} color={COLORS.white}>
-        <Content>{children}</Content> 
+        <Content>{children}</Content>
       </Circle>
       <AnimateCircle rotate={rotate}/>
     </Container>
@@ -68,8 +68,13 @@ const Container = styled.div`
     }
   `}
   ${(props) => props.size === "s" && css`
-    width: 58px;
-    height: 58px;
+    width: 3vw;
+    height: 3vw;
+
+    @media ${DEVICE.laptop} {
+      width: 40px;
+      height: 40px;
+    }
     &:hover {
       ${AnimateCircle} {
         background: ${props.hover};
@@ -87,18 +92,23 @@ const Container = styled.div`
     ${AnimateCircle} {
       top: 0;
       left: 0;
-      width: 58px;
-      height: 56px;
+      width: 100%;
+      height: 96%;
       animation: ${borderAnimationS} 10s linear infinite;
     }
     ${Circle} {
-      width: 58px;
-      height: 56px;
+      width: 100%;
+      height: 96%;
     }
     ${Content} {
       position: relative;
-      top: 3px;
-      left: 3px;
+      top: 4%;
+      left: 6%;
+      width: 50%;
+
+      svg {
+        max-width: 100%;
+      }
     }
   `}
   ${AnimateCircle} {
