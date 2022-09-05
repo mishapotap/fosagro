@@ -5,6 +5,7 @@ import * as routes from "../../constants/routes"
 import { DEVICE, COLORS } from "../../constants"
 import { Fosagro, FosagroColored } from "../../assets/svg"
 import { CourseMenuButton } from "../molecules"
+import { ModalStore } from "../../store"
 
 // TODO сделать ссылки RU EN рабочими
 // TODO сделать фиксированный хэдэр при скролле на моб?
@@ -60,7 +61,7 @@ export default function Header({
                 {course && <CourseMenuButton colored={colored}/>}
                 {goBackToMain && (
                     <BackToMain>
-                        <Link to={routes.HOME}>Вернуться на главную</Link>
+                        <Link to={routes.HOME} onClick={() => ModalStore.closeModal("menu")}>Вернуться на главную</Link>
                     </BackToMain>
                 )}
             </HeaderInner>
