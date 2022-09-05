@@ -41,9 +41,9 @@ export default function StepProgressBar({
 
     return (
         <>
-            <StepProgressBarWrap width={width}>
+            <Wrap width={width}>
                 <ProgressPercent color={color}>{Math.round(progressWidth)}%</ProgressPercent>
-                <StepProgressBarContainer>
+                <Container>
                     <StepProgressBarImages 
                         type={type}
                         progressWidth={progressWidth}
@@ -54,8 +54,8 @@ export default function StepProgressBar({
                         }
                     </ProgressPoints>
                     <ProgressLine color={color} progressWidth={progressWidth}/>
-                </StepProgressBarContainer>
-            </StepProgressBarWrap>
+                </Container>
+            </Wrap>
             <Button type="button" onClick={() => increaseProgress()}>Увеличить!</Button>
         </>
     )
@@ -65,7 +65,7 @@ const Button = styled.button`
     display: block;
 `
 
-const StepProgressBarWrap = styled.div`
+const Wrap = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -86,7 +86,7 @@ const ProgressPercent = styled.span`
     color: ${(props) => props.color};
 `
 
-const StepProgressBarContainer = styled.div`
+const Container = styled.div`
     position: relative;
     width: calc(100% - 45px);
 `

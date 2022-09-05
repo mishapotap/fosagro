@@ -23,8 +23,7 @@ import {
     ObjectSlider
 } from "../atoms"
 
-import { StepProgressBar } from "../modules"
-
+import { StepProgressBar } from "../molecules";
 import {
     Flower,
     Close,
