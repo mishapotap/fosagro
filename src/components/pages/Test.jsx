@@ -46,7 +46,7 @@ import { COLORS, FONTS } from "../../constants"
 import { HeadphonesIcon } from "../../assets/svg/static"
 import { TepkVideo } from "../../assets/video"
 import { SpeakerAudio } from "../../assets/audio"
-import { testData } from "../../data"
+import { testData, introModalData } from "../../data"
 
 export default function Test() {
     const [isInstrOpened, setIsInstrOpened] = useState(false)
@@ -122,7 +122,7 @@ export default function Test() {
             <IntroModal
                 isOpen={isIntroModalOpened}
                 onClose={() => setIsIntroModalOpened(false)}
-                items={testData.introSlider}
+                items={introModalData.introModal1}
             />
 
             <DocsLink />

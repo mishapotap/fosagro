@@ -1,3 +1,11 @@
-// eslint-disable-next-line import/prefer-default-export
 export { default as map } from "./map.png"
 export { default as bigMap } from "./bigMap.jpg"
+export { default as CourseButtonImage1 } from "./courseButton1.png"
+export { default as CourseButtonImage2 } from "./courseButton2.png"
+export { default as CourseButtonImage3 } from "./courseButton3.png"
+export { default as CourseButtonImage4 } from "./courseButton4.png"
+export { default as CourseButtonImage5 } from "./courseButton5.png"
+export { default as CourseButtonImage6 } from "./courseButton6.png"
+export { default as IntroModalOne21 } from "./introModal2_1.jpg"
+export { default as IntroModalOne22 } from "./introModal2_2.jpg"
+export { default as IntroModalOne23 } from "./introModal2_3.jpg"

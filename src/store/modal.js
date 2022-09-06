@@ -1,13 +1,14 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable } from "mobx"
 
 class Modal {
     isVisible = {
         instruction: false,
         menu: false,
         mail: false,
-    };
+        intro: false,
+    }
 
-    constructor () {
+    constructor() {
         makeAutoObservable(this)
     }
 

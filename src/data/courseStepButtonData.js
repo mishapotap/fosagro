@@ -5,7 +5,7 @@ import {
     CourseButtonImage4,
     CourseButtonImage5,
     CourseButtonImage6,
-} from "../assets/images"
+} from "../assets/images/Course1"
 import { COLORS } from "../constants"
 
 const courseStepButtonData1 = [

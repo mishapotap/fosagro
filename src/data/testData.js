@@ -1,5 +1,4 @@
 import { CourseSlider1, CourseSlider2, CourseSlider3 } from "../assets/images"
-import { SpeakerAudio, SpeakerAudio2 } from "../assets/audio"
 
 const circleSlider = [
     [
@@ -137,8 +136,7 @@ const coursesTests = {
                 ],
             },
         ],
-    }
-
+    },
 }
 
 // TODO изменить логику, чтобы подходило не только к тестам с пятью вопросами?
@@ -169,18 +167,8 @@ const courseTestProgressData = [
     },
 ]
 
-const introSlider = [
-    {
-        text: `Устойчивое развитие - термин <span class="accent">популярный</span>. Его обсуждают практически на всех уровнях, во многих сферах. Что означает понятие устойчивого развития для "ФосАгро"?`,
-        images: circleSlider[0],
-        audio: SpeakerAudio,
-        note: "Каждый из нас может внести свой вклад. Любое предложение по улучшению производства может привести к большому инновационному рывку. Все мы немного изобретатели!",
-    },
-    {
-        text: `В этом блоке вместе с вами мы разберемся, как появилась концепция «Устойчивое развитие», сконцентрируем внимание на той деятельности, которую ведет компания в этой области.`,
-        images: circleSlider[1],
-        audio: SpeakerAudio2,
-    },
-]
-
-export default { circleSlider, introSlider, coursesTests, courseTestProgressData }
+export default {
+    circleSlider,
+    coursesTests,
+    courseTestProgressData,
+}

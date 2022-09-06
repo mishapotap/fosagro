@@ -139,6 +139,6 @@ const SVG = styled.svg`
     }
 
     .mainLine {
-        animation: ${transform(0, '-10%')} 50s linear infinite;
+        /* animation: ${transform(0, '-10%')} 50s linear infinite; */
     }
 `
