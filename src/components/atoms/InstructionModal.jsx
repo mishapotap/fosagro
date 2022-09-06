@@ -21,6 +21,7 @@ import * as routes from "../../constants/routes"
 import DocsLink from "./DocsLink"
 import Modal from "./Modal"
 import Layout from "./Layout"
+import { ModalStore } from "../../store"
 
 // eslint-disable-next-line
 import "swiper/css"
@@ -194,7 +195,7 @@ export default function InstructionModal({ isOpen, onClose }) {
                                         </SlideColsInner>
                                     </Slide2Cols>
                                     <StartLearn>
-                                        <Link to={routes.COURSE01}>
+                                        <Link to={routes.COURSE01} onClick={() => ModalStore.closeModal("instruction")}>
                                             <SendButton
                                                 text="Начать обучение"
                                                 size="m"

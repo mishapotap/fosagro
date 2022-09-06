@@ -7,6 +7,7 @@ import { MenuButton } from "../molecules"
 import { MenuProgressBar, Layout, Modal } from "../atoms"
 import { DEVICE } from "../../constants"
 import { MenuBackground } from "../../assets/images"
+import { ModalStore } from "../../store"
 
 export default function MenuModal({isOpen, onClose}) {
     
@@ -17,7 +18,7 @@ export default function MenuModal({isOpen, onClose}) {
                     <MenuWrap>
                         {menuButtonData.map((item) => (
                             <MenuButtonContainer  key={item.index}>
-                                <Link to={item.href}>
+                                <Link to={item.href} onClick={() => ModalStore.closeModal("menu")}>
                                     <MenuButton
                                         index={item.index}
                                         text={item.text}
