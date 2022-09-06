@@ -41,21 +41,19 @@ export default function StepProgressBar({
 
     return (
         <>
-            <Wrap width={width}>
-                <ProgressPercent color={color}>{Math.round(progressWidth)}%</ProgressPercent>
-                <Container>
-                    <StepProgressBarImages 
-                        type={type}
-                        progressWidth={progressWidth}
-                    />
-                    <ProgressPoints>
-                        {
-                            points.map(item => <Point position={item.position} key={item.key} colorPoint={item.colorPoint}/>)
-                        }
-                    </ProgressPoints>
-                    <ProgressLine color={color} progressWidth={progressWidth}/>
-                </Container>
-            </Wrap>
+            <Container width={width}>
+                <StepProgressBarImages 
+                    type={type}
+                    progressWidth={progressWidth}
+                />
+                <ProgressPoints>
+                    {
+                        points.map(item => <Point position={item.position} key={item.key} colorPoint={item.colorPoint}/>)
+                    }
+                </ProgressPoints>
+                <ProgressLine color={color} progressWidth={progressWidth}/>
+                <ProgressPercent color={color} progressWidth={progressWidth}>{Math.round(progressWidth)}%</ProgressPercent>
+            </Container>
             <Button type="button" onClick={() => increaseProgress()}>Увеличить!</Button>
         </>
     )
@@ -65,30 +63,14 @@ const Button = styled.button`
     display: block;
 `
 
-const Wrap = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
+const Container = styled.div`
+    position: relative;
+    max-width: fit-content;
     width: ${(props) => props.width};
 
     @media ${DEVICE.mobile} {
         width: 100%;
     }
-`
-
-const ProgressPercent = styled.span`
-    padding-bottom: 17px;
-    font-family: 'CalibriRegular';
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 25px;
-
-    color: ${(props) => props.color};
-`
-
-const Container = styled.div`
-    position: relative;
-    width: calc(100% - 45px);
 `
 
 const ProgressPoints = styled.div`
@@ -138,4 +120,23 @@ const Point = styled.div`
         css`
            border: 1px solid ${props.colorPoint};
         `}
+`
+
+const ProgressPercent = styled.span`
+    position: absolute;
+    bottom: 0;
+    left: calc(${(props) => props.progressWidth}% - 19px);
+    ${(props) => props.progressWidth === 100 &&
+        css`
+           left: unset;
+           right: 0;
+        `}
+    
+    
+    font-family: 'CalibriRegular';
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 25px;
+
+    color: ${(props) => props.color};
 `
