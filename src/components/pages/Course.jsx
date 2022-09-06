@@ -31,7 +31,7 @@ function Course() {
                         <AnimateLine color={COLORS.white}/>
                     </Line>
                         {dataLine.timeline.map((section, index) => (
-                            section.value.title === "Введение" 
+                            section.value.modal 
                             // eslint-disable-next-line react/no-array-index-key
                             ?   <ModalWrapper key={index}> 
                                     <Button onClick={() => ModalStore.showModal("intro")}>

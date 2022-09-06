@@ -20,6 +20,7 @@ const timelineData = {
             {
                 slug: "courseStepButton",
                 value: {
+                    modal: true,
                     title: "Введение",
                     description:
                         "Краткая выжимка в несколько слов о чем будет в разделе",
@@ -230,6 +231,7 @@ const timelineData = {
             {
                 slug: "courseStepButton",
                 value: {
+                    modal: true,
                     title: "Введение",
                     description:
                         "Предостережения об ограниченности ресурсов планеты.",

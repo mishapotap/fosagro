@@ -34,6 +34,12 @@ function CourseStepButton({ data }) {
                 }
             </Circle>
             <AnimateCircle rotate={rotate}/>
+            { data.modal  
+                ? <>
+                    <Point className="firstPoint"/>
+                    <Point className="lastPoint"/>
+                </> 
+                : null }
         </Container>
     )
 }
@@ -78,6 +84,23 @@ const CircleContent = styled.div`
     align-items: center;
 `
 
+const Point = styled.div`
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.7);
+    &.firstPoint {
+        top: -20px;
+        left: 0;
+    }
+
+    &.lastPoint {
+        top: -35px;
+        left: 30px;
+    }
+`
+
 const Container = styled.div`
     position: absolute;
     top: ${(props) => props.top};
@@ -107,7 +130,12 @@ const Container = styled.div`
             min-height: 160px;
             width: 240px;
             transform: scale(0.6);
-        }`
+        }
+        ${Point} {
+            background-color: ${props.bgColor};
+            opacity: 0.5;
+        }
+        `
   }
   ${(props) => 
     props.isCompleted === true &&
@@ -118,6 +146,10 @@ const Container = styled.div`
         }
         ${Circle} {
             background-color: ${props.bgColor};
+        }
+        ${Point} {
+            background-color: ${props.bgColor};
+            opacity: 0.5;
         }`
     }
 `;
