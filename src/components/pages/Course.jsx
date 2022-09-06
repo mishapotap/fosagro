@@ -1,30 +1,57 @@
 import React from "react"
 import styled from "styled-components"
+import { useParams } from "react-router"
+import { Link } from "react-router-dom"
+import { observer } from "mobx-react-lite"
+import { ModalStore } from "../../store"
 import timelineData from "../../data/timelineData"
 import modules from "../modules"
-import { ContentModule, Layout } from "../atoms"
+import { ContentModule, Layout, IntroModal } from "../atoms"
 import { COLORS, DEVICE } from "../../constants"
 import { MenuBackground } from "../../assets/images"
 import {TimelineFooter} from "../organisms"
 import { AnimateLine } from "../../assets/svg"
+import { introModalData } from "../../data"
 
-export default function Course01() {
+function Course() {
+    const { id } = useParams();
+    const dataLine = timelineData[`course${id}`];
+    const dataModal = introModalData[`introModal${id}`];
+
     return (
         <Layout page="course">
             <Background/>
             <Container>
                 <Wrapper>
-                    <CourseNumber>01</CourseNumber>
-                    <CourseTitle>Устойчивое развитие - модный термин или реальность, которая касается каждого?</CourseTitle>
+                    <CourseNumber>{dataLine.id}</CourseNumber>
+                    <CourseTitle>{dataLine.title}</CourseTitle>
                 </Wrapper>
                 <MenuContainer>
                     <Line>
                         <AnimateLine color={COLORS.white}/>
                     </Line>
-                        {timelineData.map((section, index) => (
-                        // TODO обернуть компоненты в link и дописать его в data
-                        // eslint-disable-next-line react/no-array-index-key
-                        <ContentModule key={index} data={section} modules={modules.base} style={{top: "0", left: "0"}}/>
+                        {dataLine.timeline.map((section, index) => (
+                            section.value.title === "Введение" 
+                            // eslint-disable-next-line react/no-array-index-key
+                            ?   <ModalWrapper key={index}> 
+                                    <Button onClick={() => ModalStore.showModal("intro")}>
+                                        <ContentModule  data={section} 
+                                            modules={modules.base} 
+                                        />
+                                    </Button>
+                                    <IntroModal
+                                        isOpen={ModalStore.isVisible.intro}
+                                        onClose={() => ModalStore.closeModal("intro")}
+                                        // TODO прописать data (картинки и аудио)
+                                        items={dataModal}
+                                    />
+                                </ModalWrapper>
+                            // TODO прописать урлы для ликов
+                            // eslint-disable-next-line react/no-array-index-key
+                            :   <Link to="/" key={index}>
+                                    <ContentModule data={section} modules={modules.base}/>
+                                </Link>
+                        
                     ))}
                 </MenuContainer>
                 <TimelineFooter />
@@ -32,6 +59,8 @@ export default function Course01() {
         </Layout>
     )
 }
+
+export default observer(Course)
 
 const Background = styled.div`
     position: absolute;
@@ -122,3 +151,7 @@ const Line = styled.div`
     max-width: 2100px;
     overflow: hidden;
 `
+
+const ModalWrapper = styled.div``
+
+const Button = styled.button``
