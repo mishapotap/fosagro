@@ -5,7 +5,7 @@ import { COLORS } from '../../constants'
 import { borderAnimationM } from "../../constants/animations";
 
 function CourseStepButton({ data }) {
-    const { title, bgColor, image, time, description, rotate } = data
+    const { title, bgColor, image, time, description, rotate, top, left } = data
     // TODO перенести состояние в mobX
     const [isActive, setIsАсtive] = useState(false);
     const [isCompleted, setIsCompleted] = useState(false);
@@ -15,6 +15,8 @@ function CourseStepButton({ data }) {
             isActive={isActive}
             bgColor={bgColor} 
             image={image} 
+            top={top}
+            left={left}
             onMouseOver={() => setIsАсtive(true)}
             onMouseOut={() => setIsАсtive(false)}
             onClick={() => setIsCompleted(!isCompleted)}>
@@ -77,7 +79,9 @@ const CircleContent = styled.div`
 `
 
 const Container = styled.div`
-    position: relative;
+    position: absolute;
+    top: ${(props) => props.top};
+    left: ${(props) => props.left};
     width: fit-content;
     height: fit-content;
     transition: all 0.3s;

@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import { COLORS } from "../../constants";
 
 function CourseStepPoint({data}) {
-    const { color, text, position } = data
+    const { color, text, position, top, left } = data
     // TODO перенести состояние в mobX
     const [isActive, setIsАсtive] = useState(false);
     const [isCompleted, setIsCompleted] = useState(false);;
@@ -13,6 +13,8 @@ function CourseStepPoint({data}) {
             color={color}
             isCompleted={isCompleted} 
             isActive={isActive}
+            top={top}
+            left={left}
             onMouseOver={() => setIsАсtive(true)}    
             onMouseOut={() => setIsАсtive(false)}
             onClick={() => setIsCompleted(!isCompleted)}>
@@ -97,7 +99,9 @@ const PointContainer = styled.div`
 `
 
 const Container = styled.div`
-    position: relative;
+    position: absolute;
+    top: ${(props) => props.top};
+    left: ${(props) => props.left};
     display: block;
     cursor: pointer;
     ${(props) => (props.isActive === true || props.isCompleted === true) &&

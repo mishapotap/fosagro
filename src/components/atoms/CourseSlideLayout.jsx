@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { InteractiveCircle, Waves } from "../../assets/svg"
+import { InteractiveCircle, AnimateLine } from "../../assets/svg"
 import Layout from "./Layout"
 import { MailButton } from "../molecules"
 import { COLORS, DEVICE } from "../../constants"
@@ -18,7 +18,7 @@ export default function CourseSlideLayout({
                 <StyledInterCircle color={sectColor} />
             </InterCircleCont>
             <WavesContainer>
-                <Waves color={sectColor} />
+                <AnimateLine color={sectColor} />
             </WavesContainer>
             <Content>
                 {children}

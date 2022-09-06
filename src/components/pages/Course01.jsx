@@ -6,19 +6,25 @@ import { ContentModule, Layout } from "../atoms"
 import { COLORS, DEVICE } from "../../constants"
 import { MenuBackground } from "../../assets/images"
 import {TimelineFooter} from "../organisms"
+import { AnimateLine } from "../../assets/svg"
 
 export default function Course01() {
     return (
         <Layout page="course">
             <Background/>
             <Container>
-                <CourseNumber>01</CourseNumber>
-                <CourseTitle>Устойчивое развитие - модный термин или реальность, которая касается каждого?</CourseTitle>
+                <Wrapper>
+                    <CourseNumber>01</CourseNumber>
+                    <CourseTitle>Устойчивое развитие - модный термин или реальность, которая касается каждого?</CourseTitle>
+                </Wrapper>
                 <MenuContainer>
-                    {timelineData.map((section, index) => (
+                    <Line>
+                        <AnimateLine color={COLORS.white}/>
+                    </Line>
+                        {timelineData.map((section, index) => (
                         // TODO обернуть компоненты в link и дописать его в data
                         // eslint-disable-next-line react/no-array-index-key
-                        <ContentModule key={index} data={section} modules={modules.base} />
+                        <ContentModule key={index} data={section} modules={modules.base} style={{top: "0", left: "0"}}/>
                     ))}
                 </MenuContainer>
                 <TimelineFooter />
@@ -45,11 +51,20 @@ const Container = styled.div`
     /* justify-content: space-between; */
 `
 
+const Wrapper = styled.div`
+    padding: 45px 0 0 60px;
+
+    @media ${DEVICE.laptopM} {
+        padding: 0 0 0 calc(3vw - 20px);
+    }
+`
+
 const CourseNumber = styled.div`
     font-family: "FocoBold";
     font-size: 70px;
     line-height: 88px;
     color: ${COLORS.white};
+
     @media ${DEVICE.laptopS} {
         font-size: 60px;
         line-height: 78px;
@@ -65,11 +80,14 @@ const CourseNumber = styled.div`
 `
 
 const CourseTitle = styled.div`
+    max-width: 65%;
     font-family: "FocoBold";
     font-size: 43px;
     line-height: 54px;
     color: ${COLORS.blue};
+
     @media ${DEVICE.laptopS} {
+        max-width: 100%;
         font-size: 33px;
         line-height: 44px;
     }
@@ -84,12 +102,23 @@ const CourseTitle = styled.div`
 `
 
 const MenuContainer = styled.div`
+    position: relative;
     display: flex;
     flex: 1;
     justify-content: space-between;
     align-items: center;
+    margin: 0 -20px;
     overflow-x: auto;
     ::-webkit-scrollbar {
         display: none;
     }
+`
+
+const Line = styled.div`
+    z-index: -1;
+    position: absolute;
+    top: calc(50% - 150px);
+    left: 0;
+    max-width: 2100px;
+    overflow: hidden;
 `
