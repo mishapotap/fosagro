@@ -1,9 +1,9 @@
 import React from "react"
-import styled from "styled-components"
+import styled, { css, keyframes } from "styled-components"
 import { COLORS, DEVICE } from "../../constants"
 import { TimerNumberBg, TimerNumberBgTop } from "../../assets/svg/static"
 
-export default function Timer() {
+export default function Timer({ makeAnim = false }) {
     function getDayOfYear() {
         const now = new Date()
         const start = new Date(now.getFullYear(), 0, 0)
@@ -23,17 +23,20 @@ export default function Timer() {
 
     // TODO Сделать чтобы компонент был observable (следили за состоянием дня) Не обновляется в 00:00
     return (
-        <Container>
-            {numbers.map(({ number, id }) => (
-                <NumberContainer key={id}>
-                    <Number>{number}</Number>
-                </NumberContainer>
-            ))}
+        <Container className="timer" makeAnim={makeAnim}>
+            <TimerTitle>День года:</TimerTitle>
+            <TimerNumbers>
+                {numbers.map(({ number, id }) => (
+                    <NumberContainer key={id}>
+                        <Number>{number}</Number>
+                    </NumberContainer>
+                ))}
+            </TimerNumbers>
         </Container>
     )
 }
 
-const Container = styled.div`
+const TimerNumbers = styled.div`
     display: flex;
 
     > div {
@@ -43,6 +46,43 @@ const Container = styled.div`
             margin-right: 0;
         }
     }
+`
+
+const Appear = keyframes`
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+`
+
+const TimerTitle = styled.div`
+    font-family: "FocoBold", sans-serif;
+    font-size: 1.5vw;
+    color: ${COLORS.blue};
+    text-align: center;
+
+    margin-bottom: 20px;
+
+    @media ${DEVICE.laptop} {
+        font-size: 20px;
+    }
+`
+
+const Container = styled.div`
+    ${({ makeAnim }) =>
+        makeAnim &&
+        css`
+            ${TimerTitle} {
+                animation: ${Appear} 1s both;
+            }
+
+            ${TimerNumbers} {
+                animation: ${Appear} 1s both 1s;
+            }
+        `}
 `
 
 const Number = styled.div`

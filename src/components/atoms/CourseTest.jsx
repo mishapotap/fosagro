@@ -15,7 +15,6 @@ import SendButton from "./SendButton"
 import { MailButton } from "../molecules"
 import { borderAnimationM } from "../../constants/animations"
 import CourseSlideLayout from "./CourseSlideLayout"
-import BackToChapterButton from "./BackToChapterButton"
 
 // eslint-disable-next-line
 import "swiper/css"
@@ -76,7 +75,6 @@ export default function CourseTest({ courseId = 1 }) {
 
     // TODO нормальные получать значения
     const nextCourseLink = "/course/3"
-    const chapterLink = "/"
 
     // (ключ - номер вопроса, значение - id инпута)
     const [userAnswers, setUserAnswers] = useState({})
@@ -140,7 +138,7 @@ export default function CourseTest({ courseId = 1 }) {
         })
 
         setRightAnswCount(count)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userAnswers, questions])
 
     useEffect(() => {
@@ -202,12 +200,9 @@ export default function CourseTest({ courseId = 1 }) {
     }
 
     return (
-        <StyledLayout>
+        <StyledLayout type="test">
             <Columns>
                 <FirstColumn>
-                    <Link to={chapterLink} className="back-to-chapter">
-                        <BackToChapterButton />
-                    </Link>
                     <CSSTransition
                         in={showStart}
                         nodeRef={startRef}
@@ -418,7 +413,7 @@ const Columns = styled.div`
 `
 
 const StyledMobileTree = styled(Tree)`
-    max-width: 80%;
+    max-width: 60%;
     margin: 0 auto 30px;
 
     @media ${DEVICE.mobile} {
@@ -548,7 +543,7 @@ const StyledTitle = styled(Title)``
 
 const StyledTree = styled(Tree)`
     max-height: 100%;
-    height: 90%;
+    height: 100%;
     padding-bottom: 2vh;
     padding-right: 25px;
 `
@@ -583,10 +578,27 @@ const TestNav = styled.div`
 `
 
 const FirstColumn = styled.div`
-    max-width: 100%;
+    flex: 0 1 56%;
+    max-width: 56%;
     height: 100%;
-    flex: 0 1 50%;
-    max-width: 50%;
+
+    overflow-y: auto;
+    padding-right: 10px;
+
+    @media ${DEVICE.laptopS} {
+        overflow-y: visible;
+        padding-right: 0;
+    }
+
+    &::-webkit-scrollbar {
+        width: 3px;
+        background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 82, 155, 0.6);
+        border-radius: 2em;
+    }
 
     @media ${DEVICE.laptopS} {
         flex: 0 1 100%;
@@ -597,7 +609,7 @@ const FirstColumn = styled.div`
 const SecondColumn = styled.div`
     max-height: 100%;
     height: 100%;
-    flex: 0 1 50%;
+    flex: 0 1 44%;
 
     display: flex;
     align-items: flex-end;
@@ -744,7 +756,6 @@ const RadioBox = styled.div`
         content: "";
         display: none;
 
-
         @media ${DEVICE.laptopM} {
             width: 10px;
             height: 10px;
@@ -822,31 +833,19 @@ const FeedbackText = styled.p`
 `
 
 const StyledLayout = styled(CourseSlideLayout)`
-    .back-to-chapter {
-        margin-bottom: 6.8vh;
-
-        @media ${DEVICE.laptop} {
-            margin-bottom: 30px;
-        }
-    }
-
-    .continue-learn {
-        margin-right: -7.8vw;
-
-        @media ${DEVICE.laptopS} {
-            margin-right: 0;
-        }
-    }
-    .test, .final {
+    .test,
+    .final {
         transition: 0.25s;
         opacity: 0;
     }
 
-    .test-enter-done, .final-enter-done {
+    .test-enter-done,
+    .final-enter-done {
         opacity: 1;
     }
 
-    .test-exit, .final-exit {
+    .test-exit,
+    .final-exit {
         opacity: 0;
     }
 

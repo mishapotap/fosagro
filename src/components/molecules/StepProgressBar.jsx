@@ -5,9 +5,9 @@ import { COLORS, DEVICE } from "../../constants"
 
 export default function StepProgressBar({
         // width это ширина всего контейнера с прогрессом (включая проценты)
-        width = "50%", 
-        slidesAmount, 
-        color = COLORS.blue, 
+        width = "50%",
+        slidesAmount,
+        color = COLORS.blue,
         type = "grass"}) {
 
     const oneSlideValue = 100 / slidesAmount
@@ -25,7 +25,7 @@ export default function StepProgressBar({
 
     const [points, setPoints] = useState(pointArray);
 
-    const increaseProgress = () => { 
+    const increaseProgress = () => {
         const colorTest = color;
         if(progressSlides <= slidesAmount - 1) {
             setProgressSlides(progressSlides + 1);
@@ -41,8 +41,8 @@ export default function StepProgressBar({
 
     return (
         <>
-            <Container width={width}>
-                <StepProgressBarImages 
+            <Container width={width} className="step-progress-bar">
+                <StepProgressBarImages
                     type={type}
                     progressWidth={progressWidth}
                 />
@@ -131,8 +131,8 @@ const ProgressPercent = styled.span`
            left: unset;
            right: 0;
         `}
-    
-    
+
+
     font-family: 'CalibriRegular';
     font-weight: 400;
     font-size: 16px;

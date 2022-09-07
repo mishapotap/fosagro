@@ -16,6 +16,7 @@ export default function VideoPlayer({
     loop = false,
     poster = null,
     isPlaying = false,
+    className,
 }) {
     const [isMuted, _setIsMuted] = useState(false)
     const [isFullscreen, _setIsFullscreen] = useState(false)
@@ -448,7 +449,10 @@ export default function VideoPlayer({
     }
 
     return (
-        <Container className={isFullscreen && "fullscreen"} maxWidth={width}>
+        <Container
+            className={`${isFullscreen ? "fullscreen" : ""} ${className || ""} video-player`}
+            maxWidth={width}
+        >
             <VideoPlayerContainer
                 onClick={handleVideoContClick}
                 style={videoContStyle}
