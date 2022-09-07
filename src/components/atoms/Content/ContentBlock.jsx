@@ -8,7 +8,7 @@ export default function ContentBlock({ children, color, className }) {
     return (
         <Container className={className}>
             <Decor color={color} />
-            <Content className="content">{children}</Content>
+            <Content className="block-content">{children}</Content>
         </Container>
     )
 }

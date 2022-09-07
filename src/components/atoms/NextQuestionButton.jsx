@@ -41,6 +41,14 @@ const Container = styled.div`
     & svg {
         margin-left: -20px;
         transition: all 0.3s;
+
+        @media ${DEVICE.laptopM} {
+            width: 52px;
+        }
+
+        @media ${DEVICE.laptopS} {
+            width: 60px;
+        }
     }
     &:hover svg {
         transform: scale(1.15);
@@ -58,6 +66,10 @@ const Text = styled.span`
     color: ${COLORS.blue};
 
     @media ${DEVICE.laptopM} {
+        font-size: 14px;
+    }
+
+    @media ${DEVICE.laptopS} {
         font-size: 16px;
     }
 `
