@@ -1,19 +1,16 @@
 import React from "react"
 import styled from "styled-components"
 import { useParams } from "react-router"
-import { Link } from "react-router-dom"
-import { observer } from "mobx-react-lite"
-import { ModalStore } from "../../store"
 import timelineData from "../../data/timelineData"
-import modules from "../modules"
-import { ContentModule, Layout, IntroModal } from "../atoms"
+import { Layout } from "../atoms"
+import { CourseStep } from "../molecules"
 import { COLORS, DEVICE } from "../../constants"
 import { MenuBackground } from "../../assets/images"
 import {TimelineFooter} from "../organisms"
 import { AnimateLine } from "../../assets/svg"
 import { introModalData } from "../../data"
 
-function Course() {
+export default function Course() {
     const { id } = useParams();
     const dataLine = timelineData[`course${id}`];
     const dataModal = introModalData[`introModal${id}`];
@@ -33,28 +30,8 @@ function Course() {
                     <Line width={dataLine.width}>
                         <AnimateLine color={COLORS.white}/>
                     </Line>
-                        {dataLine.timeline.map((section, index) => (
-                            section.value.modal 
-                            // eslint-disable-next-line react/no-array-index-key
-                            ?   <ModalWrapper key={index}> 
-                                    <Button onClick={() => ModalStore.showModal("intro")}>
-                                        <ContentModule  data={section} 
-                                            modules={modules.base} 
-                                        />
-                                    </Button>
-                                    <IntroModal
-                                        isOpen={ModalStore.isVisible.intro}
-                                        onClose={() => ModalStore.closeModal("intro")}
-                                        // TODO прописать data (картинки и аудио)
-                                        items={dataModal}
-                                    />
-                                </ModalWrapper>
-                            // TODO прописать урлы для ликов
-                            // eslint-disable-next-line react/no-array-index-key
-                            :   <Link to="/" key={index}>
-                                    <ContentModule data={section} modules={modules.base}/>
-                                </Link>
-                        
+                    {dataLine.timeline.map((section) => (
+                        <CourseStep key={ section.id } button={section.button} points={section.points} dataModal={dataModal}/>
                     ))}
                 </MenuContainer>
                 <TimelineFooter />
@@ -62,8 +39,6 @@ function Course() {
         </Layout>
     )
 }
-
-export default observer(Course)
 
 const Background = styled.div`
     position: absolute;
@@ -176,6 +151,6 @@ const Line = styled.div`
     overflow: hidden;
 `
 
-const ModalWrapper = styled.div``
+// const ModalWrapper = styled.div``
 
-const Button = styled.button``
+// const Button = styled.button``

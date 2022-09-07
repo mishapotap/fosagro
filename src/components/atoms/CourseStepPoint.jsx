@@ -2,10 +2,9 @@ import React, { useState } from "react"
 import styled, { css } from "styled-components";
 import { COLORS } from "../../constants";
 
-function CourseStepPoint({data}) {
+export default function CourseStepPoint({data, isActive}) {
     const { color, year, text, position, top, left } = data
     // TODO перенести состояние в mobX
-    const [isActive, setIsАсtive] = useState(false);
     const [isCompleted, setIsCompleted] = useState(false);;
     return(
         <Container
@@ -15,8 +14,6 @@ function CourseStepPoint({data}) {
             isActive={isActive}
             top={top}
             left={left}
-            onMouseOver={() => setIsАсtive(true)}    
-            onMouseOut={() => setIsАсtive(false)}
             onClick={() => setIsCompleted(!isCompleted)}>
                 <PointContainer defaultColor={ COLORS.white } position={position}>
                     <Point/>
@@ -27,11 +24,6 @@ function CourseStepPoint({data}) {
                 </TextContainer>
         </Container>
     )
-}
-
-export default {
-    name: 'CourseStepPoint',
-    Component: CourseStepPoint,
 }
 
 const TextContainer = styled.div`

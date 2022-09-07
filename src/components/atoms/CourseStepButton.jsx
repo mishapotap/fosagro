@@ -4,10 +4,9 @@ import { TimeIcon } from "../../assets/svg/static";
 import { COLORS } from '../../constants'
 import { borderAnimationM } from "../../constants/animations";
 
-function CourseStepButton({ data }) {
+export default function CourseStepButton({ data, isActive }) {
     const { title, bgColor, image, time, description, rotate, top, left } = data
     // TODO перенести состояние в mobX
-    const [isActive, setIsАсtive] = useState(false);
     const [isCompleted, setIsCompleted] = useState(false);
     return (
         <Container 
@@ -17,8 +16,6 @@ function CourseStepButton({ data }) {
             image={image} 
             top={top}
             left={left}
-            onMouseOver={() => setIsАсtive(true)}
-            onMouseOut={() => setIsАсtive(false)}
             onClick={() => setIsCompleted(!isCompleted)}>
             <Circle>
                 {isActive
@@ -41,12 +38,6 @@ function CourseStepButton({ data }) {
         </Container>
     )
 }
-
-export default {
-    name: 'CourseStepButton',
-    Component: CourseStepButton,
-}
-
 
 const AnimateCircle = styled.div`
     z-index: 1;
