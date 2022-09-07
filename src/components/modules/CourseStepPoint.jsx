@@ -22,7 +22,7 @@ function CourseStepPoint({data}) {
                     <Point/>
                 </PointContainer>
                 <TextContainer position={position} color={ COLORS.blue }>
-                    { year ? <Year>{year}</Year> : null}
+                    { year && <Year>{year}</Year> }
                     <Text>{text}</Text>
                 </TextContainer>
         </Container>

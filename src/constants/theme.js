@@ -7,12 +7,16 @@ export const COLORS = {
     brown_light: "#C88242",
     brown: "#94795D",
     blue: "#00529B",
+    blue_light: "#71B2C9",
     blue_text: "#004A93",
     white: "#FFFFFF",
     black: "#000000",
     color_animate: "white",
     red: "#9b0000",
     grey: "#D9D9D9",
+    grey_light: "#707372",
+    turquoise: "#00859B",
+    coral: "#C14C27",
 }
 
 export const FONTS = {

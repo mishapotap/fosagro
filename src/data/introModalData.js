@@ -1,6 +1,8 @@
 import { SpeakerAudio, SpeakerAudio2 } from "../assets/audio"
-import { CourseSlider1, CourseSlider2, CourseSlider3 } from "../assets/images"
 import {
+    IntroModalOne11,
+    IntroModalOne12,
+    IntroModalOne13,
     IntroModalOne21,
     IntroModalOne22,
     IntroModalOne23,
@@ -14,21 +16,27 @@ import {
     IntroModalTwo23,
 } from "../assets/images/Course2"
 
+import {
+    IntroModalThree11,
+    IntroModalThree12,
+    IntroModalThree13,
+} from "../assets/images/Course3"
+
 const introModalData = {
     introModal1: [
         {
             text: `Устойчивое развитие - термин <span class="accent">популярный</span>. Его обсуждают практически на всех уровнях, во многих сферах. Что означает понятие устойчивого развития для "ФосАгро"?`,
             images: [
                 {
-                    source: CourseSlider1,
+                    source: IntroModalOne11,
                     alt: "image1",
                 },
                 {
-                    source: CourseSlider2,
+                    source: IntroModalOne12,
                     alt: "image2",
                 },
                 {
-                    source: CourseSlider3,
+                    source: IntroModalOne13,
                     alt: "image3",
                 },
             ],
@@ -90,6 +98,27 @@ const introModalData = {
                 },
             ],
             audio: SpeakerAudio2,
+        },
+    ],
+    introModal3: [
+        {
+            text: `Инновации, технологии и уникальные компетенции наших работников позволяют ФосАгро уверенно смотреть в будущее и отвечать на вызовы сегодняшнего дня.`,
+            images: [
+                {
+                    source: IntroModalThree11,
+                    alt: "image1",
+                },
+                {
+                    source: IntroModalThree12,
+                    alt: "image2",
+                },
+                {
+                    source: IntroModalThree13,
+                    alt: "image3",
+                },
+            ],
+            audio: SpeakerAudio,
+            note: "Каждый из нас может внести свой вклад. Любое предложение по улучшению производства может привести к большому инновационному рывку. Все мы немного изобретатели!",
         },
     ],
 }
