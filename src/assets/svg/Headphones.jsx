@@ -28,13 +28,17 @@ const Wrapper = styled.svg`
     &:hover {
         transition: all 0.3s;
         transform: scale(1.2);
+
+        @media ${DEVICE.laptopS} {
+            transform: none;
+        }
     }
 
     @media ${DEVICE.laptop} {
-        width: 50px;
+        width: 40px;
     }
 
-    @media ${DEVICE.mobile} {
+    @media ${DEVICE.laptopS} {
         width: 40px;
     }
 `

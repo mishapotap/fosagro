@@ -3,7 +3,7 @@ import styled, { css } from "styled-components"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Pagination, EffectFade, Autoplay } from "swiper"
 import { SliderCircleM, SliderCircleS } from "../../assets/svg"
-import { DEVICE } from "../../constants"
+import { COLORS, DEVICE } from "../../constants"
 
 // eslint-disable-next-line
 import "swiper/css"
@@ -15,7 +15,7 @@ export default function Slider({
     // это про размер внешнего круга, s - маленький (такой как в введении), m - большой
     // (как в общем слайдере раздела)
     size = "s",
-    sliderColor,
+    sliderColor = COLORS.blue,
     data,
     makeAutoplay = true,
     className,
@@ -45,8 +45,8 @@ export default function Slider({
     }
 
     return (
-        <Container width={width}>
-            <SliderContainer className={className} size={size}>
+        <Container width={width} className={`${className || ''} circle-slider`}>
+            <SliderContainer size={size}>
                 {size === "s" ? (
                     <SliderCircleS
                         color={sliderColor}

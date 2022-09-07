@@ -19,14 +19,10 @@ const Container = styled.p`
     color: ${COLORS.black};
 
     @media ${DEVICE.laptopM} {
-        font-size: 1.25vw;
+        font-size: 1.2vw;
     }
 
     @media ${DEVICE.laptop} {
-        font-size: 22px;
-    }
-
-    @media ${DEVICE.mobile} {
         font-size: 18px;
     }
 

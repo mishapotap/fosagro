@@ -9,11 +9,14 @@ import { ArrowSlider, SliderIcons } from "../../assets/svg"
 // eslint-disable-next-line
 import "swiper/css"
 // eslint-disable-next-line
-import 'swiper/css/navigation'
+import "swiper/css/navigation"
 
-export default function ObjectSlider({type = "OOH", color}) {
-    return(
+export default function ObjectSlider({ type = "OOH", color }) {
+    return (
         <Container>
+            <SliderTitle>
+                Нажмите на интересующую цель, чтобы узнать подробнее на сайте {type === "OOH" ? "OOH" : "ФосАгро"}
+            </SliderTitle>
             <Swiper
                 modules={[Navigation]}
                 loop="true"
@@ -25,39 +28,63 @@ export default function ObjectSlider({type = "OOH", color}) {
                 speed={400}
             >
                 <SliderButton className="button-prev">
-                    <ArrowSlider color={color}/>
+                    <ArrowSlider color={color} />
                 </SliderButton>
                 {/* для слайдера ООН */}
-                {type === "OOH" && objectSliderData.objectOOHSlider.map((item) => (
-                    <SwiperSlide key={item.id}>
-                        <Slide >
-                            {item.data.map(dataItem => 
-                                <CustomLink href={dataItem.link} key={dataItem.alt} target='_blank' className="OOH">
-                                    <img src={dataItem.source} alt={dataItem.alt} />
-                                </CustomLink>
-                            )}
-                        </Slide>
-                    </SwiperSlide>
-                ))}
+                {type === "OOH" &&
+                    objectSliderData.objectOOHSlider.map((item) => (
+                        <SwiperSlide key={item.id}>
+                            <Slide>
+                                {item.data.map((dataItem) => (
+                                    <CustomLink
+                                        href={dataItem.link}
+                                        key={dataItem.alt}
+                                        target="_blank"
+                                        className="OOH"
+                                    >
+                                        <img
+                                            src={dataItem.source}
+                                            alt={dataItem.alt}
+                                        />
+                                    </CustomLink>
+                                ))}
+                            </Slide>
+                        </SwiperSlide>
+                    ))}
 
                 {/* для слайдера fosagro */}
-                {type === "fosagro" && objectSliderData.objectFosagroSlider.map((item) => (
-                    <SwiperSlide key={item.id}>
-                        <Slide>
-                            {item.data.map(dataItem => 
-                                <CustomLink href={dataItem.link} key={dataItem.color} target='_blank' className="fosagro">
-                                    <LinkContant color={dataItem.color} border={color}>
-                                        <SliderIcons name={dataItem.name} className="icon"/>
-                                        <Title>{dataItem.title}</Title>
-                                        <Description>{dataItem.description}</Description>
-                                    </LinkContant>
-                                </CustomLink>
-                            )}
-                        </Slide>
-                    </SwiperSlide>
-                ))}
+                {type === "fosagro" &&
+                    objectSliderData.objectFosagroSlider.map((item) => (
+                        <SwiperSlide key={item.id}>
+                            <Slide>
+                                {item.data.map((dataItem) => (
+                                    <CustomLink
+                                        href={dataItem.link}
+                                        key={dataItem.color}
+                                        target="_blank"
+                                        className="fosagro"
+                                    >
+                                        <LinkContant
+                                            color={dataItem.color}
+                                            border={color}
+                                            className="fosagro-card"
+                                        >
+                                            <SliderIcons
+                                                name={dataItem.name}
+                                                className="icon"
+                                            />
+                                            <Title>{dataItem.title}</Title>
+                                            <Description>
+                                                {dataItem.description}
+                                            </Description>
+                                        </LinkContant>
+                                    </CustomLink>
+                                ))}
+                            </Slide>
+                        </SwiperSlide>
+                    ))}
                 <SliderButton className="button-next">
-                    <ArrowSlider position="right" color={color}/>
+                    <ArrowSlider position="right" color={color} />
                 </SliderButton>
             </Swiper>
         </Container>
@@ -109,10 +136,25 @@ const Container = styled.div`
         z-index: 20;
     }
 
-
     @media ${DEVICE.mobile} {
         max-width: 100%;
         max-height: 50vw;
+    }
+`
+
+const SliderTitle = styled.div`
+    font-family: "FocoRegular", sans-serif;
+    color: ${COLORS.blue};
+    font-size: 1.2vw;
+    text-align: center;
+    line-height: 1.4;
+
+    max-width: 22vw;
+    margin: 0 auto 10px;
+
+    @media ${DEVICE.laptopS} {
+        font-size: 16px;
+        max-width: none;
     }
 `
 
@@ -127,9 +169,13 @@ const Slide = styled.div`
 
 const CustomLink = styled.a`
     &.OOH {
+        transition: all 0.3s linear;
         &:hover {
             transform: scale(1.1);
-            transition: all 0.3s linear;
+
+            @media ${DEVICE.laptopS} {
+                transform: none;
+            }
         }
     }
 `
@@ -167,7 +213,7 @@ const Title = styled.h6`
 `
 
 const Description = styled.span`
-    font-family: 'CalibriLight';
+    font-family: "CalibriLight";
     font-weight: 300;
     font-size: 0.9vw;
     line-height: 1.1vw;
@@ -198,7 +244,7 @@ const LinkContant = styled.div`
         background-color: ${(props) => props.color};
     }
 
-    ${ Title } {
+    ${Title} {
         color: ${(props) => props.color};
     }
 
@@ -206,7 +252,7 @@ const LinkContant = styled.div`
         border: 2px solid ${(props) => props.color};
         background-color: ${(props) => props.color};
 
-        ${ Title } {
+        ${Title} {
             color: ${COLORS.white};
         }
 
@@ -217,7 +263,7 @@ const LinkContant = styled.div`
         .icon {
             background-color: ${COLORS.white};
             svg {
-                path { 
+                path {
                     fill: ${(props) => props.color};
                     stroke: ${(props) => props.color};
                 }

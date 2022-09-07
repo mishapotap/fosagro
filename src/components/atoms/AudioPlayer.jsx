@@ -250,7 +250,11 @@ export default function AudioPlayer({
     }
 
     return (
-        <Container className={`${isError ? "error" : ""} ${className || ""}`}>
+        <Container
+            className={`${isError ? "error" : ""} ${
+                className || ""
+            } audio-player`}
+        >
             <OpenPlayerBtn onClick={toggleOpened} isError={isError}>
                 <Headphones />
             </OpenPlayerBtn>
@@ -308,9 +312,7 @@ export default function AudioPlayer({
                                                 />
                                             </ProgressCircle>
                                         </ProgressCircleContainer>
-                                        <BaseCircle
-                                            className="base-circle"
-                                        >
+                                        <BaseCircle className="base-circle">
                                             <circle
                                                 ref={baseCircleRef}
                                                 cx="50%"
@@ -501,7 +503,6 @@ const ClickCircle = styled(PlayerCircle)`
 `
 
 const BaseCircle = styled(PlayerCircle)`
-
     circle {
         stroke: rgba(0, 82, 155, 0.3);
     }
