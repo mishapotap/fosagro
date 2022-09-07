@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import styled from "styled-components"
 import { observer } from "mobx-react-lite"
 import { Link } from "react-router-dom"
@@ -6,16 +6,13 @@ import { ModalStore } from "../../store"
 import { IntroModal, CourseStepButton, CourseStepPoint } from "../atoms"
 
 function CourseStep({button, points, dataModal}) {
-    const [isActive, setIsАсtive] = useState(false);
     return(
-        <Container
-            onMouseOver={() => setIsАсtive(true)}
-            onMouseOut={() => setIsАсtive(false)}>
+        <Container>
             {
                 button.value.modal 
                 ? <>
                     <Button onClick={() => ModalStore.showModal("intro")}>
-                        <CourseStepButton data={button.value} isActive={isActive}/>
+                        <CourseStepButton data={button.value}/>
                     </Button>
                     <IntroModal
                         isOpen={ModalStore.isVisible.intro}
@@ -24,10 +21,10 @@ function CourseStep({button, points, dataModal}) {
                         items={dataModal}/>
                     </>
                 : <Link to={ button.link }>
-                    <CourseStepButton data={button.value} isActive={isActive}/>
+                    <CourseStepButton data={button.value}/>
                 </Link>
             }
-            {points && points.map((item) => <CourseStepPoint key={item.id} data={item.value} isActive={isActive}/>)}
+            {points && points.map((item) => <CourseStepPoint key={item.id} data={item.value}/>)}
         </Container>
     )
 }

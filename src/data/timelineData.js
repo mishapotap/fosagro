@@ -7,10 +7,10 @@ import {
     CourseButtonImage4,
     CourseButtonImage5,
     CourseButtonImage6,
-    // CourseButtonImage7,
-    // CourseButtonImage8,
-    // CourseButtonImage9,
-    // CourseButtonImage10,
+    CourseButtonImage7,
+    CourseButtonImage8,
+    CourseButtonImage9,
+    CourseButtonImage10,
 } from "../assets/images"
 import { COLORS } from "../constants"
 
@@ -20,7 +20,7 @@ const timelineData = {
     course1: {
         id: "01",
         title: '"Устойчивое развитие" - модный термин или реальность, которая касается каждого?',
-        width: "2100",
+        width: "2300",
         timeline: [
             {
                 id: 1,
@@ -71,8 +71,8 @@ const timelineData = {
                             color: COLORS.green_light,
                             position: "top",
                             text: "Экология Средневековья",
-                            top: "calc(50% - 150px + 120px)",
-                            left: "425px",
+                            top: "calc(50% - 150px + 125px)",
+                            left: "440px",
                         },
                     },
                     {
@@ -120,7 +120,7 @@ const timelineData = {
                         image: CourseButtonImage3,
                         rotate: "105",
                         top: "calc(50% - 150px + 45px)",
-                        left: "675px",
+                        left: "715px",
                     },
                 },
                 points: [
@@ -130,8 +130,8 @@ const timelineData = {
                             color: COLORS.green_dark,
                             position: "top",
                             text: "Все взаимосвязано",
-                            top: "calc(50% - 150px + 145px)",
-                            left: "860px",
+                            top: "calc(50% - 150px + 155px)",
+                            left: "930px",
                         },
                     },
                 ],
@@ -149,7 +149,7 @@ const timelineData = {
                         image: CourseButtonImage4,
                         rotate: "165",
                         top: "calc(50% - 150px + 80px)",
-                        left: "930px",
+                        left: "1025px",
                     },
                 },
                 points: [
@@ -159,8 +159,8 @@ const timelineData = {
                             color: COLORS.brown_light,
                             position: "bottom",
                             text: "Наши задачи",
-                            top: "calc(50% - 150px + 120px)",
-                            left: "1120px",
+                            top: "calc(50% - 150px + 90px)",
+                            left: "1255px",
                         },
                     },
                     {
@@ -170,7 +170,7 @@ const timelineData = {
                             position: "top",
                             text: "Наши результаты, снизили выбросы",
                             top: "calc(50% - 150px + 95px)",
-                            left: "1180px",
+                            left: "1340px",
                         },
                     },
                     {
@@ -179,8 +179,8 @@ const timelineData = {
                             color: COLORS.brown_light,
                             position: "bottom",
                             text: "Наши результаты, снизили сброс сточных вод",
-                            top: "calc(50% - 150px + 90px)",
-                            left: "1255px",
+                            top: "calc(50% - 150px + 110px)",
+                            left: "1420px",
                         },
                     },
                     {
@@ -189,8 +189,8 @@ const timelineData = {
                             color: COLORS.brown_light,
                             position: "top",
                             text: "Наши результаты, проекты",
-                            top: "calc(50% - 150px + 95px)",
-                            left: "1340px",
+                            top: "calc(50% - 150px + 120px)",
+                            left: "1500px",
                         },
                     },
                     {
@@ -199,8 +199,8 @@ const timelineData = {
                             color: COLORS.brown_light,
                             position: "bottom",
                             text: "Новые вызовы. Наша сила",
-                            top: "calc(50% - 150px + 115px)",
-                            left: "1430px",
+                            top: "calc(50% - 150px + 100px)",
+                            left: "1580px",
                         },
                     },
                 ],
@@ -219,7 +219,7 @@ const timelineData = {
                         image: CourseButtonImage5,
                         rotate: "76",
                         top: "calc(50% - 150px + 25px)",
-                        left: "1530px",
+                        left: "1670px",
                     },
                 },
                 points: [
@@ -229,8 +229,8 @@ const timelineData = {
                             color: COLORS.brown,
                             position: "top",
                             text: "Зеленый стандарт",
-                            top: "calc(50% - 150px + 95px)",
-                            left: "1710px",
+                            top: "calc(50% - 150px + 130px)",
+                            left: "1880px",
                         },
                     },
                     {
@@ -239,8 +239,8 @@ const timelineData = {
                             color: COLORS.brown,
                             position: "bottom",
                             text: "Кодекс поставщика",
-                            top: "calc(50% - 150px + 110px)",
-                            left: "1780px",
+                            top: "calc(50% - 150px + 130px)",
+                            left: "1940px",
                         },
                     },
                 ],
@@ -257,449 +257,515 @@ const timelineData = {
                         bgColor: COLORS.blue,
                         image: CourseButtonImage6,
                         rotate: "-150",
-                        top: "calc(50% - 150px + 60px)",
-                        left: "1840px",
+                        top: "calc(50% - 150px + 90px)",
+                        left: "2030px",
                     },
                 },
             },
         ],
     },
-    // course2: {
-    //     id: "02",
-    //     title: "Цели устойчивого развития ООН",
-    //     width: "2100",
-    //     timeline: [
-    //         {
-    //             slug: "courseStepButton",
-    //             value: {
-    //                 modal: [
-    //                     {
-    //                         top: "-20px",
-    //                         left: "0",
-    //                     },
-    //                     {
-    //                         top: "-35px",
-    //                         left: "30px",
-    //                     },
-    //                 ],
-    //                 title: "Введение",
-    //                 description:
-    //                     "Предостережения об ограниченности ресурсов планеты.",
-    //                 time: "40 сек",
-    //                 bgColor: COLORS.orange,
-    //                 image: CourseButtonImage1,
-    //                 rotate: "-64",
-    //                 top: "calc(50% - 150px + 110px)",
-    //                 left: "40px",
-    //             },
-    //         },
-    //         {
-    //             slug: "courseStepButton",
-    //             value: {
-    //                 title: "Преобразования нашего мира, 17 целей",
-    //                 description:
-    //                     "Краткая выжимка в несколько слов о чем будет в разделе",
-    //                 time: "4мин 30сек",
-    //                 bgColor: COLORS.green_light,
-    //                 image: CourseButtonImage2,
-    //                 rotate: "-145",
-    //                 top: "calc(50% - 150px + 55px)",
-    //                 left: "240px",
-    //             },
-    //         },
-    //         {
-    //             slug: "courseStepPoint",
-    //             value: {
-    //                 color: COLORS.green_light,
-    //                 position: "top",
-    //                 year: "1972",
-    //                 text: "Опубликован доклад «Пределы роста»",
-    //                 top: "calc(50% - 150px + 135px)",
-    //                 left: "465px",
-    //             },
-    //         },
-    //         {
-    //             slug: "courseStepPoint",
-    //             value: {
-    //                 color: COLORS.green_light,
-    //                 position: "bottom",
-    //                 year: "1999",
-    //                 text: "Создание глобального договора ООН",
-    //                 top: "calc(50% - 150px + 145px)",
-    //                 left: "545px",
-    //             },
-    //         },
-    //         {
-    //             slug: "courseStepPoint",
-    //             value: {
-    //                 color: COLORS.green_light,
-    //                 position: "top",
-    //                 year: "2015",
-    //                 text: "Новая программа",
-    //                 top: "calc(50% - 150px + 125px)",
-    //                 left: "610px",
-    //             },
-    //         },
-    //         {
-    //             slug: "courseStepButton",
-    //             value: {
-    //                 title: "Как ФосАгро способствует достижению ЦУР ООН",
-    //                 description:
-    //                     "Краткая выжимка в несколько слов о чем будет в разделе",
-    //                 time: "55 сек",
-    //                 bgColor: COLORS.green_dark,
-    //                 image: CourseButtonImage3,
-    //                 rotate: "-77",
-    //                 top: "calc(50% - 150px + 40px)",
-    //                 left: "700px",
-    //             },
-    //         },
-    //         {
-    //             slug: "courseStepPoint",
-    //             value: {
-    //                 color: COLORS.green_dark,
-    //                 position: "bottom",
-    //                 year: "2018",
-    //                 text: "Преобразования в России, компания ФосАгро",
-    //                 top: "calc(50% - 150px + 155px)",
-    //                 left: "890px",
-    //             },
-    //         },
-    //         {
-    //             slug: "courseStepButton",
-    //             value: {
-    //                 title: "Приоритизация ЦУР для ФосАгро",
-    //                 description:
-    //                     "Краткая выжимка в несколько слов о чем будет в разделе",
-    //                 time: "1 мин 20 сек",
-    //                 bgColor: COLORS.brown_light,
-    //                 image: CourseButtonImage4,
-    //                 rotate: "165",
-    //                 top: "calc(50% - 150px + 75px)",
-    //                 left: "980px",
-    //             },
-    //         },
-    //         {
-    //             slug: "courseStepPoint",
-    //             value: {
-    //                 color: COLORS.brown_light,
-    //                 position: "top",
-    //                 year: "2020",
-    //                 text: "Наши цели устойчивого развития",
-    //                 top: "calc(50% - 150px + 95px)",
-    //                 left: "1180px",
-    //             },
-    //         },
-    //         {
-    //             slug: "courseStepPoint",
-    //             value: {
-    //                 color: COLORS.brown_light,
-    //                 position: "bottom",
-    //                 text: "Каков наш подход в области управления?",
-    //                 top: "calc(50% - 150px + 90px)",
-    //                 left: "1260px",
-    //             },
-    //         },
-    //         {
-    //             slug: "courseStepPoint",
-    //             value: {
-    //                 color: COLORS.brown_light,
-    //                 position: "top",
-    //                 text: "Какой вклад вносит Компания в достижение ЦУР 2?",
-    //                 top: "calc(50% - 150px + 95px)",
-    //                 left: "1345px",
-    //             },
-    //         },
-    //         {
-    //             slug: "courseStepPoint",
-    //             value: {
-    //                 color: COLORS.brown_light,
-    //                 position: "bottom",
-    //                 text: "Какие цели ставит перед собой компания?",
-    //                 top: "calc(50% - 150px + 115px)",
-    //                 left: "1435px",
-    //             },
-    //         },
-    //         {
-    //             slug: "courseStepPoint",
-    //             value: {
-    //                 color: COLORS.brown_light,
-    //                 position: "top",
-    //                 text: "Как компания двигается к достижению этих целей? ",
-    //                 top: "calc(50% - 150px + 120px)",
-    //                 left: "1525px",
-    //             },
-    //         },
-    //         {
-    //             slug: "courseStepPoint",
-    //             value: {
-    //                 color: COLORS.brown_light,
-    //                 position: "bottom",
-    //                 text: "У нас нет секретов",
-    //                 top: "calc(50% - 150px + 90px)",
-    //                 left: "1615px",
-    //             },
-    //         },
-    //         {
-    //             slug: "courseStepButton",
-    //             value: {
-    //                 title: "Тест",
-    //                 description:
-    //                     "Короткий тест на 5 вопросов по содержанию раздела.",
-    //                 time: "≈4 мин",
-    //                 bgColor: COLORS.blue,
-    //                 image: CourseButtonImage6,
-    //                 rotate: "-150",
-    //                 top: "calc(50% - 150px + 50px)",
-    //                 left: "1745px",
-    //             },
-    //         },
-    //     ],
-    // },
-    // course3: {
-    //     id: "03",
-    //     title: "Инновационная деятельность ФосАгро",
-    //     supTitle:
-    //         "Продукция компании, цикл производства и почему мы разрабатываем новые марки и виды продукции?",
-    //     width: "3000",
-    //     timeline: [
-    //         {
-    //             slug: "courseStepButton",
-    //             value: {
-    //                 modal: [
-    //                     {
-    //                         top: "-20px",
-    //                         left: "0",
-    //                     },
-    //                 ],
-    //                 title: "Введение",
-    //                 description: "Уникальные разработки и нновационныерешения.",
-    //                 time: "21 сек",
-    //                 bgColor: COLORS.orange,
-    //                 image: CourseButtonImage1,
-    //                 rotate: "-64",
-    //                 top: "calc(50% - 150px + 90px)",
-    //                 left: "55px",
-    //             },
-    //         },
-    //         {
-    //             slug: "courseStepButton",
-    //             value: {
-    //                 title: "Мировой контекст развития инноваций",
-    //                 description:
-    //                     "Краткая выжимка в несколько слов о чем будет в разделе",
-    //                 time: "1мин 40сек",
-    //                 bgColor: COLORS.green_light,
-    //                 image: CourseButtonImage2,
-    //                 rotate: "-145",
-    //                 top: "calc(50% - 150px + 60px)",
-    //                 left: "295px",
-    //             },
-    //         },
-    //         {
-    //             slug: "courseStepPoint",
-    //             value: {
-    //                 color: COLORS.green_light,
-    //                 position: "top",
-    //                 text: "Новый мир",
-    //                 top: "calc(50% - 150px + 145px)",
-    //                 left: "520px",
-    //             },
-    //         },
-    //         {
-    //             slug: "courseStepPoint",
-    //             value: {
-    //                 color: COLORS.green_light,
-    //                 position: "bottom",
-    //                 text: "Глобальные задачи",
-    //                 top: "calc(50% - 150px + 140px)",
-    //                 left: "580px",
-    //             },
-    //         },
-    //         {
-    //             slug: "courseStepButton",
-    //             value: {
-    //                 title: "Как мы определяем свои приоритеты в развитии инноваций",
-    //                 description:
-    //                     "Краткая выжимка в несколько слов о чем будет в разделе",
-    //                 time: "1мин 10сек",
-    //                 bgColor: COLORS.green_dark,
-    //                 image: CourseButtonImage3,
-    //                 rotate: "-77",
-    //                 top: "calc(50% - 150px + 40px)",
-    //                 left: "645px",
-    //             },
-    //         },
-    //         {
-    //             slug: "courseStepPoint",
-    //             value: {
-    //                 color: COLORS.green_dark,
-    //                 position: "top",
-    //                 text: "Открытость и контроль",
-    //                 top: "calc(50% - 150px + 145px)",
-    //                 left: "855px",
-    //             },
-    //         },
-    //         {
-    //             slug: "courseStepButton",
-    //             value: {
-    //                 title: "Что делаем мы для развития инноваций в производстве?",
-    //                 description:
-    //                     "Краткая выжимка в несколько слов о чем будет в разделе",
-    //                 time: "1мин 20сек",
-    //                 bgColor: COLORS.brown_light,
-    //                 image: CourseButtonImage4,
-    //                 rotate: "165",
-    //                 top: "calc(50% - 150px + 95px)",
-    //                 left: "935px",
-    //             },
-    //         },
-    //         {
-    //             slug: "courseStepPoint",
-    //             value: {
-    //                 color: COLORS.brown_light,
-    //                 position: "bottom",
-    //                 text: "Наши инновации",
-    //                 top: "calc(50% - 150px + 115px)",
-    //                 left: "1130px",
-    //             },
-    //         },
-    //         {
-    //             slug: "courseStepButton",
-    //             value: {
-    //                 title: "Развитие элементов циркулярной экономики",
-    //                 description:
-    //                     "Краткая выжимка в несколько слов о чем будет в разделе",
-    //                 time: "1мин 30сек",
-    //                 bgColor: COLORS.brown,
-    //                 image: CourseButtonImage5,
-    //                 rotate: "-77",
-    //                 top: "calc(50% - 150px + 30px)",
-    //                 left: "1210px",
-    //             },
-    //         },
-    //         {
-    //             slug: "courseStepPoint",
-    //             value: {
-    //                 color: COLORS.brown,
-    //                 position: "top",
-    //                 text: "Всё в дело",
-    //                 top: "calc(50% - 150px + 110px)",
-    //                 left: "1410px",
-    //             },
-    //         },
-    //         {
-    //             slug: "courseStepButton",
-    //             value: {
-    //                 title: "Работа с поставщиками",
-    //                 description:
-    //                     "Краткая выжимка в несколько слов о чем будет в разделе",
-    //                 time: "1мин 30сек",
-    //                 bgColor: COLORS.grey_light,
-    //                 image: CourseButtonImage7,
-    //                 rotate: "0",
-    //                 top: "calc(50% - 150px + 50px)",
-    //                 left: "1490px",
-    //             },
-    //         },
-    //         {
-    //             slug: "courseStepPoint",
-    //             value: {
-    //                 color: COLORS.grey_light,
-    //                 position: "bottom",
-    //                 text: "Второстепенных ролей нет",
-    //                 top: "calc(50% - 150px + 90px)",
-    //                 left: "1700px",
-    //             },
-    //         },
-    //         {
-    //             slug: "courseStepButton",
-    //             value: {
-    //                 title: "Разработка новых продуктов",
-    //                 description:
-    //                     "Краткая выжимка в несколько слов о чем будет в разделе",
-    //                 time: "1мин",
-    //                 bgColor: COLORS.blue_light,
-    //                 image: CourseButtonImage8,
-    //                 rotate: "-77",
-    //                 top: "calc(50% - 150px + 60px)",
-    //                 left: "1800px",
-    //             },
-    //         },
-    //         {
-    //             slug: "courseStepPoint",
-    //             value: {
-    //                 color: COLORS.blue_light,
-    //                 position: "top",
-    //                 text: "Инновационные продукты ФосАгро",
-    //                 top: "calc(50% - 150px + 145px)",
-    //                 left: "2030px",
-    //             },
-    //         },
-    //         {
-    //             slug: "courseStepButton",
-    //             value: {
-    //                 title: "Международное сотрудничество и поддержка молодых ученых",
-    //                 description:
-    //                     "Краткая выжимка в несколько слов о чем будет в разделе",
-    //                 time: "2мин 10сек",
-    //                 bgColor: COLORS.turquoise,
-    //                 image: CourseButtonImage9,
-    //                 rotate: "165",
-    //                 top: "calc(50% - 150px + 100px)",
-    //                 left: "2110px",
-    //             },
-    //         },
-    //         {
-    //             slug: "courseStepPoint",
-    //             value: {
-    //                 color: COLORS.turquoise,
-    //                 position: "bottom",
-    //                 text: "Зеленая Химия для жизни",
-    //                 top: "calc(50% - 150px + 135px)",
-    //                 left: "2330px",
-    //             },
-    //         },
-    //         {
-    //             slug: "courseStepButton",
-    //             value: {
-    //                 title: "Поддержка инновационных проектов",
-    //                 description:
-    //                     "Краткая выжимка в несколько слов о чем будет в разделе",
-    //                 time: "1мин 10сек",
-    //                 bgColor: COLORS.coral,
-    //                 image: CourseButtonImage10,
-    //                 rotate: "-165",
-    //                 top: "calc(50% - 150px + 95px)",
-    //                 left: "2435px",
-    //             },
-    //         },
-    //         {
-    //             slug: "courseStepPoint",
-    //             value: {
-    //                 color: COLORS.coral,
-    //                 position: "top",
-    //                 text: "Все мы немного изобретатели!",
-    //                 top: "calc(50% - 150px + 150px)",
-    //                 left: "2660px",
-    //             },
-    //         },
-    //         {
-    //             slug: "courseStepButton",
-    //             value: {
-    //                 title: "Тест",
-    //                 description:
-    //                     "Короткий тест на 5 вопросов по содержанию раздела.",
-    //                 time: "≈4 мин",
-    //                 bgColor: COLORS.blue,
-    //                 image: CourseButtonImage6,
-    //                 rotate: "-150",
-    //                 top: "calc(50% - 150px + 45px)",
-    //                 left: "2775px",
-    //             },
-    //         },
-    //     ],
-    // },
+    course2: {
+        id: "02",
+        title: "Цели устойчивого развития ООН",
+        width: "2050",
+        timeline: [
+            {
+                id: 1,
+                button: {
+                    value: {
+                        modal: [
+                            {
+                                top: "-20px",
+                                left: "0",
+                            },
+                            {
+                                top: "-35px",
+                                left: "30px",
+                            },
+                        ],
+                        title: "Введение",
+                        description:
+                            "Предостережения об ограниченности ресурсов планеты.",
+                        time: "40 сек",
+                        bgColor: COLORS.orange,
+                        image: CourseButtonImage1,
+                        rotate: "-64",
+                        top: "calc(50% - 150px + 110px)",
+                        left: "40px",
+                    },
+                },
+            },
+            {
+                id: 2,
+                button: {
+                    link: "",
+                    value: {
+                        title: "Преобразования нашего мира, 17 целей",
+                        description:
+                            "Краткая выжимка в несколько слов о чем будет в разделе",
+                        time: "4мин 30сек",
+                        bgColor: COLORS.green_light,
+                        image: CourseButtonImage2,
+                        rotate: "-145",
+                        top: "calc(50% - 150px + 55px)",
+                        left: "240px",
+                    },
+                },
+                points: [
+                    {
+                        id: 1,
+                        value: {
+                            color: COLORS.green_light,
+                            position: "top",
+                            year: "1972",
+                            text: "Опубликован доклад «Пределы роста»",
+                            top: "calc(50% - 150px + 135px)",
+                            left: "465px",
+                        },
+                    },
+                    {
+                        id: 2,
+                        value: {
+                            color: COLORS.green_light,
+                            position: "bottom",
+                            year: "1999",
+                            text: "Создание глобального договора ООН",
+                            top: "calc(50% - 150px + 145px)",
+                            left: "545px",
+                        },
+                    },
+                    {
+                        id: 3,
+                        value: {
+                            color: COLORS.green_light,
+                            position: "top",
+                            year: "2015",
+                            text: "Новая программа",
+                            top: "calc(50% - 150px + 125px)",
+                            left: "610px",
+                        },
+                    },
+                ],
+            },
+            {
+                id: 3,
+                button: {
+                    link: "",
+                    value: {
+                        title: "Как ФосАгро способствует достижению ЦУР ООН",
+                        description:
+                            "Краткая выжимка в несколько слов о чем будет в разделе",
+                        time: "55 сек",
+                        bgColor: COLORS.green_dark,
+                        image: CourseButtonImage3,
+                        rotate: "-77",
+                        top: "calc(50% - 150px + 40px)",
+                        left: "700px",
+                    },
+                },
+                points: [
+                    {
+                        id: 1,
+                        value: {
+                            color: COLORS.green_dark,
+                            position: "bottom",
+                            year: "2018",
+                            text: "Преобразования в России, компания ФосАгро",
+                            top: "calc(50% - 150px + 155px)",
+                            left: "890px",
+                        },
+                    },
+                ],
+            },
+            {
+                id: 4,
+                button: {
+                    link: "",
+                    value: {
+                        title: "Приоритизация ЦУР для ФосАгро",
+                        description:
+                            "Краткая выжимка в несколько слов о чем будет в разделе",
+                        time: "1 мин 20 сек",
+                        bgColor: COLORS.brown_light,
+                        image: CourseButtonImage4,
+                        rotate: "165",
+                        top: "calc(50% - 150px + 75px)",
+                        left: "980px",
+                    },
+                },
+                points: [
+                    {
+                        id: 1,
+                        value: {
+                            color: COLORS.brown_light,
+                            position: "top",
+                            year: "2020",
+                            text: "Наши цели устойчивого развития",
+                            top: "calc(50% - 150px + 95px)",
+                            left: "1180px",
+                        },
+                    },
+                    {
+                        id: 2,
+                        value: {
+                            color: COLORS.brown_light,
+                            position: "bottom",
+                            text: "Каков наш подход в области управления?",
+                            top: "calc(50% - 150px + 90px)",
+                            left: "1260px",
+                        },
+                    },
+                    {
+                        id: 3,
+                        value: {
+                            color: COLORS.brown_light,
+                            position: "top",
+                            text: "Какой вклад вносит Компания в достижение ЦУР 2?",
+                            top: "calc(50% - 150px + 95px)",
+                            left: "1345px",
+                        },
+                    },
+                    {
+                        id: 4,
+                        value: {
+                            color: COLORS.brown_light,
+                            position: "bottom",
+                            text: "Какие цели ставит перед собой компания?",
+                            top: "calc(50% - 150px + 115px)",
+                            left: "1435px",
+                        },
+                    },
+                    {
+                        id: 5,
+                        value: {
+                            color: COLORS.brown_light,
+                            position: "top",
+                            text: "Как компания двигается к достижению этих целей? ",
+                            top: "calc(50% - 150px + 120px)",
+                            left: "1525px",
+                        },
+                    },
+                    {
+                        id: 6,
+                        value: {
+                            color: COLORS.brown_light,
+                            position: "bottom",
+                            text: "У нас нет секретов",
+                            top: "calc(50% - 150px + 90px)",
+                            left: "1615px",
+                        },
+                    },
+                ],
+            },
+            {
+                id: 5,
+                button: {
+                    link: "",
+                    value: {
+                        title: "Тест",
+                        description:
+                            "Короткий тест на 5 вопросов по содержанию раздела.",
+                        time: "≈4 мин",
+                        bgColor: COLORS.blue,
+                        image: CourseButtonImage6,
+                        rotate: "-150",
+                        top: "calc(50% - 150px + 50px)",
+                        left: "1745px",
+                    },
+                },
+            },
+        ],
+    },
+    course3: {
+        id: "03",
+        title: "Инновационная деятельность ФосАгро",
+        supTitle:
+            "Продукция компании, цикл производства и почему мы разрабатываем новые марки и виды продукции?",
+        width: "3050",
+        timeline: [
+            {
+                id: 1,
+                button: {
+                    value: {
+                        modal: [
+                            {
+                                top: "-20px",
+                                left: "0",
+                            },
+                        ],
+                        title: "Введение",
+                        description:
+                            "Уникальные разработки и нновационныерешения.",
+                        time: "21 сек",
+                        bgColor: COLORS.orange,
+                        image: CourseButtonImage1,
+                        rotate: "-64",
+                        top: "calc(50% - 150px + 90px)",
+                        left: "55px",
+                    },
+                },
+            },
+            {
+                id: 2,
+                button: {
+                    link: "",
+                    value: {
+                        title: "Мировой контекст развития инноваций",
+                        description:
+                            "Краткая выжимка в несколько слов о чем будет в разделе",
+                        time: "1мин 40сек",
+                        bgColor: COLORS.green_light,
+                        image: CourseButtonImage2,
+                        rotate: "-145",
+                        top: "calc(50% - 150px + 60px)",
+                        left: "295px",
+                    },
+                },
+                points: [
+                    {
+                        id: 1,
+                        value: {
+                            color: COLORS.green_light,
+                            position: "top",
+                            text: "Новый мир",
+                            top: "calc(50% - 150px + 145px)",
+                            left: "520px",
+                        },
+                    },
+                    {
+                        id: 2,
+                        value: {
+                            color: COLORS.green_light,
+                            position: "bottom",
+                            text: "Глобальные задачи",
+                            top: "calc(50% - 150px + 140px)",
+                            left: "580px",
+                        },
+                    },
+                ],
+            },
+            {
+                id: 3,
+                button: {
+                    link: "",
+                    value: {
+                        title: "Как мы определяем свои приоритеты в развитии инноваций",
+                        description:
+                            "Краткая выжимка в несколько слов о чем будет в разделе",
+                        time: "1мин 10сек",
+                        bgColor: COLORS.green_dark,
+                        image: CourseButtonImage3,
+                        rotate: "-77",
+                        top: "calc(50% - 150px + 40px)",
+                        left: "670px",
+                    },
+                },
+                points: [
+                    {
+                        id: 1,
+                        value: {
+                            color: COLORS.green_dark,
+                            position: "top",
+                            text: "Открытость и контроль",
+                            top: "calc(50% - 150px + 150px)",
+                            left: "890px",
+                        },
+                    },
+                ],
+            },
+            {
+                id: 4,
+                button: {
+                    link: "",
+                    value: {
+                        title: "Что делаем мы для развития инноваций в производстве?",
+                        description:
+                            "Краткая выжимка в несколько слов о чем будет в разделе",
+                        time: "1мин 20сек",
+                        bgColor: COLORS.brown_light,
+                        image: CourseButtonImage4,
+                        rotate: "165",
+                        top: "calc(50% - 150px + 85px)",
+                        left: "980px",
+                    },
+                },
+                points: [
+                    {
+                        id: 1,
+                        value: {
+                            color: COLORS.brown_light,
+                            position: "bottom",
+                            text: "Наши инновации",
+                            top: "calc(50% - 150px + 90px)",
+                            left: "1190px",
+                        },
+                    },
+                ],
+            },
+            {
+                id: 5,
+                button: {
+                    link: "",
+                    value: {
+                        title: "Развитие элементов циркулярной экономики",
+                        description:
+                            "Краткая выжимка в несколько слов о чем будет в разделе",
+                        time: "1мин 30сек",
+                        bgColor: COLORS.brown,
+                        image: CourseButtonImage5,
+                        rotate: "-77",
+                        top: "calc(50% - 150px + 30px)",
+                        left: "1280px",
+                    },
+                },
+                points: [
+                    {
+                        id: 1,
+                        value: {
+                            color: COLORS.brown,
+                            position: "top",
+                            text: "Всё в дело",
+                            top: "calc(50% - 150px + 120px)",
+                            left: "1490px",
+                        },
+                    },
+                ],
+            },
+            {
+                id: 6,
+                button: {
+                    link: "",
+                    value: {
+                        title: "Работа с поставщиками",
+                        description:
+                            "Краткая выжимка в несколько слов о чем будет в разделе",
+                        time: "1мин 30сек",
+                        bgColor: COLORS.grey_light,
+                        image: CourseButtonImage7,
+                        rotate: "0",
+                        top: "calc(50% - 150px + 40px)",
+                        left: "1570px",
+                    },
+                },
+                points: [
+                    {
+                        id: 1,
+                        value: {
+                            color: COLORS.grey_light,
+                            position: "bottom",
+                            text: "Второстепенных ролей нет",
+                            top: "calc(50% - 150px + 110px)",
+                            left: "1780px",
+                        },
+                    },
+                ],
+            },
+            {
+                id: 7,
+                button: {
+                    link: "",
+                    value: {
+                        title: "Разработка новых продуктов",
+                        description:
+                            "Краткая выжимка в несколько слов о чем будет в разделе",
+                        time: "1мин",
+                        bgColor: COLORS.blue_light,
+                        image: CourseButtonImage8,
+                        rotate: "-77",
+                        top: "calc(50% - 150px + 60px)",
+                        left: "1870px",
+                    },
+                },
+                points: [
+                    {
+                        id: 1,
+                        value: {
+                            color: COLORS.blue_light,
+                            position: "top",
+                            text: "Инновационные продукты ФосАгро",
+                            top: "calc(50% - 150px + 160px)",
+                            left: "2090px",
+                        },
+                    },
+                ],
+            },
+            {
+                id: 8,
+                button: {
+                    link: "",
+                    value: {
+                        title: "Международное сотрудничество и поддержка молодых ученых",
+                        description:
+                            "Краткая выжимка в несколько слов о чем будет в разделе",
+                        time: "2мин 10сек",
+                        bgColor: COLORS.turquoise,
+                        image: CourseButtonImage9,
+                        rotate: "165",
+                        top: "calc(50% - 150px + 100px)",
+                        left: "2190px",
+                    },
+                },
+                points: [
+                    {
+                        id: 1,
+                        value: {
+                            color: COLORS.turquoise,
+                            position: "bottom",
+                            text: "Зеленая Химия для жизни",
+                            top: "calc(50% - 150px + 150px)",
+                            left: "2400px",
+                        },
+                    },
+                ],
+            },
+            {
+                id: 9,
+                button: {
+                    link: "",
+                    value: {
+                        title: "Поддержка инновационных проектов",
+                        description:
+                            "Краткая выжимка в несколько слов о чем будет в разделе",
+                        time: "1мин 10сек",
+                        bgColor: COLORS.coral,
+                        image: CourseButtonImage10,
+                        rotate: "-165",
+                        top: "calc(50% - 150px + 95px)",
+                        left: "2490px",
+                    },
+                },
+                points: [
+                    {
+                        id: 1,
+                        value: {
+                            color: COLORS.coral,
+                            position: "top",
+                            text: "Все мы немного изобретатели!",
+                            top: "calc(50% - 150px + 135px)",
+                            left: "2700px",
+                        },
+                    },
+                ],
+            },
+            {
+                id: 10,
+                button: {
+                    link: "",
+                    value: {
+                        title: "Тест",
+                        description:
+                            "Короткий тест на 5 вопросов по содержанию раздела.",
+                        time: "≈4 мин",
+                        bgColor: COLORS.blue,
+                        image: CourseButtonImage6,
+                        rotate: "-150",
+                        top: "calc(50% - 150px + 45px)",
+                        left: "2790px",
+                    },
+                },
+            },
+        ],
+    },
 }
 
 export default timelineData
