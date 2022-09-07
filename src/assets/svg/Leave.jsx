@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-export default function Flower({ color, className }) {
+export default function Leave({ color, className }) {
   return (
     <Wrapper
       width="22"
