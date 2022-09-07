@@ -25,9 +25,12 @@ function Course() {
                 <Wrapper>
                     <CourseNumber>{dataLine.id}</CourseNumber>
                     <CourseTitle>{dataLine.title}</CourseTitle>
+                    {
+                        dataLine.supTitle && <CourseSupTitle>{dataLine.supTitle}</CourseSupTitle>
+                    }
                 </Wrapper>
                 <MenuContainer>
-                    <Line>
+                    <Line width={dataLine.width}>
                         <AnimateLine color={COLORS.white}/>
                     </Line>
                         {dataLine.timeline.map((section, index) => (
@@ -130,6 +133,27 @@ const CourseTitle = styled.div`
     }
 `
 
+const CourseSupTitle = styled.div`
+    max-width: 50%;
+    margin-top: 10px;
+    font-family: 'FocoRegular';
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 32px;
+
+    color: ${COLORS.blue};
+
+    @media ${DEVICE.laptopM} {
+        font-size: 20px;
+        line-height: 24px;
+    }
+
+    @media ${DEVICE.mobile} {
+        font-size: 16px;
+        line-height: 20px;
+    }
+`
+
 const MenuContainer = styled.div`
     position: relative;
     display: flex;
@@ -148,7 +172,7 @@ const Line = styled.div`
     position: absolute;
     top: calc(50% - 150px);
     left: 0;
-    max-width: 2100px;
+    max-width: ${(props) => props.width}px;
     overflow: hidden;
 `
 

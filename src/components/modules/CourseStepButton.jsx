@@ -34,12 +34,10 @@ function CourseStepButton({ data }) {
                 }
             </Circle>
             <AnimateCircle rotate={rotate}/>
-            { data.modal  
-                ? <>
-                    <Point className="firstPoint"/>
-                    <Point className="lastPoint"/>
-                </> 
-                : null }
+            { data.modal && 
+                // eslint-disable-next-line react/no-array-index-key
+                data.modal.map((item, index) => <Point key={index} top={item.top} left={item.left}/>)
+            }
         </Container>
     )
 }
@@ -86,19 +84,12 @@ const CircleContent = styled.div`
 
 const Point = styled.div`
     position: absolute;
+    top: ${(props) => props.top};
+    left: ${(props) => props.left};
     width: 15px;
     height: 15px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.7);
-    &.firstPoint {
-        top: -20px;
-        left: 0;
-    }
-
-    &.lastPoint {
-        top: -35px;
-        left: 30px;
-    }
 `
 
 const Container = styled.div`
@@ -125,7 +116,7 @@ const Container = styled.div`
             background-color: unset;
         }
         ${CircleContent} {
-            bottom: -10px;
+            bottom: -15px;
             position: absolute;
             min-height: 160px;
             width: 240px;
@@ -170,7 +161,7 @@ const Title = styled.div`
     margin-bottom: 13px;
     font-family: 'FocoBold';
     font-size: 21px;
-    line-height: 27px;
+    line-height: 23px;
     font-weight: 700;
     text-align: center;
 `
