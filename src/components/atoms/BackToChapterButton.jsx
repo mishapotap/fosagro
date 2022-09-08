@@ -46,6 +46,10 @@ const Container = styled.div`
     }
     &:hover svg {
         transform: scale(1.15);
+
+        @media ${DEVICE.laptopS} {
+            transform: none;
+        }
     }
 `
 

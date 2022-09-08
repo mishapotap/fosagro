@@ -37,7 +37,7 @@ export default function CourseSlideLayout({
                 </Link>
                 {children}
             </Content>
-            <MailButtonContainer>
+            <MailButtonContainer className="mail-button">
                 <MailButton />
             </MailButtonContainer>
         </StyledLayout>
@@ -47,7 +47,6 @@ export default function CourseSlideLayout({
 const Content = styled.div`
     height: 100%;
 `
-
 
 const BackToChapterIcon = styled.div`
     display: flex;
@@ -92,13 +91,15 @@ const StyledLayout = styled(Layout)`
     .content {
         padding: ${({ type }) => (type === "test" ? "10vh 6.5vw 10px" : "0")};
         overflow: auto;
-        ${({type}) => type === "test" && css`
-            padding: "10vh 6.5vw 10px";
+        ${({ type }) =>
+            type === "test" &&
+            css`
+                padding: "10vh 6.5vw 10px";
 
-            @media ${DEVICE.laptopS} {
-                padding: 20px;
-            }
-        `}
+                @media ${DEVICE.laptopS} {
+                    padding: 20px;
+                }
+            `}
     }
 
     .back-to-chapter {

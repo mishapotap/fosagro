@@ -20,7 +20,7 @@ import {
     ReviewModal,
     IntroModal,
     AudioPlayer,
-    ObjectSlider, 
+    ObjectSlider,
 } from "../atoms"
 
 import { StepProgressBar } from "../molecules";
@@ -39,8 +39,8 @@ import {
     AnimateMap,
     AnimateEarth,
     AnimateChart,
-    AnimateGlobalContract, 
-    AnimateLine 
+    AnimateGlobalContract,
+    AnimateLine
 } from "../../assets/svg"
 import { COLORS, FONTS } from "../../constants"
 import { HeadphonesIcon } from "../../assets/svg/static"

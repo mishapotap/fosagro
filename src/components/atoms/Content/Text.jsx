@@ -14,7 +14,7 @@ export default function Text({ children, className }) {
 
 const Container = styled.p`
     font-family: "CalibriLight", sans-serif;
-    font-size: 1.3vw;
+    font-size: 1.24vw;
     line-height: 1.56;
     color: ${COLORS.black};
 

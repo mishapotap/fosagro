@@ -6,7 +6,7 @@ import BackToChapterButton from "./BackToChapterButton"
 import NextQuestionButton from "./NextQuestionButton"
 import CourseSlideLayout from "./CourseSlideLayout"
 import { StepProgressBar } from "../molecules"
-import { List, Title, ContentBlock, Text, Note } from "./Content"
+import { List, Title, ContentBlock, Text, Note, Label } from "./Content"
 import { testData } from "../../data"
 import DocsLink from "./DocsLink"
 import { DEVICE, COLORS } from "../../constants"
@@ -28,15 +28,14 @@ import {
 // TODO на мобилках сделать чтобы анимация начинала проигрываться только тогда,
 // когда попадет в область видимости
 
-// TODO разобраться с стилями ObjectSlider
-// высота слайдера с заголовком
-// по две карточки в строке сделать на моб?
-// кнопки поправить
-
 // TODO может стоит как-то поправить анимации некоторые на моб, или убрать их?
 // (текст в AnmateGlobal и AnimateChart например получается очень маленький)
 
 // TODO переделать ссылки по-новому если заказчик одобрит
+
+// TODO сделать чтобы label был между контентом и заголовком
+
+// TODO изменить расположение аудиоплеера? (также в IntroModal)
 
 export default function CoursePage() {
     // временно, получаем снаружи
@@ -65,12 +64,13 @@ export default function CoursePage() {
 
     // временно для проверки
     const video = false
-    const circleSlider = true
-    const objectSlider = false
+    const circleSlider = false
+    const objectSlider = true
 
     const contentText = true
     const list = false
     const note = false
+    const label = true
 
     const animEarth = false
     const animEco = false
@@ -96,6 +96,7 @@ export default function CoursePage() {
                     <Content>
                         <StyledContentBlock>
                             {/* для проверки */}
+                            {label && <Label/>}
                             {contentText && (
                                 <Text>
                                     В декабре 2021 года рабочая группа
@@ -156,8 +157,7 @@ export default function CoursePage() {
                             )}
                             {objectSlider && (
                                 <ObjectSlider
-                                    color={COLORS.green}
-                                    // type="fosagro"
+                                    type="fosagro"
                                 />
                             )}
                             {animEarth && <AnimateEarth />}
@@ -347,7 +347,7 @@ const ContentColumn = styled.div`
     grid-area: 2 / 2 / 3 / 3;
 
     max-height: 100%;
-    padding-right: 30px;
+    padding-right: 5px;
     overflow: hidden;
     margin-bottom: 35px;
 
@@ -407,7 +407,7 @@ const MediaColumn = styled.div`
             padding-top: 10px;
 
             ${MediaColInner} {
-                justify-content: flex-end;
+                justify-content: center;
             }
 
             ${Media} {
@@ -443,20 +443,8 @@ const MediaColumn = styled.div`
                     margin: 15px;
                     max-height: none;
 
-                    img {
-                        @media ${DEVICE.laptopS} {
-                            width: 24vw;
-                        }
-                    }
-
-                    .fosagro-card {
-                        @media ${DEVICE.laptopS} {
-                            width: 24vw;
-                            height: 24vw;
-                        }
-                    }
-
                     @media ${DEVICE.laptopS} {
+                        margin: 0;
                         max-width: 90%;
                     }
 
@@ -589,7 +577,7 @@ const TitleColumn = styled.div`
 
     @media ${DEVICE.laptopS} {
         grid-area: 1 / 1 / 2 / 2;
-        margin-bottom: 40px;
+        margin-bottom: 30px;
         padding-top: 0;
     }
 `
