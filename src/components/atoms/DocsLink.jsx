@@ -96,8 +96,7 @@ const Container = styled.a`
     margin: 0;
     font-size: 1.1vw;
 
-    &:hover,
-    &:focus {
+    &:hover {
         background-color: ${COLORS.blue};
 
         ${Text} {

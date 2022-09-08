@@ -1,20 +1,19 @@
 /* eslint-disable react/jsx-no-bind */
 import React, { useEffect, useState, useRef } from "react"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { CSSTransition } from "react-transition-group"
 import "wicg-inert"
 import { Pagination, Navigation, EffectFade } from "swiper"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Link } from "react-router-dom"
-
-import { Tree } from "../../assets/svg"
+import { Tree, Letter } from "../../assets/svg"
 import NextQuestionButton from "./NextQuestionButton"
 import { testData, courseStepButtonData1 } from "../../data"
 import { Title } from "./Content"
 import SendButton from "./SendButton"
-import { MailButton } from "../molecules"
 import { borderAnimationM } from "../../constants/animations"
 import CourseSlideLayout from "./CourseSlideLayout"
+import { ModalStore } from "../../store"
 
 // eslint-disable-next-line
 import "swiper/css"
@@ -22,6 +21,7 @@ import "swiper/css"
 import "swiper/css/effect-fade"
 
 import { COLORS, DEVICE } from "../../constants"
+import AnimatedBlueButton from "./AnimatedBlueButton"
 
 // TODO уточнить насчет модалки обратной связи, она открывается сама по себе,
 // или при нажатии на кнопку?
@@ -55,8 +55,6 @@ export default function CourseTest({ courseId = 1 }) {
     const [showStart, setShowStart] = useState(true)
     const [showFinal, setShowFinal] = useState(false)
 
-    const [isTablet, setIsTablet] = useState(false)
-
     const [isNextBtnDisabled, setIsNextBtnDisabled] = useState(true)
 
     const [learnSectsIds, setLearnSectsIds] = useState([])
@@ -89,23 +87,6 @@ export default function CourseTest({ courseId = 1 }) {
             setIsNextBtnDisabled(false)
         }
     }
-
-    function handleWindowResize() {
-        const isT = document.documentElement.clientWidth <= 1024
-        setIsTablet(isT)
-    }
-
-    useEffect(() => {
-        if (document.documentElement.clientWidth <= 1024) {
-            setIsTablet(true)
-        }
-
-        window.addEventListener("resize", handleWindowResize)
-
-        return () => {
-            window.removeEventListener("resize", handleWindowResize)
-        }
-    }, [])
 
     useEffect(() => {
         // TODO реализовать получение данных
@@ -254,6 +235,7 @@ export default function CourseTest({ courseId = 1 }) {
                                         type: "custom",
                                         renderCustom,
                                     }}
+                                    allowTouchMove={false}
                                     effect="fade"
                                     fadeEffect={{ crossFade: true }}
                                     speed={400}
@@ -324,14 +306,6 @@ export default function CourseTest({ courseId = 1 }) {
                                     {finalContent.title}
                                 </StyledTitle>
                                 <Label>{finalContent.label}</Label>
-                                {isTablet && (
-                                    <StyledMobileTree
-                                        rightAnswers={treeRightAnsw}
-                                        start={!showStart}
-                                        end={showFinal}
-                                        isMobile
-                                    />
-                                )}
                                 <Text>{finalContent.text}</Text>
                                 {allAnswersRight && (
                                     <Link
@@ -374,7 +348,16 @@ export default function CourseTest({ courseId = 1 }) {
                                         Если у Вас есть предложения,
                                         воспользуйтесь формой обратной связи
                                     </FeedbackText>
-                                    <MailButton />
+                                    <AnimatedBlueButton
+                                        size="s"
+                                        rotate="20"
+                                        onClick={() =>
+                                            ModalStore.showModal("mail")
+                                        }
+                                        className="final-mail-btn"
+                                    >
+                                        <Letter />
+                                    </AnimatedBlueButton>
                                 </Feedback>
                                 {!allAnswersRight && (
                                     <Link
@@ -388,14 +371,12 @@ export default function CourseTest({ courseId = 1 }) {
                         </FinalBlock>
                     </CSSTransition>
                 </FirstColumn>
-                <SecondColumn>
-                    {!isTablet && (
-                        <StyledTree
-                            rightAnswers={treeRightAnsw}
-                            start={!showStart}
-                            end={showFinal}
-                        />
-                    )}
+                <SecondColumn className={!showFinal ? "hide" : ""}>
+                    <StyledTree
+                        rightAnswers={treeRightAnsw}
+                        start={!showStart}
+                        end={showFinal}
+                    />
                 </SecondColumn>
             </Columns>
         </StyledLayout>
@@ -409,15 +390,6 @@ const Columns = styled.div`
 
     @media ${DEVICE.laptopS} {
         flex-direction: column;
-    }
-`
-
-const StyledMobileTree = styled(Tree)`
-    max-width: 60%;
-    margin: 0 auto 30px;
-
-    @media ${DEVICE.mobile} {
-        max-width: 90%;
     }
 `
 
@@ -546,6 +518,10 @@ const StyledTree = styled(Tree)`
     height: 100%;
     padding-bottom: 2vh;
     padding-right: 25px;
+
+    @media ${DEVICE.laptopS} {
+        padding-right: 0;
+    }
 `
 
 const TextBase = styled.div`
@@ -578,8 +554,8 @@ const TestNav = styled.div`
 `
 
 const FirstColumn = styled.div`
-    flex: 0 1 56%;
-    max-width: 56%;
+    flex: 0 1 51%;
+    max-width: 51%;
     height: 100%;
 
     overflow-y: auto;
@@ -588,6 +564,16 @@ const FirstColumn = styled.div`
     @media ${DEVICE.laptopS} {
         overflow-y: visible;
         padding-right: 0;
+        order: 2;
+
+        flex: 0 1 100%;
+        max-width: 500px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    @media ${DEVICE.mobile} {
+        max-width: 100%;
     }
 
     &::-webkit-scrollbar {
@@ -599,24 +585,25 @@ const FirstColumn = styled.div`
         background-color: rgba(0, 82, 155, 0.6);
         border-radius: 2em;
     }
-
-    @media ${DEVICE.laptopS} {
-        flex: 0 1 100%;
-        max-width: 100%;
-    }
 `
 
 const SecondColumn = styled.div`
     max-height: 100%;
     height: 100%;
-    flex: 0 1 44%;
+    flex: 0 1 49%;
 
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
 
     @media ${DEVICE.laptopS} {
-        display: none;
+        order: 1;
+        margin-bottom: 20px;
+        justify-content: center;
+
+        &.hide {
+            display: none;
+        }
     }
 `
 
@@ -628,6 +615,10 @@ const Block = styled.div`
         @media ${DEVICE.laptop} {
             margin-bottom: 30px;
             max-width: 400px;
+        }
+
+        @media ${DEVICE.laptopS} {
+            max-width: 100%;
         }
     }
 
@@ -646,12 +637,18 @@ const Block = styled.div`
 
         @media ${DEVICE.laptop} {
             margin-bottom: 30px;
-            max-width: 360px;
+            max-width: 100%;
         }
     }
 `
 
-const StartBlock = styled(Block)``
+const StartBlock = styled(Block)`
+    @media ${DEVICE.laptopS} {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+`
 
 const TestSlider = styled.div`
     .swiper-pagination {
@@ -720,6 +717,7 @@ const AnswerLabel = styled.label`
     max-width: 27vw;
     margin-bottom: 3.2vh;
     cursor: pointer;
+    text-align: left;
 
     @media ${DEVICE.laptop} {
         max-width: 370px;
@@ -788,6 +786,10 @@ const FinalBlock = styled(Block)`
     flex-direction: column;
     justify-content: space-between;
     padding-bottom: 20px;
+
+    @media ${DEVICE.laptopS} {
+        align-items: center;
+    }
 `
 
 const FinalContent = styled.div`
@@ -795,6 +797,12 @@ const FinalContent = styled.div`
 
     @media ${DEVICE.laptop} {
         margin-bottom: 35px;
+    }
+
+    @media ${DEVICE.laptopS} {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 `
 
@@ -804,8 +812,9 @@ const FinBottom = styled.div`
     justify-content: space-between;
     padding-bottom: 30px;
 
-    @media ${DEVICE.mobile} {
+    @media ${DEVICE.laptop} {
         flex-direction: column;
+        width: 100%;
     }
 `
 
@@ -813,8 +822,14 @@ const Feedback = styled.div`
     display: flex;
     align-items: center;
 
-    @media ${DEVICE.tablet} {
+    .final-mail-btn {
+        flex-shrink: 0;
+    }
+
+    @media ${DEVICE.laptop} {
         margin-bottom: 30px;
+        justify-content: space-around;
+        width: 100%;
     }
 `
 
@@ -822,6 +837,7 @@ const FeedbackText = styled.p`
     font-family: "CalibriLight", sans-serif;
     font-size: 1vw;
     line-height: 1.3;
+    text-align: left;
 
     max-width: 18.4vw;
     margin-right: 20px;
@@ -833,6 +849,20 @@ const FeedbackText = styled.p`
 `
 
 const StyledLayout = styled(CourseSlideLayout)`
+    ${({ showMailBtn }) =>
+        !showMailBtn &&
+        css`
+            .mail-button {
+                display: none;
+            }
+        `}
+
+    .back-to-chapter {
+        @media ${DEVICE.laptopS} {
+            margin-bottom: 60px;
+        }
+    }
+
     .test,
     .final {
         transition: 0.25s;
