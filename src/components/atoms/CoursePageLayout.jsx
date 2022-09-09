@@ -8,7 +8,6 @@ import CourseSlideLayout from "./CourseSlideLayout"
 import { StepProgressBar } from "../molecules"
 import { List, Title, ContentBlock, Text, Note, Label } from "./Content"
 import { testData } from "../../data"
-import DocsLink from "./DocsLink"
 import { DEVICE, COLORS } from "../../constants"
 import AudioPlayer from "./AudioPlayer"
 import { SpeakerAudio } from "../../assets/audio"
@@ -24,6 +23,7 @@ import {
     AnimateMap,
     AnimateScience,
 } from "../../assets/svg"
+import ExtLinks from "./ExtLinks"
 
 // TODO на мобилках сделать чтобы анимация начинала проигрываться только тогда,
 // когда попадет в область видимости
@@ -168,11 +168,7 @@ export default function CoursePage() {
                             {animSci && <AnimateScience />}
                         </Media>
                         {links && links.length > 0 && (
-                            <Links>
-                                {links.map(({ text, url, id }) => (
-                                    <DocsLink text={text} url={url} key={id} />
-                                ))}
-                            </Links>
+                            <StyledExtLinks links={links}/>
                         )}
                     </MediaColInner>
                 </MediaColumn>
@@ -180,6 +176,11 @@ export default function CoursePage() {
         </StyledLayout>
     )
 }
+
+const StyledExtLinks = styled(ExtLinks)`
+    bottom:0;
+    right: 36%;
+`
 
 const StyledContentBlock = styled(ContentBlock)`
     max-height: 100%;

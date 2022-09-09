@@ -1,26 +1,18 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable eqeqeq */
-import React, { useEffect, useRef, useState } from "react"
+import { observer } from "mobx-react-lite"
+import React, { useEffect, useRef } from "react"
 import styled, { keyframes } from "styled-components"
+import { CourseTestStore } from "../../store"
 
-export default function Tree({
-    rightAnswers,
-    className,
-    qsCount = 5,
-    start = false,
-    end = false,
-}) {
+function Tree({ className, qsCount = 5 }) {
     const wrapperRef = useRef(null)
-    const [localStart, setLocalStart] = useState(false)
-    const [wait, setWait] = useState(false)
-    const [init, setInit] = useState(true)
-    const [localEnd, setLocalEnd] = useState(false)
-
     const leavesRef = useRef(null)
     const leavesCountRef = useRef(null)
     const notShownItemsRef = useRef(null)
     const shuffledLeavesRef = useRef([])
     const showLeaveAnimRef = useRef(false)
+    const leavesShowed = useRef(false)
 
     function handleStartAnimend() {
         leavesRef.current.forEach((l) => l.classList.remove("visible"))
@@ -28,49 +20,47 @@ export default function Tree({
             "animationend",
             handleStartAnimend
         )
-        setLocalStart(false)
+        CourseTestStore.setShowTreeStart(false)
     }
 
-    useEffect(() => {
-        setLocalStart(start)
-    }, [start])
-
     function handleRiseAend() {
-        setLocalEnd(true)
+        CourseTestStore.setShowTreeEnd(true)
         wrapperRef.current.removeEventListener("animationend", handleRiseAend)
     }
 
     useEffect(() => {
-        if (end) {
-            setInit(false)
+        if (CourseTestStore.showFinal) {
+            CourseTestStore.setShowTreeInit(false)
+
             if (showLeaveAnimRef.current) {
                 wrapperRef.current.addEventListener(
                     "animationend",
                     handleRiseAend
                 )
             } else {
-                // eslint-disable-next-line no-lonely-if
-                setLocalEnd(true)
+                CourseTestStore.setShowTreeEnd(true)
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [end])
+    }, [CourseTestStore.showFinal])
 
     useEffect(() => {
-        if (localStart) {
-            setWait(false)
-            setLocalStart(true)
+        if (CourseTestStore.showTreeStart) {
+            CourseTestStore.setShowTreeWait(false)
+            CourseTestStore.setShowTreeStart(true)
+
             wrapperRef.current.addEventListener(
                 "animationend",
                 handleStartAnimend
             )
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [localStart])
+    }, [CourseTestStore.showTreeStart])
 
     function handleInitAnimend() {
-        setInit(false)
-        if (!localEnd) setWait(true)
+        CourseTestStore.setShowTreeInit(false)
+        if (!CourseTestStore.showTreeEnd) CourseTestStore.setShowTreeWait(true)
+
         wrapperRef.current.removeEventListener(
             "animationend",
             handleInitAnimend
@@ -79,14 +69,14 @@ export default function Tree({
     }
 
     useEffect(() => {
-        if (init) {
+        if (CourseTestStore.showTreeInit) {
             wrapperRef.current.addEventListener(
                 "animationend",
                 handleInitAnimend
             )
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [init])
+    }, [CourseTestStore.showTreeInit])
 
     function showLeaves() {
         showLeaveAnimRef.current = true
@@ -94,18 +84,26 @@ export default function Tree({
         if (leavesCountRef.current) {
             let showItems = []
 
-            setWait(false)
-            setLocalStart(false)
-            setLocalEnd(false)
+            CourseTestStore.setShowTreeWait(false)
+            CourseTestStore.setShowTreeStart(false)
+            CourseTestStore.setShowTreeEnd(false)
 
-            if (rightAnswers == qsCount) {
+            if (CourseTestStore.treeRightAnswCount == qsCount) {
                 showItems = notShownItemsRef.current
                 notShownItemsRef.current = []
             } else {
-                // сколько листьев надо анимировать
-                const showItemsCount = Math.floor(
+                const showItemsPartCount = Math.floor(
                     leavesCountRef.current / qsCount
                 )
+
+                let showItemsCount
+
+                if (CourseTestStore.userPassedTest) {
+                    showItemsCount =
+                        CourseTestStore.rightAnswersCount * showItemsPartCount
+                } else {
+                    showItemsCount = showItemsPartCount
+                }
 
                 showItems = notShownItemsRef.current.slice(0, showItemsCount)
 
@@ -123,7 +121,7 @@ export default function Tree({
                     i.classList.add("visible")
                     i.classList.remove("rise")
                     i.removeEventListener("animationend", handleAnimendHandler)
-                    showLeaveAnimRef.current = false;
+                    showLeaveAnimRef.current = false
                 }
 
                 i.classList.add("rise")
@@ -160,7 +158,7 @@ export default function Tree({
         const newLeaves = shuffle(leavesRef.current)
         shuffledLeavesRef.current = newLeaves
         const chunkedArr = chunk(newLeaves, 20)
-        notShownItemsRef.current = newLeaves;
+        notShownItemsRef.current = newLeaves
 
         chunkedArr.forEach((i, index) => {
             i.forEach((item) => item.classList.add(`wait${index + 1}`))
@@ -181,20 +179,30 @@ export default function Tree({
 
     useEffect(() => {
         // при изменении количества правильных ответов показываем анимацию листьев
-        if (rightAnswers) {
-            showLeaves()
+        if (CourseTestStore.treeRightAnswCount) {
+            if (CourseTestStore.userPassedTest) {
+                if (!leavesShowed.current) {
+                    showLeaves()
+                    leavesShowed.current = true
+                }
+            } else {
+                showLeaves()
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [rightAnswers])
+    }, [CourseTestStore.treeRightAnswCount])
 
     return (
         <Wrapper
             viewBox="0 0 562 837"
             fill="none"
-            rightAnswers={rightAnswers}
-            className={`${className || ""} ${localStart ? "start" : ""} ${
-                init ? "init" : ""
-            } ${wait || localEnd ? "wait" : ""}`}
+            className={`tree ${className || ""} ${
+                CourseTestStore.showTreeStart ? "start" : ""
+            } ${CourseTestStore.showTreeInit ? "init" : ""} ${
+                CourseTestStore.showTreeWait || CourseTestStore.showTreeEnd
+                    ? "wait"
+                    : ""
+            }`}
             xmlns="http://www.w3.org/2000/svg"
             ref={wrapperRef}
         >
@@ -1538,3 +1546,4 @@ const Wrapper = styled.svg`
         transform-origin: 70% 56%;
     }
 `
+export default observer(Tree)

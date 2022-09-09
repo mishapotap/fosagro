@@ -22,6 +22,7 @@ import DocsLink from "./DocsLink"
 import Modal from "./Modal"
 import Layout from "./Layout"
 import { ModalStore } from "../../store"
+import { renderCustom } from "../../utils"
 
 // eslint-disable-next-line
 import "swiper/css"
@@ -29,18 +30,6 @@ import "swiper/css"
 import "swiper/css/effect-fade"
 
 export default function InstructionModal({ isOpen, onClose }) {
-    function renderCustom(swiper, current, total) {
-        const getFormattedNumber = (number) =>
-            number < 10 ? `0${number}` : `${number}`
-
-        return /* html */ `
-            <span class="cur-slide-number">${getFormattedNumber(current)}</span>
-            <span class="separator">/</span>
-            <span class="total-slides-number">${getFormattedNumber(
-                total
-            )}</span>
-        `
-    }
 
     // const baseUrl = "http://localhost:3000/course01/"
     // const instructionUrl = new URL("instruction", baseUrl)

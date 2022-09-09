@@ -2,14 +2,11 @@ import React from "react"
 import styled from "styled-components"
 import { COLORS, DEVICE } from "../../constants"
 import { LinkIcon } from "../../assets/svg"
-import { LinkCursor } from "../../assets/svg/static"
-import { CursorAnim } from "../../constants/animations"
 
 export default function DocsLink({
     text = "Отчет о деятельности компании",
     // text = "Повестка дня в области устойчивого развития на период до 2030 года",
     url = "#",
-    showCursor = true,
 }) {
     // текст для проверки
     // Повестка дня в области устойчивого развития на период до 2030 года
@@ -23,7 +20,6 @@ export default function DocsLink({
                     <Text>{text}</Text>
                 </TextWrapper>
             </Wrapper>
-            {showCursor && <StyledCursor src={LinkCursor} alt="курсор" />}
         </Container>
     )
 }
@@ -31,6 +27,10 @@ export default function DocsLink({
 const Wrapper = styled.div`
     max-width: 84%;
     margin: 0 auto;
+
+    @media ${DEVICE.laptopS} {
+        max-width: 76%;
+    }
 `
 
 const Text = styled.span`
@@ -51,31 +51,10 @@ const Icon = styled(LinkIcon)`
     top: 50%;
     left: 0;
     transform: translate(calc(-100% - 10px), -50%);
-    width: 32px;
-
-    @media ${DEVICE.laptopM} {
-        width: 24px;
-    }
-`
-
-const StyledCursor = styled.img`
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 28px;
-
-    pointer-events: none;
-    animation: ${CursorAnim} 5s infinite;
-    transform: translateY(60%) translateX(120%);
-
-
-    @media ${DEVICE.laptopM} {
-        width: 23px;
-    }
+    width: 1.7vw;
 
     @media ${DEVICE.laptopS} {
-        display: none;
-        animation: none;
+        width: 20px;
     }
 `
 
@@ -105,10 +84,6 @@ const Container = styled.a`
 
         ${Icon} {
             fill: ${COLORS.white};
-        }
-
-        ${StyledCursor} {
-            display: none;
         }
     }
 

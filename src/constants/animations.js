@@ -60,17 +60,17 @@ export const CursorAnim = keyframes`
 
     30% {
         opacity: 1;
-        transform: translateY(20%) translateX(-100%);
+        transform: translateY(20%) translateX(-70%);
     }
 
     50% {
         opacity: 0;
-        transform: translateY(20%) translateX(-100%);
+        transform: translateY(20%) translateX(-70%);
     }
 
     100% {
         opacity: 0;
-        transform: translateY(20%) translateX(-100%);
+        transform: translateY(20%) translateX(-70%);
     }
 `
 
