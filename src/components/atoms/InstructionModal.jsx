@@ -22,7 +22,6 @@ import * as routes from "../../constants/routes"
 import DocsLink from "./DocsLink"
 import Modal from "./Modal"
 import Layout from "./Layout"
-import { ModalStore } from "../../store"
 
 // eslint-disable-next-line
 import "swiper/css"

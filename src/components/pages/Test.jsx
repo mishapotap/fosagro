@@ -59,98 +59,17 @@ export default function Test() {
     return (
         <Layout page="section">
             <AnimateLine color={COLORS.red}/>
+            <div style={{marginBottom: "150px"}}/>
+            <VideoPlayer src={TepkVideo} />
+            <div style={{marginBottom: "150px"}}/>
             <ObjectSlider color={COLORS.orange}/>
             <ObjectSlider color={COLORS.red} type="fosagro"/>
+            <div style={{marginBottom: "150px"}}/>
             <AnimateGlobalContract/>
             <AnimateChart/>
             <AnimateEarth/>
             <Ecology />
-
-            {/* <AudioPlayer src={SpeakerAudio} /> */}
-            {/* <Text>СТРАНИЦА НЕ НАЙДЕНА! ЭТО 404 ОШИБКА</Text>
-            <Title>Hello World!</Title>
-            <Subtitle>Start</Subtitle> */}
-
-            {/* <button onClick={() => setIsModalOpened(true)}>
-                Открыть modal
-            </button>
-            <Modal
-                isOpen={isModalOpened}
-                onClose={() => setIsModalOpened(false)}
-            >
-                Проверка Modal
-            </Modal>
-
-            <button onClick={() => setIsReviewModalOpened(true)}>
-                Открыть ReviewModal
-            </button>
-            <ReviewModal
-                isOpen={isReviewModalOpened}
-                onClose={() => setIsReviewModalOpened(false)}
-            />
-
-            <button onClick={() => setIsCurvedModalOpened(true)}>
-                Открыть curved modal
-            </button>
-            <CurvedModal
-                isOpen={isCurvedModalOpened}
-                onClose={() => setIsCurvedModalOpened(false)}
-            >
-                Проверка CurvedModal
-            </CurvedModal>
-
-            <button
-                style={{
-                    fontSize: "18px",
-                    margin: "20px 0",
-                }}
-                onClick={() => setIsInstrOpened(true)}
-            >
-                Открыть инструкцию
-            </button>
-            <InstructionModal
-                isOpen={isInstrOpened}
-                onClose={() => setIsInstrOpened(false)}
-            /> */}
-
-            {/* <button
-                style={{
-                    fontSize: "18px",
-                    margin: "20px 0",
-                }}
-                onClick={() => setIsIntroModalOpened(true)}
-            >
-                Открыть введение
-            </button>
-            <IntroModal
-                isOpen={isIntroModalOpened}
-                onClose={() => setIsIntroModalOpened(false)}
-                items={introModalData.introModal1}
-            /> */}
-
-            {/* <DocsLink />
-            <span>{routes.HOME}</span>
-            <img src={HeadphonesIcon} alt="mksicon" />
-            <Testy style={FONTS.modalTitleWhite}>gfsjgfjdgbfsdjg</Testy>
-            <Link to={routes.HOME}>
-                <SendButton text="Перейти в home" />
-            </Link>
-            <Link to={routes.MENU}>
-                <SendButton text="Перейти в меню" />
-            </Link>
-
-            <Flower />
-            <Close color={COLORS.orange} />
-            <Close color={COLORS.blue} />
-            <ArrowLeft color={COLORS.orange} />
-            <ArrowRight color={COLORS.blue} />
-            <Next />
-            <Prev color={COLORS.orange} />
-            <NextQuestionButton />
-            <BackToChapterButton />
-
-            <Headphones />
-            <Timer />
+            <div style={{marginBottom: "150px"}}/>
             <StepProgressBar slidesAmount="2" color={COLORS.green_light}/>
             <StepProgressBar slidesAmount="3" type="canyons" color={COLORS.brown_light}/>
             <StepProgressBar slidesAmount="4" type="rocks" />
@@ -161,28 +80,12 @@ export default function Test() {
             <StepProgressBar slidesAmount="3" type="planeWaves"/>
             <StepProgressBar slidesAmount="4" type="mountains"/>
             <StepProgressBar slidesAmount="4" type="ground"/>
-            <Tree />
-            <InteractiveCircle color={COLORS.green_circle} />
-
-            {/* <Slider
-                size="m"
-                data={testData.circleSlider[0]}
-                sliderColor={COLORS.green_circle}
-                time={5000}
-                width="50%"
-            /> */}
-
-            <Slider
-                size="s"
-                data={testData.circleSlider[0]}
-                sliderColor={COLORS.orange}
-                time={5000}
-                width="40vw"
-            />
-
-            {/* <VideoPlayer src={TepkVideo} /> */}
-            {/* <AnimateScience /> */}
-            {/* <AnimateMap /> */}
+            {/* <Tree /> */}
+            {/* <InteractiveCircle color={COLORS.green_circle} /> */}
+            <div style={{marginBottom: "150px"}}/>
+            <AnimateScience />
+            <div style={{marginBottom: "150px"}}/>
+            <AnimateMap />
         </Layout>
     )
 }
