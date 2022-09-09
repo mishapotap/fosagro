@@ -4,13 +4,14 @@ import { TimeIcon } from "../../assets/svg/static";
 import { COLORS } from '../../constants'
 import { borderAnimationM } from "../../constants/animations";
 
-export default function CourseStepButton({ data }) {
+export default function CourseStepButton({ data, className }) {
     const { title, bgColor, image, time, description, rotate, top, left } = data
     // TODO перенести состояние в mobX
     const [isCompleted, setIsCompleted] = useState(false);
     const [isActive, setIsАсtive] = useState(false);
     return (
         <Container 
+            className={className}
             isCompleted={isCompleted} 
             isActive={isActive}
             bgColor={bgColor} 

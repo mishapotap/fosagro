@@ -2,13 +2,14 @@ import React, { useState } from "react"
 import styled, { css } from "styled-components";
 import { COLORS } from "../../constants";
 
-export default function CourseStepPoint({data}) {
+export default function CourseStepPoint({data, className}) {
     const { color, year, text, position, top, left } = data
     // TODO перенести состояние в mobX
     const [isCompleted, setIsCompleted] = useState(false);
     const [isActive, setIsАсtive] = useState(false);
     return(
         <Container
+            className={className}
             defaultColor={ COLORS.white }
             color={color}
             isCompleted={isCompleted} 
@@ -111,6 +112,7 @@ const Container = styled.div`
     top: ${(props) => props.top};
     left: ${(props) => props.left};
     display: block;
+    transition: all 0.3s;
     cursor: pointer;
     ${(props) => (props.isActive === true || props.isCompleted === true) &&
         css`

@@ -5,14 +5,14 @@ import { Link } from "react-router-dom"
 import { ModalStore } from "../../store"
 import { IntroModal, CourseStepButton, CourseStepPoint } from "../atoms"
 
-function CourseStep({button, points, dataModal}) {
+function CourseStep({button, points, dataModal, className}) {
     return(
         <Container>
             {
                 button.value.modal 
                 ? <>
                     <Button onClick={() => ModalStore.showModal("intro")}>
-                        <CourseStepButton data={button.value}/>
+                        <CourseStepButton data={button.value} className={`${className}-button`}/>
                     </Button>
                     <IntroModal
                         isOpen={ModalStore.isVisible.intro}
@@ -21,10 +21,10 @@ function CourseStep({button, points, dataModal}) {
                         items={dataModal}/>
                     </>
                 : <Link to={ button.link }>
-                    <CourseStepButton data={button.value}/>
+                    <CourseStepButton data={button.value} className={`${className}-button`}/>
                 </Link>
             }
-            {points && points.map((item) => <CourseStepPoint key={item.id} data={item.value}/>)}
+            {points && points.map((item) => <CourseStepPoint key={item.id} data={item.value} className={`${className}-point`}/>)}
         </Container>
     )
 }
