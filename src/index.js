@@ -2,9 +2,9 @@ import React from "react"
 import ReactDOM from "react-dom/client"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import App from "./App"
-import { Tutorial, Test, Course, Error404 } from "./components/pages"
+import { Tutorial, Test, Course, Error404, CourseTestPage } from "./components/pages"
 import GlobalStyle from "./globalStyles"
-import { CourseTest, CoursePageLayout } from "./components/atoms"
+import { CoursePageLayout } from "./components/atoms"
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
@@ -17,7 +17,7 @@ root.render(
                 <Route path="tutorial" element={<Tutorial />} />
                 <Route path="test" element={<Test />} />
                 {/* временно для проверки (тк нужен полный экран) */}
-                <Route path="course-test" element={<CourseTest />} />
+                <Route path="course-test" element={<CourseTestPage />} />
                 <Route path="course-page" element={<CoursePageLayout />} />
                 <Route path="*" element={<Error404 />} />
             </Routes>

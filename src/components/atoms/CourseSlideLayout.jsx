@@ -37,8 +37,8 @@ export default function CourseSlideLayout({
                 </Link>
                 {children}
             </Content>
-            <MailButtonContainer className="mail-button">
-                <MailButton />
+            <MailButtonContainer>
+                <MailButton isTest={type === 'test'}/>
             </MailButtonContainer>
         </StyledLayout>
     )
