@@ -20,11 +20,18 @@ export default function Header({
     // заголовок части раздела, в которой мы находимся
     // (вот то что в больших кружках в разделе на timeline)
     sectTitle = false,
-    // цвет заголовка части
-    sectTitleColor = COLORS.blue,
     // ссылка "вернуться на главную"
     goBackToMain = false,
 }) {
+    // сделать норм
+    const rusSiteLink = "/"
+    const engSiteLink = "/"
+    const isRus = false
+
+    // получать норм
+    const activeSectTitle = "Суть концепции устойчивого развития"
+    const activeSectColor = COLORS.green_light
+
     return (
         <Container>
             <HeaderInner>
@@ -33,32 +40,40 @@ export default function Header({
                         {colored ? <FosagroColored /> : <Fosagro />}
                     </Link>
                 </Logo>
-                {sectTitle && (
-                    <HeaderCenter>
-                        <SectTitle>
-                            <SectTitleDecor />
-                            <SectTitleText color={sectTitleColor}>
-                                {sectTitle}
-                            </SectTitleText>
-                        </SectTitle>
-                    </HeaderCenter>
-                )}
                 {language && (
                     <LanguageContainer
                         color={COLORS.white}
                         colorActive={COLORS.blue}
                     >
                         <Language>
-                            <Link to="/" className="active">
+                            <Link
+                                to={rusSiteLink}
+                                className={isRus && "active"}
+                            >
                                 RU
                             </Link>
                         </Language>
                         <Language>
-                            <Link to="/">EN</Link>
+                            <Link
+                                to={engSiteLink}
+                                className={!isRus && "active"}
+                            >
+                                EN
+                            </Link>
                         </Language>
                     </LanguageContainer>
                 )}
-                {course && <CourseMenuButton colored={colored}/>}
+                {course && <CourseMenuButton colored={colored} />}
+                {sectTitle && (
+                    <HeaderSectTitle>
+                        <SectTitle>
+                            <SectTitleDecor />
+                            <SectTitleText color={activeSectColor}>
+                                {activeSectTitle}
+                            </SectTitleText>
+                        </SectTitle>
+                    </HeaderSectTitle>
+                )}
                 {goBackToMain && (
                     <BackToMain>
                         <Link to={routes.HOME} onClick={() => ModalStore.closeModal("menu")}>Вернуться на главную</Link>
@@ -111,25 +126,16 @@ const BackToMain = styled.div`
     }
 `
 
-const HeaderCenter = styled.div`
+const HeaderSectTitle = styled.div`
     flex: 0 1 100%;
-    align-self: flex-end;
-
-    @media ${DEVICE.laptopS} {
-        order: 3;
-    }
 `
 
 const SectTitle = styled.div`
     display: flex;
     align-items: flex-end;
-
-    @media ${DEVICE.laptopM} {
-        margin-bottom: 5px;
-    }
+    margin-top: 10px;
 
     @media ${DEVICE.laptopS} {
-        margin-bottom: 0;
         margin-top: 8px;
     }
 `
@@ -163,6 +169,7 @@ const SectTitleText = styled.div`
 
 const HeaderInner = styled.div`
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
 
@@ -176,7 +183,7 @@ const HeaderInner = styled.div`
 `
 
 const Container = styled.div`
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -189,13 +196,12 @@ const Container = styled.div`
     z-index: 100;
 
     @media ${DEVICE.laptopM} {
-        height: 70px;
+        height: 80px;
         padding-left: 3vw;
     }
 
     @media ${DEVICE.laptopS} {
         padding: 0 23px;
-        height: 95px;
     }
 `
 

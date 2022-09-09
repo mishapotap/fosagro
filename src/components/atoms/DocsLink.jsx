@@ -1,6 +1,5 @@
-/* eslint-disable no-unused-vars */
 import React from "react"
-import styled, { keyframes } from "styled-components"
+import styled from "styled-components"
 import { COLORS, DEVICE } from "../../constants"
 import { LinkIcon } from "../../assets/svg"
 import { LinkCursor } from "../../assets/svg/static"
@@ -74,7 +73,7 @@ const StyledCursor = styled.img`
         width: 23px;
     }
 
-    @media ${DEVICE.mobile} {
+    @media ${DEVICE.laptopS} {
         display: none;
         animation: none;
     }
@@ -87,6 +86,7 @@ const Container = styled.a`
 
     text-align: center;
     transition: 0.3s;
+    background-color: ${COLORS.white};
 
     /* относительный border-radius не получится сделать, тк нужна dashed border */
     background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='18' ry='18' stroke='%2300529BFF' stroke-width='2' stroke-dasharray='9%2c 7' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
@@ -96,8 +96,7 @@ const Container = styled.a`
     margin: 0;
     font-size: 1.1vw;
 
-    &:hover,
-    &:focus {
+    &:hover {
         background-color: ${COLORS.blue};
 
         ${Text} {

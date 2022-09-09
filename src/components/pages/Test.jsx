@@ -10,9 +10,9 @@ import {
     NextQuestionButton,
     BackToChapterButton,
     Timer,
-    StepProgressBar,
     Slider,
     VideoPlayer,
+    // eslint-disable-next-line import/named
     InstructionModal,
     DocsLink,
     Modal,
@@ -21,9 +21,10 @@ import {
     ReviewModal,
     IntroModal,
     AudioPlayer,
-    ObjectSlider
+    ObjectSlider,
 } from "../atoms"
 
+import { StepProgressBar } from "../molecules";
 import {
     Flower,
     Close,
@@ -39,13 +40,14 @@ import {
     AnimateMap,
     AnimateEarth,
     AnimateChart,
-    AnimateGlobalContract
+    AnimateGlobalContract,
+    AnimateLine
 } from "../../assets/svg"
 import { COLORS, FONTS } from "../../constants"
 import { HeadphonesIcon } from "../../assets/svg/static"
 import { TepkVideo } from "../../assets/video"
 import { SpeakerAudio } from "../../assets/audio"
-import { testData } from "../../data"
+import { testData, introModalData } from "../../data"
 
 export default function Test() {
     const [isInstrOpened, setIsInstrOpened] = useState(false)
@@ -56,9 +58,10 @@ export default function Test() {
 
     return (
         <Layout page="section">
-            {/* <ObjectSlider color={COLORS.orange}/> */}
-            {/* <ObjectSlider color={COLORS.red} type="fosagro"/> */}
-            {/* <AnimateGlobalContract/> */}
+            <AnimateLine color={COLORS.red}/>
+            <ObjectSlider color={COLORS.orange}/>
+            <ObjectSlider color={COLORS.red} type="fosagro"/>
+            <AnimateGlobalContract/>
             <AnimateChart/>
             <AnimateEarth/>
             <Ecology />
@@ -122,7 +125,7 @@ export default function Test() {
             <IntroModal
                 isOpen={isIntroModalOpened}
                 onClose={() => setIsIntroModalOpened(false)}
-                items={testData.introSlider}
+                items={introModalData.introModal1}
             /> */}
 
             {/* <DocsLink />
@@ -145,14 +148,21 @@ export default function Test() {
             <Prev color={COLORS.orange} />
             <NextQuestionButton />
             <BackToChapterButton />
-            <Headphones /> */}
-            {/* <Timer /> */}
-            {/* <StepProgressBar width="608" slidesAmount="7" />
-            <StepProgressBar width="608" slidesAmount="5" />
-            <StepProgressBar width="608" slidesAmount="8" />
-            <StepProgressBar width="608" slidesAmount="3" />
-            <Tree /> */}
-            {/* <InteractiveCircle color={COLORS.green_circle} /> */}
+
+            <Headphones />
+            <Timer />
+            <StepProgressBar slidesAmount="2" color={COLORS.green_light}/>
+            <StepProgressBar slidesAmount="3" type="canyons" color={COLORS.brown_light}/>
+            <StepProgressBar slidesAmount="4" type="rocks" />
+            <StepProgressBar slidesAmount="5" type="wave"/>
+            <StepProgressBar slidesAmount="3" type="flowers"/>
+            <StepProgressBar slidesAmount="5" type="tropics" color={COLORS.green}/>
+            <StepProgressBar slidesAmount="4" type="desert"/>
+            <StepProgressBar slidesAmount="3" type="planeWaves"/>
+            <StepProgressBar slidesAmount="4" type="mountains"/>
+            <StepProgressBar slidesAmount="4" type="ground"/>
+            <Tree />
+            <InteractiveCircle color={COLORS.green_circle} />
 
             {/* <Slider
                 size="m"

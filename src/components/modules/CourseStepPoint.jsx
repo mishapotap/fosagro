@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import { COLORS } from "../../constants";
 
 function CourseStepPoint({data}) {
-    const { color, text, position } = data
+    const { color, year, text, position, top, left } = data
     // TODO перенести состояние в mobX
     const [isActive, setIsАсtive] = useState(false);
     const [isCompleted, setIsCompleted] = useState(false);;
@@ -13,13 +13,18 @@ function CourseStepPoint({data}) {
             color={color}
             isCompleted={isCompleted} 
             isActive={isActive}
+            top={top}
+            left={left}
             onMouseOver={() => setIsАсtive(true)}    
             onMouseOut={() => setIsАсtive(false)}
             onClick={() => setIsCompleted(!isCompleted)}>
                 <PointContainer defaultColor={ COLORS.white } position={position}>
                     <Point/>
                 </PointContainer>
-                <Text color={ COLORS.blue } position={position}>{text}</Text>
+                <TextContainer position={position} color={ COLORS.blue }>
+                    { year && <Year>{year}</Year> }
+                    <Text>{text}</Text>
+                </TextContainer>
         </Container>
     )
 }
@@ -29,19 +34,9 @@ export default {
     Component: CourseStepPoint,
 }
 
-const Text = styled.div`
+const TextContainer = styled.div`
     position: absolute;
     left: -50px;
-    /* max-width: 130px; */
-    min-width: 130px;
-    font-family: 'FocoRegular';
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 20px;
-    text-align: center;
-
-    color: ${props => props.color};
-    transition: all .3s;
     ${(props) => props.position === "top" &&
         css`
             bottom: calc(100% + 90px);
@@ -50,6 +45,26 @@ const Text = styled.div`
         css`
             top: calc(100% + 90px);
     `}
+
+    min-width: 130px;
+
+    font-size: 16px;
+    line-height: 20px;
+    text-align: center;
+
+    color: ${props => props.color};
+
+    transition: all .3s;
+`
+
+const Year = styled.div`
+    font-family: 'FocoBold';
+    font-weight: 700;
+`
+
+const Text = styled.div`
+    font-family: 'FocoRegular';
+    font-weight: 400;
 `
 
 const Point = styled.div`
@@ -97,7 +112,9 @@ const PointContainer = styled.div`
 `
 
 const Container = styled.div`
-    position: relative;
+    position: absolute;
+    top: ${(props) => props.top};
+    left: ${(props) => props.left};
     display: block;
     cursor: pointer;
     ${(props) => (props.isActive === true || props.isCompleted === true) &&
@@ -114,7 +131,7 @@ const Container = styled.div`
                 background: ${props.color};
             }
 
-            ${Text} {
+            ${TextContainer} {
                 color: ${props.defaultColor}
             }
         `}

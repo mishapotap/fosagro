@@ -1,14 +1,20 @@
 import React from "react"
 import styled, { keyframes } from "styled-components"
+import { Timer } from "../../components/atoms"
 
 export default function AnimateEarth() {
   return(
-    <SVG width="39.4vw" 
-      height="24.5vw" viewBox="0 0 757 470" 
+    <Wrapper className="anim-earth-wrapper">
+      <TimerContainer>
+        <Timer makeAnim/>
+      </TimerContainer>
+      <SVG width="39.4vw"
+      height="24.5vw" viewBox="0 0 757 470"
+      className="anim-earth"
       fill="none" xmlns="http://www.w3.org/2000/svg">
-      <mask id="mask0_1285_2" style={{maskType:"alpha"}} 
+      <mask id="mask0_1285_2" style={{maskType:"alpha"}}
         maskUnits="userSpaceOnUse" x="223" y="100" width="288" height="287">
-        <path 
+        <path
           d="M367.027 386.94C446.125 386.94 510.247 322.763 510.247 243.595C510.247 164.428 446.125 100.25 367.027 100.25C287.928 100.25 223.807 164.428 223.807 243.595C223.807 322.763 287.928 386.94 367.027 386.94Z" fill="#6EE1FF"/>
       </mask>
       <g mask="url(#mask0_1285_2)" className="earth">
@@ -433,9 +439,20 @@ export default function AnimateEarth() {
         </clipPath>
       </defs>
       </SVG>
+    </Wrapper>
 
   )
 }
+
+const TimerContainer = styled.div`
+    margin-bottom: 30px;
+`
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
 
 const showContent = keyframes`
   0% {

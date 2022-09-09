@@ -3,47 +3,42 @@ import styled, { css } from "styled-components"
 import { TimeIcon } from "../../assets/svg/static";
 import { COLORS } from '../../constants'
 import { borderAnimationM } from "../../constants/animations";
-import { IntroModal } from "../atoms";
-import { testData } from "../../data";
 
 function CourseStepButton({ data }) {
-    const { title, bgColor, image, time, description, rotate } = data
+    const { title, bgColor, image, time, description, rotate, top, left } = data
     // TODO перенести состояние в mobX
     const [isActive, setIsАсtive] = useState(false);
     const [isCompleted, setIsCompleted] = useState(false);
-    const [isIntroModalOpened, setIsIntroModalOpened] = useState(false)
     return (
-        <>
-            <Container 
-                isCompleted={isCompleted} 
-                isActive={isActive}
-                bgColor={bgColor} 
-                image={image} 
-                onMouseOver={() => setIsАсtive(true)}
-                onMouseOut={() => setIsАсtive(false)}
-                onClick={() => {setIsCompleted(!isCompleted); setIsIntroModalOpened(true)}}>
-                <Circle>
-                    {isActive
-                        ? <CircleContent style={{color: COLORS.white}}>
-                            <Title>{title}</Title>
-                            <Description>{description}</Description>
-                            <Time>
-                                <img src={TimeIcon} alt="timeIcon"/>
-                                <TimeText>{time}</TimeText>
-                            </Time>
-                        </CircleContent>
-                        : <Text style={isCompleted === true ? {color: COLORS.white} : {color: COLORS.blue_text}}>{title}</Text>
-                    }
-                </Circle>
-                <AnimateCircle rotate={rotate}/>
-                
-            </Container>
-            <IntroModal
-            isOpen={isIntroModalOpened}
-            onClose={() => setIsIntroModalOpened(false)}
-            items={testData.introSlider}
-        />
-        </>
+        <Container 
+            isCompleted={isCompleted} 
+            isActive={isActive}
+            bgColor={bgColor} 
+            image={image} 
+            top={top}
+            left={left}
+            onMouseOver={() => setIsАсtive(true)}
+            onMouseOut={() => setIsАсtive(false)}
+            onClick={() => setIsCompleted(!isCompleted)}>
+            <Circle>
+                {isActive
+                    ? <CircleContent style={{color: COLORS.white}}>
+                        <Title>{title}</Title>
+                        <Description>{description}</Description>
+                        <Time>
+                            <img src={TimeIcon} alt="timeIcon"/>
+                            <TimeText>{time}</TimeText>
+                        </Time>
+                    </CircleContent>
+                    : <Text style={isCompleted === true ? {color: COLORS.white} : {color: COLORS.blue_text}}>{title}</Text>
+                }
+            </Circle>
+            <AnimateCircle rotate={rotate}/>
+            { data.modal && 
+                // eslint-disable-next-line react/no-array-index-key
+                data.modal.map((item, index) => <Point key={index} top={item.top} left={item.left}/>)
+            }
+        </Container>
     )
 }
 
@@ -87,8 +82,20 @@ const CircleContent = styled.div`
     align-items: center;
 `
 
+const Point = styled.div`
+    position: absolute;
+    top: ${(props) => props.top};
+    left: ${(props) => props.left};
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.7);
+`
+
 const Container = styled.div`
-    position: relative;
+    position: absolute;
+    top: ${(props) => props.top};
+    left: ${(props) => props.left};
     width: fit-content;
     height: fit-content;
     transition: all 0.3s;
@@ -109,12 +116,17 @@ const Container = styled.div`
             background-color: unset;
         }
         ${CircleContent} {
-            bottom: -10px;
+            bottom: -15px;
             position: absolute;
             min-height: 160px;
             width: 240px;
             transform: scale(0.6);
-        }`
+        }
+        ${Point} {
+            background-color: ${props.bgColor};
+            opacity: 0.5;
+        }
+        `
   }
   ${(props) => 
     props.isCompleted === true &&
@@ -125,6 +137,10 @@ const Container = styled.div`
         }
         ${Circle} {
             background-color: ${props.bgColor};
+        }
+        ${Point} {
+            background-color: ${props.bgColor};
+            opacity: 0.5;
         }`
     }
 `;
@@ -145,7 +161,7 @@ const Title = styled.div`
     margin-bottom: 13px;
     font-family: 'FocoBold';
     font-size: 21px;
-    line-height: 27px;
+    line-height: 23px;
     font-weight: 700;
     text-align: center;
 `

@@ -1,7 +1,7 @@
 import React from "react"
 import styled, { css } from "styled-components"
 import Header from "./Header"
-import { COLORS, DEVICE } from "../../constants"
+import { DEVICE } from "../../constants"
 
 export default function Layout({ page = "start", children, className }) {
     return (
@@ -21,9 +21,7 @@ export default function Layout({ page = "start", children, className }) {
                 <Header
                     colored
                     course
-                    // TODO сделать чтобы у нас где-то хранились эти значения в store и брать оттуда
-                    sectTitle="Суть концепции устойчивого развития"
-                    sectTitleColor={COLORS.green_light}
+                    sectTitle
                 />
             )}
             <Content className="content">{children}</Content>
@@ -50,10 +48,11 @@ const Container = styled.div`
             );
 
             &:before {
-                position: absolute;
+                position: fixed;
                 top: 0;
                 left: 0;
 
+                z-index: -1;
                 width: 100%;
                 height: 100%;
 
@@ -69,11 +68,7 @@ const Container = styled.div`
         `}
 
     @media ${DEVICE.laptopM} {
-        padding-top: 70px;
-    }
-
-    @media ${DEVICE.laptopS} {
-        padding-top: 95px;
+        padding-top: 80px;
     }
 `
 
