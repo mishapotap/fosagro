@@ -1,13 +1,13 @@
 import React from "react"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { observer } from "mobx-react-lite"
-import { ModalStore } from "../../store"
+import { ModalStore, CourseTestStore } from "../../store"
 import { AnimatedBlueButton, ReviewModal } from "../atoms"
 import { Letter } from "../../assets/svg"
 
-function MailButton() {
+function MailButton({ isTest }) {
     return (
-        <Wrapper>
+        <Wrapper hide={isTest && CourseTestStore.showFinal}>
             <AnimatedBlueButton
                 size="s"
                 rotate="20"
@@ -23,6 +23,12 @@ function MailButton() {
     )
 }
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+    ${({ hide }) =>
+        hide &&
+        css`
+            display: none;
+        `}
+`
 
 export default observer(MailButton)

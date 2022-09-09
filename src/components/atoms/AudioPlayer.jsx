@@ -13,6 +13,7 @@ import {
 } from "../../assets/svg"
 import { COLORS, DEVICE } from "../../constants"
 import { AudioPlayerBg } from "../../assets/svg/static"
+import { formatTime } from "../../utils"
 
 export default function AudioPlayer({
     isPlaying,
@@ -46,15 +47,6 @@ export default function AudioPlayer({
     const progrContRef = useRef(null)
     const playerContRef = useRef(null)
     const controlsCircleRef = useRef(null)
-
-    // TODO перенести куда-то отдельно? тк используется также в VideoPlayer
-    function formatTime(time) {
-        const isoString = new Date(time * 1000).toISOString()
-        if (time >= 3600) {
-            return isoString.slice(11, 19)
-        }
-        return isoString.slice(14, 19)
-    }
 
     useEffect(() => {
         setIsPlayingLocal(isPlaying)

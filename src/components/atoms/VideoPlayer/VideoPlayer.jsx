@@ -5,6 +5,7 @@ import styled from "styled-components"
 import { COLORS, DEVICE } from "../../../constants"
 import VideoControls from "./VideoControls"
 import Loader from "../Loader"
+import { formatTime } from "../../../utils"
 
 // TODO сделать автоматический выход из полноэкранного режима при окончании видео?
 // TODO показать состояние фокуса?
@@ -79,14 +80,6 @@ export default function VideoPlayer({
     function setIsMuted(val) {
         isMutedRef.current = val
         _setIsMuted(val)
-    }
-
-    function formatTime(time) {
-        const isoString = new Date(time * 1000).toISOString()
-        if (time >= 3600) {
-            return isoString.slice(11, 19)
-        }
-        return isoString.slice(14, 19)
     }
 
     // устанавливаем форматированное время длительности фидео при изменении всего времени видео
