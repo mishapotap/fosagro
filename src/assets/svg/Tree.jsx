@@ -9,25 +9,18 @@ export default function Tree({
     qsCount = 5,
     start = false,
     end = false,
-    isMobile = false,
 }) {
     const wrapperRef = useRef(null)
-    const [notShownItems, _setNotShownItems] = useState([])
     const [localStart, setLocalStart] = useState(false)
     const [wait, setWait] = useState(false)
-    const [init, setInit] = useState(!isMobile)
+    const [init, setInit] = useState(true)
     const [localEnd, setLocalEnd] = useState(false)
-    const [showLeaveAnim, setShowLeaveAnim] = useState(false)
 
     const leavesRef = useRef(null)
     const leavesCountRef = useRef(null)
     const notShownItemsRef = useRef(null)
-    const leavesShowedRef = useRef(false)
-
-    function setNotShownItems(val) {
-        _setNotShownItems(val)
-        notShownItemsRef.current = val
-    }
+    const shuffledLeavesRef = useRef([])
+    const showLeaveAnimRef = useRef(false)
 
     function handleStartAnimend() {
         leavesRef.current.forEach((l) => l.classList.remove("visible"))
@@ -39,8 +32,8 @@ export default function Tree({
     }
 
     useEffect(() => {
-        if (!isMobile) setLocalStart(start)
-    }, [start, isMobile])
+        setLocalStart(start)
+    }, [start])
 
     function handleRiseAend() {
         setLocalEnd(true)
@@ -49,14 +42,15 @@ export default function Tree({
 
     useEffect(() => {
         if (end) {
-            if (showLeaveAnim) {
+            setInit(false)
+            if (showLeaveAnimRef.current) {
                 wrapperRef.current.addEventListener(
                     "animationend",
                     handleRiseAend
                 )
             } else {
                 // eslint-disable-next-line no-lonely-if
-                if (!isMobile) setLocalEnd(true)
+                setLocalEnd(true)
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -76,7 +70,7 @@ export default function Tree({
 
     function handleInitAnimend() {
         setInit(false)
-        setWait(true)
+        if (!localEnd) setWait(true)
         wrapperRef.current.removeEventListener(
             "animationend",
             handleInitAnimend
@@ -95,49 +89,32 @@ export default function Tree({
     }, [init])
 
     function showLeaves() {
-        setShowLeaveAnim(true)
-        leavesShowedRef.current = true
+        showLeaveAnimRef.current = true
 
         if (leavesCountRef.current) {
             let showItems = []
 
             setWait(false)
             setLocalStart(false)
-            if (isMobile) {
-                setLocalEnd(false)
-            }
+            setLocalEnd(false)
 
             if (rightAnswers == qsCount) {
-                showItems = notShownItems
-                setNotShownItems([])
-                if (isMobile) showItems = leavesRef.current
+                showItems = notShownItemsRef.current
+                notShownItemsRef.current = []
             } else {
                 // сколько листьев надо анимировать
-                let showItemsCount = Math.floor(
+                const showItemsCount = Math.floor(
                     leavesCountRef.current / qsCount
                 )
 
-                if (isMobile) {
-                    showItemsCount *= rightAnswers
-                }
+                showItems = notShownItemsRef.current.slice(0, showItemsCount)
 
-                // случайные индексы среди листьев, которые еще не показаны
-                const randomIdxs = []
-                while (randomIdxs.length < showItemsCount) {
-                    const r = Math.floor(
-                        Math.random() * notShownItemsRef.current.length
-                    )
-                    if (randomIdxs.indexOf(r) === -1) randomIdxs.push(r)
-                }
-
-                // случайные листья из тех, которые еще не показаны
-                showItems = randomIdxs.map((i) => notShownItemsRef.current[i])
-
-                // обновляем листья, которые еще скрыты
-                const newNotShownItems = notShownItemsRef.current.filter(
-                    (i, index) => !randomIdxs.includes(index)
+                const newNotShownItems = notShownItemsRef.current.slice(
+                    showItemsCount,
+                    notShownItemsRef.current.length
                 )
-                setNotShownItems(newNotShownItems)
+
+                notShownItemsRef.current = newNotShownItems
             }
 
             // показываем листья с анимацией
@@ -146,8 +123,7 @@ export default function Tree({
                     i.classList.add("visible")
                     i.classList.remove("rise")
                     i.removeEventListener("animationend", handleAnimendHandler)
-                    setShowLeaveAnim(false)
-                    if (isMobile) setLocalEnd(true)
+                    showLeaveAnimRef.current = false;
                 }
 
                 i.classList.add("rise")
@@ -182,7 +158,9 @@ export default function Tree({
 
     function initWaitLeaves() {
         const newLeaves = shuffle(leavesRef.current)
+        shuffledLeavesRef.current = newLeaves
         const chunkedArr = chunk(newLeaves, 20)
+        notShownItemsRef.current = newLeaves;
 
         chunkedArr.forEach((i, index) => {
             i.forEach((item) => item.classList.add(`wait${index + 1}`))
@@ -197,21 +175,14 @@ export default function Tree({
         leavesRef.current = leavesItems
         leavesCountRef.current = count
 
-        setNotShownItems([...leavesItems])
         initWaitLeaves()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
         // при изменении количества правильных ответов показываем анимацию листьев
         if (rightAnswers) {
-            if (isMobile) {
-                if (!leavesShowedRef.current) {
-                    showLeaves()
-                }
-            } else {
-                showLeaves()
-            }
+            showLeaves()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [rightAnswers])
