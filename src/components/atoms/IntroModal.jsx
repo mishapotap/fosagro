@@ -119,6 +119,7 @@ export default function IntroModal({ isOpen, onClose, items }) {
                         speed={600}
                         onSlideChange={handleSlideChange}
                         className="swiper-intro"
+                        allowTouchMove={false}
                     >
                         {items.map(({ text, audio, images, note }, index) => (
                             <SwiperSlide
