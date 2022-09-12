@@ -41,7 +41,8 @@ import {
     AnimateChart,
     AnimateGlobalContract,
     AnimateLine,
-    AnimateDegrees
+    AnimateDegrees,
+    AnimateIPCC
 } from "../../assets/svg"
 import { COLORS, FONTS } from "../../constants"
 import { HeadphonesIcon } from "../../assets/svg/static"
@@ -59,6 +60,7 @@ export default function Test() {
     return (
         <Layout page="section">
         <AnimateLine color={COLORS.red}/>
+            <AnimateIPCC/>
             <AnimateDegrees/>
             <ObjectSlider color={COLORS.orange}/>
             <ObjectSlider color={COLORS.red} type="fosagro"/>
