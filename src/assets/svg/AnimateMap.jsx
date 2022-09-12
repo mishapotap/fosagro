@@ -4,6 +4,7 @@ import styled, { keyframes } from "styled-components"
 import map from "../images/Course1/map.png"
 import bigMap from "../images/Course1/bigMap.jpg"
 import { COLORS } from "../../constants"
+import { dashoffset, showContent } from "../../constants/animations"
 
 export default function AnimateMap() {
   const bgColor = COLORS.color_animate;
@@ -66,24 +67,9 @@ export default function AnimateMap() {
   )
 }
 
-const strokeMap = (offset) => keyframes`
-  to {
-    stroke-dashoffset: ${offset};
-  }
-`
-
 const showLine = keyframes`
   to {
     stroke-dasharray: 230;
-  }
-`
-
-const showMap = keyframes`
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
   }
 `
 
@@ -122,14 +108,14 @@ const SVG = styled.svg`
   .strokeBigMap {
     stroke-dasharray: 2300;
     stroke-dashoffset: 2300;
-    animation: ${strokeMap(0)} 6s linear;
+    animation: ${dashoffset(0)} 6s linear;
     animation-delay: 3s;
     animation-fill-mode: forwards;
   }
   .strokeMap {
     stroke-dasharray: 800;
     stroke-dashoffset: 0;
-    animation: ${strokeMap(800)} 5s linear;
+    animation: ${dashoffset(800)} 5s linear;
     animation-delay: 10s;
     animation-fill-mode: forwards;
   }
@@ -142,13 +128,13 @@ const SVG = styled.svg`
   }
 
   .bigMap {
-    animation: ${showMap} 3s ease-out;
+    animation: ${showContent} 3s ease-out;
     animation-delay: 1s;
     opacity: 0;
     animation-fill-mode: forwards;
   }
   .miniMap {
-    animation: ${showMap} 1s ease-in;
+    animation: ${showContent} 1s ease-in;
     animation-delay: 9s;
     opacity: 0;
     animation-fill-mode: forwards;
@@ -157,7 +143,7 @@ const SVG = styled.svg`
   .firstLine {
     stroke-dasharray: 230;
     stroke-dashoffset: 262;
-    animation: ${strokeMap(100)} 3s linear;
+    animation: ${dashoffset(100)} 3s linear;
     animation-delay: 19s;
     animation-fill-mode: forwards;
   }

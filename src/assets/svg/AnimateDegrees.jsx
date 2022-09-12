@@ -1,5 +1,6 @@
 import React from "react"
 import styled, { keyframes } from "styled-components"
+import { circleStroke, opacity } from "../../constants/animations"
 
 export default function AnimateDegrees() {
     return(
@@ -251,30 +252,6 @@ const transform = keyframes`
     }
 `
 
-const opacity = keyframes`
-    0% {
-        opacity: 0;
-    }
-
-    5% {
-        opacity: 1;
-    }
-
-    100% {
-        opacity: 1;
-    }
-`
-
-const stroke = (from, to) => keyframes`
-    0% {
-        stroke-dashoffset: ${from}px;
-    }
-
-    100% {
-        stroke-dashoffset: ${to}px;
-    }
-`
-
 const SVG = styled.svg`
 
     .chartLine {
@@ -352,7 +329,7 @@ const SVG = styled.svg`
             opacity: 1;
             stroke-dasharray: 3575px;
             stroke-dashoffset: 3590px;
-            animation: ${stroke("3590", "7155")} 15s linear;
+            animation: ${circleStroke("3590", "7155")} 15s linear;
             animation-delay: 9.5s;
             animation-fill-mode: forwards;
         }
@@ -360,7 +337,7 @@ const SVG = styled.svg`
             opacity: 1;
             stroke-dasharray: 3575px;
             stroke-dashoffset: 3580px;
-            animation: ${stroke("3580", "1915")} 25s linear;
+            animation: ${circleStroke("3580", "1915")} 25s linear;
             animation-delay: 11.5s;
             animation-fill-mode: forwards;
         }
@@ -369,7 +346,7 @@ const SVG = styled.svg`
             opacity: 1;
             stroke-dasharray: 40px;
             stroke-dashoffset: 40px;
-            animation: ${stroke("40", "0")} 2s linear;
+            animation: ${circleStroke("40", "0")} 2s linear;
             animation-delay: 17s;
             animation-fill-mode: forwards;
         }
@@ -378,7 +355,7 @@ const SVG = styled.svg`
             opacity: 1;
             stroke-dasharray: 40px;
             stroke-dashoffset: 40px;
-            animation: ${stroke("40", "0")} 2s linear;
+            animation: ${circleStroke("40", "0")} 2s linear;
             animation-delay: 20s;
             animation-fill-mode: forwards;
         }
@@ -845,7 +822,7 @@ const SVG = styled.svg`
             opacity: 1;
             stroke-dasharray: 515px;
             stroke-dashoffset: 515px;
-            animation: ${stroke("515", "0")} 3s linear;
+            animation: ${circleStroke("515", "0")} 3s linear;
             animation-delay: 65.5s;
             animation-fill-mode: forwards;
         }
@@ -859,7 +836,7 @@ const SVG = styled.svg`
             opacity: 1;
             stroke-dasharray: 4365px;
             stroke-dashoffset: 4365px;
-            animation: ${stroke("4365", "0")} 15s linear;
+            animation: ${circleStroke("4365", "0")} 15s linear;
             animation-delay: 50.5s;
             animation-fill-mode: forwards;
         }
@@ -867,7 +844,7 @@ const SVG = styled.svg`
             opacity: 1;
             stroke-dasharray: 4365px;
             stroke-dashoffset: 4365px;
-            animation: ${stroke("4365", "0")} 15s linear;
+            animation: ${circleStroke("4365", "0")} 15s linear;
             animation-delay: 50s;
             animation-fill-mode: forwards;
         }
@@ -875,7 +852,7 @@ const SVG = styled.svg`
             opacity: 1;
             stroke-dasharray: 630px;
             stroke-dashoffset: 630px;
-            animation: ${stroke("630", "0")} 15s linear;
+            animation: ${circleStroke("630", "0")} 15s linear;
             animation-delay: 50s;
             animation-fill-mode: forwards;
         }

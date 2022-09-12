@@ -1,6 +1,7 @@
 import React from "react"
 import styled, { keyframes } from "styled-components"
 import { Timer } from "../../components/atoms"
+import { showContent } from "../../constants/animations"
 
 export default function AnimateEarth() {
   return(
@@ -452,15 +453,6 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`
-
-const showContent = keyframes`
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
 `
 
 const showArrow = keyframes`

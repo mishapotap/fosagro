@@ -1,5 +1,6 @@
 import React from "react"
 import styled, { keyframes } from "styled-components"
+import { dashoffset } from "../../constants/animations"
 
 export default function AnimateIPCC() {
     return(
@@ -229,12 +230,6 @@ const opacity = keyframes`
     }
 `
 
-const stroke = (to) => keyframes`
-    to {
-        stroke-dashoffset: ${to}px;
-    }
-`
-
 const SVG = styled.svg`
     .first {
         opacity: 0; 
@@ -269,35 +264,35 @@ const SVG = styled.svg`
         .line_1 {
             stroke-dasharray: 3690px;
             stroke-dashoffset: 3690px;
-            animation: ${stroke(0)} 10s linear;
+            animation: ${dashoffset(0)} 10s linear;
             animation-delay: 6.5s;
             animation-fill-mode: forwards;
         }
         .line_2 {
             stroke-dasharray: 2585px;
             stroke-dashoffset: 2585px;
-            animation: ${stroke(0)} 10s linear;
+            animation: ${dashoffset(0)} 10s linear;
             animation-delay: 11.5s;
             animation-fill-mode: forwards;
         }
         .line_3 {
             stroke-dasharray: 900px;
             stroke-dashoffset: 900px;
-            animation: ${stroke(0)} 10s linear;
+            animation: ${dashoffset(0)} 10s linear;
             animation-delay: 16.5s;
             animation-fill-mode: forwards;
         }
         .line_4 {
             stroke-dasharray: 4120px;
             stroke-dashoffset: 4120px;
-            animation: ${stroke(0)} 10s linear;
+            animation: ${dashoffset(0)} 10s linear;
             animation-delay: 21.5s;
             animation-fill-mode: forwards;
         }
         .line_5 {
             stroke-dasharray: 3440px;
             stroke-dashoffset: 3440px;
-            animation: ${stroke(0)} 10s linear;
+            animation: ${dashoffset(0)} 10s linear;
             animation-delay: 26.5s;
             animation-fill-mode: forwards;
         }
@@ -341,7 +336,7 @@ const SVG = styled.svg`
         .line {
             stroke-dasharray: 2225px;
             stroke-dashoffset: 2225px;
-            animation: ${stroke(0)} 10s linear;
+            animation: ${dashoffset(0)} 10s linear;
             animation-delay: 47s;
             animation-fill-mode: forwards;
         }
