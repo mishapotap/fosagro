@@ -6,16 +6,19 @@ import { COLORS } from "../../constants"
 
 export default function CourseMenu({ dataLine, dataModal }) {
     const ref = useRef(null);
+    const line = useRef(null);
 
     const [isDown, setIsDown] = useState(false);
     const [startX, setstartX] = useState(0);
     const [scrollLeft, setscrollLeft] = useState(0);
 
     const handleMouseDown = (e) => {
-        setIsDown(true);
-        ref.current.classList.add('active');
-        setstartX(e.pageX - ref.current.offsetLeft);
-        setscrollLeft(ref.current.scrollLeft);
+        if(e.target.parentNode === line.current) {
+            setIsDown(true);
+            ref.current.classList.add('active');
+            setstartX(e.pageX - ref.current.offsetLeft);
+            setscrollLeft(ref.current.scrollLeft);
+        }
     }
 
     const handleMouseLeave = () => {
@@ -61,7 +64,7 @@ export default function CourseMenu({ dataLine, dataModal }) {
             onMouseMove={(e) => handleMouseMove(e)}
             onScroll={() => handleScroll()}
             >
-            <Line width={dataLine.width}>
+            <Line width={dataLine.width} ref={line}>
                 <AnimateLine color={COLORS.white}/>
             </Line>
             {dataLine.timeline.map((section) => (
