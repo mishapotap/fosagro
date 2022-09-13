@@ -88,9 +88,6 @@ export const opacity = keyframes`
 `
 
 export const scale = keyframes`
-    from {
-        transform: scale(0)
-    }
     to {
         transform: scale(1)
     }
