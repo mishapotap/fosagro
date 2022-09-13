@@ -3,19 +3,21 @@ import styled, { css } from "styled-components"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Pagination, EffectFade, Autoplay } from "swiper"
 import { SliderCircleM, SliderCircleS } from "../../assets/svg"
+// eslint-disable-next-line no-unused-vars
 import { COLORS, DEVICE } from "../../constants"
 
 // eslint-disable-next-line
 import "swiper/css"
 // eslint-disable-next-line
 import "swiper/css/effect-fade"
+import { CourseProgressStore } from "../../store"
 
 export default function Slider({
     // size - это не про размер самого слайдера, слайдер занимает все пространство родителя
     // это про размер внешнего круга, s - маленький (такой как в введении), m - большой
     // (как в общем слайдере раздела)
     size = "s",
-    sliderColor = COLORS.blue,
+    sliderColor,
     data,
     makeAutoplay = true,
     className,
@@ -39,6 +41,8 @@ export default function Slider({
         }
     }, [makeAutoplay])
 
+    const color = sliderColor || CourseProgressStore.activeSectColor
+
     // для автоплэя
     const onInit = (swiper) => {
         swiperRef.current = swiper
@@ -49,13 +53,13 @@ export default function Slider({
             <SliderContainer size={size}>
                 {size === "s" ? (
                     <SliderCircleS
-                        color={sliderColor}
+                        color={color}
                         time={delayTime}
                         activePathItem={isActive}
                     />
                 ) : (
                     <SliderCircleM
-                        color={sliderColor}
+                        color={color}
                         time={delayTime}
                         activePathItem={isActive}
                     />

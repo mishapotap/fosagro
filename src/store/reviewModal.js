@@ -65,6 +65,15 @@ class ReviewModal {
         this.isError = false
         this.isSuccess = true
     }
+
+    resetState() {
+        this.isLoading = false
+        this.isError = false
+        this.isSuccess = false
+        this.ratingVal = 0
+        this.message = ''
+        this.ratingHoverVal = 0
+    }
 }
 
 export default new ReviewModal()

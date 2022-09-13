@@ -51,7 +51,7 @@ const timelineData = {
             {
                 id: 2,
                 button: {
-                    link: "",
+                    link: "1/1",
                     value: {
                         title: "Суть концепции устойчивого развития",
                         description:
@@ -110,7 +110,7 @@ const timelineData = {
             {
                 id: 3,
                 button: {
-                    link: "",
+                    link: "2/1",
                     value: {
                         title: "Концепции ESG",
                         description:
@@ -139,7 +139,7 @@ const timelineData = {
             {
                 id: 4,
                 button: {
-                    link: "",
+                    link: "3/1",
                     value: {
                         title: "А что в ФосАгро?",
                         description:
@@ -209,7 +209,7 @@ const timelineData = {
             {
                 id: 5,
                 button: {
-                    link: "",
+                    link: "4/1",
                     value: {
                         title: "А что с поставщиками и потребителями?",
                         description:
@@ -248,7 +248,7 @@ const timelineData = {
             {
                 id: 6,
                 button: {
-                    link: "",
+                    link: "test",
                     value: {
                         title: "Тест",
                         description:
@@ -298,7 +298,7 @@ const timelineData = {
             {
                 id: 2,
                 button: {
-                    link: "",
+                    link: "1/1",
                     value: {
                         title: "Преобразования нашего мира, 17 целей",
                         description:
@@ -350,7 +350,7 @@ const timelineData = {
             {
                 id: 3,
                 button: {
-                    link: "",
+                    link: "2/1",
                     value: {
                         title: "Как ФосАгро способствует достижению ЦУР ООН",
                         description:
@@ -380,7 +380,7 @@ const timelineData = {
             {
                 id: 4,
                 button: {
-                    link: "",
+                    link: "3/1",
                     value: {
                         title: "Приоритизация ЦУР для ФосАгро",
                         description:
@@ -460,7 +460,7 @@ const timelineData = {
             {
                 id: 5,
                 button: {
-                    link: "",
+                    link: "test",
                     value: {
                         title: "Тест",
                         description:
@@ -750,7 +750,7 @@ const timelineData = {
             {
                 id: 10,
                 button: {
-                    link: "",
+                    link: "test",
                     value: {
                         title: "Тест",
                         description:

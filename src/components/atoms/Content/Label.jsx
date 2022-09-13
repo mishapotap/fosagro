@@ -1,13 +1,12 @@
 import React from "react"
 import styled from "styled-components"
+import parse from "html-react-parser"
 import { DEVICE } from "../../../constants"
 
-// TODO добавить такую штучку, когда при наведении появляется кружочек с тестом
+export default function Label({ data }) {
+    const { text = "" } = data
 
-export default function Label({
-    children = "ФосАгро следует международным стандартам раскрытия.",
-}) {
-    return <Container>{children}</Container>
+    return <Container>{parse(text)}</Container>
 }
 
 const Container = styled.div`

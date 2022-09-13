@@ -12,8 +12,8 @@ import "swiper/css"
 import "swiper/css/navigation"
 
 export default function ObjectSlider({
-    type = "OOH",
-    color = COLORS.green_dark,
+    data: { type = "OOH" } = {},
+    color = COLORS.green_dark
 }) {
     return (
         <Container>
@@ -99,6 +99,10 @@ const Container = styled.div`
     width: 100%;
     max-height: 30vw;
     height: 100%;
+
+    .swiper {
+        padding: 15px;
+    }
 
     .swiper-wrapper,
     .swiper-slide {

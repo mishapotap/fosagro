@@ -4,12 +4,8 @@ import parse from "html-react-parser"
 import { COLORS, DEVICE } from "../../../constants"
 
 // текст с акцентом (синий толстый шрифт) или без
-export default function Text({ children, className }) {
-    // парсим html текста, чтобы сделать акцент в нем
-    // (в качестве children должна поступать html строка, в которой слова,
-    // которые надо выделить, обернуты в тег span)
-    // или просто строка с текстом, если без акцента
-    return <Container className={className}>{parse(children)}</Container>
+export default function Text({ data: { text }, className }) {
+    return <Container className={className}>{parse(text)}</Container>
 }
 
 const Container = styled.p`

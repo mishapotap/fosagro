@@ -83,7 +83,7 @@ const Container = styled.div`
     .links {
         transition: 0.2s;
         opacity: 0;
-        display: block;
+        display: none;
     }
 
     .links-enter-done {
@@ -161,7 +161,7 @@ const LinksContainer = styled.div`
     display: none;
     z-index: 60;
     width: 28vw;
-    transform: translate(-50%, -64%);
+    transform: translate(-50%, -10vh);
 
     & > * {
         margin-bottom: 10px;

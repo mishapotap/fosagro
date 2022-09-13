@@ -147,8 +147,12 @@ export default function IntroModal({ isOpen, onClose, items }) {
 
                                         <SlideCol className="content">
                                             <StyledContentBlock>
-                                                <Text>{text}</Text>
-                                                {note && <Note>{note}</Note>}
+                                                <Text data={{text}} />
+                                                {note && (
+                                                    <Note
+                                                        data={{ text: note }}
+                                                    />
+                                                )}
                                             </StyledContentBlock>
                                         </SlideCol>
 

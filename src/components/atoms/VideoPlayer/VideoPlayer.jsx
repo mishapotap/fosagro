@@ -5,18 +5,18 @@ import styled from "styled-components"
 import { COLORS, DEVICE } from "../../../constants"
 import VideoControls from "./VideoControls"
 import Loader from "../Loader"
-import { formatTime } from "../../../utils"
+import { formatTime, getElWindowPos } from "../../../utils"
 
 // TODO сделать автоматический выход из полноэкранного режима при окончании видео?
 // TODO показать состояние фокуса?
 // TODO проверить работу установки паузы/плэй снаружи
 
 export default function VideoPlayer({
-    src,
+    data: { src },
     width = "914px",
     loop = false,
     poster = null,
-    isPlaying = false,
+    isPlaying = true,
     className,
 }) {
     const [isMuted, _setIsMuted] = useState(false)
@@ -128,6 +128,7 @@ export default function VideoPlayer({
         window.addEventListener("resize", setValIsMob)
 
         return () => {
+            clearInterval(intervalId.current)
             document.removeEventListener("keydown", handleKeydown)
             window.removeEventListener("resize", setValIsMob)
         }
@@ -142,21 +143,12 @@ export default function VideoPlayer({
         }
     }
 
-    // получение положения элемента относительно окна
-    function getElPos(el) {
-        const rect = el.getBoundingClientRect()
-        return {
-            left: rect.left,
-            top: rect.top,
-        }
-    }
-
     // записываем стили для VideoContainer перед началом анимации fullscreen для пк
     function setVideoAnimStartStyle() {
         const videoWidth = videoPlayerContRef.current.offsetWidth
         const videoHeight = videoPlayerContRef.current.offsetHeight
 
-        const { left, top } = getElPos(videoPlayerContRef.current)
+        const { left, top } = getElWindowPos(videoPlayerContRef.current)
 
         const startStyle = {
             width: `${videoWidth}px`,
@@ -367,7 +359,7 @@ export default function VideoPlayer({
     function togglePlay() {
         if (!isLoadedRef.current) return
 
-        if (isPlayingLocal.current) {
+        if (isPlayingLocal.current && !videoRef.current.paused) {
             pause()
         } else {
             play()
@@ -443,7 +435,9 @@ export default function VideoPlayer({
 
     return (
         <Container
-            className={`${isFullscreen ? "fullscreen" : ""} ${className || ""} video-player`}
+            className={`${isFullscreen ? "fullscreen" : ""} ${
+                className || ""
+            } video-player`}
             maxWidth={width}
         >
             <VideoPlayerContainer
@@ -511,7 +505,6 @@ const Video = styled.video`
 
     height: 100%;
     width: 100%;
-
     object-fit: cover;
 
     opacity: 0;
@@ -533,8 +526,12 @@ const VideoError = styled.div`
 `
 
 const VideoErrorText = styled.div`
-    font-size: 21px;
+    font-size: 1.09vw;
     color: ${COLORS.blue};
+
+    @media ${DEVICE.laptopS} {
+        font-size: 16px;
+    }
 `
 
 const VideoPlayerContainer = styled.div`
@@ -547,6 +544,7 @@ const VideoPlayerContainer = styled.div`
     height: 100%;
 
     border-radius: 30px;
+    background-color: ${COLORS.white};
 
     @media ${DEVICE.laptopM} {
         border-radius: 20px;
@@ -573,7 +571,7 @@ const Container = styled.div`
 
     &:after {
         display: block;
-        padding-top: 64%;
+        padding-top: 56%;
         content: "";
     }
 `

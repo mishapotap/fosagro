@@ -59,11 +59,11 @@ export default function Test() {
         <Layout page="section">
         <AnimateLine color={COLORS.red}/>
             <ObjectSlider color={COLORS.orange}/>
-            <ObjectSlider color={COLORS.red} type="fosagro"/>
+            <ObjectSlider color={COLORS.red} data={{type: "fosagro"}} />
             <AnimateGlobalContract/>
             <AnimateChart/>
             <AnimateEarth/>
-            <AudioPlayer src={SpeakerAudio} />
+            <AudioPlayer src={SpeakerAudio} isPlaying={false} />
             <Text>СТРАНИЦА НЕ НАЙДЕНА! ЭТО 404 ОШИБКА</Text>
             <Title>Hello World!</Title>
             <Subtitle>Start</Subtitle>
@@ -176,7 +176,7 @@ export default function Test() {
                 width="40vw"
             />
 
-            <VideoPlayer src={TepkVideo} />
+            {/* <VideoPlayer src={TepkVideo} /> */}
             <Ecology />
             <AnimateScience />
             <AnimateMap />

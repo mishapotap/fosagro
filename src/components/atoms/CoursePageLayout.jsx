@@ -1,32 +1,27 @@
 /* eslint-disable no-unused-vars */
-import React from "react"
+import React, { useEffect } from "react"
+import { useParams, useLocation } from "react-router"
 import styled, { css } from "styled-components"
 import { Link } from "react-router-dom"
+import { observer } from "mobx-react-lite"
+
 import BackToChapterButton from "./BackToChapterButton"
 import NextQuestionButton from "./NextQuestionButton"
 import CourseSlideLayout from "./CourseSlideLayout"
 import { StepProgressBar } from "../molecules"
-import { List, Title, ContentBlock, Text, Note, Label } from "./Content"
-import { testData } from "../../data"
+import { Title, ContentBlock } from "./Content"
+
 import { DEVICE, COLORS } from "../../constants"
 import AudioPlayer from "./AudioPlayer"
-import { SpeakerAudio } from "../../assets/audio"
-import { TepkVideo } from "../../assets/video"
-import VideoPlayer from "./VideoPlayer"
-import Slider from "./Slider"
-import ObjectSlider from "./ObjectSlider"
-import {
-    AnimateEarth,
-    Ecology,
-    AnimateChart,
-    AnimateGlobalContract,
-    AnimateMap,
-    AnimateScience,
-} from "../../assets/svg"
 import ExtLinks from "./ExtLinks"
+import coursePageComponents from "./coursePageComponents"
+import { CourseProgressStore } from "../../store"
+import { Error404 } from "../pages"
 
 // TODO на мобилках сделать чтобы анимация начинала проигрываться только тогда,
 // когда попадет в область видимости
+// ! кстати то же самое с видео, оно не должно проигрываться, если находится
+// вне области видимости
 
 // TODO может стоит как-то поправить анимации некоторые на моб, или убрать их?
 // (текст в AnmateGlobal и AnimateChart например получается очень маленький)
@@ -37,103 +32,99 @@ import ExtLinks from "./ExtLinks"
 
 // TODO изменить расположение аудиоплеера? (также в IntroModal)
 
-export default function CoursePage() {
-    // временно, получаем снаружи
-    const nextPageLink = "/"
-    const prevPageLink = "/"
-    const courseProgressType = "grass"
-    const sectSlidesCount = 5
-    const color = COLORS.green_circle
+// TODO сделать чтобы плавно появлялись элементы
+// (чтобы прошлое состояние не было видно)
 
-    const audioSrc = SpeakerAudio
-    const videoSrc = TepkVideo
+// TODO постараться сделать плавное переключение
 
-    // const links = []
-    const links = [
-        {
-            id: 1,
-            text: "Годовой отчет ФосАгро 2021 года",
-            url: "#",
-        },
-        {
-            id: 2,
-            text: "Повестка дня в области устойчивого развития на период до 2030 года",
-            url: "#",
-        },
-    ]
+function CoursePage() {
+    const { id: courseId, sectId, pageId } = useParams()
+    const pageData = CourseProgressStore.activePageData
+    const location = useLocation()
 
-    // временно для проверки
-    const video = false
-    const circleSlider = false
-    const objectSlider = true
+    function setIds() {
+        CourseProgressStore.setActiveCourseId(courseId)
+        CourseProgressStore.setActiveSectId(sectId)
+        CourseProgressStore.setActivePageId(pageId)
+    }
 
-    const contentText = true
-    const list = false
-    const note = false
-    const label = true
+    useEffect(() => {
+        setIds()
 
-    const animEarth = false
-    const animEco = false
-    const animChart = false
-    const animGlob = false
-    const animSci = false
-    const animMap = false
-    const animation =
-        animEarth || animChart || animEco || animGlob || animSci || animMap
+        const slideContent = document.querySelector(".slide-content")
+        if (slideContent) {
+            setTimeout(() => {
+                slideContent.scrollTop = 0
+            }, 100)
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [location])
+
+    useEffect(() => {
+        setIds()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    if (!pageData) {
+        return <Error404 />
+    }
+
+    const { component, data: mData, type: mediaType } = pageData.media
+    const MediaComponent = coursePageComponents[component]
+    const mediaData = mData || {}
+
+    const { links, audioSrc, title } = pageData
+
+    const video = mediaType === "video"
+    const circleSlider = mediaType === "circleSlider"
+    const animation = mediaType === "animation"
+    const objectSlider = mediaType === "objectSlider"
 
     return (
-        <StyledLayout sectColor={color}>
+        <StyledLayout>
             <Columns>
                 <AudioColumn>
-                    {audioSrc && <StyledAudioPlayer src={audioSrc} />}
+                    {audioSrc && (
+                        <StyledAudioPlayer
+                            src={audioSrc}
+                            key={window.location.pathname}
+                        />
+                    )}
                 </AudioColumn>
                 <TitleColumn>
-                    <Title>
-                        Как компания двигается к достижению этих целей?
+                    <Title color={CourseProgressStore.activeSectColor}>
+                        {title}
                     </Title>
                 </TitleColumn>
                 <ContentColumn>
                     <Content>
                         <StyledContentBlock>
-                            {/* для проверки */}
-                            {label && <Label/>}
-                            {contentText && (
-                                <Text>
-                                    В декабре 2021 года рабочая группа
-                                    Международной ассоциации производителей
-                                    удобрений (IFA) признала в качестве лучшей
-                                    практики опыт Группы «ФосАгро» в
-                                    производстве и применении в сельском
-                                    хозяйстве улучшенного фосфогипса. Фосфогипс
-                                    — это ценный побочный продукт, получаемый в
-                                    процессе производства минеральных удобрений.
-                                    В его состав входят такие полезные для почв
-                                    элементы, как кальций, сера, фосфор, цинк,
-                                    кремний, магний, медь и др.
-                                </Text>
-                            )}
-                            {list && <List data={testData.listData[1]} />}
-                            {note && (
-                                <Note>
-                                    Ключевой аспект деятельности ФосАгро -
-                                    повышенная социальная и экологическая
-                                    ответственность. Это не дань моде. Это
-                                    необходимость.
-                                </Note>
+                            {pageData.content.map(
+                                ({ component: compName, data }, index) => {
+                                    const Component =
+                                        coursePageComponents[compName]
+                                    return Component ? (
+                                        // eslint-disable-next-line react/no-array-index-key
+                                        <Component data={data} key={index} />
+                                    ) : null
+                                }
                             )}
                         </StyledContentBlock>
                     </Content>
                 </ContentColumn>
                 <NavColumn>
                     <Nav>
-                        <Link to={prevPageLink} className="prev-btn">
+                        <Link
+                            to={CourseProgressStore.prevPageLink}
+                            className="prev-btn"
+                        >
                             <BackToChapterButton text="Назад" />
                         </Link>
-                        <StepProgressBar
-                            type={courseProgressType}
-                            slidesAmount={sectSlidesCount}
-                        />
-                        <Link to={nextPageLink} className="next-btn">
+                        <StepProgressBar />
+                        <Link
+                            to={CourseProgressStore.nextPageLink}
+                            className="next-btn"
+                        >
                             <NextQuestionButton text="Вперед" />
                         </Link>
                     </Nav>
@@ -145,30 +136,13 @@ export default function CoursePage() {
                     objectSlider={objectSlider}
                 >
                     <MediaColInner>
-                        <Media>
-                            {/* для проверки */}
-                            {video && <VideoPlayer src={videoSrc} />}
-                            {circleSlider && (
-                                <Slider
-                                    data={testData.circleSlider[0]}
-                                    sliderColor={color}
-                                    size="m"
-                                />
+                        <Media key={window.location.pathname}>
+                            {MediaComponent && (
+                                <MediaComponent data={mediaData} />
                             )}
-                            {objectSlider && (
-                                <ObjectSlider
-                                    type="fosagro"
-                                />
-                            )}
-                            {animEarth && <AnimateEarth />}
-                            {animEco && <Ecology />}
-                            {animChart && <AnimateChart />}
-                            {animGlob && <AnimateGlobalContract />}
-                            {animMap && <AnimateMap />}
-                            {animSci && <AnimateScience />}
                         </Media>
                         {links && links.length > 0 && (
-                            <StyledExtLinks links={links}/>
+                            <StyledExtLinks links={links} />
                         )}
                     </MediaColInner>
                 </MediaColumn>
@@ -177,8 +151,10 @@ export default function CoursePage() {
     )
 }
 
+export default observer(CoursePage)
+
 const StyledExtLinks = styled(ExtLinks)`
-    bottom:0;
+    bottom: 0;
     right: 36%;
 `
 
@@ -190,10 +166,14 @@ const StyledContentBlock = styled(ContentBlock)`
         padding-right: 10px;
 
         & > * {
-            margin-bottom: 30px;
+            margin-bottom: 2vh;
 
             &:last-child {
                 margin-bottom: 0;
+            }
+
+            @media ${DEVICE.laptopS} {
+                margin-bottom: 23px;
             }
         }
 
@@ -242,11 +222,6 @@ const StyledAudioPlayer = styled(AudioPlayer)`
 const Nav = styled.div`
     display: flex;
     align-items: center;
-
-    /* временно (убрала кнопку увеличить) */
-    button {
-        display: none;
-    }
 
     .step-progress-bar {
         width: 33vw;
@@ -307,33 +282,6 @@ const Media = styled.div`
     }
 `
 
-const Links = styled.div`
-    position: absolute;
-    width: 100%;
-    bottom: 0;
-    right: 0;
-
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-
-    overflow: hidden;
-    padding-right: 7.2vw;
-    z-index: 20;
-
-    @media ${DEVICE.laptopS} {
-        position: relative;
-        padding-right: 0;
-        margin-top: 50px;
-    }
-
-    & > * {
-        margin-bottom: 7px;
-        width: 100%;
-        flex-shrink: 0;
-    }
-`
-
 const Content = styled.div`
     overflow: hidden;
 
@@ -350,7 +298,7 @@ const ContentColumn = styled.div`
     max-height: 100%;
     padding-right: 5px;
     overflow: hidden;
-    margin-bottom: 35px;
+    margin-bottom: 20px;
 
     @media ${DEVICE.laptopS} {
         grid-area: 2 / 1 / 3 / 2;
@@ -441,7 +389,6 @@ const MediaColumn = styled.div`
 
                 & > * {
                     max-width: 80%;
-                    margin: 15px;
                     max-height: none;
 
                     @media ${DEVICE.laptopS} {
@@ -574,7 +521,11 @@ const AudioColumn = styled.div`
 
 const TitleColumn = styled.div`
     grid-area: 1 / 2 / 2 / 3;
-    padding-top: 9vh;
+    padding-top: 7vh;
+
+    @media ${DEVICE.laptopM} {
+        padding-top: 5vh;
+    }
 
     @media ${DEVICE.laptopS} {
         grid-area: 1 / 1 / 2 / 2;
@@ -585,23 +536,40 @@ const TitleColumn = styled.div`
 
 const Columns = styled.div`
     display: grid;
-    grid-template: 28vh auto 105px / 7% 40% 53%;
+    grid-template: 22vh auto 105px / 7% 40% 53%;
     height: 100%;
 
     @media ${DEVICE.laptopM} {
-        grid-template: 26vh auto 105px / 7% 40% 53%;
+        grid-template: 18vh auto 105px / 7% 40% 53%;
     }
 
     @media ${DEVICE.laptopS} {
         grid-template: repeat(5, auto) / 100%;
     }
 
+    .bubble-trigger {
+        position: relative;
+        cursor: pointer;
+
+        &::after {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+
+            width: 100%;
+            height: 1px;
+            background-color: ${COLORS.blue};
+            transform: translateY(calc(100% + 3px));
+            content: "";
+        }
+    }
+
     .title {
-        max-width: 35vw;
+        max-width: 43vw;
         height: 14vh;
 
         @media ${DEVICE.laptopM} {
-            max-width: 30vw;
+            max-width: 34vw;
         }
 
         @media ${DEVICE.laptop} {

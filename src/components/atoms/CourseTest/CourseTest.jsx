@@ -1,8 +1,9 @@
 /* eslint-disable react/jsx-no-bind */
-import React from "react"
+import React, {useEffect} from "react"
 import styled from "styled-components"
 import "wicg-inert"
 import { observer } from "mobx-react-lite"
+
 import { Tree } from "../../../assets/svg"
 import { CourseTestStore } from "../../../store"
 import { DEVICE } from "../../../constants"
@@ -14,6 +15,14 @@ import StartBlock from "./StartBlock"
 // TODO сделать чтобы тест можно было снова пройти?
 
 function CourseTest() {
+    // если пользователь уходит в процессе решения теста, сбрасываем прогресс
+
+    useEffect(() => () => {
+            if (!CourseTestStore.userPassedTest) {
+                CourseTestStore.resetProgress()
+            }
+        }, [])
+
     return (
         <Columns>
             <FirstColumn>

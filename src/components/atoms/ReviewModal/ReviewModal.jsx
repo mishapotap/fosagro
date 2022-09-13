@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-bind */
-import React, { useRef, useState } from "react"
+import React, { useRef, useState, useEffect } from "react"
 import styled from "styled-components"
 import { CSSTransition } from "react-transition-group"
 import { observer } from "mobx-react-lite"
@@ -21,6 +21,10 @@ function ReviewModal({ isOpen, onClose }) {
     // нам не показывалось сообщение об успехе напр, а можно было снова отправить отзыв
     const [showSuccess, setShowSuccess] = useState(false)
     const [sucIsVisible, setSucIsVisible] = useState(false)
+
+    useEffect(() => () => {
+            ReviewModalStore.resetState()
+        }, [])
 
     return (
         <CurvedModal isOpen={isOpen} onClose={onClose} type="review">

@@ -4,11 +4,13 @@ import { Lamp } from "../../../assets/svg/static"
 import { COLORS, DEVICE } from "../../../constants"
 
 // синее примечание с лампочкой
-export default function Note({ children, className }) {
+export default function Note({ data, className }) {
+    const { text } = data
+
     return (
         <Container className={className}>
             <Icon src={Lamp} alt="лампа" />
-            <Text>{children}</Text>
+            <Text>{text}</Text>
         </Container>
     )
 }

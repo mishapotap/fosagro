@@ -14,11 +14,10 @@ root.render(
             <Routes>
                 <Route path="/" element={<App />} />
                 <Route path="course/:id" element={<Course />} />
+                <Route path="course/:id/test" element={<CourseTestPage />} />
+                <Route path="course/:id/:sectId/:pageId" element={<CoursePageLayout />} />
                 <Route path="tutorial" element={<Tutorial />} />
                 <Route path="test" element={<Test />} />
-                {/* временно для проверки (тк нужен полный экран) */}
-                <Route path="course-test" element={<CourseTestPage />} />
-                <Route path="course-page" element={<CoursePageLayout />} />
                 <Route path="*" element={<Error404 />} />
             </Routes>
         </BrowserRouter>

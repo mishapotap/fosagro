@@ -1,16 +1,18 @@
+/* eslint-disable no-unused-vars */
 import React from "react"
 import styled from "styled-components"
 import { Link } from "react-router-dom"
+import { observer } from "mobx-react-lite"
 import * as routes from "../../constants/routes"
 import { DEVICE, COLORS } from "../../constants"
 import { Fosagro, FosagroColored } from "../../assets/svg"
 import { CourseMenuButton } from "../molecules"
-import { ModalStore } from "../../store"
+import { ModalStore, CourseProgressStore } from "../../store"
 
 // TODO сделать ссылки RU EN рабочими
 // TODO сделать фиксированный хэдэр при скролле на моб?
 
-export default function Header({
+function Header({
     // цветной ли (если нет, то все будет белое)
     colored = false,
     // ссылка Курс "Устойчивое развитие"
@@ -28,9 +30,7 @@ export default function Header({
     const engSiteLink = "/"
     const isRus = false
 
-    // получать норм
-    const activeSectTitle = "Суть концепции устойчивого развития"
-    const activeSectColor = COLORS.green_light
+    const {activeSectColor, activeSectTitle} = CourseProgressStore
 
     return (
         <Container>
@@ -68,7 +68,9 @@ export default function Header({
                     <HeaderSectTitle>
                         <SectTitle>
                             <SectTitleDecor />
-                            <SectTitleText color={activeSectColor}>
+                            <SectTitleText
+                                color={activeSectColor}
+                            >
                                 {activeSectTitle}
                             </SectTitleText>
                         </SectTitle>
@@ -76,13 +78,20 @@ export default function Header({
                 )}
                 {goBackToMain && (
                     <BackToMain>
-                        <Link to={routes.HOME} onClick={() => ModalStore.closeModal("menu")}>Вернуться на главную</Link>
+                        <Link
+                            to={routes.HOME}
+                            onClick={() => ModalStore.closeModal("menu")}
+                        >
+                            Вернуться на главную
+                        </Link>
                     </BackToMain>
                 )}
             </HeaderInner>
         </Container>
     )
 }
+
+export default observer(Header)
 
 const Logo = styled.div`
     svg {

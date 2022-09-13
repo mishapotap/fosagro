@@ -1,67 +1,83 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import styled, { css } from "styled-components"
+import { observer } from "mobx-react-lite"
 import { StepProgressBarImages } from "../atoms"
 import { COLORS, DEVICE } from "../../constants"
+import { CourseProgressStore } from "../../store"
 
-export default function StepProgressBar({
-        // width это ширина всего контейнера с прогрессом (включая проценты)
-        width = "50%",
-        slidesAmount,
-        color = COLORS.blue,
-        type = "grass"}) {
+function StepProgressBar({
+    // width это ширина всего контейнера с прогрессом (включая проценты)
+    width = "50%",
+}) {
+    const slidesAmount = CourseProgressStore.activeSectPagesCount
+    const { activeSectColor, progressType } = CourseProgressStore
 
+    const progressSlides = CourseProgressStore.activeSectPageId
     const oneSlideValue = 100 / slidesAmount
 
-    // TODO Перенести состояние в Mobx
-    const [progressSlides, setProgressSlides] = useState(1)
     const [progressWidth, setProgressWidth] = useState(oneSlideValue)
 
-    // инициализая и заполнение массива точек прогресса
-    const pointArray = [];
-    // eslint-disable-next-line no-plusplus
-    for(let i = 0; i < slidesAmount; i++) {
-        pointArray.push({key: i + 1, position: oneSlideValue*(i + 1), colorPoint: i === 0 ? color : "" })
-    }
+    function getPointsArr() {
+        const arr = []
 
-    const [points, setPoints] = useState(pointArray);
-
-    const increaseProgress = () => {
-        const colorTest = color;
-        if(progressSlides <= slidesAmount - 1) {
-            setProgressSlides(progressSlides + 1);
-            setProgressWidth(oneSlideValue * (progressSlides + 1));
-            const newPoints = points.map((point) => (
-                point.key === progressSlides + 1
-                  ? { ...point, colorPoint: colorTest }
-                  : point
-            ));
-            setPoints(newPoints);
+        // eslint-disable-next-line no-plusplus
+        for (let i = 0; i < slidesAmount; i++) {
+            arr.push({
+                key: i + 1,
+                position: oneSlideValue * (i + 1),
+                colorPoint: i === 0 ? activeSectColor : "",
+            })
         }
+
+        return arr
     }
+
+    const pointArray = getPointsArr()
+    const [points, setPoints] = useState(pointArray)
+
+    useEffect(() => {
+        const newArr = getPointsArr()
+        const newPoints = newArr.map((point) =>
+            point.key <= progressSlides
+                ? { ...point, colorPoint: activeSectColor }
+                : point
+        )
+
+        setProgressWidth(oneSlideValue * progressSlides)
+        setPoints(newPoints)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [CourseProgressStore.activeSectId, CourseProgressStore.activeSectPageId])
 
     return (
-        <>
-            <Container width={width} className="step-progress-bar">
+        <Container width={width} className="step-progress-bar">
                 <StepProgressBarImages
-                    type={type}
+                    type={progressType}
                     progressWidth={progressWidth}
                 />
                 <ProgressPoints>
-                    {
-                        points.map(item => <Point position={item.position} key={item.key} colorPoint={item.colorPoint}/>)
-                    }
+                    {points.map((item) => (
+                        <Point
+                            position={item.position}
+                            key={item.key}
+                            colorPoint={item.colorPoint}
+                        />
+                    ))}
                 </ProgressPoints>
-                <ProgressLine color={color} progressWidth={progressWidth}/>
-                <ProgressPercent color={color} progressWidth={progressWidth}>{Math.round(progressWidth)}%</ProgressPercent>
+                <ProgressLine
+                    color={activeSectColor}
+                    progressWidth={progressWidth}
+                />
+                <ProgressPercent
+                    color={activeSectColor}
+                    progressWidth={progressWidth}
+                >
+                    {Math.round(progressWidth)}%
+                </ProgressPercent>
             </Container>
-            <Button type="button" onClick={() => increaseProgress()}>Увеличить!</Button>
-        </>
     )
 }
 
-const Button = styled.button`
-    display: block;
-`
+export default observer(StepProgressBar)
 
 const Container = styled.div`
     position: relative;
@@ -91,7 +107,7 @@ const ProgressLine = styled.div`
     background: ${COLORS.grey};
 
     &:after {
-        content: '';
+        content: "";
         z-index: 1;
         position: absolute;
         top: 0;
@@ -118,7 +134,7 @@ const Point = styled.div`
     ${(props) =>
         props.colorPoint !== "" &&
         css`
-           border: 1px solid ${props.colorPoint};
+            border: 1px solid ${props.colorPoint};
         `}
 `
 
@@ -126,12 +142,12 @@ const ProgressPercent = styled.span`
     position: absolute;
     bottom: 0;
     left: calc(${(props) => props.progressWidth}% - 19px);
-    ${(props) => props.progressWidth === 100 &&
+    ${(props) =>
+        props.progressWidth === 100 &&
         css`
-           left: unset;
-           right: 0;
+            left: unset;
+            right: 0;
         `}
-
 
     font-family: 'CalibriRegular';
     font-weight: 400;
