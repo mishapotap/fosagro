@@ -3,10 +3,9 @@ import { courseStepButtonData1, courseTestsData } from "../data"
 
 // TODO создать нормальные данные для отрисовки секций
 
-// TODO как-то получать актуальное значение
-const activeCourseId = 1
-
 class CourseTest {
+    activeCourseId = 1
+
     tests = {
         // ключи - id курсов
         1: {
@@ -25,22 +24,21 @@ class CourseTest {
             showTreeWait: false,
             showTreeEnd: false,
         },
-        // для проверки, позже записать данные как в 1 и других
         2: {
             learnSectsIds: [],
-            userAnswers: { 1: 2, 2: 1, 3: 1, 4: 1, 5: 1 },
+            userAnswers: {},
             activeQId: courseTestsData.testsQsData[2][0].id,
-            showStart: false,
-            showFinal: true,
+            showStart: true,
+            showFinal: false,
             showTest: false,
             showEndTestBtn: false,
             isLastSlide: false,
-            treeRightAnswCount: 1,
-            userPassedTest: true,
-            showTreeInit: false,
+            treeRightAnswCount: 0,
+            userPassedTest: false,
+            showTreeInit: true,
             showTreeStart: false,
             showTreeWait: false,
-            showTreeEnd: true,
+            showTreeEnd: false,
         },
         3: {
             learnSectsIds: [],
@@ -120,56 +118,57 @@ class CourseTest {
 
     // eslint-disable-next-line class-methods-use-this
     get testQsData() {
-        return courseTestsData.testsQsData[activeCourseId]
+        return courseTestsData.testsQsData[this.activeCourseId]
     }
 
     get showStart() {
-        return this.tests[activeCourseId].showStart
+        return this.tests[this.activeCourseId].showStart
     }
 
     get showTest() {
-        return this.tests[activeCourseId].showTest
+        return this.tests[this.activeCourseId].showTest
     }
 
     get showFinal() {
-        return this.tests[activeCourseId].showFinal
+        return this.tests[this.activeCourseId].showFinal
     }
 
     get showTreeInit() {
-        return this.tests[activeCourseId].showTreeInit
+        return this.tests[this.activeCourseId].showTreeInit
     }
 
     get showTreeStart() {
-        return this.tests[activeCourseId].showTreeStart
+        return this.tests[this.activeCourseId].showTreeStart
     }
 
     get showTreeWait() {
-        return this.tests[activeCourseId].showTreeWait
+        return this.tests[this.activeCourseId].showTreeWait
     }
 
     get showTreeEnd() {
-        return this.tests[activeCourseId].showTreeEnd
+        return this.tests[this.activeCourseId].showTreeEnd
     }
 
     get showEndTestBtn() {
-        return this.tests[activeCourseId].showEndTestBtn
+        return this.tests[this.activeCourseId].showEndTestBtn
     }
 
     get userPassedTest() {
-        return this.tests[activeCourseId].userPassedTest
+        return this.tests[this.activeCourseId].userPassedTest
     }
 
     get treeRightAnswCount() {
-        return this.tests[activeCourseId].treeRightAnswCount
+        return this.tests[this.activeCourseId].treeRightAnswCount
     }
 
+    // TODO ! проверять есть ли дальше курс, и только тогда покащывать в тесте кнопку прожолжжить обучение?
     // eslint-disable-next-line class-methods-use-this
     get nextCourseLink() {
-        return `/course/${activeCourseId + 1}`
+        return `/course/${+this.activeCourseId + 1}`
     }
 
     get learnSectsIds() {
-        return this.tests[activeCourseId].learnSectsIds
+        return this.tests[this.activeCourseId].learnSectsIds
     }
 
     get finalContent() {
@@ -184,19 +183,19 @@ class CourseTest {
     }
 
     get userAnswers() {
-        return this.tests[activeCourseId].userAnswers
+        return this.tests[this.activeCourseId].userAnswers
     }
 
     get activeQId() {
-        return this.tests[activeCourseId].activeQId
+        return this.tests[this.activeCourseId].activeQId
     }
 
     get isLastSlide() {
-        return this.tests[activeCourseId].isLastSlide
+        return this.tests[this.activeCourseId].isLastSlide
     }
 
     get nextBtnDisabled() {
-        if (!this.tests[activeCourseId].userAnswers[this.activeQId]) {
+        if (!this.tests[this.activeCourseId].userAnswers[this.activeQId]) {
             return true
         }
         return false
@@ -223,60 +222,83 @@ class CourseTest {
         return count
     }
 
+    resetProgress() {
+        this.tests[this.activeCourseId] = {
+            learnSectsIds: [],
+            userAnswers: {},
+            activeQId: courseTestsData.testsQsData[this.activeCourseId][0].id,
+            showStart: true,
+            showFinal: false,
+            showTest: false,
+            showEndTestBtn: false,
+            isLastSlide: false,
+            treeRightAnswCount: 0,
+            userPassedTest: false,
+            showTreeInit: true,
+            showTreeStart: false,
+            showTreeWait: false,
+            showTreeEnd: false,
+        }
+    }
+
     setLearnSectId(id) {
-        this.tests[activeCourseId].learnSectsIds.push(id)
+        this.tests[this.activeCourseId].learnSectsIds.push(id)
     }
 
     setActiveQId(id) {
-        this.tests[activeCourseId].activeQId = id
+        this.tests[this.activeCourseId].activeQId = id
     }
 
     setShowStart(val) {
-        this.tests[activeCourseId].showStart = val
+        this.tests[this.activeCourseId].showStart = val
     }
 
     setShowTest(val) {
-        this.tests[activeCourseId].showTest = val
+        this.tests[this.activeCourseId].showTest = val
     }
 
     setShowFinal(val) {
-        this.tests[activeCourseId].showFinal = val
+        this.tests[this.activeCourseId].showFinal = val
     }
 
     setShowEndTestBtn(val) {
-        this.tests[activeCourseId].showEndTestBtn = val
+        this.tests[this.activeCourseId].showEndTestBtn = val
     }
 
     setUserAnswers(qId, aId) {
-        this.tests[activeCourseId].userAnswers[qId] = aId
+        this.tests[this.activeCourseId].userAnswers[qId] = aId
     }
 
     setTreeRightAnswCount() {
-        this.tests[activeCourseId].treeRightAnswCount = this.rightAnswersCount
+        this.tests[this.activeCourseId].treeRightAnswCount = this.rightAnswersCount
     }
 
     setIsLastSlide(val) {
-        this.tests[activeCourseId].isLastSlide = val
+        this.tests[this.activeCourseId].isLastSlide = val
     }
 
     setUserPassedTest(val) {
-        this.tests[activeCourseId].userPassedTest = val
+        this.tests[this.activeCourseId].userPassedTest = val
     }
 
     setShowTreeInit(val) {
-        this.tests[activeCourseId].showTreeInit = val
+        this.tests[this.activeCourseId].showTreeInit = val
     }
 
     setShowTreeStart(val) {
-        this.tests[activeCourseId].showTreeStart = val
+        this.tests[this.activeCourseId].showTreeStart = val
     }
 
     setShowTreeWait(val) {
-        this.tests[activeCourseId].showTreeWait = val
+        this.tests[this.activeCourseId].showTreeWait = val
     }
 
     setShowTreeEnd(val) {
-        this.tests[activeCourseId].showTreeEnd = val
+        this.tests[this.activeCourseId].showTreeEnd = val
+    }
+
+    setActiveCourseId(val) {
+        this.activeCourseId = val
     }
 }
 

@@ -15,7 +15,7 @@ export default function Layout({ page = "start", children, className }) {
             {/* страница раздела с плавающими кружочками */}
             {page === "course" && <Header course />}
             {/* страница ошибки */}
-            {page === "error" && <Header colored course />}
+            {page === "error" || page === "test" && <Header colored course />}
             {/* внутри темы раздела - где слайды с текстом, картинками, анимацией и пр */}
             {page === "section" && (
                 <Header

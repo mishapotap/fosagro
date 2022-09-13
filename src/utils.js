@@ -14,9 +14,7 @@ export function renderCustom(swiper, current, total) {
     return /* html */ `
         <span class="cur-slide-number">${getFormattedNumber(current)}</span>
         <span class="separator">/</span>
-        <span class="total-slides-number">${getFormattedNumber(
-            total
-        )}</span>
+        <span class="total-slides-number">${getFormattedNumber(total)}</span>
     `
 }
 
@@ -48,4 +46,12 @@ export async function makePostRequest(url, data) {
     })
 }
 
-
+// получение положения элемента относительно окна
+export function getElWindowPos(el) {
+    const rect = el.getBoundingClientRect()
+    return {
+        left: rect.left,
+        top: rect.top,
+        right: rect.left + el.offsetWidth,
+    }
+}

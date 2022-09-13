@@ -13,6 +13,7 @@ function Tree({ className, qsCount = 5 }) {
     const shuffledLeavesRef = useRef([])
     const showLeaveAnimRef = useRef(false)
     const leavesShowed = useRef(false)
+    const leavesWaitInited = useRef(false)
 
     function handleStartAnimend() {
         leavesRef.current.forEach((l) => l.classList.remove("visible"))
@@ -173,7 +174,15 @@ function Tree({ className, qsCount = 5 }) {
         leavesRef.current = leavesItems
         leavesCountRef.current = count
 
-        initWaitLeaves()
+        if (!leavesWaitInited.current) {
+            initWaitLeaves()
+            leavesWaitInited.current = true
+        }
+
+        if (!CourseTestStore.userPassedTest) {
+            CourseTestStore.setShowTreeInit(true)
+            CourseTestStore.setShowTreeWait(false)
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 

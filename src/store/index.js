@@ -2,3 +2,4 @@
 export { default as ModalStore } from "./modal"
 export { default as CourseTestStore } from "./courseTest"
 export { default as ReviewModalStore } from "./reviewModal"
+export { default as CourseProgressStore } from "./courseProgress"

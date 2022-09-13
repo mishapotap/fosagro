@@ -5,24 +5,22 @@ import { InteractiveCircle, AnimateLine, ArrowUp } from "../../assets/svg"
 import Layout from "./Layout"
 import { MailButton } from "../molecules"
 import { COLORS, DEVICE } from "../../constants"
+import { CourseProgressStore } from "../../store"
 
-// TODO получать значение backChapterLink
+export default function CourseSlideLayout({ className, type, children }) {
 
-export default function CourseSlideLayout({
-    sectColor = COLORS.blue,
-    className,
-    type,
-    children,
-}) {
-    const backChapterLink = "/"
+    const { activeSectColor, activeCourseId } = CourseProgressStore
+    const color = type === 'test' ? COLORS.blue : activeSectColor
+
+    const backChapterLink = `/course/${activeCourseId}`
 
     return (
-        <StyledLayout page="section" className={className} type={type}>
+        <StyledLayout page={type === 'test' ? "test" : "section"} className={className} type={type}>
             <InterCircleCont>
-                <StyledInterCircle color={sectColor} />
+                <StyledInterCircle color={color} />
             </InterCircleCont>
             <WavesContainer>
-                <AnimateLine color={sectColor} />
+                <AnimateLine color={color} />
             </WavesContainer>
             <Content className="slide-content">
                 <Link to={backChapterLink} className="back-to-chapter">
@@ -38,7 +36,7 @@ export default function CourseSlideLayout({
                 {children}
             </Content>
             <MailButtonContainer>
-                <MailButton isTest={type === 'test'}/>
+                <MailButton isTest={type === "test"} />
             </MailButtonContainer>
         </StyledLayout>
     )

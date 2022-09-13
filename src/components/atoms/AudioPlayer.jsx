@@ -16,7 +16,7 @@ import { AudioPlayerBg } from "../../assets/svg/static"
 import { formatTime } from "../../utils"
 
 export default function AudioPlayer({
-    isPlaying,
+    isPlaying = true,
     src,
     isOpened = true,
     className = "",
@@ -91,7 +91,7 @@ export default function AudioPlayer({
         setStrokeLength(length)
 
         return () => {
-            clearTimeout(intervalId.current)
+            clearInterval(intervalId.current)
             window.removeEventListener("resize", setStrokeL)
         }
     }, [])
@@ -164,7 +164,7 @@ export default function AudioPlayer({
     }
 
     function togglePlay() {
-        if (isPlayingLocal) {
+        if (isPlayingLocal && !audioRef.current.paused) {
             pause()
         } else {
             play()
@@ -358,7 +358,7 @@ export default function AudioPlayer({
                                                     <TogglePlayBtn
                                                         onClick={togglePlay}
                                                     >
-                                                        {isPlayingLocal ? (
+                                                        {isPlayingLocal && !audioRef.current.paused ? (
                                                             <Pause
                                                                 color={
                                                                     COLORS.blue
