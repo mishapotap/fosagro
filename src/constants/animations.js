@@ -53,6 +53,7 @@ export const rotateInteractiveCircle = (from, to) => keyframes`
         transform: rotate(${to}deg);
     }
 `
+
 export const CursorAnim = keyframes`
     0% {
         opacity: 0;
@@ -74,10 +75,47 @@ export const CursorAnim = keyframes`
     }
 `
 
+export const opacity = keyframes`
+    0% {
+        opacity: 0;
+    }
+    5% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 1;
+    }
+`
+
+export const scale = keyframes`
+    to {
+        transform: scale(1)
+    }
+`
+
+export const dashoffset = (to) => keyframes`
+    to {
+        stroke-dashoffset: ${to};
+    }
+`
+
+export const showContent = keyframes`
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+`
+
 export default {
     borderAnimationS,
     borderAnimationM,
     circleStroke,
     rotateInteractiveCircle,
     CursorAnim,
+    opacity,
+    scale,
+    dashoffset,
+    showContent,
 }

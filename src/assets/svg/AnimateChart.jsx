@@ -1,6 +1,7 @@
 import React from "react"
-import styled, { keyframes } from "styled-components"
+import styled from "styled-components"
 import { COLORS } from "../../constants"
+import { opacity, scale, dashoffset,showContent } from "../../constants/animations"
 
 export default function AnimateChart() {
   return(
@@ -504,46 +505,10 @@ export default function AnimateChart() {
   )
 }
 
-const showContent = keyframes`
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-`
-
-const showSVG = keyframes`
-    0% {
-        opacity: 0;
-    }
-    5% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 1;
-    }
-`
-
-const showLine = (to) => keyframes`
-    to {
-        stroke-dashoffset: ${to};
-    }
-`
-
-const scale = keyframes`
-    from {
-        transform: scale(0)
-    }
-    to {
-        transform: scale(1)
-    }
-`
-
 const SVG = styled.svg`
     #first {
         opacity: 0;
-        animation: ${showSVG} 19s linear;
+        animation: ${opacity} 19s linear;
         transition: all 0.3s;
         .textFirst {
             opacity: 0;
@@ -577,14 +542,14 @@ const SVG = styled.svg`
             &.elementFirst_2 {
                 stroke-dashoffset: 1000;
                 stroke-dasharray: 1000;
-                animation: ${showLine(0)} 5s cubic-bezier(0.8, 0.02, 1, 0.72);
+                animation: ${dashoffset(0)} 5s cubic-bezier(0.8, 0.02, 1, 0.72);
                 animation-fill-mode: forwards;
                 animation-delay: 6.5s;
             }
             &.elementFirst_3 {
                 stroke-dashoffset: 1000;
                 stroke-dasharray: 1000;
-                animation: ${showLine(0)} 5s linear;
+                animation: ${dashoffset(0)} 5s linear;
                 animation-fill-mode: forwards;
                 animation-delay: 2.5s;
             }
@@ -598,7 +563,7 @@ const SVG = styled.svg`
             &.elementFirst_6 {
                 stroke-dasharray: 200;
                 stroke-dashoffset: 0;
-                animation: ${showLine(-200)} 3s linear;
+                animation: ${dashoffset(-200)} 3s linear;
                 animation-fill-mode: forwards;
                 animation-delay: 14s;
             }
@@ -606,20 +571,20 @@ const SVG = styled.svg`
     }
     #second {
         opacity: 0;
-        animation: ${showSVG} 15s linear;
+        animation: ${opacity} 15s linear;
         animation-delay: 19s;
         transition: all 0.3s;
         .circleSecond {
             stroke-dasharray: 2250;
             stroke-dashoffset: 2250;
-            animation: ${showLine(0)} 12s linear;
+            animation: ${dashoffset(0)} 12s linear;
             animation-fill-mode: forwards;
             animation-delay: 21s;
         }
     }
     #last {
         opacity: 0;
-        animation: ${showSVG} 20s linear;
+        animation: ${opacity} 20s linear;
         animation-delay: 34s;
         transition: all 0.3s;
         animation-fill-mode: forwards;
