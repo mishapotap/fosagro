@@ -33,7 +33,8 @@ import {
     AnimateLine,
     AnimateDegrees,
     AnimateIPCC,
-    AnimateGas
+    AnimateGas,
+    Waves
 } from "../../assets/svg"
 import { COLORS, FONTS } from "../../constants"
 import { HeadphonesIcon } from "../../assets/svg/static"
@@ -48,7 +49,8 @@ export default function Test() {
 
     return (
         <Layout page="section">
-        <AnimateLine color={COLORS.red}/>
+            <AnimateLine color={COLORS.red}/>
+            <Waves color={COLORS.red}/>
             <AnimateGas/>
             <AnimateIPCC/>
             <AnimateDegrees/>
@@ -153,7 +155,7 @@ export default function Test() {
     )
 }
 
-const Container = styled.div`
+const Container = styled.div`   
     /* padding: 20px; */
 `
 const Text = styled.span``
