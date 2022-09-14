@@ -11,7 +11,7 @@ export const COLORS = {
     blue_text: "#004A93",
     white: "#FFFFFF",
     black: "#000000",
-    color_animate: "white",
+    color_animate: "#f5f9fd",
     red: "#9b0000",
     grey: "#D9D9D9",
     grey_light: "#707372",

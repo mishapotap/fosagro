@@ -1,8 +1,0 @@
-export { default as map } from "./map.png"
-export { default as bigMap } from "./bigMap.jpg"
-export { default as IntroModalOne11 } from "./introModal1_1.jpg"
-export { default as IntroModalOne12 } from "./introModal1_2.jpg"
-export { default as IntroModalOne13 } from "./introModal1_3.jpg"
-export { default as IntroModalOne21 } from "./introModal2_1.jpg"
-export { default as IntroModalOne22 } from "./introModal2_2.jpg"
-export { default as IntroModalOne23 } from "./introModal2_3.jpg"

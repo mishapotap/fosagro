@@ -16,7 +16,7 @@ import {
     ObjectOOH15,
     ObjectOOH16,
     ObjectOOH17,
-} from "../assets/images/Course2"
+} from "../assets/Course2/Topic1/Point3"
 
 const objectOOHSlider = [
     {

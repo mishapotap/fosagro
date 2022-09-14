@@ -3,8 +3,8 @@ import {
     CourseSlider1,
     CourseSlider2,
     CourseSlider3,
-} from "../../assets/images"
-import { MainBG, TepkVideo } from "../../assets/video"
+} from "../../assets/Course2/Topic2"
+import { MainBG } from "../../assets/video"
 
 // TODO заполнить нормальные данные для аудио, видео, слайдеров и ссылок
 
@@ -144,7 +144,7 @@ const chapter2Data = {
                     component: "Slider",
                     data: [
                         {
-                            source: CourseSlider3,
+                            source: CourseSlider1,
                             alt: "image1",
                         },
                         {
@@ -152,7 +152,7 @@ const chapter2Data = {
                             alt: "image2",
                         },
                         {
-                            source: CourseSlider1,
+                            source: CourseSlider3,
                             alt: "image3",
                         },
                     ],
@@ -208,7 +208,7 @@ const chapter2Data = {
                 media: {
                     type: "video",
                     component: "VideoPlayer",
-                    data: { src: TepkVideo },
+                    data: { src: MainBG },
                 },
                 links: [
                     {
@@ -280,7 +280,7 @@ const chapter2Data = {
                 media: {
                     type: "video",
                     component: "VideoPlayer",
-                    data: { src: TepkVideo },
+                    data: { src: MainBG },
                 },
                 links: [
                     {
@@ -317,7 +317,7 @@ const chapter2Data = {
                 media: {
                     type: "video",
                     component: "VideoPlayer",
-                    data: { src: TepkVideo },
+                    data: { src: MainBG },
                 },
                 links: [
                     {
@@ -365,7 +365,7 @@ const chapter2Data = {
                 media: {
                     type: "video",
                     component: "VideoPlayer",
-                    data: { src: TepkVideo },
+                    data: { src: MainBG },
                 },
             },
         },

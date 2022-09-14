@@ -10,8 +10,6 @@ import {
     NextQuestionButton,
     BackToChapterButton,
     Timer,
-    Slider,
-    VideoPlayer,
     InstructionModal,
     DocsLink,
     Modal,
@@ -19,8 +17,6 @@ import {
     Layout,
     ReviewModal,
     IntroModal,
-    AudioPlayer,
-    ObjectSlider,
 } from "../atoms"
 
 import { StepProgressBar } from "../molecules";
@@ -34,12 +30,6 @@ import {
     Headphones,
     Tree,
     InteractiveCircle,
-    Ecology,
-    AnimateScience,
-    AnimateMap,
-    AnimateEarth,
-    AnimateChart,
-    AnimateGlobalContract,
     AnimateLine,
     AnimateDegrees,
     AnimateIPCC,
@@ -47,9 +37,7 @@ import {
 } from "../../assets/svg"
 import { COLORS, FONTS } from "../../constants"
 import { HeadphonesIcon } from "../../assets/svg/static"
-import { TepkVideo } from "../../assets/video"
-import { SpeakerAudio } from "../../assets/audio"
-import { testData, introModalData } from "../../data"
+import { introModalData } from "../../data"
 
 export default function Test() {
     const [isInstrOpened, setIsInstrOpened] = useState(false)
@@ -64,12 +52,6 @@ export default function Test() {
             <AnimateGas/>
             <AnimateIPCC/>
             <AnimateDegrees/>
-            <ObjectSlider color={COLORS.orange}/>
-            <ObjectSlider color={COLORS.red} data={{type: "fosagro"}} />
-            <AnimateGlobalContract/>
-            <AnimateChart/>
-            <AnimateEarth/>
-            <AudioPlayer src={SpeakerAudio} isPlaying={false} />
             <Text>СТРАНИЦА НЕ НАЙДЕНА! ЭТО 404 ОШИБКА</Text>
             <Title>Hello World!</Title>
             <Subtitle>Start</Subtitle>
@@ -166,26 +148,7 @@ export default function Test() {
             <Tree />
             <InteractiveCircle color={COLORS.green_circle} />
 
-            <Slider
-                size="m"
-                data={testData.circleSlider[0]}
-                sliderColor={COLORS.green_circle}
-                time={5000}
-                width="50%"
-            />
-
-            <Slider
-                size="s"
-                data={testData.circleSlider[0]}
-                sliderColor={COLORS.orange}
-                time={5000}
-                width="40vw"
-            />
-
             {/* <VideoPlayer src={TepkVideo} /> */}
-            <Ecology />
-            <AnimateScience />
-            <AnimateMap />
         </Layout>
     )
 }
