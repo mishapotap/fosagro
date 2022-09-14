@@ -3,24 +3,34 @@ import {
     CourseSlider1,
     CourseSlider2,
     CourseSlider3,
-} from "../../assets/images"
-import { MainBG, TepkVideo, TestVideo } from "../../assets/video"
-import { SpeakerAudio, SpeakerAudio2 } from "../../assets/audio"
-
+    Speaker12,
+} from "../../assets/Course1/Topic1/Point2"
+import { Speaker11 } from "../../assets/Course1/Topic1/Point1"
+import { Speaker13 } from "../../assets/Course1/Topic1/Point3"
+// import { Speaker14 } from "../../assets/Course1/Topic1/Point4"
+import { Speaker21 } from "../../assets/Course1/Topic2"
+import {
+    Video31,
+    Video32,
+    Video33,
+    Video34,
+    Video35,
+} from "../../assets/Course1/Topic3"
+import { Video41, Video42 } from "../../assets/Course1/Topic4"
 // TODO заполнить нормальные данные для аудио, видео, слайдеров и ссылок
 
 const chapter1Data = {
     1: {
         sectTitle: "Суть концепции устойчивого развития",
         sectColor: COLORS.green_light,
-        progressType: 'grass',
+        progressType: "grass",
         pages: {
             1: {
                 title: "Экология Средневековья",
-                audioSrc: SpeakerAudio,
+                audioSrc: Speaker11,
                 content: [
                     {
-                        component: 'List',
+                        component: "List",
                         data: {
                             title: "В средневековых городах появились:",
                             items: [
@@ -38,15 +48,15 @@ const chapter1Data = {
                 ],
                 media: {
                     type: "animation",
-                    component: 'AnimateMap',
+                    component: "AnimateMap",
                 },
             },
             2: {
                 title: "Нужен баланс",
-                audioSrc: SpeakerAudio2,
+                audioSrc: Speaker12,
                 content: [
                     {
-                        component: 'Text',
+                        component: "Text",
                         data: {
                             text: "Главная задача  - <span>соблюсти баланс</span> между желанием человека комфортно жить и возможностями окружающей среды.",
                         },
@@ -54,8 +64,7 @@ const chapter1Data = {
                 ],
                 media: {
                     type: "circleSlider",
-                    component: 'Slider',
-                    // временно
+                    component: "Slider",
                     data: [
                         {
                             source: CourseSlider1,
@@ -74,16 +83,16 @@ const chapter1Data = {
             },
             3: {
                 title: "Делать больше, ресурсов тратить меньше",
-                audioSrc: "",
+                audioSrc: Speaker13,
                 content: [
                     {
-                        component: 'Text',
+                        component: "Text",
                         data: {
                             text: "60-е года XX века - существенное ухудшение состояния окружающей среды:",
                         },
                     },
                     {
-                        component: 'List',
+                        component: "List",
                         data: {
                             items: [
                                 {
@@ -96,7 +105,7 @@ const chapter1Data = {
                 ],
                 media: {
                     type: "animation",
-                    component: 'AnimateScience',
+                    component: "AnimateScience",
                 },
             },
             4: {
@@ -104,7 +113,7 @@ const chapter1Data = {
                 audioSrc: "",
                 content: [
                     {
-                        component: 'Text',
+                        component: "Text",
                         data: {
                             text: "С 70-х годов на Земле фиксируется день экологического долга.",
                         },
@@ -112,7 +121,7 @@ const chapter1Data = {
                 ],
                 media: {
                     type: "animation",
-                    component: 'AnimateEarth',
+                    component: "AnimateEarth",
                 },
             },
         },
@@ -120,14 +129,14 @@ const chapter1Data = {
     2: {
         sectTitle: "Концепции ESG",
         sectColor: COLORS.green_dark,
-        progressType: 'tropics',
+        progressType: "tropics",
         pages: {
             1: {
                 title: "Все взаимосвязано",
-                audioSrc: "",
+                audioSrc: Speaker21,
                 content: [
                     {
-                        component: 'List',
+                        component: "List",
                         data: {
                             title: "Цели:",
                             items: [
@@ -144,7 +153,7 @@ const chapter1Data = {
                         },
                     },
                     {
-                        component: 'List',
+                        component: "List",
                         data: {
                             title: "Для достижения этих целей нужны:",
                             items: [
@@ -163,7 +172,7 @@ const chapter1Data = {
                 ],
                 media: {
                     type: "animation",
-                    component: 'Ecology',
+                    component: "Ecology",
                 },
                 links: [
                     { id: 1, text: "Отчет о деятельности компании", url: "#" },
@@ -174,13 +183,44 @@ const chapter1Data = {
     3: {
         sectTitle: "А что в ФосАгро?",
         sectColor: COLORS.brown_light,
-        progressType: 'canyons',
+        progressType: "canyons",
         pages: {
             1: {
+                title: "Наши задачи",
+                content: [
+                    {
+                        component: "List",
+                        data: {
+                            items: [
+                                {
+                                    id: 1,
+                                    text: "Обеспечение <span>устойчивости</span> деятельности Компании.",
+                                },
+                                {
+                                    id: 2,
+                                    text: "Повышение <span>качества и экоэффективности</span> продукции.",
+                                },
+                                {
+                                    id: 3,
+                                    text: "Обеспечение <span>безопасности</span> рабочих мест и предприятий в целом.",
+                                },
+                            ],
+                        },
+                    },
+                ],
+                media: {
+                    type: "video",
+                    component: "VideoPlayer",
+                    data: {
+                        src: Video31,
+                    },
+                },
+            },
+            2: {
                 title: "Наши результаты - снизили выбросы",
                 content: [
                     {
-                        component: 'List',
+                        component: "List",
                         data: {
                             items: [
                                 {
@@ -197,17 +237,17 @@ const chapter1Data = {
                 ],
                 media: {
                     type: "video",
-                    component: 'VideoPlayer',
+                    component: "VideoPlayer",
                     data: {
-                        src: TestVideo,
+                        src: Video32,
                     },
                 },
             },
-            2: {
+            3: {
                 title: "Наши результаты - снизили сброс сточных вод",
                 content: [
                     {
-                        component: 'List',
+                        component: "List",
                         data: {
                             items: [
                                 {
@@ -228,17 +268,17 @@ const chapter1Data = {
                 ],
                 media: {
                     type: "video",
-                    component: 'VideoPlayer',
+                    component: "VideoPlayer",
                     data: {
-                        src: MainBG,
+                        src: Video33,
                     },
                 },
             },
-            3: {
+            4: {
                 title: "Наши результаты - проекты",
                 content: [
                     {
-                        component: 'List',
+                        component: "List",
                         data: {
                             items: [
                                 {
@@ -255,17 +295,17 @@ const chapter1Data = {
                 ],
                 media: {
                     type: "video",
-                    component: 'VideoPlayer',
+                    component: "VideoPlayer",
                     data: {
-                        src: TepkVideo,
+                        src: Video34,
                     },
                 },
             },
-            4: {
+            5: {
                 title: "Новые вызовы. Наша сила",
                 content: [
                     {
-                        component: 'List',
+                        component: "List",
                         data: {
                             title: "Новые вызовы:",
                             items: [
@@ -279,7 +319,7 @@ const chapter1Data = {
                         },
                     },
                     {
-                        component: 'List',
+                        component: "List",
                         data: {
                             title: "Наша сила:",
                             items: [
@@ -294,9 +334,9 @@ const chapter1Data = {
                 ],
                 media: {
                     type: "video",
-                    component: 'VideoPlayer',
+                    component: "VideoPlayer",
                     data: {
-                        src: TepkVideo,
+                        src: Video35,
                     },
                 },
             },
@@ -305,13 +345,13 @@ const chapter1Data = {
     4: {
         sectTitle: "А что с поставщиками и потребителями?",
         sectColor: COLORS.brown,
-        progressType: 'desert',
+        progressType: "desert",
         pages: {
             1: {
                 title: "Зеленый стандарт",
                 content: [
                     {
-                        component: 'Text',
+                        component: "Text",
                         data: {
                             text: 'Мы создали маркировку качества <span>"Зеленый стандарт".</span>',
                         },
@@ -319,9 +359,9 @@ const chapter1Data = {
                 ],
                 media: {
                     type: "video",
-                    component: 'VideoPlayer',
+                    component: "VideoPlayer",
                     data: {
-                        src: TepkVideo,
+                        src: Video41,
                     },
                 },
             },
@@ -329,7 +369,7 @@ const chapter1Data = {
                 title: "Кодекс поставщика",
                 content: [
                     {
-                        component: 'List',
+                        component: "List",
                         data: {
                             items: [
                                 {
@@ -346,9 +386,9 @@ const chapter1Data = {
                 ],
                 media: {
                     type: "video",
-                    component: 'VideoPlayer',
+                    component: "VideoPlayer",
                     data: {
-                        src: TepkVideo,
+                        src: Video42,
                     },
                 },
                 links: [

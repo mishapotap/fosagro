@@ -1,4 +1,3 @@
-import { SpeakerAudio, SpeakerAudio2 } from "../assets/audio"
 import {
     IntroModalOne11,
     IntroModalOne12,
@@ -6,7 +5,8 @@ import {
     IntroModalOne21,
     IntroModalOne22,
     IntroModalOne23,
-} from "../assets/images/Course1"
+    IntroSpeaker,
+} from "../assets/Course1/Into"
 import {
     IntroModalTwo11,
     IntroModalTwo12,
@@ -14,13 +14,13 @@ import {
     IntroModalTwo21,
     IntroModalTwo22,
     IntroModalTwo23,
-} from "../assets/images/Course2"
+} from "../assets/Course2/Intro"
 
 import {
     IntroModalThree11,
     IntroModalThree12,
     IntroModalThree13,
-} from "../assets/images/Course3"
+} from "../assets/Course3/Intro"
 
 const introModalData = {
     introModal1: [
@@ -40,8 +40,7 @@ const introModalData = {
                     alt: "image3",
                 },
             ],
-            audio: SpeakerAudio,
-            note: "Каждый из нас может внести свой вклад. Любое предложение по улучшению производства может привести к большому инновационному рывку. Все мы немного изобретатели!",
+            audio: IntroSpeaker,
         },
         {
             text: `В этом блоке вместе с вами мы разберемся, как появилась концепция «Устойчивое развитие», сконцентрируем внимание на той деятельности, которую ведет компания в этой области.`,
@@ -59,7 +58,7 @@ const introModalData = {
                     alt: "image3",
                 },
             ],
-            audio: SpeakerAudio2,
+            audio: "",
         },
     ],
     introModal2: [
@@ -79,7 +78,7 @@ const introModalData = {
                     alt: "image3",
                 },
             ],
-            audio: SpeakerAudio,
+            audio: IntroSpeaker,
         },
         {
             text: `При этом еще в XVIII веке английский экономист Томас Мальтус связывал причины социальных бедствий, политических потрясений и экологических катастроф с опережающим по отношению к ресурсам ростом численности населения. Эти идеи легли в основу концепции мальтузианства.`,
@@ -97,7 +96,7 @@ const introModalData = {
                     alt: "image3",
                 },
             ],
-            audio: SpeakerAudio2,
+            audio: "",
         },
     ],
     introModal3: [
@@ -117,7 +116,7 @@ const introModalData = {
                     alt: "image3",
                 },
             ],
-            audio: SpeakerAudio,
+            audio: IntroSpeaker,
             note: "Каждый из нас может внести свой вклад. Любое предложение по улучшению производства может привести к большому инновационному рывку. Все мы немного изобретатели!",
         },
     ],
