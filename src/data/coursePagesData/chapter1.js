@@ -1,8 +1,8 @@
 import { COLORS } from "../../constants"
 import {
-    CourseSlider1,
-    CourseSlider2,
-    CourseSlider3,
+    CourseSliderOne21,
+    CourseSliderOne22,
+    CourseSliderOne23,
     Speaker12,
 } from "../../assets/Course1/Topic1/Point2"
 import { Speaker11 } from "../../assets/Course1/Topic1/Point1"
@@ -67,15 +67,15 @@ const chapter1Data = {
                     component: "Slider",
                     data: [
                         {
-                            source: CourseSlider1,
+                            source: CourseSliderOne21,
                             alt: "image1",
                         },
                         {
-                            source: CourseSlider2,
+                            source: CourseSliderOne22,
                             alt: "image2",
                         },
                         {
-                            source: CourseSlider3,
+                            source: CourseSliderOne23,
                             alt: "image3",
                         },
                     ],

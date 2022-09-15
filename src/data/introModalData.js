@@ -22,6 +22,12 @@ import {
     IntroModalThree13,
 } from "../assets/Course3/Intro"
 
+import {
+    IntroModalFive11,
+    IntroModalFive12,
+    IntroModalFive13,
+} from "../assets/Course5/Intro"
+
 const introModalData = {
     introModal1: [
         {
@@ -118,6 +124,26 @@ const introModalData = {
             ],
             audio: IntroSpeaker,
             note: "Каждый из нас может внести свой вклад. Любое предложение по улучшению производства может привести к большому инновационному рывку. Все мы немного изобретатели!",
+        },
+    ],
+    introModal5: [
+        {
+            text: `Земля преобразует энергию солнечного света в инфракрасное излучение. Оно исходит от Земли в космос. Парниковые газы затрудняют этот процесс, частично поглощая излучение и удерживая энергию в атмосфере. Что влияет на температуру поверхности планеты.`,
+            images: [
+                {
+                    source: IntroModalFive11,
+                    alt: "image1",
+                },
+                {
+                    source: IntroModalFive12,
+                    alt: "image2",
+                },
+                {
+                    source: IntroModalFive13,
+                    alt: "image3",
+                },
+            ],
+            audio: IntroSpeaker,
         },
     ],
 }
