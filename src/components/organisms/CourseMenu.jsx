@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react"
 import styled from "styled-components"
 import { CourseStep } from "../molecules"
-import { AnimateLine } from "../../assets/svg"
+import { Waves } from "../../assets/svg"
 import { COLORS } from "../../constants"
 
 export default function CourseMenu({ dataLine, dataModal }) {
@@ -65,7 +65,7 @@ export default function CourseMenu({ dataLine, dataModal }) {
             onScroll={() => handleScroll()}
             >
             <Line width={dataLine.width} ref={line}>
-                <AnimateLine color={COLORS.white}/>
+                <Waves color={COLORS.white}/>
             </Line>
             {dataLine.timeline.map((section) => (
                 <CourseStep key={ section.id } button={section.button} points={section.points} dataModal={dataModal} className="active"/>
@@ -107,8 +107,8 @@ const MenuContainer = styled.div`
 const Line = styled.div`
     z-index: -1;
     position: absolute;
-    top: calc(50% - 150px);
-    left: 0;
+    top: calc(50% - 110px);
+    left: -377px;
     max-width: ${(props) => props.width}px;
     overflow: hidden;
 `
