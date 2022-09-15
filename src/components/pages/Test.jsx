@@ -31,11 +31,11 @@ import {
     Tree,
     InteractiveCircle,
     AnimateLine,
-    AnimateDegrees,
-    AnimateIPCC,
-    AnimateGas,
     Waves
 } from "../../assets/svg"
+import { AnimateDegrees } from "../../assets/Course5/Topic1"
+import { AnimateIPCC } from "../../assets/Course5/Topic2/Point3"
+import { AnimateGas } from "../../assets/Course5/Topic2/Point4"
 import { COLORS, FONTS } from "../../constants"
 import { HeadphonesIcon } from "../../assets/svg/static"
 import { introModalData } from "../../data"

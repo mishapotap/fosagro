@@ -766,6 +766,246 @@ const timelineData = {
             },
         ],
     },
+    course5: {
+        id: "05",
+        title: "Климат и энергоэффективность",
+        width: "2750",
+        timeline: [
+            {
+                id: 1,
+                button: {
+                    value: {
+                        modal: [
+                            {
+                                top: "-20px",
+                                left: "0",
+                            },
+                        ],
+                        title: "Введение",
+                        description:
+                            "Уникальные разработки и нновационныерешения.",
+                        time: "21 сек",
+                        bgColor: COLORS.orange,
+                        image: CourseButtonImage1,
+                        rotate: "-64",
+                        top: "calc(50% - 150px + 90px)",
+                        left: "55px",
+                    },
+                },
+            },
+            {
+                id: 2,
+                button: {
+                    link: "",
+                    value: {
+                        title: "Как меняется климат и почему это опасно для человечества",
+                        description:
+                            "Краткая выжимка в несколько слов о чем будет в разделе",
+                        time: "1мин 40сек",
+                        bgColor: COLORS.green_light,
+                        image: CourseButtonImage2,
+                        rotate: "-145",
+                        top: "calc(50% - 150px + 60px)",
+                        left: "295px",
+                    },
+                },
+                points: [
+                    {
+                        id: 1,
+                        value: {
+                            color: COLORS.green_light,
+                            position: "top",
+                            text: "+1 градус",
+                            top: "calc(50% - 150px + 145px)",
+                            left: "510px",
+                        },
+                    },
+                ],
+            },
+            {
+                id: 3,
+                button: {
+                    link: "",
+                    value: {
+                        title: "Причины глобального потепления",
+                        description:
+                            "Краткая выжимка в несколько слов о чем будет в разделе",
+                        time: "30сек",
+                        bgColor: COLORS.green_dark,
+                        image: CourseButtonImage3,
+                        rotate: "-77",
+                        top: "calc(50% - 150px + 50px)",
+                        left: "610px",
+                    },
+                },
+                points: [
+                    {
+                        id: 1,
+                        value: {
+                            color: COLORS.green_dark,
+                            position: "bottom",
+                            text: "Природные аспекты",
+                            top: "calc(50% - 150px + 140px)",
+                            left: "845px",
+                        },
+                    },
+                    {
+                        id: 2,
+                        value: {
+                            color: COLORS.green_dark,
+                            position: "top",
+                            text: "Антропогенные аспекты",
+                            top: "calc(50% - 150px + 155px)",
+                            left: "900px",
+                        },
+                    },
+                    {
+                        id: 3,
+                        value: {
+                            color: COLORS.green_dark,
+                            position: "bottom",
+                            text: "А что с влиянием человека?",
+                            top: "calc(50% - 150px + 155px)",
+                            left: "955px",
+                        },
+                    },
+                    {
+                        id: 4,
+                        value: {
+                            color: COLORS.green_dark,
+                            position: "top",
+                            text: "+4 градуса",
+                            top: "calc(50% - 150px + 150px)",
+                            left: "1010px",
+                        },
+                    },
+                ],
+            },
+            {
+                id: 4,
+                button: {
+                    link: "",
+                    value: {
+                        title: "Что дальше?",
+                        description:
+                            "Краткая выжимка в несколько слов о чем будет в разделе",
+                        time: "1мин 20сек",
+                        bgColor: COLORS.brown_light,
+                        image: CourseButtonImage4,
+                        rotate: "165",
+                        top: "calc(50% - 150px + 50px)",
+                        left: "1100px",
+                    },
+                },
+                points: [
+                    {
+                        id: 1,
+                        value: {
+                            color: COLORS.brown_light,
+                            position: "bottom",
+                            text: "Физические последствия",
+                            top: "calc(50% - 150px + 95px)",
+                            left: "1320px",
+                        },
+                    },
+                    {
+                        id: 2,
+                        value: {
+                            color: COLORS.brown_light,
+                            position: "top",
+                            text: "Социальные последствия",
+                            top: "calc(50% - 150px + 100px)",
+                            left: "1375px",
+                        },
+                    },
+                    {
+                        id: 3,
+                        value: {
+                            color: COLORS.brown_light,
+                            position: "bottom",
+                            text: "Экономические последствия",
+                            top: "calc(50% - 150px + 115px)",
+                            left: "1435px",
+                        },
+                    },
+                ],
+            },
+            {
+                id: 5,
+                button: {
+                    link: "",
+                    value: {
+                        title: "Углеродная нейтральность",
+                        description:
+                            "Краткая выжимка в несколько слов о чем будет в разделе",
+                        time: "1мин 30сек",
+                        bgColor: COLORS.brown,
+                        image: CourseButtonImage5,
+                        rotate: "-77",
+                        top: "calc(50% - 150px + 40px)",
+                        left: "1530px",
+                    },
+                },
+                points: [
+                    {
+                        id: 1,
+                        value: {
+                            color: COLORS.brown,
+                            position: "top",
+                            text: "Парижское соглашение",
+                            top: "calc(50% - 150px + 100px)",
+                            left: "1735px",
+                        },
+                    },
+                ],
+            },
+            {
+                id: 6,
+                button: {
+                    link: "",
+                    value: {
+                        title: "Работа с поставщиками",
+                        description: "Климат для ФосАгро",
+                        time: "1мин 30сек",
+                        bgColor: COLORS.grey_light,
+                        image: CourseButtonImage7,
+                        rotate: "0",
+                        top: "calc(50% - 150px + 50px)",
+                        left: "1820px",
+                    },
+                },
+                points: [
+                    {
+                        id: 1,
+                        value: {
+                            color: COLORS.grey_light,
+                            position: "bottom",
+                            text: "Климат для ФосАгро",
+                            top: "calc(50% - 150px + 145px)",
+                            left: "2025px",
+                        },
+                    },
+                ],
+            },
+            {
+                id: 7,
+                button: {
+                    link: "test",
+                    value: {
+                        title: "Тест",
+                        description:
+                            "Короткий тест на 5 вопросов по содержанию раздела.",
+                        time: "≈4 мин",
+                        bgColor: COLORS.blue,
+                        image: CourseButtonImage6,
+                        rotate: "-150",
+                        top: "calc(50% - 150px + 90px)",
+                        left: "2130px",
+                    },
+                },
+            },
+        ],
+    },
 }
 
 export default timelineData
