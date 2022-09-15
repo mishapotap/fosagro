@@ -1,12 +1,17 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import styled, { css } from "styled-components";
 import { COLORS } from "../../constants";
 
-export default function CourseStepPoint({data, className}) {
+export default function CourseStepPoint({data, className, isActiveParent}) {
     const { color, year, text, position, top, left } = data
     // TODO перенести состояние в mobX
     const [isCompleted, setIsCompleted] = useState(false);
-    const [isActive, setIsАсtive] = useState(false);
+    const [isActive, setIsАсtive] = useState(isActiveParent);
+    
+    useEffect(() => {
+        // eslint-disable-next-line no-unused-expressions
+        isActiveParent ? setIsАсtive(true) : setIsАсtive(false)
+    }, [isActiveParent])
     return(
         <Container
             className={className}
