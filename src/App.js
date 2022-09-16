@@ -205,7 +205,7 @@ const Suptitle = styled.div`
 const Footer = styled.div`
     position: absolute;
     left: 0;
-    bottom: 32px;
+    bottom: 22px;
 
     display: flex;
     justify-content: space-between;
