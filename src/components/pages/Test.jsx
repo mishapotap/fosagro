@@ -49,12 +49,12 @@ export default function Test() {
 
     return (
         <Layout page="section">
-            <AnimateLine color={COLORS.red}/>
+            {/* <AnimateLine color={COLORS.red}/> */}
             <Waves color={COLORS.red}/>
             <AnimateGas/>
             <AnimateIPCC/>
             <AnimateDegrees/>
-            <Text>СТРАНИЦА НЕ НАЙДЕНА! ЭТО 404 ОШИБКА</Text>
+            {/* <Text>СТРАНИЦА НЕ НАЙДЕНА! ЭТО 404 ОШИБКА</Text>
             <Title>Hello World!</Title>
             <Subtitle>Start</Subtitle>
 
@@ -113,9 +113,9 @@ export default function Test() {
                 isOpen={isIntroModalOpened}
                 onClose={() => setIsIntroModalOpened(false)}
                 items={introModalData.introModal1}
-            />
+            /> */}
 
-            <DocsLink />
+            {/* <DocsLink />
             <span>{routes.HOME}</span>
             <img src={HeadphonesIcon} alt="mksicon" />
             <Testy style={FONTS.modalTitleWhite}>gfsjgfjdgbfsdjg</Testy>
@@ -136,8 +136,8 @@ export default function Test() {
             <NextQuestionButton />
             <BackToChapterButton />
             <Headphones />
-            <Timer />
-            <StepProgressBar slidesAmount="2" color={COLORS.green_light}/>
+            <Timer /> */}
+            {/* <StepProgressBar slidesAmount="2" color={COLORS.green_light}/>
             <StepProgressBar slidesAmount="3" type="canyons" color={COLORS.brown_light}/>
             <StepProgressBar slidesAmount="4" type="rocks" />
             <StepProgressBar slidesAmount="5" type="wave"/>
@@ -146,9 +146,9 @@ export default function Test() {
             <StepProgressBar slidesAmount="4" type="desert"/>
             <StepProgressBar slidesAmount="3" type="planeWaves"/>
             <StepProgressBar slidesAmount="4" type="mountains"/>
-            <StepProgressBar slidesAmount="4" type="ground"/>
+            <StepProgressBar slidesAmount="4" type="ground"/> */}
             <Tree />
-            <InteractiveCircle color={COLORS.green_circle} />
+            {/* <InteractiveCircle color={COLORS.green_circle} /> */}
 
             {/* <VideoPlayer src={TepkVideo} /> */}
         </Layout>
