@@ -4,10 +4,13 @@ import { COLORS, DEVICE } from "../../../constants"
 import { BubbleBg } from "../../../assets/svg/static"
 
 export default function Bubble({ data = {}, style }) {
-    const { text, title } = data
+    const { text, title, id } = data
 
     return (
-        <StyledBubble style={style}>
+        <StyledBubble
+            style={style}
+            className={`bubble ${id ? `bubble-${id}` : ""}`}
+        >
             <Question>?</Question>
             <BubbleContent>
                 <BubbleTitle>{title}</BubbleTitle>
@@ -20,13 +23,21 @@ export default function Bubble({ data = {}, style }) {
 const StyledBubble = styled.div`
     position: fixed;
     z-index: 200;
-    transform: translate(40%, calc(-100% - 10px));
+    transform: translate(5px, calc(-60%)) scale(0.7);
 
     width: 17.2vw;
     height: 17.2vw;
     border-radius: 46%;
     background: url(${BubbleBg}) no-repeat center/contain;
 
+    display: none;
+    opacity: 0;
+    transition: 0.3s;
+
+    &.shown {
+        opacity: 1;
+        transform: translate(5px, calc(-60%)) scale(1);
+    }
 `
 
 const BubbleTitle = styled.div`

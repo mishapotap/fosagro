@@ -10,6 +10,7 @@ const Container = styled.div`
     font-family: "FocoBold", sans-serif;
     color: ${COLORS.blue};
     font-size: 1.3vw;
+    line-height: 1.2;
 
     margin-bottom: 2.1vh;
 

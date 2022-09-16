@@ -116,7 +116,7 @@ const ProgressLine = styled.div`
         width: ${(props) => props.progressWidth}%;
         height: 1px;
         background: ${(props) => props.color};
-        transition: all 0.3s;
+        transition: all 0.6s;
     }
 `
 
@@ -129,7 +129,7 @@ const Point = styled.div`
     background: ${COLORS.color_animate};
     border: 1px solid ${COLORS.grey};
     border-radius: 50%;
-    transition: all 0.3s;
+    transition: all 0.6s;
 
     ${(props) =>
         props.colorPoint !== "" &&

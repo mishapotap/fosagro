@@ -8,7 +8,7 @@ export default function LampLabel({ text = "" }) {
     return (
         <Container>
             <LampIcon src={Lamp} />
-            <StyledText>{text}</StyledText>
+            <StyledText data={{ text }} />
         </Container>
     )
 }

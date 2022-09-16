@@ -1,4 +1,4 @@
-import { COLORS } from "../../constants"
+
 import {
     CourseSliderOne21,
     CourseSliderOne22,
@@ -8,6 +8,7 @@ import {
 import { Speaker11 } from "../../assets/Course1/Topic1/Point1"
 import { Speaker13 } from "../../assets/Course1/Topic1/Point3"
 // import { Speaker14 } from "../../assets/Course1/Topic1/Point4"
+import Speaker14 from "../../assets/Course1/Topic1/Point4/speaker14.mp3"
 import { Speaker21 } from "../../assets/Course1/Topic2"
 import {
     Video31,
@@ -17,13 +18,12 @@ import {
     Video35,
 } from "../../assets/Course1/Topic3"
 import { Video41, Video42 } from "../../assets/Course1/Topic4"
+
 // TODO заполнить нормальные данные для аудио, видео, слайдеров и ссылок
 
 const chapter1Data = {
     1: {
         sectTitle: "Суть концепции устойчивого развития",
-        sectColor: COLORS.green_light,
-        progressType: "grass",
         pages: {
             1: {
                 title: "Экология Средневековья",
@@ -110,7 +110,7 @@ const chapter1Data = {
             },
             4: {
                 title: "Концепция устойчивого развития - не брать у природы в долг",
-                audioSrc: "",
+                audioSrc: Speaker14,
                 content: [
                     {
                         component: "Text",
@@ -128,8 +128,6 @@ const chapter1Data = {
     },
     2: {
         sectTitle: "Концепции ESG",
-        sectColor: COLORS.green_dark,
-        progressType: "tropics",
         pages: {
             1: {
                 title: "Все взаимосвязано",
@@ -175,15 +173,13 @@ const chapter1Data = {
                     component: "Ecology",
                 },
                 links: [
-                    { id: 1, text: "Отчет о деятельности компании", url: "#" },
+                    { id: 1, text: "Отчет о деятельности Компании", url: "https://ar2021.phosagro.ru/reports/phosagro/annual/2021/gb/Russian/2030/.html" },
                 ],
             },
         },
     },
     3: {
         sectTitle: "А что в ФосАгро?",
-        sectColor: COLORS.brown_light,
-        progressType: "canyons",
         pages: {
             1: {
                 title: "Наши задачи",
@@ -287,7 +283,7 @@ const chapter1Data = {
                                 },
                                 {
                                     id: 2,
-                                    text: "Мы <span>поддерживаем города</span> присутствия компании.",
+                                    text: "Мы <span>поддерживаем города</span> присутствия Компании.",
                                 },
                             ],
                         },
@@ -325,7 +321,7 @@ const chapter1Data = {
                             items: [
                                 {
                                     id: 1,
-                                    text: "в компании сформирована профессиональная команда;",
+                                    text: "в Компании сформирована профессиональная команда;",
                                 },
                                 { id: 2, text: "накоплен огромный опыт." },
                             ],
@@ -344,8 +340,6 @@ const chapter1Data = {
     },
     4: {
         sectTitle: "А что с поставщиками и потребителями?",
-        sectColor: COLORS.brown,
-        progressType: "desert",
         pages: {
             1: {
                 title: "Зеленый стандарт",
@@ -392,8 +386,8 @@ const chapter1Data = {
                     },
                 },
                 links: [
-                    { id: 1, text: "Контакты", url: "#" },
-                    { id: 2, text: "Годовые интегрированные отчеты", url: "#" },
+                    { id: 1, text: "Контакты", url: "https://www.phosagro.ru/contacts/" },
+                    { id: 2, text: "Годовые интегрированные отчеты", url: "https://www.phosagro.ru/investors/reports/year/" },
                 ],
             },
         },

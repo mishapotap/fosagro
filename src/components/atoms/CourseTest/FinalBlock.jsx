@@ -55,14 +55,12 @@ function FinalBlock() {
                     )}
                     {!CourseTestStore.allAnswersRight && (
                         <SectButtons>
-                            {/* TODO получать норм ссылку (если это будет ссылка) */}
                             {CourseTestStore.learnSectsData.map(
-                                ({ title, bgColor, link = "/" }, index) => (
-                                    // TODO заменить index на id
+                                ({ title, color, link = "/", id }, index) => (
                                     // eslint-disable-next-line react/no-array-index-key
-                                    <Link to={link} key={index}>
+                                    <Link to={link} key={id}>
                                         <SectButton
-                                            color={bgColor}
+                                            color={color}
                                             rotate={index * 45}
                                         >
                                             <SectButtonInner>

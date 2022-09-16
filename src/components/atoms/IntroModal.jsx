@@ -14,6 +14,8 @@ import AudioPlayer from "./AudioPlayer"
 // TODO уточнить, как должно вести себя аудио при переключении слайдов, и добавить логику
 // (может при возвращении на прошлые слайды не включать аудио автоматически?)
 
+// TODO сделать ссылки как в CoursePage (нужно для 4 сценария)
+
 export default function IntroModal({ isOpen, onClose, items }) {
     function renderCustom(swiper, current, total) {
         return /* html */ `
@@ -146,7 +148,7 @@ export default function IntroModal({ isOpen, onClose, items }) {
                                         </SlideCol>
 
                                         <SlideCol className="content">
-                                            <StyledContentBlock>
+                                            <StyledContentBlock color={COLORS.orange}>
                                                 <Text data={{text}} />
                                                 {note && (
                                                     <Note

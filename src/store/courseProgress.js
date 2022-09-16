@@ -2,11 +2,14 @@
 import { makeAutoObservable } from "mobx"
 import { coursePagesData } from "../data"
 import { COLORS } from "../constants"
+import { sectColors, sectsProgressTypes } from "../data/coursePagesData/general"
 
 // TODO отслеживать прогресс пользователя
 // TODO связать прогресс с кружками на таймлайне
+// (еще на гоавную проценты надо прохождения)
 
 class CourseProgress {
+
     activeSectId = 1
 
     activeCourseId = 1
@@ -51,11 +54,11 @@ class CourseProgress {
     }
 
     get activeSectColor() {
-        return this.isWrongPath ? COLORS.green : this.activeSectData.sectColor
+        return this.isWrongPath ? COLORS.green : sectColors[this.activeSectId]
     }
 
     get progressType() {
-        return this.isWrongPath ? "grass" : this.activeSectData.progressType
+        return this.isWrongPath ? "grass" : sectsProgressTypes[this.activeSectId]
     }
 
     get activeSectPagesCount() {
@@ -68,18 +71,18 @@ class CourseProgress {
     }
 
     get nextPageLink() {
-        let newLink = `/course/${this.activeCourseId}/`
+        let newLink = `/course${this.activeCourseId}/`
 
         const newPageId = +this.activeSectPageId + 1
         const nextPage = this.activeSectData.pages[newPageId]
         if (nextPage) {
             // новая страница секции
-            newLink += `${this.activeSectId}/${newPageId}`
+            newLink += `topic${this.activeSectId}/point${newPageId}`
         } else {
             const nextSectId = +this.activeSectId + 1
             // перейти на другую секцию
             if (coursePagesData[this.activeCourseId][nextSectId]) {
-                newLink += `${nextSectId}/1`
+                newLink += `topic${nextSectId}/point1`
             } else {
                 newLink += "test"
             }
@@ -90,13 +93,13 @@ class CourseProgress {
 
     get prevPageLink() {
         // eslint-disable-next-line prefer-const
-        let newLink = `/course/${this.activeCourseId}/`
+        let newLink = `/course${this.activeCourseId}/`
 
         const newPageId = +this.activeSectPageId - 1
         const prevPage = this.activeSectData.pages[newPageId]
         if (prevPage) {
             // новая страница секции
-            newLink += `${this.activeSectId}/${newPageId}`
+            newLink += `topic${this.activeSectId}/point${newPageId}`
         } else {
             const prevSectId = +this.activeSectId - 1
             const prevSectData =
@@ -104,13 +107,13 @@ class CourseProgress {
             // перейти на предыдущую секцию если есть
             if (prevSectData) {
                 const pagesCount = Object.keys(prevSectData.pages).length
-                newLink += `${prevSectId}/${pagesCount}`
+                newLink += `topic${prevSectId}/point${pagesCount}`
             } else {
                 // переключить на прошлый курс, если есть
                 const prevCourseId = +this.activeCourseId - 1
                 const prevCourseData = coursePagesData[prevCourseId]
                 if (prevCourseData) {
-                    return `/course/${prevCourseId}`
+                    return `/course${prevCourseId}`
                 }
                 return "/"
             }

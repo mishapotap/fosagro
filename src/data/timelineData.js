@@ -51,7 +51,7 @@ const timelineData = {
             {
                 id: 2,
                 button: {
-                    link: "1/1",
+                    link: "topic1/point1",
                     value: {
                         title: "Суть концепции устойчивого развития",
                         description:
@@ -110,7 +110,7 @@ const timelineData = {
             {
                 id: 3,
                 button: {
-                    link: "2/1",
+                    link: "topic2/point1",
                     value: {
                         title: "Концепции ESG",
                         description:
@@ -139,7 +139,7 @@ const timelineData = {
             {
                 id: 4,
                 button: {
-                    link: "3/1",
+                    link: "topic3/point1",
                     value: {
                         title: "А что в ФосАгро?",
                         description:
@@ -209,7 +209,7 @@ const timelineData = {
             {
                 id: 5,
                 button: {
-                    link: "4/1",
+                    link: "topic4/point1",
                     value: {
                         title: "А что с поставщиками и потребителями?",
                         description:
@@ -298,7 +298,7 @@ const timelineData = {
             {
                 id: 2,
                 button: {
-                    link: "1/1",
+                    link: "topic1/point1",
                     value: {
                         title: "Преобразования нашего мира, 17 целей",
                         description:
@@ -350,7 +350,7 @@ const timelineData = {
             {
                 id: 3,
                 button: {
-                    link: "2/1",
+                    link: "topic2/point1",
                     value: {
                         title: "Как ФосАгро способствует достижению ЦУР ООН",
                         description:
@@ -380,7 +380,7 @@ const timelineData = {
             {
                 id: 4,
                 button: {
-                    link: "3/1",
+                    link: "topic3/point1",
                     value: {
                         title: "Приоритизация ЦУР для ФосАгро",
                         description:
@@ -508,7 +508,7 @@ const timelineData = {
             {
                 id: 2,
                 button: {
-                    link: "",
+                    link: "topic1/point1",
                     value: {
                         title: "Мировой контекст развития инноваций",
                         description:
@@ -547,7 +547,7 @@ const timelineData = {
             {
                 id: 3,
                 button: {
-                    link: "",
+                    link: "topic2/point1",
                     value: {
                         title: "Как мы определяем свои приоритеты в развитии инноваций",
                         description:
@@ -576,7 +576,7 @@ const timelineData = {
             {
                 id: 4,
                 button: {
-                    link: "",
+                    link: "topic3/point1",
                     value: {
                         title: "Что делаем мы для развития инноваций в производстве?",
                         description:
@@ -605,7 +605,7 @@ const timelineData = {
             {
                 id: 5,
                 button: {
-                    link: "",
+                    link: "topic4/point1",
                     value: {
                         title: "Развитие элементов циркулярной экономики",
                         description:
@@ -634,7 +634,7 @@ const timelineData = {
             {
                 id: 6,
                 button: {
-                    link: "",
+                    link: "topic5/point1",
                     value: {
                         title: "Работа с поставщиками",
                         description:
@@ -663,7 +663,7 @@ const timelineData = {
             {
                 id: 7,
                 button: {
-                    link: "",
+                    link: "topic6/point1",
                     value: {
                         title: "Разработка новых продуктов",
                         description:
@@ -692,7 +692,7 @@ const timelineData = {
             {
                 id: 8,
                 button: {
-                    link: "",
+                    link: "topic7/point1",
                     value: {
                         title: "Международное сотрудничество и поддержка молодых ученых",
                         description:
@@ -721,7 +721,7 @@ const timelineData = {
             {
                 id: 9,
                 button: {
-                    link: "",
+                    link: "topic8/point1",
                     value: {
                         title: "Поддержка инновационных проектов",
                         description:
@@ -796,7 +796,7 @@ const timelineData = {
             {
                 id: 2,
                 button: {
-                    link: "",
+                    link: "topic1/point1",
                     value: {
                         title: "Как меняется климат и почему это опасно для человечества",
                         description:
@@ -825,7 +825,7 @@ const timelineData = {
             {
                 id: 3,
                 button: {
-                    link: "",
+                    link: "topic2/point1",
                     value: {
                         title: "Причины глобального потепления",
                         description:
@@ -884,7 +884,7 @@ const timelineData = {
             {
                 id: 4,
                 button: {
-                    link: "",
+                    link: "topic3/point1",
                     value: {
                         title: "Что дальше?",
                         description:
@@ -933,7 +933,7 @@ const timelineData = {
             {
                 id: 5,
                 button: {
-                    link: "",
+                    link: "topic4/point1",
                     value: {
                         title: "Углеродная нейтральность",
                         description:
@@ -962,7 +962,7 @@ const timelineData = {
             {
                 id: 6,
                 button: {
-                    link: "",
+                    link: "topic5/point1",
                     value: {
                         title: "Работа с поставщиками",
                         description: "Климат для ФосАгро",

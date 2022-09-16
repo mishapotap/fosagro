@@ -1,17 +1,20 @@
-/* eslint-disable no-unused-vars */
-import React, { useEffect } from "react"
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-use-before-define */
+/* eslint-disable react/jsx-no-bind */
+import React, { useEffect, useRef, useState } from "react"
 import { useParams, useLocation } from "react-router"
-import styled, { css } from "styled-components"
+import styled, { css, keyframes } from "styled-components"
 import { Link } from "react-router-dom"
+import { CSSTransition } from "react-transition-group"
 import { observer } from "mobx-react-lite"
 
 import BackToChapterButton from "./BackToChapterButton"
 import NextQuestionButton from "./NextQuestionButton"
 import CourseSlideLayout from "./CourseSlideLayout"
 import { StepProgressBar } from "../molecules"
-import { Title, ContentBlock } from "./Content"
+import { Title, ContentBlock, Label, BubbleContainer } from "./Content"
 
-import { DEVICE, COLORS } from "../../constants"
+import { DEVICE } from "../../constants"
 import AudioPlayer from "./AudioPlayer"
 import ExtLinks from "./ExtLinks"
 import coursePageComponents from "./coursePageComponents"
@@ -26,21 +29,32 @@ import { Error404 } from "../pages"
 // TODO может стоит как-то поправить анимации некоторые на моб, или убрать их?
 // (текст в AnmateGlobal и AnimateChart например получается очень маленький)
 
-// TODO переделать ссылки по-новому если заказчик одобрит
-
-// TODO сделать чтобы label был между контентом и заголовком
-
 // TODO изменить расположение аудиоплеера? (также в IntroModal)
 
 // TODO сделать чтобы плавно появлялись элементы
 // (чтобы прошлое состояние не было видно)
 
-// TODO постараться сделать плавное переключение
+// TODO сделать плавное переключение получше?
 
 function CoursePage() {
     const { id: courseId, sectId, pageId } = useParams()
     const pageData = CourseProgressStore.activePageData
     const location = useLocation()
+
+    const [key, setKey] = useState(1)
+
+    const audioColRef = useRef(null)
+    const contentColRef = useRef(null)
+    const mediaColRef = useRef(null)
+    const titleColRef = useRef(null)
+    const isFirstRender = useRef(true)
+    const colsRef = useRef(null)
+
+    const [showSlide, setShowSlide] = useState(true)
+    const [leftSlide, setLeftSlide] = useState(false)
+    const [rightSlide, setRightSlide] = useState(false)
+
+    const [makeBubbles, setMakeBubbles] = useState(false)
 
     function setIds() {
         CourseProgressStore.setActiveCourseId(courseId)
@@ -49,7 +63,28 @@ function CoursePage() {
     }
 
     useEffect(() => {
-        setIds()
+        if (pageData) {
+            const bubbleComp = pageData.content.find(
+                (i) => i.component === "Bubble"
+            )
+            if (bubbleComp) {
+                // eslint-disable-next-line no-use-before-define
+                setMakeBubbles(true)
+            } else if (makeBubbles) {
+                setMakeBubbles(false)
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [CourseProgressStore.activePageData])
+
+    useEffect(() => {
+        if (isFirstRender.current) {
+            isFirstRender.current = false
+            setIds()
+        } else if (!leftSlide && !rightSlide) {
+            setIds()
+            setKey(key + 1)
+        }
 
         const slideContent = document.querySelector(".slide-content")
         if (slideContent) {
@@ -57,23 +92,52 @@ function CoursePage() {
                 slideContent.scrollTop = 0
             }, 100)
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [location])
-
-    useEffect(() => {
-        setIds()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [location])
 
     if (!pageData) {
         return <Error404 />
+    }
+
+    function stopMedia() {
+        const audio = document.querySelector("audio")
+        const video = document.querySelector("video")
+
+        if (audio) audio.pause()
+        if (video) video.pause()
+    }
+
+    function handleBackClick() {
+        stopMedia()
+        setLeftSlide(true)
+        setRightSlide(false)
+        setShowSlide(false)
+    }
+
+    function handleNextClick() {
+        stopMedia()
+        setLeftSlide(false)
+        setRightSlide(true)
+        setShowSlide(false)
+    }
+
+    function handleExited() {
+        setKey(key + 1)
+        setIds()
+        setShowSlide(true)
+    }
+
+    function handleEntered() {
+        setLeftSlide(false)
+        setRightSlide(false)
     }
 
     const { component, data: mData, type: mediaType } = pageData.media
     const MediaComponent = coursePageComponents[component]
     const mediaData = mData || {}
 
-    const { links, audioSrc, title } = pageData
+    const { links, audioSrc, title, content } = pageData
+    const labelComp = content.find((i) => i.component === "Label")
 
     const video = mediaType === "video"
     const circleSlider = mediaType === "circleSlider"
@@ -82,41 +146,89 @@ function CoursePage() {
 
     return (
         <StyledLayout>
-            <Columns>
-                <AudioColumn>
-                    {audioSrc && (
-                        <StyledAudioPlayer
-                            src={audioSrc}
-                            key={window.location.pathname}
-                        />
-                    )}
-                </AudioColumn>
-                <TitleColumn>
-                    <Title color={CourseProgressStore.activeSectColor}>
-                        {title}
-                    </Title>
-                </TitleColumn>
-                <ContentColumn>
-                    <Content>
-                        <StyledContentBlock>
-                            {pageData.content.map(
-                                ({ component: compName, data }, index) => {
-                                    const Component =
-                                        coursePageComponents[compName]
-                                    return Component ? (
-                                        // eslint-disable-next-line react/no-array-index-key
-                                        <Component data={data} key={index} />
-                                    ) : null
-                                }
-                            )}
-                        </StyledContentBlock>
-                    </Content>
-                </ContentColumn>
+            <Columns
+                className={`${leftSlide && "left-slide"} ${
+                    rightSlide && "right-slide"
+                }`}
+                ref={colsRef}
+            >
+                <CSSTransition
+                    in={showSlide}
+                    timeout={500}
+                    appear
+                    classNames="slide"
+                    nodeRef={audioColRef}
+                >
+                    <AudioColumn ref={audioColRef} className="slide" key={key}>
+                        {audioSrc && <StyledAudioPlayer src={audioSrc} />}
+                    </AudioColumn>
+                </CSSTransition>
+                <CSSTransition
+                    in={showSlide}
+                    timeout={500}
+                    classNames="slide"
+                    nodeRef={titleColRef}
+                >
+                    <TitleColumn ref={titleColRef}>
+                        <Title color={CourseProgressStore.activeSectColor}>
+                            {title}
+                        </Title>
+                    </TitleColumn>
+                </CSSTransition>
+                <CSSTransition
+                    in={showSlide}
+                    timeout={500}
+                    classNames="slide"
+                    nodeRef={contentColRef}
+                    onExited={handleExited}
+                    onEntered={handleEntered}
+                >
+                    <ContentColumn ref={contentColRef} className="slide">
+                        <Content>
+                            <BubbleContainer makeBubbles={makeBubbles}>
+                                {labelComp && <Label data={labelComp.data} />}
+                                <ContentWrapper>
+                                    <StyledContentBlock
+                                        color={
+                                            CourseProgressStore.activeSectColor
+                                        }
+                                    >
+                                        {content.map(
+                                            (
+                                                { component: compName, data },
+                                                index
+                                            ) => {
+                                                const Component =
+                                                    coursePageComponents[
+                                                        compName
+                                                    ]
+                                                if (
+                                                    Component &&
+                                                    compName !== "Label"
+                                                ) {
+                                                    return (
+                                                        <Component
+                                                            data={data}
+                                                            // eslint-disable-next-line react/no-array-index-key
+                                                            key={index}
+                                                        />
+                                                    )
+                                                }
+                                                return null
+                                            }
+                                        )}
+                                    </StyledContentBlock>
+                                </ContentWrapper>
+                            </BubbleContainer>
+                        </Content>
+                    </ContentColumn>
+                </CSSTransition>
                 <NavColumn>
                     <Nav>
                         <Link
                             to={CourseProgressStore.prevPageLink}
                             className="prev-btn"
+                            onClick={handleBackClick}
                         >
                             <BackToChapterButton text="Назад" />
                         </Link>
@@ -124,28 +236,38 @@ function CoursePage() {
                         <Link
                             to={CourseProgressStore.nextPageLink}
                             className="next-btn"
+                            onClick={handleNextClick}
                         >
                             <NextQuestionButton text="Вперед" />
                         </Link>
                     </Nav>
                 </NavColumn>
-                <MediaColumn
-                    video={video}
-                    circleSlider={circleSlider}
-                    animation={animation}
-                    objectSlider={objectSlider}
+
+                <CSSTransition
+                    in={showSlide}
+                    timeout={500}
+                    classNames="slide"
+                    nodeRef={mediaColRef}
                 >
-                    <MediaColInner>
-                        <Media key={window.location.pathname}>
-                            {MediaComponent && (
-                                <MediaComponent data={mediaData} />
+                    <MediaColumn
+                        video={video}
+                        circleSlider={circleSlider}
+                        animation={animation}
+                        objectSlider={objectSlider}
+                        ref={mediaColRef}
+                    >
+                        <MediaColInner>
+                            <Media key={key}>
+                                {MediaComponent && (
+                                    <MediaComponent data={mediaData} />
+                                )}
+                            </Media>
+                            {links && links.length > 0 && (
+                                <StyledExtLinks links={links} />
                             )}
-                        </Media>
-                        {links && links.length > 0 && (
-                            <StyledExtLinks links={links} />
-                        )}
-                    </MediaColInner>
-                </MediaColumn>
+                        </MediaColInner>
+                    </MediaColumn>
+                </CSSTransition>
             </Columns>
         </StyledLayout>
     )
@@ -153,9 +275,15 @@ function CoursePage() {
 
 export default observer(CoursePage)
 
+const ContentWrapper = styled.div`
+    flex: 0 1 100%;
+    overflow: hidden;
+`
+
 const StyledExtLinks = styled(ExtLinks)`
-    bottom: 0;
+    bottom: 5px;
     right: 36%;
+    z-index: 50;
 `
 
 const StyledContentBlock = styled(ContentBlock)`
@@ -188,8 +316,20 @@ const StyledContentBlock = styled(ContentBlock)`
         }
     }
 `
+const appear = keyframes`
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+`
 
 const StyledLayout = styled(CourseSlideLayout)`
+    opacity: 0;
+    animation: ${appear} 0.2s both 0.2s;
+
     .slide-content {
         @media ${DEVICE.laptopS} {
             overflow: auto;
@@ -198,6 +338,8 @@ const StyledLayout = styled(CourseSlideLayout)`
     }
 
     .content {
+        overflow-x: hidden;
+
         @media ${DEVICE.laptopS} {
             padding: 0;
         }
@@ -298,7 +440,21 @@ const ContentColumn = styled.div`
     max-height: 100%;
     padding-right: 5px;
     overflow: hidden;
-    margin-bottom: 20px;
+    height: 100%;
+    padding-bottom: 20px;
+
+    .bubble-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .label {
+        margin-bottom: 2.3vh;
+
+        @media ${DEVICE.laptopS} {
+            margin-bottom: 23px;
+        }
+    }
 
     @media ${DEVICE.laptopS} {
         grid-area: 2 / 1 / 3 / 2;
@@ -326,19 +482,16 @@ const MediaColumn = styled.div`
     ${({ video }) =>
         video &&
         css`
-            padding-right: 4.8vw;
-            padding-top: 13vh;
-
-            @media ${DEVICE.laptopM} {
-                padding-top: 8vh;
-            }
+            padding-right: 4vw;
 
             @media ${DEVICE.laptopS} {
                 padding-right: 0;
-                padding-top: 0;
+                padding-bottom: 0;
             }
 
             ${MediaColInner} {
+                justify-content: center;
+
                 @media ${DEVICE.laptopS} {
                     max-width: 820px;
                     margin: 0 auto;
@@ -346,7 +499,11 @@ const MediaColumn = styled.div`
             }
 
             ${Media} {
-                align-items: flex-start;
+                padding-bottom: 7vh;
+
+                @media ${DEVICE.laptopS} {
+                    padding-bottom: 0;
+                }
             }
         `}
 
@@ -534,6 +691,30 @@ const TitleColumn = styled.div`
     }
 `
 
+const slideRightEnter = keyframes`
+    0% {
+        transform: translate(25vw);
+        opacity: 0;
+    }
+
+    100% {
+        transform: none;
+        opacity: 1;
+    }
+`
+
+const slideRightExit = keyframes`
+    0% {
+        transform: none;
+        opacity: 1;
+    }
+
+    100% {
+        transform:  translate(-25vw);
+        opacity: 0;
+    }
+`
+
 const Columns = styled.div`
     display: grid;
     grid-template: 22vh auto 105px / 7% 40% 53%;
@@ -547,21 +728,36 @@ const Columns = styled.div`
         grid-template: repeat(5, auto) / 100%;
     }
 
-    .bubble-trigger {
-        position: relative;
-        cursor: pointer;
-
-        &::after {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-
-            width: 100%;
-            height: 1px;
-            background-color: ${COLORS.blue};
-            transform: translateY(calc(100% + 3px));
-            content: "";
+    &.right-slide {
+        .slide-enter-active {
+            animation: ${slideRightEnter} 0.5s both;
         }
+
+        .slide-exit-active {
+            animation: ${slideRightExit} 0.5s both;
+        }
+    }
+
+    &.left-slide {
+        .slide-enter-active {
+            animation: ${slideRightExit} 0.5s reverse both;
+        }
+
+        .slide-exit-active {
+            animation: ${slideRightEnter} 0.5s reverse both;
+        }
+    }
+
+    .slide {
+        opacity: 1;
+    }
+
+    .slide-enter-done {
+        opacity: 1;
+    }
+
+    .slide-exit-done {
+        opacity: 0;
     }
 
     .title {
