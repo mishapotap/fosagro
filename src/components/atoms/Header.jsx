@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 import { observer } from "mobx-react-lite"
 import * as routes from "../../constants/routes"
 import { DEVICE, COLORS } from "../../constants"
-import { Fosagro, FosagroColored } from "../../assets/svg"
+import { Fosagro, FosagroColored, LinkArrow } from "../../assets/svg"
 import { CourseMenuButton } from "../molecules"
 import { ModalStore, CourseProgressStore } from "../../store"
 
@@ -41,27 +41,34 @@ function Header({
                     </Link>
                 </Logo>
                 {language && (
-                    <LanguageContainer
-                        color={COLORS.white}
-                        colorActive={COLORS.blue}
-                    >
-                        <Language>
-                            <Link
-                                to={rusSiteLink}
-                                className={isRus && "active"}
-                            >
-                                RU
-                            </Link>
-                        </Language>
-                        <Language>
-                            <Link
-                                to={engSiteLink}
-                                className={!isRus && "active"}
-                            >
-                                EN
-                            </Link>
-                        </Language>
-                    </LanguageContainer>
+                    <LinksContainer>
+                        <LinkToFosagro>
+                            <a href="https://www.phosagro.ru/" 
+                                target="_blank" 
+                                rel="noopener noreferrer">
+                               <LinkArrow className="linkArrow"/>
+                                <span>Корпоративный сайт</span>
+                            </a>
+                        </LinkToFosagro>
+                        <LanguageContainer>
+                            <Language>
+                                <Link
+                                    to={rusSiteLink}
+                                    className={isRus && "active"}
+                                >
+                                    RU
+                                </Link>
+                            </Language>
+                            <Language>
+                                <Link
+                                    to={engSiteLink}
+                                    className={!isRus && "active"}
+                                >
+                                    EN
+                                </Link>
+                            </Language>
+                        </LanguageContainer>
+                    </LinksContainer>
                 )}
                 {course && <CourseMenuButton colored={colored} />}
                 {sectTitle && (
@@ -100,10 +107,13 @@ const Logo = styled.div`
 
     flex-shrink: 0;
     width: 12.5vw;
-    margin-right: 10px;
+    margin-right: 40px;
 
     @media ${DEVICE.laptopS} {
         width: 150px;
+    }
+    @media ${DEVICE.mobile} {
+        margin-right: 10px;
     }
 `
 
@@ -214,6 +224,54 @@ const Container = styled.div`
     }
 `
 
+const LinksContainer = styled.div`
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 100%;    
+`
+
+const LinkToFosagro = styled.div`
+    a {
+        display: flex;
+        align-items: flex-end;
+    }
+
+    span {
+        margin-left: 12px;
+
+        font-family: 'CalibriBold';
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 20px;
+
+        color: ${COLORS.blue};
+        transition: all 0.3s;
+        @media ${DEVICE.mobile} {
+            display: none;
+        }
+    }
+
+    .linkArrow {
+        @media ${DEVICE.mobile} {
+            width: 25px;
+            height: 25px;
+        }
+    }
+
+    &:hover {
+        span {
+            color: ${COLORS.white};
+        }
+        .linkArrow {
+            path {
+                fill: ${COLORS.white};
+            }
+        }
+    }
+`
+
 const Language = styled.div`
     font-weight: 700;
     font-size: 1.2vw;
@@ -254,7 +312,7 @@ const LanguageContainer = styled.div`
                 width: 6px;
                 height: 6px;
                 border-radius: 50%;
-                background: ${(props) => props.color};
+                background: ${COLORS.white};
 
                 @media ${DEVICE.laptopS} {
                     top: 1vw;
@@ -268,10 +326,10 @@ const LanguageContainer = styled.div`
     }
 
     a {
-        color: ${(props) => props.color};
+        color: ${COLORS.white};
     }
 
     a.active {
-        color: ${(props) => props.colorActive};
+        color: ${COLORS.blue};
     }
 `

@@ -1,7 +1,7 @@
 import * as routes from "../constants/routes"
 
 const menuButtonData = [
-    {   
+    {
         id: 1,
         index: "01",
         text: "введение и личный вклад в устойчивое развитие",
@@ -14,7 +14,7 @@ const menuButtonData = [
     {
         id: 2,
         index: "02",
-        text: "Цели устойчивого развития (ЦУР) ООН для компании ФосАгро",
+        text: "Цели устойчивого развития (ЦУР) ООН",
         bgColor: "rgba(200, 130, 66, 0.8)",
         bgAnimateColor: "rgba(200, 130, 66, 0.5)",
         rotate: "-94",
@@ -54,7 +54,7 @@ const menuButtonData = [
     {
         id: 6,
         index: "06",
-        text: "человек и социальная среда",
+        text: "социальная среда и права человека",
         bgColor: "rgba(113, 178, 201, 0.8)",
         bgAnimateColor: "rgba(113, 178, 201, 0.5)",
         rotate: "55",
