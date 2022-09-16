@@ -6,7 +6,7 @@ import { DEVICE } from "../../../constants"
 export default function Label({ data }) {
     const { text = "" } = data
 
-    return <Container>{parse(text)}</Container>
+    return <Container className="label">{parse(text)}</Container>
 }
 
 const Container = styled.div`

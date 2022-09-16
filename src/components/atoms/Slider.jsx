@@ -21,7 +21,7 @@ export default function Slider({
     data,
     makeAutoplay = true,
     className,
-    delayTime = 10000,
+    delayTime = 7000,
     width = "100%",
 }) {
     const [isActive, setIsActive] = useState(0)

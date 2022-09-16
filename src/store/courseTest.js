@@ -1,5 +1,6 @@
 import { makeAutoObservable } from "mobx"
-import { courseStepButtonData1, courseTestsData } from "../data"
+import { coursePagesData, courseTestsData } from "../data"
+import { sectColors } from "../data/coursePagesData/general"
 
 // TODO создать нормальные данные для отрисовки секций
 
@@ -43,7 +44,7 @@ class CourseTest {
         3: {
             learnSectsIds: [],
             userAnswers: {},
-            activeQId: courseTestsData.testsQsData[1][0].id,
+            activeQId: courseTestsData.testsQsData[3][0].id,
             showStart: true,
             showFinal: false,
             showTest: false,
@@ -59,7 +60,7 @@ class CourseTest {
         4: {
             learnSectsIds: [],
             userAnswers: {},
-            activeQId: courseTestsData.testsQsData[1][0].id,
+            activeQId: courseTestsData.testsQsData[4][0].id,
             showStart: true,
             showFinal: false,
             showTest: false,
@@ -75,7 +76,7 @@ class CourseTest {
         5: {
             learnSectsIds: [],
             userAnswers: {},
-            activeQId: courseTestsData.testsQsData[1][0].id,
+            activeQId: courseTestsData.testsQsData[5][0].id,
             showStart: true,
             showFinal: false,
             showTest: false,
@@ -91,7 +92,7 @@ class CourseTest {
         6: {
             learnSectsIds: [],
             userAnswers: {},
-            activeQId: courseTestsData.testsQsData[1][0].id,
+            activeQId: courseTestsData.testsQsData[6][0].id,
             showStart: true,
             showFinal: false,
             showTest: false,
@@ -110,10 +111,23 @@ class CourseTest {
         makeAutoObservable(this)
     }
 
-    // eslint-disable-next-line class-methods-use-this
     get learnSectsData() {
-        // ! временно, записывать нормальные данные для отрисовки секций
-        return courseStepButtonData1
+        const courseData = coursePagesData[this.activeCourseId]
+        const sectsData = this.learnSectsIds.map((id) => {
+
+            const { sectTitle } = courseData[id]
+            const sectLink = `/course${this.activeCourseId}/topic${id}/point1`
+            const sectColor = sectColors[id]
+
+            return {
+                id,
+                title: sectTitle,
+                link: sectLink,
+                color: sectColor,
+            }
+        })
+
+        return sectsData
     }
 
     // eslint-disable-next-line class-methods-use-this
@@ -164,11 +178,30 @@ class CourseTest {
     // TODO ! проверять есть ли дальше курс, и только тогда покащывать в тесте кнопку прожолжжить обучение?
     // eslint-disable-next-line class-methods-use-this
     get nextCourseLink() {
-        return `/course/${+this.activeCourseId + 1}`
+        return `/course${+this.activeCourseId + 1}`
     }
 
     get learnSectsIds() {
-        return this.tests[this.activeCourseId].learnSectsIds
+        const wrongSectIds = []
+
+        Object.entries(this.userAnswers).forEach(([qId, answId]) => {
+            // eslint-disable-next-line eqeqeq
+            const qData = this.testQsData.find(({ id }) => id == qId)
+
+            const { correct, wrongAnswerSectId } = qData
+
+            if (qData) {
+                if (
+                    // eslint-disable-next-line eqeqeq
+                    answId != correct &&
+                    !wrongSectIds.includes(wrongAnswerSectId)
+                ) {
+                    wrongSectIds.push(wrongAnswerSectId)
+                }
+            }
+        })
+
+        return wrongSectIds
     }
 
     get finalContent() {
@@ -208,14 +241,12 @@ class CourseTest {
             // eslint-disable-next-line eqeqeq
             const qData = this.testQsData.find(({ id }) => id == qId)
 
-            const { wrongAnswerSectId, correct } = qData
+            const { correct } = qData
 
             if (qData) {
                 // eslint-disable-next-line eqeqeq
                 if (answId == correct) {
                     count += 1
-                } else {
-                    this.setLearnSectId(wrongAnswerSectId)
                 }
             }
         })
@@ -270,7 +301,8 @@ class CourseTest {
     }
 
     setTreeRightAnswCount() {
-        this.tests[this.activeCourseId].treeRightAnswCount = this.rightAnswersCount
+        this.tests[this.activeCourseId].treeRightAnswCount =
+            this.rightAnswersCount
     }
 
     setIsLastSlide(val) {

@@ -81,13 +81,21 @@ const Container = styled.div`
     }
 
     .links {
-        transition: 0.2s;
+        transition: 0.25s;
         opacity: 0;
         display: none;
     }
 
+    .links-enter-active {
+        display: block;
+    }
+
     .links-enter-done {
         opacity: 1;
+        display: block;
+    }
+
+    .links-exit {
         display: block;
     }
 
