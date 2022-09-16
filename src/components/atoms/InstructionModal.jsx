@@ -5,6 +5,7 @@ import styled from "styled-components"
 import { Link } from "react-router-dom"
 import { Pagination, Navigation, EffectFade } from "swiper"
 import { Swiper, SwiperSlide } from "swiper/react"
+import { ModalStore } from "../../store"
 import {
     IconAttention,
     IconBlueBtnMail,
