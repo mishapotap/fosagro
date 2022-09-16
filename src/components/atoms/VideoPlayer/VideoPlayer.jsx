@@ -212,8 +212,12 @@ export default function VideoPlayer({
 
     // устанавливаем прогресс видео
     function handleTimeChange() {
-        const curTime = videoRef.current.currentTime
-        setProgressTime(curTime)
+        if (videoRef.current) {
+            const curTime = videoRef.current.currentTime
+            setProgressTime(curTime)
+        } else {
+            handleVideoPause()
+        }
     }
 
     // обработка события play видео
@@ -333,7 +337,7 @@ export default function VideoPlayer({
         }
 
         // используем ref, чтобы было актуальное значение в settimeout
-        if (isPlayingLocal.current) {
+        if (isPlayingLocal.current && !videoRef.current.paused) {
             const timeoutId = setTimeout(() => {
                 if (isControlsShown && isPlayingLocal.current) {
                     setIsControlsShown(false)

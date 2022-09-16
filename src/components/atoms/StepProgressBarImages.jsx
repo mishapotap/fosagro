@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
-import { Grass, GrassGrey, Canyons, CanyonsGrey, Rocks, RocksGrey, Wave, WaveGrey, 
-    Flowers, FlowersGrey, Tropics, TropicsGrey, Desert, DesertGrey, PlaneWaves, 
+import { Grass, GrassGrey, Canyons, CanyonsGrey, Rocks, RocksGrey, Wave, WaveGrey,
+    Flowers, FlowersGrey, Tropics, TropicsGrey, Desert, DesertGrey, PlaneWaves,
     PlaneWavesGrey, Mountains, MountainsGrey, Ground, GroundGrey } from "../../assets/svg/static/ProgressBars"
 
 export default function StepProgressBarImages({progressWidth, type}) {
@@ -22,7 +22,7 @@ export default function StepProgressBarImages({progressWidth, type}) {
         ["wave", {
             grey: WaveGrey,
             colored: Wave
-        }], 
+        }],
         ["flowers", {
             grey: FlowersGrey,
             colored: Flowers
@@ -68,7 +68,7 @@ const Container = styled.div`
 
 const Back = styled.div`
     width: 607px;
-    max-width: 100%;    
+    max-width: 100%;
     height: 102px;
     background-image: url(${(props) => props.image})
 `
@@ -82,5 +82,5 @@ const Front = styled.div`
     max-width: 100%;
     background-image: url(${(props) => props.image});
     background-repeat: no-repeat;
-    transition: all 0.3s;
+    transition: all 0.6s;
 `

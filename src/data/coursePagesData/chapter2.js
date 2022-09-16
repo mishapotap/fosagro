@@ -1,4 +1,3 @@
-import { COLORS } from "../../constants"
 import {
     CourseSliderTwo21,
     CourseSliderTwo22,
@@ -11,8 +10,6 @@ import { MainBG } from "../../assets/video"
 const chapter2Data = {
     1: {
         sectTitle: "Преобразования нашего мира. 17 целей",
-        sectColor: COLORS.green_light,
-        progressType: "grass",
         pages: {
             1: {
                 title: "Пределы роста",
@@ -104,7 +101,8 @@ const chapter2Data = {
                     {
                         id: 1,
                         text: "Повестка дня в области устойчивого развития на период до 2030 года",
-                        url: "#",
+                        // TODO попросить рабочую ссылку?
+                        url: "https://www.un.org/ga/search/view_doc.asp?symbol=A/RES/70/1&Lang=R",
                     },
                 ],
             },
@@ -112,8 +110,6 @@ const chapter2Data = {
     },
     2: {
         sectTitle: "Как ФосАгро способствует достижению ЦУР ООН",
-        sectColor: COLORS.green_dark,
-        progressType: "tropics",
         pages: {
             1: {
                 title: "Роль ФосАгро",
@@ -162,8 +158,6 @@ const chapter2Data = {
     },
     3: {
         sectTitle: "Приоритизация ЦУР для ФосАгро",
-        sectColor: COLORS.brown_light,
-        progressType: "canyons",
         pages: {
             1: {
                 title: "Наши цели устойчивого развития",
@@ -172,7 +166,7 @@ const chapter2Data = {
                     {
                         component: "Text",
                         data: {
-                            text: "В 2020 году мы провели процедуру приоритизации Целей устойчивого развития для ФосАгро. В результате определены <span>11 целей</span>, достижению которых способствует наша компания.",
+                            text: "В 2020 году мы провели процедуру приоритизации Целей устойчивого развития для ФосАгро. В результате определены <span>11 целей</span>, достижению которых способствует наша Компания.",
                         },
                     },
                 ],
@@ -214,7 +208,7 @@ const chapter2Data = {
                     {
                         id: 1,
                         text: "Годовой отчет ФосАгро 2021 года",
-                        url: "#",
+                        url: "chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://cdn.phosagro.ru/upload/iblock/dc9/dc9ee42f1af7716f4ce9cebfde271755.pdf",
                     },
                 ],
             },
@@ -241,7 +235,8 @@ const chapter2Data = {
                     data: { src: MainBG },
                 },
                 links: [
-                    { id: 1, text: "Каталог продукции ФосАгро", url: "#" },
+                    { id: 1, text: "Каталог продукции ФосАгро", url: "https://www.phosagro.ru/production/" },
+                    // TODO добавить ссылку
                     {
                         id: 2,
                         text: "Проекты ФосАгро, направленные на сохранение и повышение почвенного плодородия",
@@ -250,7 +245,7 @@ const chapter2Data = {
                 ],
             },
             4: {
-                title: "Какие цели ставит перед собой компания?",
+                title: "Какие цели ставит перед собой Компания?",
                 content: [
                     {
                         component: "List",
@@ -286,12 +281,12 @@ const chapter2Data = {
                     {
                         id: 1,
                         text: "Приверженность ЦУР ООН в ФосАгро",
-                        url: "#",
+                        url: "https://www.phosagro.ru/sustainability/",
                     },
                 ],
             },
             5: {
-                title: "Как компания двигается к достижению этих целей?",
+                title: "Как Компания двигается к достижению этих целей?",
                 content: [
                     {
                         component: "List",
@@ -323,7 +318,7 @@ const chapter2Data = {
                     {
                         id: 1,
                         text: "Приверженность ЦУР ООН в ФосАгро",
-                        url: "#",
+                        url: "https://www.phosagro.ru/sustainability/",
                     },
                 ],
             },

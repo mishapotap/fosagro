@@ -12,7 +12,7 @@ export default function CourseSlideLayout({ className, type, children }) {
     const { activeSectColor, activeCourseId } = CourseProgressStore
     const color = type === 'test' ? COLORS.blue : activeSectColor
 
-    const backChapterLink = `/course/${activeCourseId}`
+    const backChapterLink = `/course${activeCourseId}`
 
     return (
         <StyledLayout page={type === 'test' ? "test" : "section"} className={className} type={type}>

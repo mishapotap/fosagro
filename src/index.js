@@ -13,9 +13,9 @@ root.render(
             <GlobalStyle />
             <Routes>
                 <Route path="/" element={<App />} />
-                <Route path="course/:id" element={<Course />} />
-                <Route path="course/:id/test" element={<CourseTestPage />} />
-                <Route path="course/:id/:sectId/:pageId" element={<CoursePageLayout />} />
+                <Route path="course:id" element={<Course />} />
+                <Route path="course:id/test" element={<CourseTestPage />} />
+                <Route path="course:id/topic:sectId/point:pageId" element={<CoursePageLayout />} />
                 <Route path="tutorial" element={<Tutorial />} />
                 <Route path="test" element={<Test />} />
                 <Route path="*" element={<Error404 />} />

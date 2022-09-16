@@ -67,8 +67,12 @@ export default function AudioPlayer({
     }, [isPlaying, isLoaded])
 
     function handleTimeChange() {
-        const curTime = audioRef.current.currentTime
-        setProgressTime(curTime)
+        if (audioRef.current) {
+            const curTime = audioRef.current.currentTime
+            setProgressTime(curTime)
+        } else {
+            handlePause()
+        }
     }
 
     useEffect(() => {
@@ -91,7 +95,7 @@ export default function AudioPlayer({
         setStrokeLength(length)
 
         return () => {
-            clearInterval(intervalId.current)
+            handlePause()
             window.removeEventListener("resize", setStrokeL)
         }
     }, [])

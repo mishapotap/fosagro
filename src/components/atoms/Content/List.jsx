@@ -68,7 +68,7 @@ const ListText = styled.div`
         font-size: 17px;
     }
 
-    span {
+    span:not(.bubble-trigger) {
         font-family: "FocoBold", sans-serif;
         color: ${COLORS.blue};
     }
