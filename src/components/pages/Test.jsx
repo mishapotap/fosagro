@@ -31,6 +31,7 @@ import {
     Tree,
     InteractiveCircle,
     AnimateLine,
+    Waves
 } from "../../assets/svg"
 import { AnimateDegrees } from "../../assets/Course5/Topic1"
 import { AnimateIPCC } from "../../assets/Course5/Topic2/Point3"
@@ -48,7 +49,8 @@ export default function Test() {
 
     return (
         <Layout page="section">
-        <AnimateLine color={COLORS.red}/>
+            <AnimateLine color={COLORS.red}/>
+            <Waves color={COLORS.red}/>
             <AnimateGas/>
             <AnimateIPCC/>
             <AnimateDegrees/>
@@ -153,7 +155,7 @@ export default function Test() {
     )
 }
 
-const Container = styled.div`
+const Container = styled.div`   
     /* padding: 20px; */
 `
 const Text = styled.span``
