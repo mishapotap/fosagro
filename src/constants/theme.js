@@ -17,6 +17,7 @@ export const COLORS = {
     grey_light: "#707372",
     turquoise: "#00859B",
     coral: "#C14C27",
+    copy_right: "#bec4c7",
 }
 
 export const FONTS = {

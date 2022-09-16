@@ -4,6 +4,7 @@ import { Link, Outlet } from "react-router-dom"
 import { menuButtonData } from "./data"
 import { MenuButton } from "./components/molecules"
 import { OOH } from "./assets/svg/static"
+import { AVTdigital } from "./assets/images"
 import { MainBG } from "./assets/video"
 import { COLORS, DEVICE } from "./constants"
 import { Layout } from "./components/atoms"
@@ -40,6 +41,17 @@ function App() {
                     ))}
                 </MenuContainer>
             </Content>
+            <Footer>
+                <CopyRight>© Группа компаний ФосАгро 2001 — 2022</CopyRight>
+                <LinkAVT
+                    href="https://avt.digital/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <img src={AVTdigital} alt="AVTdigital" />
+                    Разработано AVT Digital
+                </LinkAVT>
+            </Footer>
             <Outlet />
         </Layout>
     )
@@ -122,6 +134,10 @@ const MenuContainer = styled.div`
     @media ${DEVICE.laptopS} {
         padding: 6vw;
     }
+    @media ${DEVICE.mobile} {
+        padding: 6vw 0;
+        flex: none;
+    }
 
     a {
         margin: 0.5vw;
@@ -183,6 +199,83 @@ const Suptitle = styled.div`
         span {
             font-family: "CalibriBold";
         }
+    }
+`
+
+const Footer = styled.div`
+    position: absolute;
+    left: 0;
+    bottom: 32px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 2.3vw 0 4.3vw;
+
+    font-size: 16px;
+    line-height: 20px;
+
+    @media ${DEVICE.laptopM} {
+        padding-left: 3vw;
+    }
+
+    @media ${DEVICE.laptopS} {
+        padding: 0 23px;
+    }
+
+    @media ${DEVICE.tablet} {
+        bottom: 20px;
+        font-size: 14px;
+        line-height: 18px;
+    }
+
+    @media ${DEVICE.mobile} {
+        flex-direction: column-reverse;
+        align-items: flex-start;
+        font-size: 12px;
+        line-height: 14px;
+    }
+`
+
+const CopyRight = styled.div`
+    font-family: "CalibriBold";
+    font-weight: 700;
+
+    color: ${COLORS.copy_right};
+
+    opacity: 0.9;
+`
+
+const LinkAVT = styled.a`
+    display: flex;
+    align-items: center;
+
+    font-family: "CalibriRegular";
+    font-weight: 400;
+
+    color: ${COLORS.white};
+
+    opacity: 0.3;
+    transition: all 0.3s;
+
+    img {
+        margin-right: 5px;
+        @media ${DEVICE.tablet} {
+            width: 25px;
+        }
+
+        @media ${DEVICE.mobile} {
+            width: 18px;
+        }
+    }
+
+    &:hover {
+        opacity: 0.8;
+    }
+
+    @media ${DEVICE.mobile} {
+        margin-bottom: 8px;
     }
 `
 
