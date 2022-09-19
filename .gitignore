@@ -2,7 +2,12 @@
 
 # dependencies
 /node_modules
-/src/assets
+/src/assets/Course1
+/src/assets/Course2
+/src/assets/Course3
+/src/assets/Course4
+/src/assets/Course5
+/src/assets/Course6
 /.pnp
 .pnp.js
 package-lock.json
