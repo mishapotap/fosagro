@@ -5,18 +5,32 @@ import { ModalStore } from "../../store"
 import { COLORS, DEVICE } from "../../constants"
 import { BurgerIcon } from "../../assets/svg"
 import { MenuModal } from "../organisms"
+import { Click1 } from "../../assets/audio"
 
 function CourseMenuButton({colored}) {
+
+    const clickSound = new Audio(Click1)
+
+    const openMenu = () => {
+        ModalStore.showModal("menu");
+        clickSound.play();
+    }
+
+    const closeMenu = () => {
+        ModalStore.closeModal("menu");
+        clickSound.play();
+    }
+
     return (
         <Wrapper>
-            <CourseLink onClick={() => ModalStore.showModal("menu")}>
+            <CourseLink onClick={() => openMenu()}>
                 <CourseLinkText colored={colored}>
                     Курс “Устойчивое развитие”
                 </CourseLinkText>
                 <BurgerIcon colored={colored} />
             </CourseLink>
             <MenuModal isOpen={ModalStore.isVisible.menu}
-                onClose={() => ModalStore.closeModal("menu")}
+                onClose={() => closeMenu()}
             />
         </Wrapper>
     )

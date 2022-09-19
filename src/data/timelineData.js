@@ -766,6 +766,298 @@ const timelineData = {
             },
         ],
     },
+    course4: {
+        id: "04",
+        title: "Экология",
+        width: "3250",
+        timeline: [
+            {
+                id: 1,
+                button: {
+                    value: {
+                        modal: [
+                            {
+                                top: "-20px",
+                                left: "0",
+                            },
+                            {
+                                top: "-35px",
+                                left: "30px",
+                            },
+                        ],
+                        title: "Введение",
+                        description: "",
+                        time: "21 сек",
+                        bgColor: COLORS.orange,
+                        image: CourseButtonImage1,
+                        rotate: "-64",
+                        top: "calc(50% - 150px + 90px)",
+                        left: "55px",
+                    },
+                },
+            },
+            {
+                id: 2,
+                button: {
+                    link: "topic1/point1",
+                    value: {
+                        title: "Климатическая стратегия ФосАгро",
+                        description:
+                            "Краткая выжимка в несколько слов о чем будет в разделе",
+                        time: "1мин 40сек",
+                        bgColor: COLORS.green_light,
+                        image: CourseButtonImage2,
+                        rotate: "-145",
+                        top: "calc(50% - 150px + 60px)",
+                        left: "295px",
+                    },
+                },
+                points: [
+                    {
+                        id: 1,
+                        value: {
+                            color: COLORS.green_light,
+                            position: "top",
+                            text: "Противодействие изменению климата",
+                            top: "calc(50% - 150px + 145px)",
+                            left: "520px",
+                        },
+                    },
+                    {
+                        id: 2,
+                        value: {
+                            color: COLORS.green_light,
+                            position: "bottom",
+                            text: "Углерод - на минимум",
+                            top: "calc(50% - 150px + 140px)",
+                            left: "580px",
+                        },
+                    },
+                ],
+            },
+            {
+                id: 3,
+                button: {
+                    link: "topic2/point1",
+                    value: {
+                        title: `Энергоэффек-тивность`,
+                        description:
+                            "Краткая выжимка в несколько слов о чем будет в разделе",
+                        time: "30сек",
+                        bgColor: COLORS.green_dark,
+                        image: CourseButtonImage3,
+                        rotate: "-77",
+                        top: "calc(50% - 150px + 40px)",
+                        left: "670px",
+                    },
+                },
+                points: [
+                    {
+                        id: 1,
+                        value: {
+                            color: COLORS.green_dark,
+                            position: "top",
+                            text: "Энергоэффективность",
+                            top: "calc(50% - 150px + 150px)",
+                            left: "890px",
+                        },
+                    },
+                    {
+                        id: 2,
+                        value: {
+                            color: COLORS.green_dark,
+                            position: "bottom",
+                            text: `“Зеленые” ресурсы`,
+                            top: "calc(50% - 150px + 155px)",
+                            left: "940px",
+                        },
+                    },
+                ],
+            },
+            {
+                id: 4,
+                button: {
+                    link: "topic3/point1",
+                    value: {
+                        title: "Отходы",
+                        description:
+                            "Краткая выжимка в несколько слов о чем будет в разделе",
+                        time: "1мин 20сек",
+                        bgColor: COLORS.brown_light,
+                        image: CourseButtonImage4,
+                        rotate: "165",
+                        top: "calc(50% - 150px + 65px)",
+                        left: "1025px",
+                    },
+                },
+                points: [
+                    {
+                        id: 1,
+                        value: {
+                            color: COLORS.brown_light,
+                            position: "top",
+                            text: "Сократить, переработать, утилизировать",
+                            top: "calc(50% - 150px + 90px)",
+                            left: "1230px",
+                        },
+                    },
+                ],
+            },
+            {
+                id: 5,
+                button: {
+                    link: "topic4/point1",
+                    value: {
+                        title: "Воздух",
+                        description:
+                            "Краткая выжимка в несколько слов о чем будет в разделе",
+                        time: "1мин 30сек",
+                        bgColor: COLORS.brown,
+                        image: CourseButtonImage5,
+                        rotate: "-77",
+                        top: "calc(50% - 150px + 30px)",
+                        left: "1320px",
+                    },
+                },
+                points: [
+                    {
+                        id: 1,
+                        value: {
+                            color: COLORS.brown,
+                            position: "bottom",
+                            text: "Чистый воздух",
+                            top: "calc(50% - 150px + 115px)",
+                            left: "1520px",
+                        },
+                    },
+                ],
+            },
+            {
+                id: 6,
+                button: {
+                    link: "topic5/point1",
+                    value: {
+                        title: "Вода",
+                        description:
+                            "Краткая выжимка в несколько слов о чем будет в разделе",
+                        time: "1мин 30сек",
+                        bgColor: COLORS.grey_light,
+                        image: CourseButtonImage7,
+                        rotate: "0",
+                        top: "calc(50% - 150px + 20px)",
+                        left: "1610px",
+                    },
+                },
+                points: [
+                    {
+                        id: 1,
+                        value: {
+                            color: COLORS.grey_light,
+                            position: "top",
+                            text: "Без стоков",
+                            top: "calc(50% - 150px + 120px)",
+                            left: "1830px",
+                        },
+                    },
+                ],
+            },
+            {
+                id: 7,
+                button: {
+                    link: "topic6/point1",
+                    value: {
+                        title: "Биоразнообразие",
+                        description:
+                            "Краткая выжимка в несколько слов о чем будет в разделе",
+                        time: "1мин 30сек",
+                        bgColor: COLORS.blue_light,
+                        image: CourseButtonImage8,
+                        rotate: "0",
+                        top: "calc(50% - 150px + 50px)",
+                        left: "1920px",
+                    },
+                },
+                points: [
+                    {
+                        id: 1,
+                        value: {
+                            color: COLORS.blue_light,
+                            position: "bottom",
+                            text: "Устойчивость экосистем",
+                            top: "calc(50% - 150px + 165px)",
+                            left: "2120px",
+                        },
+                    },
+                ],
+            },
+            {
+                id: 8,
+                button: {
+                    link: "topic7/point1",
+                    value: {
+                        title: "Экологическая система управления ФосАгро",
+                        description:
+                            "Краткая выжимка в несколько слов о чем будет в разделе",
+                        time: "1мин 30сек",
+                        bgColor: COLORS.turquoise,
+                        image: CourseButtonImage8,
+                        rotate: "0",
+                        top: "calc(50% - 150px + 70px)",
+                        left: "2210px",
+                    },
+                },
+                points: [
+                    {
+                        id: 1,
+                        value: {
+                            color: COLORS.turquoise,
+                            position: "top",
+                            text: "Экологический менеджмент",
+                            top: "calc(50% - 150px + 150px)",
+                            left: "2420px",
+                        },
+                    },
+                    {
+                        id: 2,
+                        value: {
+                            color: COLORS.turquoise,
+                            position: "bottom",
+                            text: "Экостандарт ФосАгро",
+                            top: "calc(50% - 150px + 165px)",
+                            left: "2480px",
+                        },
+                    },
+                    {
+                        id: 3,
+                        value: {
+                            color: COLORS.turquoise,
+                            position: "top",
+                            text: "Мелочей не бывает",
+                            top: "calc(50% - 150px + 165px)",
+                            left: "2540px",
+                        },
+                    },
+                ],
+            },
+            {
+                id: 9,
+                button: {
+                    link: "test",
+                    value: {
+                        title: "Тест",
+                        description:
+                            "Короткий тест на 5 вопросов по содержанию раздела.",
+                        time: "≈4 мин",
+                        bgColor: COLORS.blue,
+                        image: CourseButtonImage6,
+                        rotate: "-150",
+                        top: "calc(50% - 150px + 65px)",
+                        left: "2640px",
+                    },
+                },
+            },
+        ],
+    },
     course5: {
         id: "05",
         title: "Климат и энергоэффективность",
@@ -1001,6 +1293,278 @@ const timelineData = {
                         rotate: "-150",
                         top: "calc(50% - 150px + 90px)",
                         left: "2130px",
+                    },
+                },
+            },
+        ],
+    },
+    course6: {
+        id: "06",
+        title: "Социальная среда и права человека",
+        width: "2950",
+        timeline: [
+            {
+                id: 1,
+                button: {
+                    value: {
+                        modal: [
+                            {
+                                top: "-20px",
+                                left: "0",
+                            },
+                        ],
+                        title: "Введение",
+                        description:
+                            "Уникальные разработки и нновационныерешения.",
+                        time: "21 сек",
+                        bgColor: COLORS.orange,
+                        image: CourseButtonImage1,
+                        rotate: "-64",
+                        top: "calc(50% - 150px + 90px)",
+                        left: "55px",
+                    },
+                },
+            },
+            {
+                id: 2,
+                button: {
+                    link: "topic1/point1",
+                    value: {
+                        title: "Права человека и социальные принципы ФосАгро",
+                        description:
+                            "Краткая выжимка в несколько слов о чем будет в разделе",
+                        time: "2мин",
+                        bgColor: COLORS.green_light,
+                        image: CourseButtonImage2,
+                        rotate: "-145",
+                        top: "calc(50% - 150px + 60px)",
+                        left: "295px",
+                    },
+                },
+                points: [
+                    {
+                        id: 1,
+                        value: {
+                            color: COLORS.green_light,
+                            position: "top",
+                            text: "Права человека",
+                            top: "calc(50% - 150px + 145px)",
+                            left: "510px",
+                        },
+                    },
+                    {
+                        id: 2,
+                        value: {
+                            color: COLORS.green_light,
+                            position: "bottom",
+                            text: "Социальные инструменты ФосАгро",
+                            top: "calc(50% - 150px + 140px)",
+                            left: "570px",
+                        },
+                    },
+                ],
+            },
+            {
+                id: 3,
+                button: {
+                    link: "topic2/point1",
+                    value: {
+                        title: "Сотрудники ФосАгро - ключ к успеху Компании",
+                        description:
+                            "Краткая выжимка в несколько слов о чем будет в разделе",
+                        time: "30сек",
+                        bgColor: COLORS.green_dark,
+                        image: CourseButtonImage3,
+                        rotate: "-77",
+                        top: "calc(50% - 150px + 50px)",
+                        left: "650px",
+                    },
+                },
+                points: [
+                    {
+                        id: 1,
+                        value: {
+                            color: COLORS.green_dark,
+                            position: "top",
+                            text: "Мы - ФосАгро",
+                            top: "calc(50% - 150px + 145px)",
+                            left: "865px",
+                        },
+                    },
+                    {
+                        id: 2,
+                        value: {
+                            color: COLORS.green_dark,
+                            position: "bottom",
+                            text: "Работаем и учимся",
+                            top: "calc(50% - 150px + 150px)",
+                            left: "920px",
+                        },
+                    },
+                    {
+                        id: 3,
+                        value: {
+                            color: COLORS.green_dark,
+                            position: "top",
+                            text: "Наша молодежь",
+                            top: "calc(50% - 150px + 150px)",
+                            left: "980px",
+                        },
+                    },
+                    {
+                        id: 4,
+                        value: {
+                            color: COLORS.green_dark,
+                            position: "bottom",
+                            text: "Наша поддержка",
+                            top: "calc(50% - 150px + 140px)",
+                            left: "1050px",
+                        },
+                    },
+                ],
+            },
+            {
+                id: 4,
+                button: {
+                    link: "topic3/point1",
+                    value: {
+                        title: "Охрана труда и промышленной безопасности",
+                        description:
+                            "Краткая выжимка в несколько слов о чем будет в разделе",
+                        time: "1мин 20сек",
+                        bgColor: COLORS.brown_light,
+                        image: CourseButtonImage4,
+                        rotate: "165",
+                        top: "calc(50% - 150px + 50px)",
+                        left: "1135px",
+                    },
+                },
+                points: [
+                    {
+                        id: 1,
+                        value: {
+                            color: COLORS.brown_light,
+                            position: "top",
+                            text: "“Золотые правила” безопасности",
+                            top: "calc(50% - 150px + 95px)",
+                            left: "1345px",
+                        },
+                    },
+                ],
+            },
+            {
+                id: 5,
+                button: {
+                    link: "topic4/point1",
+                    value: {
+                        title: "Вовлечение местных сообществ",
+                        description:
+                            "Краткая выжимка в несколько слов о чем будет в разделе",
+                        time: "1мин 30сек",
+                        bgColor: COLORS.brown,
+                        image: CourseButtonImage5,
+                        rotate: "-77",
+                        top: "calc(50% - 150px + 40px)",
+                        left: "1440px",
+                    },
+                },
+                points: [
+                    {
+                        id: 1,
+                        value: {
+                            color: COLORS.brown,
+                            position: "bottom",
+                            text: "Безымянный пока что слайд",
+                            top: "calc(50% - 150px + 85px)",
+                            left: "1655px",
+                        },
+                    },
+                    {
+                        id: 2,
+                        value: {
+                            color: COLORS.brown,
+                            position: "top",
+                            text: "Любимые города",
+                            top: "calc(50% - 150px + 95px)",
+                            left: "1725px",
+                        },
+                    },
+                    {
+                        id: 3,
+                        value: {
+                            color: COLORS.brown,
+                            position: "bottom",
+                            text: "Школа - ВУЗ - предприятие",
+                            top: "calc(50% - 150px + 115px)",
+                            left: "1800px",
+                        },
+                    },
+                    {
+                        id: 4,
+                        value: {
+                            color: COLORS.brown,
+                            position: "top",
+                            text: "Образование, здоровье, духовность",
+                            top: "calc(50% - 150px + 125px)",
+                            left: "1875px",
+                        },
+                    },
+                    {
+                        id: 5,
+                        value: {
+                            color: COLORS.brown,
+                            position: "bottom",
+                            text: "Духовное возрождение",
+                            top: "calc(50% - 150px + 130px)",
+                            left: "1955px",
+                        },
+                    },
+                    {
+                        id: 6,
+                        value: {
+                            color: COLORS.brown,
+                            position: "top",
+                            text: "Связь поколений",
+                            top: "calc(50% - 150px + 140px)",
+                            left: "2030px",
+                        },
+                    },
+                    {
+                        id: 7,
+                        value: {
+                            color: COLORS.brown,
+                            position: "bottom",
+                            text: "Помогать важно",
+                            top: "calc(50% - 150px + 165px)",
+                            left: "2110px",
+                        },
+                    },
+                    {
+                        id: 8,
+                        value: {
+                            color: COLORS.brown,
+                            position: "top",
+                            text: "Спорт",
+                            top: "calc(50% - 150px + 165px)",
+                            left: "2180px",
+                        },
+                    },
+                ],
+            },
+            {
+                id: 6,
+                button: {
+                    link: "test",
+                    value: {
+                        title: "Тест",
+                        description:
+                            "Короткий тест на 5 вопросов по содержанию раздела.",
+                        time: "≈4 мин",
+                        bgColor: COLORS.blue,
+                        image: CourseButtonImage6,
+                        rotate: "-150",
+                        top: "calc(50% - 150px + 80px)",
+                        left: "2290px",
                     },
                 },
             },

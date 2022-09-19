@@ -1,10 +1,22 @@
 import { MainBG } from "../../assets/video"
 // временно
 import {
-    CourseSliderThree11,
-    CourseSliderThree12,
-    CourseSliderThree13,
-} from "../../assets/Course3/Topic1/Point1"
+    CourseSliderFour11,
+    CourseSliderFour12,
+    CourseSliderFour13,
+} from "../../assets/Course4/Topic7/Point1"
+
+import {
+    CourseSliderFour21,
+    CourseSliderFour22,
+    CourseSliderFour23,
+} from "../../assets/Course4/Topic7/Point2"
+
+import {
+    CourseSliderFour31,
+    CourseSliderFour32,
+    CourseSliderFour33,
+} from "../../assets/Course4/Topic7/Point3"
 
 const chapter4Data = {
     1: {
@@ -68,8 +80,16 @@ const chapter4Data = {
                     },
                 },
                 links: [
-                    { id: 1, text: "TCFD отчет ФосАгро 2020", url: "chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://cdn.phosagro.ru/upload/iblock/35c/35c2ee0bc879eb911cb2aa1a4dddf722.pdf" },
-                    { id: 2, text: "Полный список сторонников TCFD", url: "https://www.fsb-tcfd.org/supporters/" },
+                    {
+                        id: 1,
+                        text: "TCFD отчет ФосАгро 2020",
+                        url: "chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://cdn.phosagro.ru/upload/iblock/35c/35c2ee0bc879eb911cb2aa1a4dddf722.pdf",
+                    },
+                    {
+                        id: 2,
+                        text: "Полный список сторонников TCFD",
+                        url: "https://www.fsb-tcfd.org/supporters/",
+                    },
                 ],
             },
             2: {
@@ -305,8 +325,12 @@ const chapter4Data = {
                     },
                 },
                 links: [
-                    {id: 1, text: "Водная стратегия ФосАгро", url: "https://www.phosagro.ru/upload/docs/society-water-strategy_ru.pdf"}
-                ]
+                    {
+                        id: 1,
+                        text: "Водная стратегия ФосАгро",
+                        url: "https://www.phosagro.ru/upload/docs/society-water-strategy_ru.pdf",
+                    },
+                ],
             },
         },
     },
@@ -391,15 +415,15 @@ const chapter4Data = {
                     component: "Slider",
                     data: [
                         {
-                            source: CourseSliderThree11,
+                            source: CourseSliderFour11,
                             alt: "image1",
                         },
                         {
-                            source: CourseSliderThree12,
+                            source: CourseSliderFour12,
                             alt: "image2",
                         },
                         {
-                            source: CourseSliderThree13,
+                            source: CourseSliderFour13,
                             alt: "image3",
                         },
                     ],
@@ -434,15 +458,15 @@ const chapter4Data = {
                     component: "Slider",
                     data: [
                         {
-                            source: CourseSliderThree11,
+                            source: CourseSliderFour21,
                             alt: "image1",
                         },
                         {
-                            source: CourseSliderThree12,
+                            source: CourseSliderFour22,
                             alt: "image2",
                         },
                         {
-                            source: CourseSliderThree13,
+                            source: CourseSliderFour23,
                             alt: "image3",
                         },
                     ],
@@ -471,15 +495,15 @@ const chapter4Data = {
                     component: "Slider",
                     data: [
                         {
-                            source: CourseSliderThree11,
+                            source: CourseSliderFour31,
                             alt: "image1",
                         },
                         {
-                            source: CourseSliderThree12,
+                            source: CourseSliderFour32,
                             alt: "image2",
                         },
                         {
-                            source: CourseSliderThree13,
+                            source: CourseSliderFour33,
                             alt: "image3",
                         },
                     ],

@@ -5,7 +5,8 @@ import {
     IntroModalOne21,
     IntroModalOne22,
     IntroModalOne23,
-    IntroSpeaker,
+    IntroSpeaker1,
+    IntroSpeaker2,
 } from "../assets/Course1/Into"
 import {
     IntroModalTwo11,
@@ -23,10 +24,25 @@ import {
 } from "../assets/Course3/Intro"
 
 import {
+    IntroModalFour11,
+    IntroModalFour12,
+    IntroModalFour13,
+    IntroModalFour21,
+    IntroModalFour22,
+    IntroModalFour23,
+} from "../assets/Course4/Intro"
+
+import {
     IntroModalFive11,
     IntroModalFive12,
     IntroModalFive13,
 } from "../assets/Course5/Intro"
+
+import {
+    IntroModalSix11,
+    IntroModalSix12,
+    IntroModalSix13,
+} from "../assets/Course6/Intro"
 
 const introModalData = {
     introModal1: [
@@ -46,7 +62,7 @@ const introModalData = {
                     alt: "image3",
                 },
             ],
-            audio: IntroSpeaker,
+            audio: IntroSpeaker1,
         },
         {
             text: `В этом блоке вместе с вами мы разберемся, как появилась концепция «Устойчивое развитие», сконцентрируем внимание на той деятельности, которую ведет компания в этой области.`,
@@ -64,7 +80,7 @@ const introModalData = {
                     alt: "image3",
                 },
             ],
-            audio: "",
+            audio: IntroSpeaker2,
         },
     ],
     introModal2: [
@@ -84,7 +100,7 @@ const introModalData = {
                     alt: "image3",
                 },
             ],
-            audio: IntroSpeaker,
+            audio: IntroSpeaker1,
         },
         {
             text: `При этом еще в XVIII веке английский экономист Томас Мальтус связывал причины социальных бедствий, политических потрясений и экологических катастроф с опережающим по отношению к ресурсам ростом численности населения. Эти идеи легли в основу концепции мальтузианства.`,
@@ -122,8 +138,46 @@ const introModalData = {
                     alt: "image3",
                 },
             ],
-            audio: IntroSpeaker,
+            audio: IntroSpeaker1,
             note: "Каждый из нас может внести свой вклад. Любое предложение по улучшению производства может привести к большому инновационному рывку. Все мы немного изобретатели!",
+        },
+    ],
+    introModal4: [
+        {
+            text: `В России тема экологии особенно остро зазвучала после разлива дизельного топлива в Арктике в мае 2020 года. Тогда и общественность, и бизнес достигли понимания - «экология дело каждого».`,
+            images: [
+                {
+                    source: IntroModalFour11,
+                    alt: "image1",
+                },
+                {
+                    source: IntroModalFour12,
+                    alt: "image2",
+                },
+                {
+                    source: IntroModalFour13,
+                    alt: "image3",
+                },
+            ],
+            audio: IntroSpeaker1,
+        },
+        {
+            text: `В экологической Политике ФосАгро закреплена ответственность по минимизации воздействия деятельности предприятий на окружающую среду на всем протяжении жизненного цикла продукции — от руды до еды.`,
+            images: [
+                {
+                    source: IntroModalFour21,
+                    alt: "image1",
+                },
+                {
+                    source: IntroModalFour22,
+                    alt: "image2",
+                },
+                {
+                    source: IntroModalFour23,
+                    alt: "image3",
+                },
+            ],
+            audio: IntroSpeaker1,
         },
     ],
     introModal5: [
@@ -143,7 +197,27 @@ const introModalData = {
                     alt: "image3",
                 },
             ],
-            audio: IntroSpeaker,
+            audio: IntroSpeaker1,
+        },
+    ],
+    introModal6: [
+        {
+            text: `Социальная ответственность - общепризнанный этический стандарт ведения современного бизнеса. Программы по обеспечению социальной защищенности, соблюдению прав человека и развитию сотрудников лежат в основе деятельности ФосАгро.`,
+            images: [
+                {
+                    source: IntroModalSix11,
+                    alt: "image1",
+                },
+                {
+                    source: IntroModalSix12,
+                    alt: "image2",
+                },
+                {
+                    source: IntroModalSix13,
+                    alt: "image3",
+                },
+            ],
+            audio: IntroSpeaker1,
         },
     ],
 }

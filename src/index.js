@@ -10,13 +10,14 @@ import {
     CourseTestPage,
 } from "./components/pages"
 import GlobalStyle from "./globalStyles"
-import { CoursePageLayout } from "./components/atoms"
+import { CoursePageLayout, BackgroundSound } from "./components/atoms"
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
     <React.StrictMode>
         <BrowserRouter>
             <GlobalStyle />
+            <BackgroundSound />
             <Routes>
                 <Route path="/" element={<App />} />
                 <Route path="course:id" element={<Course />} />

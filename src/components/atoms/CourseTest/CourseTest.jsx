@@ -5,7 +5,7 @@ import "wicg-inert"
 import { observer } from "mobx-react-lite"
 
 import { Tree } from "../../../assets/svg"
-import { CourseTestStore } from "../../../store"
+import { CourseTestStore, SoundStore } from "../../../store"
 import { DEVICE } from "../../../constants"
 
 import TestBlock from "./TestBlock"
@@ -15,6 +15,7 @@ import StartBlock from "./StartBlock"
 // TODO сделать чтобы тест можно было снова пройти?
 
 function CourseTest() {
+    SoundStore.setIsPlayingSound(false)
     // если пользователь уходит в процессе решения теста, сбрасываем прогресс
 
     useEffect(() => () => {

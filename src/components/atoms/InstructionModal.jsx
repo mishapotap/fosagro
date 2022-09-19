@@ -11,6 +11,7 @@ import {
     IconOpenCourseBtn,
     IconOpenCourseBtnMob,
     IconBlueBtnSound,
+    IconBlueBtnInstraction
 } from "../../assets/svg/static/InstructionModal"
 
 import { Headphones, ArrowRight, ArrowLeft } from "../../assets/svg"
@@ -178,6 +179,19 @@ export default function InstructionModal({ isOpen, onClose }) {
                                                         будем рады ваши отзывам
                                                         и предложениям по
                                                         улучшению контента!
+                                                    </Text>
+                                                </IconRow>
+                                                <IconRow>
+                                                    <ElIcon>
+                                                        <img
+                                                            src={
+                                                                IconBlueBtnInstraction
+                                                            }
+                                                            alt="инструкция"
+                                                        />
+                                                    </ElIcon>
+                                                    <Text>
+                                                        Элемент вызова данной инструкции.
                                                     </Text>
                                                 </IconRow>
                                             </Column>
