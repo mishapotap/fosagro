@@ -7,7 +7,7 @@ import * as routes from "../../constants/routes"
 import { DEVICE, COLORS } from "../../constants"
 import { Fosagro, FosagroColored, LinkArrow } from "../../assets/svg"
 import { CourseMenuButton } from "../molecules"
-import { ModalStore, CourseProgressStore } from "../../store"
+import { ModalStore, CourseProgressStore, SoundStore } from "../../store"
 
 // TODO сделать ссылки RU EN рабочими
 // TODO сделать фиксированный хэдэр при скролле на моб?
@@ -32,11 +32,16 @@ function Header({
 
     const {activeSectColor, activeSectTitle} = CourseProgressStore
 
+    const closeMenuModal = () => {
+        ModalStore.closeModal("menu")
+        SoundStore.setIsPlayingSound(true)
+    }
+
     return (
         <Container>
             <HeaderInner>
                 <Logo>
-                    <Link to={routes.HOME}>
+                    <Link to={routes.HOME} onClick={() => SoundStore.setIsPlayingSound(true)}>
                         {colored ? <FosagroColored /> : <Fosagro />}
                     </Link>
                 </Logo>
@@ -87,7 +92,7 @@ function Header({
                     <BackToMain>
                         <Link
                             to={routes.HOME}
-                            onClick={() => ModalStore.closeModal("menu")}
+                            onClick={() => closeMenuModal()}
                         >
                             Вернуться на главную
                         </Link>

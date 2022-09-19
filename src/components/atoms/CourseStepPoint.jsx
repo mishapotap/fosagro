@@ -71,12 +71,14 @@ const Text = styled.div`
 const Point = styled.div`
     width: 15px;
     height: 15px;
+
     border-radius: 50%;
     transition: all .3s;
 `
 
 const PointContainer = styled.div`
     position: relative;
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -86,6 +88,7 @@ const PointContainer = styled.div`
     border-radius: 50%;
     border: 1px solid ${props => props.defaultColor};
     background: transparent;
+    
     opacity: 0.75;
     transition: all .3s;
     ${Point} {
@@ -116,9 +119,11 @@ const Container = styled.div`
     position: absolute;
     top: ${(props) => props.top};
     left: ${(props) => props.left};
+
     display: block;
+
+    cursor: default;
     transition: all 0.3s;
-    cursor: pointer;
     ${(props) => (props.isActive === true || props.isCompleted === true) &&
         css`
             ${PointContainer} {

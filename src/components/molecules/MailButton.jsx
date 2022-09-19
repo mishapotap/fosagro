@@ -4,20 +4,34 @@ import { observer } from "mobx-react-lite"
 import { ModalStore, CourseTestStore } from "../../store"
 import { AnimatedBlueButton, ReviewModal } from "../atoms"
 import { Letter } from "../../assets/svg"
+import { Click1 } from "../../assets/audio"
 
 function MailButton({ isTest }) {
+
+    const clickSound = new Audio(Click1)
+
+    const openMail = () => {
+        ModalStore.showModal("mail");
+        clickSound.play();
+    }
+
+    const closeMail = () => {
+        ModalStore.closeModal("mail");
+        clickSound.play();
+    }
+
     return (
         <Wrapper hide={isTest && CourseTestStore.showFinal}>
             <AnimatedBlueButton
                 size="s"
                 rotate="20"
-                onClick={() => ModalStore.showModal("mail")}
+                onClick={() => openMail()}
             >
                 <Letter />
             </AnimatedBlueButton>
             <ReviewModal
                 isOpen={ModalStore.isVisible.mail}
-                onClose={() => ModalStore.closeModal("mail")}
+                onClose={() => closeMail()}
             />
         </Wrapper>
     )
