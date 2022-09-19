@@ -14,7 +14,7 @@ function BackgroundSound () {
             promise
                 .then(() => {   
                     SoundStore.setIsPlayingSound(true);
-                    backSound.current.volume = 0.1;
+                    backSound.current.volume = 0.01;
                 })
                 .catch(() => {
                     SoundStore.setIsPlayingSound(false);

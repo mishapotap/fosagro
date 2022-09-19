@@ -5,7 +5,8 @@ import {
     IntroModalOne21,
     IntroModalOne22,
     IntroModalOne23,
-    IntroSpeaker,
+    IntroSpeaker1,
+    IntroSpeaker2,
 } from "../assets/Course1/Into"
 import {
     IntroModalTwo11,
@@ -61,7 +62,7 @@ const introModalData = {
                     alt: "image3",
                 },
             ],
-            audio: IntroSpeaker,
+            audio: IntroSpeaker1,
         },
         {
             text: `В этом блоке вместе с вами мы разберемся, как появилась концепция «Устойчивое развитие», сконцентрируем внимание на той деятельности, которую ведет компания в этой области.`,
@@ -79,7 +80,7 @@ const introModalData = {
                     alt: "image3",
                 },
             ],
-            audio: "",
+            audio: IntroSpeaker2,
         },
     ],
     introModal2: [
@@ -99,7 +100,7 @@ const introModalData = {
                     alt: "image3",
                 },
             ],
-            audio: IntroSpeaker,
+            audio: IntroSpeaker1,
         },
         {
             text: `При этом еще в XVIII веке английский экономист Томас Мальтус связывал причины социальных бедствий, политических потрясений и экологических катастроф с опережающим по отношению к ресурсам ростом численности населения. Эти идеи легли в основу концепции мальтузианства.`,
@@ -137,7 +138,7 @@ const introModalData = {
                     alt: "image3",
                 },
             ],
-            audio: IntroSpeaker,
+            audio: IntroSpeaker1,
             note: "Каждый из нас может внести свой вклад. Любое предложение по улучшению производства может привести к большому инновационному рывку. Все мы немного изобретатели!",
         },
     ],
@@ -158,7 +159,7 @@ const introModalData = {
                     alt: "image3",
                 },
             ],
-            audio: IntroSpeaker,
+            audio: IntroSpeaker1,
         },
         {
             text: `В экологической Политике ФосАгро закреплена ответственность по минимизации воздействия деятельности предприятий на окружающую среду на всем протяжении жизненного цикла продукции — от руды до еды.`,
@@ -176,7 +177,7 @@ const introModalData = {
                     alt: "image3",
                 },
             ],
-            audio: IntroSpeaker,
+            audio: IntroSpeaker1,
         },
     ],
     introModal5: [
@@ -196,7 +197,7 @@ const introModalData = {
                     alt: "image3",
                 },
             ],
-            audio: IntroSpeaker,
+            audio: IntroSpeaker1,
         },
     ],
     introModal6: [
@@ -216,7 +217,7 @@ const introModalData = {
                     alt: "image3",
                 },
             ],
-            audio: IntroSpeaker,
+            audio: IntroSpeaker1,
         },
     ],
 }
