@@ -9,7 +9,6 @@ import { sectColors, sectsProgressTypes } from "../data/coursePagesData/general"
 // (еще на гоавную проценты надо прохождения)
 
 class CourseProgress {
-
     activeSectId = 1
 
     activeCourseId = 1
@@ -33,7 +32,7 @@ class CourseProgress {
         return null
     }
 
-    get isWrongPath () {
+    get isWrongPath() {
         return !this.activePageData
     }
 
@@ -58,7 +57,9 @@ class CourseProgress {
     }
 
     get progressType() {
-        return this.isWrongPath ? "grass" : sectsProgressTypes[this.activeSectId]
+        return this.isWrongPath
+            ? "grass"
+            : sectsProgressTypes[this.activeSectId]
     }
 
     get activeSectPagesCount() {
@@ -115,7 +116,7 @@ class CourseProgress {
                 if (prevCourseData) {
                     return `/course${prevCourseId}`
                 }
-                return "/"
+                return "/course1"
             }
         }
 

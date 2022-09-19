@@ -1,23 +1,26 @@
-import React, { useState } from "react"
+import React from "react"
 import styled from "styled-components"
+import { observer } from "mobx-react-lite"
 import { Mute, UnMute } from "../../assets/svg"
 import { AnimatedBlueButton } from "../atoms"
+import { SoundStore } from "../../store"
 
-export default function SoundButton() {
+function SoundButton() {
     // TODO перенести состояние в mobX
-    const [isMute, setIsMute] = useState(false)
 
     return (
         <Wrapper>
             <AnimatedBlueButton
                 size="s"
                 rotate="60"
-                onClick={() => setIsMute(!isMute)}
+                onClick={() => SoundStore.setIsPlayingUser(!SoundStore.getIsPlaying())}
             >
-                {isMute ? <UnMute /> : <Mute />}
+                {SoundStore.getIsPlaying() ? <Mute /> : <UnMute />}
             </AnimatedBlueButton>
         </Wrapper>
     )
 }
+
+export default observer(SoundButton)
 
 const Wrapper = styled.div``

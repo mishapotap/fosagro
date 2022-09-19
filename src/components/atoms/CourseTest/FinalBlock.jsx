@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 import { CSSTransition } from "react-transition-group"
 import { observer } from "mobx-react-lite"
 
-import { ModalStore, CourseTestStore } from "../../../store"
+import { ModalStore, CourseTestStore, SoundStore } from "../../../store"
 import { COLORS, DEVICE } from "../../../constants"
 import { borderAnimationM } from "../../../constants/animations"
 import { Letter } from "../../../assets/svg"
@@ -14,12 +14,20 @@ import NextQuestionButton from "../NextQuestionButton"
 import AnimatedBlueButton from "../AnimatedBlueButton"
 import SendButton from "../SendButton"
 import { Text, Label, Block, StyledTitle } from "./styledAtoms"
+import { Click1 } from "../../../assets/audio"
 
 function FinalBlock() {
     const finalRef = useRef(null)
 
     function handleExited() {
         finalRef.current.style.opacity = 1
+    }
+
+    const clickSound = new Audio(Click1)
+
+    const openMailModal = () => {
+        ModalStore.showModal("mail")
+        clickSound.play()
     }
 
     return (
@@ -47,6 +55,7 @@ function FinalBlock() {
                         <Link
                             to={CourseTestStore.nextCourseLink}
                             className="next-chapter"
+                            onCLick={() => SoundStore.setIsPlayingSound(true)}
                         >
                             <SendButton
                                 text="Перейти к следующему разделу"
@@ -84,7 +93,7 @@ function FinalBlock() {
                         <AnimatedBlueButton
                             size="s"
                             rotate="20"
-                            onClick={() => ModalStore.showModal("mail")}
+                            onClick={() => openMailModal()}
                             className="final-mail-btn"
                         >
                             <Letter />

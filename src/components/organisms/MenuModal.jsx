@@ -7,9 +7,18 @@ import { MenuButton } from "../molecules"
 import { MenuProgressBar, Layout, Modal } from "../atoms"
 import { DEVICE } from "../../constants"
 import { MenuBackground } from "../../assets/images"
-import { ModalStore } from "../../store"
+import { ModalStore, SoundStore } from "../../store"
+import { Click1 } from "../../assets/audio"
 
 export default function MenuModal({isOpen, onClose}) {
+
+    const clickSound = new Audio(Click1);
+
+    const closeModal = () => {
+        ModalStore.closeModal("menu");
+        SoundStore.setIsPlayingSound(true);
+        clickSound.play();
+    }
     
     return (
         <StyledModal isOpen={isOpen} onClose={onClose}>
@@ -18,7 +27,7 @@ export default function MenuModal({isOpen, onClose}) {
                     <MenuWrap>
                         {menuButtonData.map((item) => (
                             <MenuButtonContainer  key={item.index}>
-                                <Link to={item.href} onClick={() => ModalStore.closeModal("menu")}>
+                                <Link to={item.href} onClick={() => closeModal()}>
                                     <MenuButton
                                         index={item.index}
                                         text={item.text}

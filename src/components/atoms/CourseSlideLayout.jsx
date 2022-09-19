@@ -5,7 +5,7 @@ import { InteractiveCircle, AnimateLine, ArrowUp } from "../../assets/svg"
 import Layout from "./Layout"
 import { MailButton } from "../molecules"
 import { COLORS, DEVICE } from "../../constants"
-import { CourseProgressStore } from "../../store"
+import { CourseProgressStore, SoundStore } from "../../store"
 
 export default function CourseSlideLayout({ className, type, children }) {
 
@@ -23,7 +23,7 @@ export default function CourseSlideLayout({ className, type, children }) {
                 <AnimateLine color={color} />
             </WavesContainer>
             <Content className="slide-content">
-                <Link to={backChapterLink} className="back-to-chapter">
+                <Link to={backChapterLink} className="back-to-chapter" onClick={() => SoundStore.setIsPlayingSound(true)}>
                     <BackToChapter>
                         <BackToChapterIcon>
                             <ArrowUp />

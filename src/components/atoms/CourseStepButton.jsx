@@ -3,11 +3,19 @@ import styled, { css } from "styled-components"
 import { TimeIcon } from "../../assets/svg/static";
 import { COLORS } from '../../constants'
 import { borderAnimationM } from "../../constants/animations";
+import { Click2 } from "../../assets/audio";
 
 export default function CourseStepButton({ data, className, isActive, handleMouseOut, handleMouseOver }) {
     const { title, bgColor, image, time, description, rotate, top, left } = data
     // TODO перенести состояние в mobX
     const [isCompleted, setIsCompleted] = useState(false);
+
+    const clickSound = new Audio(Click2)
+
+    const handleClick = () => {
+        setIsCompleted(!isCompleted);
+        clickSound.play();
+    }
     
     return (
         <Container 
@@ -20,7 +28,7 @@ export default function CourseStepButton({ data, className, isActive, handleMous
             left={left}
             onMouseOut={handleMouseOut}
             onMouseOver={handleMouseOver}
-            onClick={() => setIsCompleted(!isCompleted)}>
+            onClick={() => handleClick()}>
             <Circle>
                 {isActive
                     ? <CircleContent style={{color: COLORS.white}}>

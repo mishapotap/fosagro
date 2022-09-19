@@ -18,7 +18,7 @@ import { DEVICE } from "../../constants"
 import AudioPlayer from "./AudioPlayer"
 import ExtLinks from "./ExtLinks"
 import coursePageComponents from "./coursePageComponents"
-import { CourseProgressStore } from "../../store"
+import { CourseProgressStore, SoundStore } from "../../store"
 import { Error404 } from "../pages"
 
 // TODO на мобилках сделать чтобы анимация начинала проигрываться только тогда,
@@ -37,6 +37,7 @@ import { Error404 } from "../pages"
 // TODO сделать плавное переключение получше?
 
 function CoursePage() {
+    SoundStore.setIsPlayingSound(false)
     const { id: courseId, sectId, pageId } = useParams()
     const pageData = CourseProgressStore.activePageData
     const location = useLocation()

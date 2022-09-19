@@ -8,8 +8,11 @@ import { AVTdigital } from "./assets/images"
 import { MainBG } from "./assets/video"
 import { COLORS, DEVICE } from "./constants"
 import { Layout } from "./components/atoms"
+import { Click2 } from "./assets/audio"
 
 function App() {
+    const clickSound = new Audio(Click2)
+
     return (
         <Layout>
             <Background>
@@ -17,7 +20,9 @@ function App() {
             </Background>
             <Content>
                 <TextContainer>
-                    <Title>Курс «Устойчивое развитие»</Title>
+                    <Title>
+                        Учебный курс «Устойчивое развитие» компании ФосАгро
+                    </Title>
                     <Suptitle>
                         <div>Компания ФосАгро напрямую способствует</div>
                         <div>
@@ -29,7 +34,11 @@ function App() {
                 </TextContainer>
                 <MenuContainer>
                     {menuButtonData.map((item) => (
-                        <Link to={`/course${item.id}`} key={item.index}>
+                        <Link
+                            to={`/course${item.id}`}
+                            key={item.index}
+                            onClick={() => clickSound.play()}
+                        >
                             <MenuButton
                                 index={item.index}
                                 text={item.text}

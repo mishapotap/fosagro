@@ -7,14 +7,18 @@ import { CourseTestStore } from "../../../store"
 import SendButton from "../SendButton"
 import { Text, Label, Block, StyledTitle } from "./styledAtoms"
 import { COLORS, DEVICE } from "../../../constants"
+import { Click2 } from "../../../assets/audio"
 
 function StartBlock() {
     const startRef = useRef(null)
+
+    const clickSound = new Audio(Click2)
 
     function handleStartClick() {
         CourseTestStore.setShowStart(false)
         CourseTestStore.setShowTreeInit(false)
         CourseTestStore.setShowTreeStart(true)
+        clickSound.play()
     }
 
     return (
