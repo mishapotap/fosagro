@@ -1,5 +1,6 @@
 import React from "react"
 import styled from "styled-components"
+import { Helmet } from "react-helmet"
 import { useParams } from "react-router"
 import timelineData from "../../data/timelineData"
 import { Layout } from "../atoms"
@@ -15,6 +16,14 @@ export default function Course() {
 
     return (
         <Layout page="course">
+            {dataLine.metaTitle && <Helmet>
+                <title data-rh="true">{dataLine.metaTitle}</title>
+                <meta
+                    name="description"
+                    content={dataLine.metaDescription}
+                />
+            </Helmet>
+            }
             <Background/>
             <Container>
                 <Wrapper>

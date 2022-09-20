@@ -4,8 +4,10 @@ import { observer } from "mobx-react-lite"
 import { Link } from "react-router-dom"
 import { ModalStore, SoundStore } from "../../store"
 import { IntroModal, CourseStepButton, CourseStepPoint } from "../atoms"
+import { Click2 } from "../../assets/audio"
 
 function CourseStep({button, points, dataModal, className}) {
+    const clickSound = new Audio(Click2)
     const [isActive, setIsАсtive] = useState(false);
 
     const openIntroModal = () => {
@@ -16,6 +18,7 @@ function CourseStep({button, points, dataModal, className}) {
     const closeIntroModal = () => {
         ModalStore.closeModal("intro");
         SoundStore.setIsPlayingSound(true);
+        clickSound.play();
     }
 
     return(

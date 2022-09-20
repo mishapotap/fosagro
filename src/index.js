@@ -14,22 +14,20 @@ import { CoursePageLayout, BackgroundSound } from "./components/atoms"
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
-    <React.StrictMode>
-        <BrowserRouter>
-            <GlobalStyle />
-            <BackgroundSound />
-            <Routes>
-                <Route path="/" element={<App />} />
-                <Route path="course:id" element={<Course />} />
-                <Route path="course:id/test" element={<CourseTestPage />} />
-                <Route
-                    path="course:id/topic:sectId/point:pageId"
-                    element={<CoursePageLayout />}
-                />
-                <Route path="tutorial" element={<Tutorial />} />
-                <Route path="test" element={<Test />} />
-                <Route path="*" element={<Error404 />} />
-            </Routes>
-        </BrowserRouter>
-    </React.StrictMode>
+    <BrowserRouter>
+        <GlobalStyle />
+        <BackgroundSound />
+        <Routes>
+            <Route path="/" element={<App />} />
+            <Route path="course:id" element={<Course />} />
+            <Route path="course:id/test" element={<CourseTestPage />} />
+            <Route
+                path="course:id/topic:sectId/point:pageId"
+                element={<CoursePageLayout />}
+            />
+            <Route path="tutorial" element={<Tutorial />} />
+            <Route path="test" element={<Test />} />
+            <Route path="*" element={<Error404 />} />
+        </Routes>
+    </BrowserRouter>
 )

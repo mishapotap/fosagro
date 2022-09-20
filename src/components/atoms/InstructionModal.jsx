@@ -24,6 +24,7 @@ import Modal from "./Modal"
 import Layout from "./Layout"
 import { ModalStore } from "../../store"
 import { renderCustom } from "../../utils"
+import { Click1 } from "../../assets/audio"
 
 // eslint-disable-next-line
 import "swiper/css"
@@ -35,6 +36,13 @@ export default function InstructionModal({ isOpen, onClose }) {
     // const baseUrl = "http://localhost:3000/course01/"
     // const instructionUrl = new URL("instruction", baseUrl)
     // console.log(instructionUrl.href)
+
+    const clickSound = new Audio(Click1)
+
+    const closeInstructionModal = () => {
+        ModalStore.closeModal("instruction")
+        clickSound.play()
+    }
 
     return (
         <StyledModal isOpen={isOpen} onClose={onClose}>
@@ -198,7 +206,7 @@ export default function InstructionModal({ isOpen, onClose }) {
                                         </SlideColsInner>
                                     </Slide2Cols>
                                     <StartLearn>
-                                        <Link to={routes.COURSE01} onClick={() => ModalStore.closeModal("instruction")}>
+                                        <Link to={routes.COURSE01} onClick={() => closeInstructionModal()}>
                                             <SendButton
                                                 text="Начать обучение"
                                                 size="m"
