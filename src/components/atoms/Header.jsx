@@ -50,14 +50,14 @@ function Header({
             <HeaderInner>
                 <Logo>
                     <Link to={routes.HOME} onClick={() => handleClickLogo()}>
-                        {colored ? <FosagroColored /> : <Fosagro />}
+                        <FosagroColored />
                     </Link>
                 </Logo>
                 {language && (
                     <LinksContainer>
                         <LinkToFosagro>
-                            <a href="https://www.phosagro.ru/" 
-                                target="_blank" 
+                            <a href="https://www.phosagro.ru/"
+                                target="_blank"
                                 rel="noopener noreferrer">
                                <LinkArrow className="linkArrow"/>
                                 <span>Корпоративный сайт</span>
@@ -242,7 +242,7 @@ const LinksContainer = styled.div`
     flex-grow: 1;
     justify-content: space-between;
     align-items: flex-end;
-    height: 100%;    
+    height: 100%;
 `
 
 const LinkToFosagro = styled.div`

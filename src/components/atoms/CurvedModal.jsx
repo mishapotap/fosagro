@@ -13,6 +13,8 @@ export default function CurvedModal({
     isOpen,
     onClose,
     className,
+    onOpenAnimEnd,
+    navigateBack,
 }) {
     const color = type === "intro" ? COLORS.orange : COLORS.blue
 
@@ -22,6 +24,8 @@ export default function CurvedModal({
             isOpen={isOpen}
             onClose={onClose}
             className={className}
+            onOpenAnimEnd={onOpenAnimEnd}
+            navigateBack={navigateBack}
         >
             <StyledBg borderColor={color} />
             <ModalContent className="modal-content">{children}</ModalContent>

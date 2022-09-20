@@ -509,7 +509,6 @@ const Video = styled.video`
 
     height: 100%;
     width: 100%;
-    object-fit: cover;
 
     opacity: 0;
     transition: 0.4s;

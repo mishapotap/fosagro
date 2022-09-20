@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react"
 import styled, { css } from "styled-components";
-import { COLORS } from "../../constants";
+import { COLORS, DEVICE } from "../../constants";
 
-export default function CourseStepPoint({data, className, isActiveParent}) {
+export default function CourseStepPoint({data, className, isActiveParent, isCompleted}) {
     const { color, year, text, position, top, left } = data
-    // TODO перенести состояние в mobX
-    const [isCompleted, setIsCompleted] = useState(false);
     const [isActive, setIsАсtive] = useState(isActiveParent);
-    
+
     useEffect(() => {
         // eslint-disable-next-line no-unused-expressions
         isActiveParent ? setIsАсtive(true) : setIsАсtive(false)
@@ -17,13 +15,12 @@ export default function CourseStepPoint({data, className, isActiveParent}) {
             className={className}
             defaultColor={ COLORS.white }
             color={color}
-            isCompleted={isCompleted} 
+            isCompleted={isCompleted}
             isActive={isActive}
             top={top}
             left={left}
             onMouseOver={() => setIsАсtive(true)}
-            onMouseOut={() => setIsАсtive(false)}
-            onClick={() => setIsCompleted(!isCompleted)}>
+            onMouseOut={() => setIsАсtive(false)}>
                 <PointContainer defaultColor={ COLORS.white } position={position}>
                     <Point/>
                 </PointContainer>
@@ -56,6 +53,10 @@ const TextContainer = styled.div`
     color: ${props => props.color};
 
     transition: all .3s;
+
+    @media ${DEVICE.laptopM} {
+        font-size: 14px;
+    }
 `
 
 const Year = styled.div`
@@ -88,7 +89,7 @@ const PointContainer = styled.div`
     border-radius: 50%;
     border: 1px solid ${props => props.defaultColor};
     background: transparent;
-    
+
     opacity: 0.75;
     transition: all .3s;
     ${Point} {

@@ -40,6 +40,9 @@ const chapter2Data = {
                     type: "animation",
                     component: "AnimateChart",
                 },
+                links: [
+                    {id: 1, text: "Римский клуб", url: "https://www.clubofrome.org/"}
+                ]
             },
             2: {
                 title: "Глобальный договор",
@@ -66,6 +69,9 @@ const chapter2Data = {
                     type: "animation",
                     component: "AnimateGlobalContract",
                 },
+                links: [
+                    {id: 1, text: "Глобальный договор ООН", url: "http://globalcompact.ru/"}
+                ]
             },
             3: {
                 title: "На повестке дня - устойчивое развитие",
@@ -101,8 +107,7 @@ const chapter2Data = {
                     {
                         id: 1,
                         text: "Повестка дня в области устойчивого развития на период до 2030 года",
-                        // TODO попросить рабочую ссылку?
-                        url: "https://www.un.org/ga/search/view_doc.asp?symbol=A/RES/70/1&Lang=R",
+                        url: "https://sdgs.un.org/ru/2030agenda",
                     },
                 ],
             },
@@ -204,13 +209,6 @@ const chapter2Data = {
                     component: "VideoPlayer",
                     data: { src: MainBG },
                 },
-                links: [
-                    {
-                        id: 1,
-                        text: "Годовой отчет ФосАгро 2021 года",
-                        url: "chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://cdn.phosagro.ru/upload/iblock/dc9/dc9ee42f1af7716f4ce9cebfde271755.pdf",
-                    },
-                ],
             },
             3: {
                 title: "Какой вклад вносит Компания в достижение ЦУР 2?",
@@ -234,15 +232,6 @@ const chapter2Data = {
                     component: "VideoPlayer",
                     data: { src: MainBG },
                 },
-                links: [
-                    { id: 1, text: "Каталог продукции ФосАгро", url: "https://www.phosagro.ru/production/" },
-                    // TODO добавить ссылку
-                    {
-                        id: 2,
-                        text: "Проекты ФосАгро, направленные на сохранение и повышение почвенного плодородия",
-                        url: "#",
-                    },
-                ],
             },
             4: {
                 title: "Какие цели ставит перед собой Компания?",
@@ -280,8 +269,8 @@ const chapter2Data = {
                 links: [
                     {
                         id: 1,
-                        text: "Приверженность ЦУР ООН в ФосАгро",
-                        url: "https://www.phosagro.ru/sustainability/",
+                        text: "Цель 2: Ликвидация голода",
+                        url: "https://www.phosagro.ru/sustainability/zero-hunger/",
                     },
                 ],
             },

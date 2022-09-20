@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-no-bind */
 import React, { useRef, useEffect } from "react"
 import { CSSTransition } from "react-transition-group"
+import { useNavigate } from "react-router-dom"
 import { createPortal } from "react-dom"
 import styled from "styled-components"
 import { COLORS, DEVICE } from "../../constants"
@@ -12,11 +13,28 @@ export default function Modal({
     onClose,
     closeBtnColor = COLORS.blue,
     className,
+    onOpenAnimEnd = () => {},
+    navigateBack = false
 }) {
     const modalRef = useRef(null)
+    const navigate = useNavigate()
+
+    const isOpenRef = useRef(null)
+
+    useEffect(() => {
+        isOpenRef.current = isOpen
+    }, [isOpen])
+
+    function handleClose() {
+        if (navigateBack) navigate(".")
+        // if (isOpenRef.current) onClose()
+        onClose()
+    }
 
     function handleKeyDown({ key }) {
-        if (key === "Escape") onClose()
+        if (key === "Escape") {
+            handleClose()
+        }
     }
 
     function makeBodyChildrenInert(el) {
@@ -58,23 +76,24 @@ export default function Modal({
     return createPortal(
         <CSSTransition
             in={isOpen}
-            timeout={200}
+            timeout={500}
             mountOnEnter
             appear
             unmountOnExit
             classNames="modal"
             nodeRef={modalRef}
             onEnter={handleOpenModal}
+            onEntered={onOpenAnimEnd}
             onExited={handleCloseModal}
         >
             <Container className={`${className} modal`} ref={modalRef}>
                 <ModalWindow className="modal-window" ref={modalRef}>
-                    <CloseBtn className="modal-close-btn" onClick={onClose}>
+                    <CloseBtn className="modal-close-btn" onClick={handleClose}>
                         <Close color={closeBtnColor} />
                     </CloseBtn>
                     {children}
                 </ModalWindow>
-                <ModalMask className="modal-mask" onClick={onClose} />
+                <ModalMask className="modal-mask" onClick={handleClose} />
             </Container>
         </CSSTransition>,
         document.body

@@ -28,6 +28,7 @@ const timelineData = {
         timeline: [
             {
                 id: 1,
+                intro: true,
                 button: {
                     value: {
                         modal: [
@@ -251,6 +252,7 @@ const timelineData = {
             },
             {
                 id: 6,
+                test: true,
                 button: {
                     link: "test",
                     value: {
@@ -275,6 +277,7 @@ const timelineData = {
         timeline: [
             {
                 id: 1,
+                intro: true,
                 button: {
                     value: {
                         modal: [
@@ -463,6 +466,7 @@ const timelineData = {
             },
             {
                 id: 5,
+                test: true,
                 button: {
                     link: "test",
                     value: {
@@ -489,6 +493,7 @@ const timelineData = {
         timeline: [
             {
                 id: 1,
+                intro: true,
                 button: {
                     value: {
                         modal: [
@@ -753,6 +758,7 @@ const timelineData = {
             },
             {
                 id: 10,
+                test: true,
                 button: {
                     link: "test",
                     value: {
@@ -777,6 +783,7 @@ const timelineData = {
         timeline: [
             {
                 id: 1,
+                intro: true,
                 button: {
                     value: {
                         modal: [
@@ -1045,6 +1052,7 @@ const timelineData = {
             },
             {
                 id: 9,
+                test: true,
                 button: {
                     link: "test",
                     value: {
@@ -1069,6 +1077,7 @@ const timelineData = {
         timeline: [
             {
                 id: 1,
+                intro: true,
                 button: {
                     value: {
                         modal: [
@@ -1285,6 +1294,7 @@ const timelineData = {
             },
             {
                 id: 7,
+                test: true,
                 button: {
                     link: "test",
                     value: {
@@ -1309,6 +1319,7 @@ const timelineData = {
         timeline: [
             {
                 id: 1,
+                intro: true,
                 button: {
                     value: {
                         modal: [
@@ -1557,6 +1568,7 @@ const timelineData = {
             },
             {
                 id: 6,
+                test: true,
                 button: {
                     link: "test",
                     value: {

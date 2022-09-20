@@ -78,12 +78,12 @@ const chapter5Data = {
                     },
                     {
                         id: 2,
-                        text: "NASA (НАСА)",
-                        url: "https://climate.nasa.gov/",
+                        text: "Глобальное изменение климата NASA (НАСА)",
+                        url: "https://climate.nasa.gov/vital-signs/global-temperature/",
                     },
                     {
                         id: 3,
-                        text: "Письма Письма о геофизических исследованиях",
+                        text: "Письма о геофизических исследованиях",
                         url: "https://agupubs.onlinelibrary.wiley.com/doi/10.1029/1999GL900070 ",
                     },
                 ],
@@ -449,6 +449,16 @@ const chapter5Data = {
                         text: "Программа ООН по окружающей среде",
                         url: "https://www.unep.org/",
                     },
+                    {
+                        id: 2,
+                        text: "Cтратегия низкоуглеродного развития России до 2050 года",
+                        url: "http://static.government.ru/media/files/ADKkCzp3fWO32e2yA0BhtIpyzWfHaiUa.pdf",
+                    },
+                    {
+                        id: 3,
+                        text: "Парижское соглашение",
+                        url: "https://unfccc.int/ru/peregovornyy-process-i-vstrechi/parizhskoe-soglashenie/chto-takoe-parizhskoe-soglashenie",
+                    },
                 ],
             },
         },
@@ -476,8 +486,18 @@ const chapter5Data = {
                 links: [
                     {
                         id: 1,
-                        text: "Годовой отчет Компании за 2021 год",
-                        url: "https://ar2021.phosagro.ru/reports/phosagro/annual/2021/gb/Russian/4045/.html",
+                        text: "Платформа Climate Ambition Accelerator",
+                        url: "https://unglobalcompact.org/take-action/climate-ambition-accelerator",
+                    },
+                    {
+                        id: 2,
+                        text: "Глобальная Климатическая Инициатива",
+                        url: "https://cgi-russia.ru/",
+                    },
+                    {
+                        id: 2,
+                        text: "Годовой отчет компании за 2021 год",
+                        url: "https://ar2021.phosagro.com/reports/phosagro/annual/2021/gb/Russian/0/.html",
                     },
                 ],
             },

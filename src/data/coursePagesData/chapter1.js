@@ -386,8 +386,10 @@ const chapter1Data = {
                     },
                 },
                 links: [
-                    { id: 1, text: "Контакты", url: "https://www.phosagro.ru/contacts/" },
-                    { id: 2, text: "Годовые интегрированные отчеты", url: "https://www.phosagro.ru/investors/reports/year/" },
+                    { id: 1, text: "Кодекс поведения Контрагента Компании", url: "https://cdn.phosagro.ru/upload/docs/Code_of_Conduct_for_Counterparties_2020_ru.pdf" },
+                    { id: 2, text: "Система оценки поставщиков и подрядчиков по критериям ESG", url: "https://cdn.phosagro.ru/upload/20201209_Green_ru.pdf" },
+                    { id: 3, text: "Деятельность компании в области устойчивого развития", url: "https://cdn.phosagro.ru/upload/docs/ESG_Review.pdf" },
+                    { id: 4, text: "Годовые интегрированные отчеты", url: "https://www.phosagro.ru/sustainability/" },
                 ],
             },
         },

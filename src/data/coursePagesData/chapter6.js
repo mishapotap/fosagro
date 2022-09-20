@@ -106,32 +106,13 @@ const chapter6Data = {
                     },
                 },
                 links: [
-                    {
-                        id: 1,
-                        text: "Политика управления персоналом ФосАгро",
-                        url: "https://www.phosagro.ru/upload/docs/hr_policy.pdf",
-                    },
-                    {
-                        id: 2,
-                        text: "Заявление о прозрачности в отношении закона «О современном рабстве»",
-                        url: "https://www.phosagro.ru/upload/docs/About_morern_sl.pdf",
-                    },
-                    {
-                        id: 3,
-                        text: "Международный билль о правах человека",
-                        url: "https://www.ohchr.org/ru/what-are-human-rights/international-bill-human-rights",
-                    },
-                    {
-                        id: 4,
-                        text: "Всеобщая декларация международной организации труда",
-                        url: "https://www.ohchr.org/ru/what-are-human-rights",
-                    },
-                    {
-                        id: 5,
-                        text: "Обязательное требование ФосАгро к подрядным организациям",
-                        url: "https://www.phosagro.ru/upload/docs/Code_of_Conduct_for_Counterparties_2020_ru.pdf",
-                    },
-                ],
+                    {id: 1, text: "Политика управления персоналом ФосАгро", url: "https://www.phosagro.ru/upload/docs/hr_policy.pdf"},
+                    {id: 2, text: "Заявление о прозрачности в отношении закона «О современном рабстве»", url: "https://www.phosagro.ru/upload/docs/About_morern_sl.pdf"},
+                    {id: 3, text: "Кодекс этики", url: "https://cdn.phosagro.ru/upload/docs/ethics_code.pdf"},
+                    {id: 4, text: "Международный билль о правах человека", url: "https://www.ohchr.org/ru/what-are-human-rights/international-bill-human-rights"},
+                    {id: 5, text: "Всеобщая декларация международной организации труда", url: "https://www.ohchr.org/ru/what-are-human-rights"},
+                    {id: 6, text: "Кодекс поведения Контрагента Компании", url: "https://www.phosagro.ru/upload/docs/Code_of_Conduct_for_Counterparties_2020_ru.pdf"}
+                ]
             },
             2: {
                 title: "Социальные инструменты ФосАгро",
@@ -456,19 +437,12 @@ const chapter6Data = {
                     },
                 },
                 links: [
-                    {
-                        id: 1,
-                        text: "Соответствие системы менеджмента международным стандартам",
-                        url: "https://www.phosagro.ru/upload/docs/iso-45001-2018-21-1584-026.pdf",
-                    },
-                    {
-                        id: 2,
-                        text: "«Золотые правила» ФосАгро",
-                        url: "https://www.phosagro.ru/files/golden_rules.pdf",
-                    },
-                ],
-            },
-        },
+                    {id: 1, text: "Политика в области охраны труда, промышленной и пожарной безопасности", url: "https://cdn.phosagro.ru/upload/docs/sustainability/Industrial-fire-safety-policy.pdf"},
+                    {id: 2, text: "Соответствие системы менеджмента международным стандартам", url: "https://www.phosagro.ru/upload/docs/iso-45001-2018-21-1584-026.pdf"},
+                    {id: 3, text: "«Золотые правила» ФосАгро", url: "https://www.phosagro.ru/files/golden_rules.pdf"}
+                ]
+            }
+        }
     },
     4: {
         sectTitle: "Вовлечение местных сообществ",
@@ -503,12 +477,8 @@ const chapter6Data = {
                     ],
                 },
                 links: [
-                    {
-                        id: 1,
-                        text: "Благотворительная деятельность Компании",
-                        url: "https://www.phosagro.ru/upload/docs/Charity.pdf",
-                    },
-                ],
+                    {id: 1, text: "Программы вовлечения местных сообществ", url: "https://www.phosagro.ru/sustainability/social-response/#accordion-communities"}
+                ]
             },
             2: {
                 title: "Любимые города",

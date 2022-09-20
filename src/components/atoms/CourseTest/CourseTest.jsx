@@ -1,5 +1,6 @@
+/* eslint-disable jsx-a11y/media-has-caption */
 /* eslint-disable react/jsx-no-bind */
-import React, {useEffect} from "react"
+import React, {useEffect, useRef} from "react"
 import styled from "styled-components"
 import "wicg-inert"
 import { observer } from "mobx-react-lite"
@@ -11,18 +12,27 @@ import { DEVICE } from "../../../constants"
 import TestBlock from "./TestBlock"
 import FinalBlock from "./FinalBlock"
 import StartBlock from "./StartBlock"
+import { TestEnd } from "../../../assets/audio"
 
 // TODO сделать чтобы тест можно было снова пройти?
 
 function CourseTest() {
     SoundStore.setIsPlayingSound(false)
+    const audioRef = useRef(null)
     // если пользователь уходит в процессе решения теста, сбрасываем прогресс
 
     useEffect(() => () => {
-            if (!CourseTestStore.userPassedTest) {
-                CourseTestStore.resetProgress()
-            }
-        }, [])
+        if (!CourseTestStore.userPassedTest) {
+            CourseTestStore.resetProgress()
+        }
+    }, [])
+
+    useEffect(() => {
+        if (CourseTestStore.showFinal) {
+            audioRef.current.play()
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [CourseTestStore.showFinal])
 
     return (
         <Columns>
@@ -34,6 +44,7 @@ function CourseTest() {
             <SecondColumn className={!CourseTestStore.showFinal ? "hide" : ""}>
                 <Tree/>
             </SecondColumn>
+            <audio src={TestEnd} ref={audioRef} />
         </Columns>
     )
 }

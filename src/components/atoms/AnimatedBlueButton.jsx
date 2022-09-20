@@ -20,6 +20,10 @@ const Content = styled.div`
   font-size: 17px;
   line-height: 21px;
   text-align: center;
+
+  @media ${DEVICE.laptopM} {
+    font-size: 15px;
+  }
 `;
 
 const Circle = styled.div`
@@ -53,18 +57,23 @@ const Container = styled.div`
     transform: scale(1.1)
   }
   ${(props) => props.size === "m" && css`
-    width: 86px;
-    height: 84px;
+    width: 4.47vw;
+    height: 4.4vw;
     ${AnimateCircle} {
-      top: -4px;
-      left: -4px;
-      width: 86px;
-      height: 84px;
+      top: -5%;
+      left: -4%;
+      width: 100%;
+      height: 96%;
       animation: ${borderAnimationM} 10s linear infinite;
     }
     ${Circle} {
-      width: 79px;
-      height: 77px;
+      width: 91%;
+      height: 89.5%;
+    }
+
+    @media ${DEVICE.laptop} {
+      width: 60px;
+      height: 60px;
     }
   `}
   ${(props) => props.size === "s" && css`

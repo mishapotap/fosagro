@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { COLORS, DEVICE } from "../../constants"
 import { Prev } from "../../assets/svg"
 
-export default function BackToChapterButton({
+export default function PrevButton({
     className,
     text = "Вернуться в раздел",
 }) {

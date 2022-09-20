@@ -272,7 +272,12 @@ const chapter3Data = {
                     {
                         id: 1,
                         text: "Годовой отчет за 2021 год",
-                        url: "chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://cdn.phosagro.ru/upload/iblock/dc9/dc9ee42f1af7716f4ce9cebfde271755.pdf",
+                        url: "https://cdn.phosagro.ru/upload/iblock/dc9/dc9ee42f1af7716f4ce9cebfde271755.pdfchrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://cdn.phosagro.ru/upload/iblock/dc9/dc9ee42f1af7716f4ce9cebfde271755.pdf",
+                    },
+                    {
+                        id: 2,
+                        text: "Фосфогипс",
+                        url: "https://www.phosagro.ru/production/phosphogypsum/pavement/",
                     },
                 ],
             },
@@ -312,6 +317,9 @@ const chapter3Data = {
                         src: MainBG,
                     },
                 },
+                links: [
+                    {id: 1, text: "Как стать нашим поставщиком", url: "https://www.phosagro.ru/procurement/to-suppliers/how-to-be-a-supplier/"}
+                ]
             },
         },
     },
@@ -352,6 +360,10 @@ const chapter3Data = {
                         src: MainBG,
                     },
                 },
+                links: [
+                    {id: 1, text: "Новый продукт ApaSil", url: "https://apasil.phosagro.ru/?utm_source=phosagro.ru&utm_medium=banner_main_page&utm_campaign=apasil"},
+                    {id: 2, text: "Продуктовый каталог", url: "https://shop.phosagro.com/"},
+                ]
             },
         },
     },
@@ -385,6 +397,9 @@ const chapter3Data = {
                         src: MainBG,
                     },
                 },
+                links: [
+                    {id: 1, text: "Международные проекты", url: "https://www.phosagro.ru/international-projects/"}
+                ]
             },
         },
     },
@@ -420,13 +435,6 @@ const chapter3Data = {
                         },
                     ],
                 },
-                links: [
-                    {
-                        id: 1,
-                        text: "Годовые интегрированные отчеты",
-                        url: "https://www.phosagro.ru/investors/reports/year/",
-                    },
-                ],
             },
         },
     },

@@ -10,11 +10,8 @@ import Slider from "./Slider"
 import { COLORS, DEVICE } from "../../constants"
 import { ContentBlock, Title, Text, Note } from "./Content"
 import AudioPlayer from "./AudioPlayer"
-
-// TODO уточнить, как должно вести себя аудио при переключении слайдов, и добавить логику
-// (может при возвращении на прошлые слайды не включать аудио автоматически?)
-
-// TODO сделать ссылки как в CoursePage (нужно для 4 сценария)
+import ExtLinks from './ExtLinks'
+import { CourseProgressStore } from "../../store"
 
 export default function IntroModal({ isOpen, onClose, items }) {
     function renderCustom(swiper, current, total) {
@@ -33,22 +30,14 @@ export default function IntroModal({ isOpen, onClose, items }) {
         const initSliderAutoplState = {}
         const initAudiosState = {}
 
-        // изначально выключить автоплэй у каждого круглого слайдера кроме того, что на первом слайде
+        // изначально выключить автоплэй у каждого круглого слайдера
         items.forEach((i, index) => {
-            if (index === 0) {
-                initSliderAutoplState[index] = true
-            } else {
-                initSliderAutoplState[index] = false
-            }
+            initSliderAutoplState[index] = false
         })
 
-        // изначально выключить проигрывание аудио у всех слайдов, кроме первого
+        // изначально выключить проигрывание аудио у всех слайдов
         items.forEach((i, index) => {
-            if (index === 0) {
-                initAudiosState[index] = true
-            } else {
-                initAudiosState[index] = false
-            }
+            initAudiosState[index] = false
         })
 
         setSlidersAudio(initAudiosState)
@@ -66,6 +55,13 @@ export default function IntroModal({ isOpen, onClose, items }) {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isOpen])
+
+    function handleOpenAnimEnd() {
+        setTimeout(() => {
+            setSlidersAutoplay(() => ({...slidersAutoplay, 0: true}))
+            setSlidersAudio(() => ({...slidersAudio, 0: true}))
+        }, 200);
+    }
 
     // при смене слайда
     function handleSlideChange(swiper) {
@@ -88,8 +84,13 @@ export default function IntroModal({ isOpen, onClose, items }) {
         }))
     }
 
+    function handleClose() {
+        CourseProgressStore.setIntroPassed()
+        onClose()
+    }
+
     return (
-        <StyledModal isOpen={isOpen} onClose={onClose}>
+        <StyledModal isOpen={isOpen} onClose={handleClose} onOpenAnimEnd={handleOpenAnimEnd} navigateBack>
             <ModalContent ref={modalContent}>
                 {items.length > 1 && (
                     <Controls>
@@ -123,7 +124,7 @@ export default function IntroModal({ isOpen, onClose, items }) {
                         className="swiper-intro"
                         allowTouchMove={false}
                     >
-                        {items.map(({ text, audio, images, note }, index) => (
+                        {items.map(({ text, audio, images, note, links }, index) => (
                             <SwiperSlide
                                 key={index}
                                 className="swiper-slide-intro"
@@ -166,8 +167,12 @@ export default function IntroModal({ isOpen, onClose, items }) {
                                                 makeAutoplay={
                                                     slidersAutoplay[index]
                                                 }
+                                                delayTime={4300}
                                                 index={index}
                                             />
+                                            {(links && links.length > 0) && (
+                                                <ExtLinks links={links} />
+                                            )}
                                         </SlideCol>
                                     </SlideCols>
                                 </SlideInner>
@@ -390,6 +395,12 @@ const SlideCol = styled.div`
         @media ${DEVICE.laptopS} {
             grid-area: 3 / 1 / 4 / 2;
             margin-bottom: 30px;
+        }
+
+        .ext-links {
+            bottom: 5px;
+            right: 21%;
+            z-index: 50;
         }
     }
 `

@@ -29,7 +29,7 @@ export default function ExtLinks({ links, className, showCursor = true }) {
         <Container className={`${className || ""} ext-links`}>
             <OpenBtnContainer>
                 <OpenLinksBtn
-                    className={isLinksOpened && "active"}
+                    className={`open-ext-links ${isLinksOpened ? "active" : ""}`}
                     onClick={() => setIsLinksOpened(!isLinksOpened)}
                 >
                     <LinkIcon />
@@ -135,7 +135,7 @@ const OpenLinksBtn = styled.button`
 
     background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='14' ry='14' stroke='%2300529BFF' stroke-width='2' stroke-dasharray='9%2c 7' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
     border-radius: 14px;
-    background-color: ${COLORS.white};
+    background-color: ${COLORS.color_animate};
     transition: 0.3s;
 
     @media ${DEVICE.laptopM} {
