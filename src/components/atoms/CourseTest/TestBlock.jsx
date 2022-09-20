@@ -12,9 +12,9 @@ import "swiper/css"
 import "swiper/css/effect-fade"
 
 import { Label, Text } from "./styledAtoms"
-import NextQuestionButton from "../NextQuestionButton"
+import NextButton from "../NextButton"
 import { DEVICE, COLORS } from "../../../constants"
-import { CourseTestStore } from "../../../store"
+import { CourseProgressStore, CourseTestStore } from "../../../store"
 import { renderCustom } from "../../../utils"
 
 function TestBlock() {
@@ -36,6 +36,7 @@ function TestBlock() {
             CourseTestStore.setShowTest(false)
             setTimeout(() => {
                 CourseTestStore.setUserPassedTest(true)
+                CourseProgressStore.setTestPassed()
             }, 500);
         }
         CourseTestStore.setTreeRightAnswCount()
@@ -103,7 +104,7 @@ function TestBlock() {
                         ))}
 
                         <TestNav>
-                            <NextQuestionButton
+                            <NextButton
                                 text={
                                     CourseTestStore.showEndTestBtn
                                         ? "Завершить"

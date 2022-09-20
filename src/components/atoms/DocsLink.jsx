@@ -13,7 +13,7 @@ export default function DocsLink({
     // Контакты
     // Отчет о деятельности компании
     return (
-        <Container href={url} target="_blank" rel="noopener noreferrer">
+        <Container href={url} target="_blank" rel="noopener noreferrer" className="docs-link">
             <Wrapper>
                 <TextWrapper>
                     <Icon />
@@ -65,7 +65,7 @@ const Container = styled.a`
 
     text-align: center;
     transition: 0.3s;
-    background-color: ${COLORS.white};
+    background-color: ${COLORS.color_animate};
 
     /* относительный border-radius не получится сделать, тк нужна dashed border */
     background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='18' ry='18' stroke='%2300529BFF' stroke-width='2' stroke-dasharray='9%2c 7' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");

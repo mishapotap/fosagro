@@ -77,6 +77,7 @@ export default function Slider({
                         }}
                         slidesPerView={1}
                         onSlideChange={(swiper) => addActivePath(swiper)}
+                        speed={400}
                     >
                         {data.map((item) => (
                             <SwiperSlide key={item.alt}>

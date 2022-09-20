@@ -1,29 +1,26 @@
-import React, { useState } from "react"
+import React from "react"
 import styled, { css } from "styled-components"
 import { TimeIcon } from "../../assets/svg/static";
 import { COLORS } from '../../constants'
 import { borderAnimationM } from "../../constants/animations";
 import { Click2 } from "../../assets/audio";
 
-export default function CourseStepButton({ data, className, isActive, handleMouseOut, handleMouseOver }) {
+export default function CourseStepButton({ data, className, isActive, handleMouseOut, handleMouseOver, isCompleted }) {
     const { title, bgColor, image, time, description, rotate, top, left } = data
-    // TODO перенести состояние в mobX
-    const [isCompleted, setIsCompleted] = useState(false);
 
     const clickSound = new Audio(Click2)
 
     const handleClick = () => {
-        setIsCompleted(!isCompleted);
         clickSound.play();
     }
-    
+
     return (
-        <Container 
-            className={className}
-            isCompleted={isCompleted} 
+        <Container
+            className={`${className} course-step-btn`}
+            isCompleted={isCompleted}
             isActive={isActive}
-            bgColor={bgColor} 
-            image={image} 
+            bgColor={bgColor}
+            image={image}
             top={top}
             left={left}
             onMouseOut={handleMouseOut}
@@ -43,7 +40,7 @@ export default function CourseStepButton({ data, className, isActive, handleMous
                 }
             </Circle>
             <AnimateCircle rotate={rotate}/>
-            { data.modal && 
+            { data.modal &&
                 // eslint-disable-next-line react/no-array-index-key
                 data.modal.map((item, index) => <Point key={index} top={item.top} left={item.left}/>)
             }
@@ -103,7 +100,7 @@ const Container = styled.div`
     height: fit-content;
     transition: all 0.3s;
 
-    ${(props) => 
+    ${(props) =>
     props.isActive === true &&
         css`
         z-index: 3;
@@ -131,7 +128,7 @@ const Container = styled.div`
         }
         `
   }
-  ${(props) => 
+  ${(props) =>
     props.isCompleted === true &&
         css`
         ${AnimateCircle} {

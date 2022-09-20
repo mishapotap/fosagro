@@ -1,10 +1,11 @@
+import { observer } from "mobx-react-lite";
 import React, { useRef, useState } from "react"
 import styled from "styled-components"
 import { CourseStep } from "../molecules"
 import { Waves } from "../../assets/svg"
 import { COLORS } from "../../constants"
 
-export default function CourseMenu({ dataLine, dataModal }) {
+function CourseMenu({ dataLine, dataModal }) {
     const ref = useRef(null);
     const line = useRef(null);
 
@@ -37,7 +38,7 @@ export default function CourseMenu({ dataLine, dataModal }) {
         const x = e.pageX - ref.current.offsetLeft;
         const shift = (x - startX) * 1;
         ref.current.scrollLeft = scrollLeft - shift;
-    } 
+    }
 
     let time = 0;
     let interval = null;
@@ -56,7 +57,7 @@ export default function CourseMenu({ dataLine, dataModal }) {
     }
 
     return(
-        <MenuContainer 
+        <MenuContainer
             ref={ref}
             onMouseDown={(e) => handleMouseDown(e)}
             onMouseLeave={() => handleMouseLeave()}
@@ -68,11 +69,13 @@ export default function CourseMenu({ dataLine, dataModal }) {
                 <Waves color={COLORS.white}/>
             </Line>
             {dataLine.timeline.map((section) => (
-                <CourseStep key={ section.id } button={section.button} points={section.points} dataModal={dataModal} className="active"/>
+                <CourseStep key={ section.id } sectId={section.id - 1} intro={section.intro} test={section.test} button={section.button} points={section.points} dataModal={dataModal} className="active"/>
             ))}
     </MenuContainer>
     )
 }
+
+export default observer(CourseMenu)
 
 const MenuContainer = styled.div`
     position: relative;
@@ -86,7 +89,6 @@ const MenuContainer = styled.div`
     transition: all 0.3s;
     will-change: transform;
     user-select: none;
-    cursor: pointer;
 
     ::-webkit-scrollbar {
         display: none;

@@ -1,44 +1,94 @@
-import React from "react"
+import React, { useEffect } from "react"
 import styled from "styled-components"
 import { Helmet } from "react-helmet"
-import { useParams } from "react-router"
+import { useLocation, useNavigate, useParams } from "react-router"
+import { observer } from "mobx-react-lite"
 import timelineData from "../../data/timelineData"
 import { Layout } from "../atoms"
 import { COLORS, DEVICE } from "../../constants"
 import { MenuBackground } from "../../assets/images"
-import { TimelineFooter, CourseMenu} from "../organisms"
+import { TimelineFooter, CourseMenu } from "../organisms"
 import { introModalData } from "../../data"
+import Error404 from "./Error404"
+import { CourseProgressStore, ModalStore } from "../../store"
+import Notification from '../atoms/Notification'
 
-export default function Course() {
-    const { id } = useParams();
-    const dataLine = timelineData[`course${id}`];
-    const dataModal = introModalData[`introModal${id}`];
+function Course() {
+    const { id } = useParams()
+    const location = useLocation()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (location.pathname.includes("instruction")) {
+            ModalStore.showModal("instruction")
+        } else if (location.pathname.includes("intro")) {
+            ModalStore.showModal("intro")
+        }
+    }, [location])
+
+    const dataLine = timelineData[`course${id}`]
+    const dataModal = introModalData[`introModal${id}`]
+
+    useEffect(() => {
+        if (id) {
+            CourseProgressStore.setActiveCourseId(id)
+
+            if (
+                dataLine &&
+                dataModal &&
+                !CourseProgressStore.userVisitedCourse[id]
+            ) {
+                navigate("instruction")
+                CourseProgressStore.setUserVisitedCourse(id)
+            }
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [id, dataLine, dataModal])
+
+    useEffect(() => {
+        CourseProgressStore.setIsTimelinePageActive(true)
+    }, [])
+
+    if (!dataLine && !dataModal) {
+        return <Error404 />
+    }
 
     return (
-        <Layout page="course">
+        <StyledLayout page="course">
             {dataLine.metaTitle && <Helmet>
                 <title data-rh="true">{dataLine.metaTitle}</title>
                 <meta
                     name="description"
                     content={dataLine.metaDescription}
                 />
-            </Helmet>
+                </Helmet>
             }
-            <Background/>
+            <Notification/>
+            <Background />
             <Container>
                 <Wrapper>
                     <CourseNumber>{dataLine.id}</CourseNumber>
                     <CourseTitle>{dataLine.title}</CourseTitle>
-                    {
-                        dataLine.supTitle && <CourseSupTitle>{dataLine.supTitle}</CourseSupTitle>
-                    }
+                    {dataLine.supTitle && (
+                        <CourseSupTitle>{dataLine.supTitle}</CourseSupTitle>
+                    )}
                 </Wrapper>
-                <CourseMenu dataLine={dataLine} dataModal={dataModal}/>
-                <TimelineFooter/>
+                <CourseMenu dataLine={dataLine} dataModal={dataModal} />
+                <TimelineFooter />
             </Container>
-        </Layout>
+        </StyledLayout>
     )
 }
+
+export default observer(Course)
+
+const StyledLayout = styled(Layout)`
+    .content {
+        @media ${DEVICE.laptopM} {
+            padding-bottom: 10px;
+        }
+    }
+`
 
 const Background = styled.div`
     position: absolute;
@@ -59,7 +109,7 @@ const Container = styled.div`
 `
 
 const Wrapper = styled.div`
-    padding: 45px 0 0 60px;
+    padding: 25px 0 0 60px;
 
     @media ${DEVICE.laptopM} {
         padding: 0 0 0 calc(3vw - 20px);
@@ -68,63 +118,64 @@ const Wrapper = styled.div`
 
 const CourseNumber = styled.div`
     font-family: "FocoBold";
-    font-size: 70px;
-    line-height: 88px;
+    font-size: 3.4vw;
+    line-height: 1.25;
     color: ${COLORS.white};
+
+    @media ${DEVICE.laptopM} {
+        font-size: 2.5vw;
+    }
 
     @media ${DEVICE.laptopS} {
         font-size: 60px;
-        line-height: 78px;
     }
     @media ${DEVICE.tablet} {
         font-size: 50px;
-        line-height: 68px;
     }
     @media ${DEVICE.mobile} {
         font-size: 40px;
-        line-height: 58px;
     }
 `
 
 const CourseTitle = styled.div`
     max-width: 65%;
     font-family: "FocoBold";
-    font-size: 43px;
-    line-height: 54px;
+    font-size: 2.1vw;
+    line-height: 1.25;
     color: ${COLORS.blue};
+
+    @media ${DEVICE.laptopM} {
+        font-size: 1.8vw;
+        max-width: 55%;
+    }
 
     @media ${DEVICE.laptopS} {
         max-width: 100%;
         font-size: 33px;
-        line-height: 44px;
     }
     @media ${DEVICE.tablet} {
         font-size: 28px;
-        line-height: 38px;
     }
     @media ${DEVICE.mobile} {
         font-size: 22px;
-        line-height: 30px;
     }
 `
 
 const CourseSupTitle = styled.div`
     max-width: 50%;
     margin-top: 10px;
-    font-family: 'FocoRegular';
+    font-family: "FocoRegular";
     font-weight: 400;
-    font-size: 25px;
-    line-height: 32px;
+    font-size: 1.3vw;
+    line-height: 1.28;
 
     color: ${COLORS.blue};
 
     @media ${DEVICE.laptopM} {
         font-size: 20px;
-        line-height: 24px;
     }
 
     @media ${DEVICE.mobile} {
         font-size: 16px;
-        line-height: 20px;
     }
 `

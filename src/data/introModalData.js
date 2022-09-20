@@ -160,6 +160,13 @@ const introModalData = {
                 },
             ],
             audio: IntroSpeaker1,
+            links: [
+                {
+                    id: 1,
+                    text: "Проект «Экология дело каждого»",
+                    url: "https://www.xn--80afbcbeimqege7abfeb7wqb.xn--p1ai/",
+                }
+            ],
         },
         {
             text: `В экологической Политике ФосАгро закреплена ответственность по минимизации воздействия деятельности предприятий на окружающую среду на всем протяжении жизненного цикла продукции — от руды до еды.`,
@@ -178,6 +185,13 @@ const introModalData = {
                 },
             ],
             audio: IntroSpeaker1,
+            links: [
+                {
+                    id: 1,
+                    text: "Политика в области охраны окружающей среды ПАО «ФосАгро»",
+                    url: "https://cdn.phosagro.ru/upload/docs/environmental_protection.pdf chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://cdn.phosagro.ru/upload/docs/environmental_protection.pdf",
+                },
+            ]
         },
     ],
     introModal5: [

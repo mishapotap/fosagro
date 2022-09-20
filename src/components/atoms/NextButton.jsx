@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { COLORS, DEVICE } from "../../constants"
 import { Next } from "../../assets/svg"
 
-export default function NextQuestionButton({
+export default function NextButton({
     className,
     text = "Следующий вопрос",
     onClick,

@@ -11,7 +11,9 @@ import {
     IconOpenCourseBtn,
     IconOpenCourseBtnMob,
     IconBlueBtnSound,
-    IconBlueBtnInstraction
+    IconBlueBtnInstraction,
+    IconLinksPc,
+    IconLinksMob,
 } from "../../assets/svg/static/InstructionModal"
 
 import { Headphones, ArrowRight, ArrowLeft } from "../../assets/svg"
@@ -19,7 +21,6 @@ import { COLORS, DEVICE } from "../../constants"
 import { MenuBackground } from "../../assets/images"
 import SendButton from "./SendButton"
 import * as routes from "../../constants/routes"
-import DocsLink from "./DocsLink"
 import Modal from "./Modal"
 import Layout from "./Layout"
 import { ModalStore } from "../../store"
@@ -45,7 +46,7 @@ export default function InstructionModal({ isOpen, onClose }) {
     }
 
     return (
-        <StyledModal isOpen={isOpen} onClose={onClose}>
+        <StyledModal isOpen={isOpen} onClose={onClose} navigateBack>
             <StyledLayout page="instruction">
                 <Container>
                     <SliderContainer>
@@ -132,10 +133,8 @@ export default function InstructionModal({ isOpen, onClose }) {
                                                         курса.
                                                     </Text>
                                                 </ColBlock>
-                                                <ColBlock inert="">
-                                                    <DocsLink
-                                                        showCursor={false}
-                                                    />
+                                                <ColBlock>
+                                                    <LinksImage/>
                                                     <Text>
                                                         Ссылки на дополнительные
                                                         материалы вынесены в
@@ -255,6 +254,11 @@ const Container = styled.div`
     padding-top: 5vh;
     padding-bottom: 3vh;
 
+    @media ${DEVICE.laptopM} {
+        padding-top: 0;
+        padding-bottom: 2vh;
+    }
+
     @media ${DEVICE.laptopS} {
         align-items: flex-end;
         padding-top: 0;
@@ -368,12 +372,22 @@ const SlideInner = styled.div`
     justify-content: center;
 `
 
+const LinksImage = styled.div`
+    background: url(${IconLinksPc}) no-repeat left center/contain;
+    height: 5vh;
+
+    @media ${DEVICE.laptopS} {
+        height: 32px;
+        background: url(${IconLinksMob}) no-repeat center/contain;
+    }
+
+`
+
 const CourseImage = styled.div`
     max-width: 311px;
     height: 28px;
 
-    font-size: 1.3vw;
-    background: url(${IconOpenCourseBtn}) no-repeat center/contain;
+    background: url(${IconOpenCourseBtn}) no-repeat left/contain;
 
     @media ${DEVICE.laptopS} {
         max-width: 24px;
@@ -564,7 +578,7 @@ const Slide2Cols = styled(SlideCols)`
         }
 
         & > * {
-            margin-bottom: 4vh;
+            margin-bottom: 3vh;
 
             &:last-child {
                 margin-bottom: 0;

@@ -8,8 +8,8 @@ import { Link } from "react-router-dom"
 import { CSSTransition } from "react-transition-group"
 import { observer } from "mobx-react-lite"
 
-import BackToChapterButton from "./BackToChapterButton"
-import NextQuestionButton from "./NextQuestionButton"
+import PrevButton from "./PrevButton"
+import NextButton from "./NextButton"
 import CourseSlideLayout from "./CourseSlideLayout"
 import { StepProgressBar } from "../molecules"
 import { Title, ContentBlock, Label, BubbleContainer } from "./Content"
@@ -29,12 +29,13 @@ import { Error404 } from "../pages"
 // TODO может стоит как-то поправить анимации некоторые на моб, или убрать их?
 // (текст в AnmateGlobal и AnimateChart например получается очень маленький)
 
-// TODO изменить расположение аудиоплеера? (также в IntroModal)
-
 // TODO сделать чтобы плавно появлялись элементы
 // (чтобы прошлое состояние не было видно)
 
 // TODO сделать плавное переключение получше?
+
+// TODO сделать чтобы переключение слайдера было по времени с аудио?
+// (добавить доп поле в данных?)
 
 function CoursePage() {
     SoundStore.setIsPlayingSound(false)
@@ -42,7 +43,13 @@ function CoursePage() {
     const pageData = CourseProgressStore.activePageData
     const location = useLocation()
 
-    const [key, setKey] = useState(1)
+    const [key, _setKey] = useState(1)
+    const [mediaKey, setMediaKey] = useState(1)
+
+    function setKey(val) {
+        _setKey(val)
+        setMediaKey(val)
+    }
 
     const audioColRef = useRef(null)
     const contentColRef = useRef(null)
@@ -51,17 +58,27 @@ function CoursePage() {
     const isFirstRender = useRef(true)
     const colsRef = useRef(null)
 
+    const didAudioEnded = useRef(null)
+    const wasFirstPlay = useRef(false)
+
     const [showSlide, setShowSlide] = useState(true)
     const [leftSlide, setLeftSlide] = useState(false)
     const [rightSlide, setRightSlide] = useState(false)
 
+    const [pauseAnim, setPauseAnim] = useState(false)
     const [makeBubbles, setMakeBubbles] = useState(false)
 
     function setIds() {
         CourseProgressStore.setActiveCourseId(courseId)
         CourseProgressStore.setActiveSectId(sectId)
         CourseProgressStore.setActivePageId(pageId)
+        CourseProgressStore.setVisitedPage()
     }
+
+    useEffect(() => {
+        CourseProgressStore.setIsTestActive(false)
+        CourseProgressStore.setIsTimelinePageActive(false)
+    }, [])
 
     useEffect(() => {
         if (pageData) {
@@ -75,6 +92,9 @@ function CoursePage() {
                 setMakeBubbles(false)
             }
         }
+
+        didAudioEnded.current = false
+        wasFirstPlay.current = false
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [CourseProgressStore.activePageData])
 
@@ -96,7 +116,7 @@ function CoursePage() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location])
 
-    if (!pageData) {
+    if (CourseProgressStore.isWrongPath || !pageData) {
         return <Error404 />
     }
 
@@ -133,6 +153,28 @@ function CoursePage() {
         setRightSlide(false)
     }
 
+    function onAudioPlay() {
+        setPauseAnim(false)
+
+        if (!wasFirstPlay.current) wasFirstPlay.current = true
+
+        if (didAudioEnded.current) {
+            // запустить анимацию заново
+            setMediaKey(mediaKey + 1)
+        }
+    }
+
+    function onAudioPause() {
+        if (wasFirstPlay.current && !leftSlide && !rightSlide) {
+            setPauseAnim(true)
+        }
+    }
+
+    function onAudioEnded() {
+        didAudioEnded.current = true
+        setPauseAnim(false)
+    }
+
     const { component, data: mData, type: mediaType } = pageData.media
     const MediaComponent = coursePageComponents[component]
     const mediaData = mData || {}
@@ -161,7 +203,14 @@ function CoursePage() {
                     nodeRef={audioColRef}
                 >
                     <AudioColumn ref={audioColRef} className="slide" key={key}>
-                        {audioSrc && <StyledAudioPlayer src={audioSrc} />}
+                        {audioSrc && (
+                            <StyledAudioPlayer
+                                src={audioSrc}
+                                onPlay={onAudioPlay}
+                                onPause={onAudioPause}
+                                onEnded={onAudioEnded}
+                            />
+                        )}
                     </AudioColumn>
                 </CSSTransition>
                 <CSSTransition
@@ -231,7 +280,7 @@ function CoursePage() {
                             className="prev-btn"
                             onClick={handleBackClick}
                         >
-                            <BackToChapterButton text="Назад" />
+                            <PrevButton text="Назад" />
                         </Link>
                         <StepProgressBar />
                         <Link
@@ -239,7 +288,7 @@ function CoursePage() {
                             className="next-btn"
                             onClick={handleNextClick}
                         >
-                            <NextQuestionButton text="Вперед" />
+                            <NextButton text="Вперед" />
                         </Link>
                     </Nav>
                 </NavColumn>
@@ -256,9 +305,11 @@ function CoursePage() {
                         animation={animation}
                         objectSlider={objectSlider}
                         ref={mediaColRef}
+                        className={(animation && pauseAnim) ? "anim-paused" : ""}
                     >
                         <MediaColInner>
-                            <Media key={key}>
+                            {/* <Media key={key}> */}
+                            <Media key={mediaKey}>
                                 {MediaComponent && (
                                     <MediaComponent data={mediaData} />
                                 )}
@@ -479,6 +530,14 @@ const MediaColumn = styled.div`
     grid-area: 1 / 3 / 4 / 4;
     overflow: hidden;
     padding-top: 20px;
+
+    &.anim-paused {
+        animation-play-state: paused;
+
+        * {
+            animation-play-state: paused;
+        }
+    }
 
     ${({ video }) =>
         video &&

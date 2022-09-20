@@ -4,9 +4,10 @@ import { COLORS, DEVICE } from "../../constants"
 
 export default function MenuProgressBar({ value, max, color, width = "15vw" }) {
     // TODO Проверка на if > 100
+
     return (
         <Container color={color} width={width}>
-            <Persent color={color}>{(value/max) * 100}%</Persent>
+            <Persent color={color}>{value}%</Persent>
             <Progress value={value} max={max} />
         </Container>
     )
@@ -20,14 +21,14 @@ const Container = styled.div`
     }
     /* Значение  */
     progress[value]{
-        
+
         width: ${props => props.width};
         -webkit-appearance: none;
         appearance: none;
-        @media ${DEVICE.laptopS} { 
+        @media ${DEVICE.laptopS} {
             width: 23vw;
         }
-        @media ${DEVICE.mobile} { 
+        @media ${DEVICE.mobile} {
             width: 33vw;
         }
     }
@@ -54,11 +55,11 @@ const Persent = styled.div`
     line-height: 5.67vw; */
     color: ${props => props.color};
 
-    @media ${DEVICE.laptopS} { 
+    @media ${DEVICE.laptopS} {
         font-size: 2.3vw;
         line-height: 2.67vw;
     }
-    @media ${DEVICE.tablet} { 
+    @media ${DEVICE.tablet} {
         font-size: 3.8vw;
         line-height: 4.5vw;
     }
