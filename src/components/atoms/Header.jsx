@@ -8,6 +8,7 @@ import { DEVICE, COLORS } from "../../constants"
 import { Fosagro, FosagroColored, LinkArrow } from "../../assets/svg"
 import { CourseMenuButton } from "../molecules"
 import { ModalStore, CourseProgressStore, SoundStore } from "../../store"
+import { Click2 } from "../../assets/audio"
 
 // TODO сделать ссылки RU EN рабочими
 // TODO сделать фиксированный хэдэр при скролле на моб?
@@ -32,16 +33,23 @@ function Header({
 
     const {activeSectColor, activeSectTitle} = CourseProgressStore
 
+    const clickSound = new Audio(Click2)
+
     const closeMenuModal = () => {
         ModalStore.closeModal("menu")
         SoundStore.setIsPlayingSound(true)
+    }
+
+    const handleClickLogo = () => {
+        SoundStore.setIsPlayingSound(true)
+        clickSound.play()
     }
 
     return (
         <Container>
             <HeaderInner>
                 <Logo>
-                    <Link to={routes.HOME} onClick={() => SoundStore.setIsPlayingSound(true)}>
+                    <Link to={routes.HOME} onClick={() => handleClickLogo()}>
                         {colored ? <FosagroColored /> : <Fosagro />}
                     </Link>
                 </Logo>

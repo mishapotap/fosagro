@@ -8,20 +8,14 @@ function BackgroundSound () {
     const backSound = useRef(null);
 
     useEffect(() => {
-        const promise = backSound.current.play();
-
-        if (promise !== "undefined") {
-            promise
-                .then(() => {   
-                    SoundStore.setIsPlayingSound(true);
-                    backSound.current.volume = 0.01;
-                })
-                .catch(() => {
-                    SoundStore.setIsPlayingSound(false);
-                })
+        function playSound() {
+            SoundStore.setIsPlayingSound(true);
+            backSound.current.volume = 0.01;
+            backSound.current.play();
+            window.removeEventListener("click", playSound)
         }
-
-    }, []);
+        window.addEventListener("click", playSound, { ones: true})
+    }, [])
 
     useEffect(() => {
         // eslint-disable-next-line no-unused-expressions
