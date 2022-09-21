@@ -42,7 +42,7 @@ export async function makePostRequest(url, data) {
             // eslint-disable-next-line no-new
             // reject(new Error("Test error"))
             resolve("success")
-        }, 3000)
+        }, 700)
     })
 }
 

@@ -6,7 +6,7 @@ import { borderAnimationM } from "../../constants/animations";
 import { Click2 } from "../../assets/audio";
 
 export default function CourseStepButton({ data, className, isActive, handleMouseOut, handleMouseOver, isCompleted }) {
-    const { title, bgColor, image, time, description, rotate, top, left } = data
+    const { title, bgColor, image, time, rotate, top, left } = data
 
     const clickSound = new Audio(Click2)
 
@@ -30,7 +30,6 @@ export default function CourseStepButton({ data, className, isActive, handleMous
                 {isActive
                     ? <CircleContent style={{color: COLORS.white}}>
                         <Title>{title}</Title>
-                        <Description>{description}</Description>
                         <Time>
                             <img src={TimeIcon} alt="timeIcon"/>
                             <TimeText>{time}</TimeText>
@@ -121,6 +120,7 @@ const Container = styled.div`
             min-height: 160px;
             width: 240px;
             transform: scale(0.6);
+            justify-content: center;
         }
         ${Point} {
             background-color: ${props.bgColor};
@@ -163,15 +163,6 @@ const Title = styled.div`
     font-size: 21px;
     line-height: 23px;
     font-weight: 700;
-    text-align: center;
-`
-
-const Description = styled.div`
-    margin-bottom: 20px;
-    font-family: 'CalibriRegular';
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 20px;
     text-align: center;
 `
 
