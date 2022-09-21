@@ -4,14 +4,16 @@ import React, { useEffect, useState, useRef } from "react"
 import styled from "styled-components"
 import { Pagination, Navigation, EffectFade } from "swiper"
 import { Swiper, SwiperSlide } from "swiper/react"
+import { Link } from "react-router-dom"
 import CurvedModal from "./CurvedModal"
 import { ArrowLeft, ArrowRight } from "../../assets/svg"
 import Slider from "./Slider"
 import { COLORS, DEVICE } from "../../constants"
 import { ContentBlock, Title, Text, Note } from "./Content"
 import AudioPlayer from "./AudioPlayer"
-import ExtLinks from './ExtLinks'
+import ExtLinks from "./ExtLinks"
 import { CourseProgressStore } from "../../store"
+import SendButton from "./SendButton"
 
 export default function IntroModal({ isOpen, onClose, items }) {
     function renderCustom(swiper, current, total) {
@@ -58,30 +60,32 @@ export default function IntroModal({ isOpen, onClose, items }) {
 
     function handleOpenAnimEnd() {
         setTimeout(() => {
-            setSlidersAutoplay(() => ({...slidersAutoplay, 0: true}))
-            setSlidersAudio(() => ({...slidersAudio, 0: true}))
-        }, 200);
+            setSlidersAutoplay(() => ({ ...slidersAutoplay, 0: true }))
+            setSlidersAudio(() => ({ ...slidersAudio, 0: true }))
+        }, 1000)
     }
 
     // при смене слайда
     function handleSlideChange(swiper) {
         const { activeIndex, previousIndex } = swiper
 
-        setSlidersAutoplay((prevState) => ({
-            ...prevState,
-            // ставим новому круглому слайдеру автоплэй
-            [activeIndex]: true,
-            // убираем у старого круглого слайдера автоплэй
-            [previousIndex]: false,
-        }))
+        setTimeout(() => {
+            setSlidersAutoplay((prevState) => ({
+                ...prevState,
+                // ставим новому круглому слайдеру автоплэй
+                [activeIndex]: true,
+                // убираем у старого круглого слайдера автоплэй
+                [previousIndex]: false,
+            }))
 
-        setSlidersAudio((prevState) => ({
-            ...prevState,
-            // включаем аудио у нового слайда
-            [activeIndex]: true,
-            // выключаем аудио у старого слайда
-            [previousIndex]: false,
-        }))
+            setSlidersAudio((prevState) => ({
+                ...prevState,
+                // включаем аудио у нового слайда
+                [activeIndex]: true,
+                // выключаем аудио у старого слайда
+                [previousIndex]: false,
+            }))
+        }, 1000)
     }
 
     function handleClose() {
@@ -90,7 +94,12 @@ export default function IntroModal({ isOpen, onClose, items }) {
     }
 
     return (
-        <StyledModal isOpen={isOpen} onClose={handleClose} onOpenAnimEnd={handleOpenAnimEnd} navigateBack>
+        <StyledModal
+            isOpen={isOpen}
+            onClose={handleClose}
+            onOpenAnimEnd={handleOpenAnimEnd}
+            navigateBack
+        >
             <ModalContent ref={modalContent}>
                 {items.length > 1 && (
                     <Controls>
@@ -124,60 +133,86 @@ export default function IntroModal({ isOpen, onClose, items }) {
                         className="swiper-intro"
                         allowTouchMove={false}
                     >
-                        {items.map(({ text, audio, images, note, links }, index) => (
-                            <SwiperSlide
-                                key={index}
-                                className="swiper-slide-intro"
-                            >
-                                <SlideInner>
-                                    <SlideCols>
-                                        <SlideCol className="player">
-                                            {audio && (
-                                                <AudioPlayer
-                                                    src={audio}
-                                                    isPlaying={
-                                                        slidersAudio[index]
-                                                    }
-                                                />
-                                            )}
-                                        </SlideCol>
-
-                                        <SlideCol className="title">
-                                            <StyledTitle color={COLORS.orange}>
-                                                Введение
-                                            </StyledTitle>
-                                        </SlideCol>
-
-                                        <SlideCol className="content">
-                                            <StyledContentBlock color={COLORS.orange}>
-                                                <Text data={{text}} />
-                                                {note && (
-                                                    <Note
-                                                        data={{ text: note }}
+                        {items.map(
+                            ({ text, audio, images, note, links }, index) => (
+                                <SwiperSlide
+                                    key={index}
+                                    className="swiper-slide-intro"
+                                >
+                                    <SlideInner>
+                                        <SlideCols>
+                                            <SlideCol className="player">
+                                                {audio && (
+                                                    <AudioPlayer
+                                                        src={audio}
+                                                        isPlaying={
+                                                            slidersAudio[index]
+                                                        }
                                                     />
                                                 )}
-                                            </StyledContentBlock>
-                                        </SlideCol>
+                                            </SlideCol>
 
-                                        <SlideCol className="slider">
-                                            <StyledCircleSlider
-                                                size="s"
-                                                sliderColor={COLORS.orange}
-                                                data={images}
-                                                makeAutoplay={
-                                                    slidersAutoplay[index]
-                                                }
-                                                delayTime={4300}
-                                                index={index}
-                                            />
-                                            {(links && links.length > 0) && (
-                                                <ExtLinks links={links} />
-                                            )}
-                                        </SlideCol>
-                                    </SlideCols>
-                                </SlideInner>
-                            </SwiperSlide>
-                        ))}
+                                            <SlideCol className="title">
+                                                <StyledTitle
+                                                    color={COLORS.orange}
+                                                >
+                                                    Введение
+                                                </StyledTitle>
+                                            </SlideCol>
+
+                                            <SlideCol
+                                                className="content"
+                                                hasControls={items.length > 1}
+                                            >
+                                                <StyledContentBlock
+                                                    color={COLORS.orange}
+                                                >
+                                                    <Text data={{ text }} />
+                                                    {note && (
+                                                        <Note
+                                                            data={{
+                                                                text: note,
+                                                            }}
+                                                        />
+                                                    )}
+                                                </StyledContentBlock>
+                                                {index === items.length - 1 && (
+                                                    <Link
+                                                        to={
+                                                            CourseProgressStore.introStartLink
+                                                        }
+                                                        onClick={handleClose}
+                                                    >
+                                                        <SendButton
+                                                            text="Начать изучение курса"
+                                                            color={
+                                                                COLORS.orange
+                                                            }
+                                                        />
+                                                    </Link>
+                                                )}
+                                            </SlideCol>
+
+                                            <SlideCol className="slider">
+                                                <StyledCircleSlider
+                                                    size="s"
+                                                    sliderColor={COLORS.orange}
+                                                    data={images}
+                                                    makeAutoplay={
+                                                        slidersAutoplay[index]
+                                                    }
+                                                    delayTime={4300}
+                                                    index={index}
+                                                />
+                                                {links && links.length > 0 && (
+                                                    <ExtLinks links={links} />
+                                                )}
+                                            </SlideCol>
+                                        </SlideCols>
+                                    </SlideInner>
+                                </SwiperSlide>
+                            )
+                        )}
                     </Swiper>
                 </SliderWrapper>
             </ModalContent>
@@ -282,6 +317,8 @@ const Controls = styled.div`
 `
 
 const StyledContentBlock = styled(ContentBlock)`
+    flex: 0 1 100%;
+
     .content > * {
         margin-bottom: 23px;
 
@@ -379,10 +416,16 @@ const SlideCol = styled.div`
     &.content {
         grid-area: 2 / 2 / 3 / 3;
         padding-right: 23px;
+        padding-bottom: ${({ hasControls }) => (hasControls ? "17vh" : "30px")};
+
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
 
         @media ${DEVICE.laptopS} {
             grid-area: 2 / 1 / 3 / 2;
             margin-bottom: 50px;
+            padding-bottom: 0;
             padding-right: 0;
         }
     }
@@ -399,7 +442,7 @@ const SlideCol = styled.div`
 
         .ext-links {
             bottom: 5px;
-            right: 21%;
+            right: 12%;
             z-index: 50;
         }
     }
