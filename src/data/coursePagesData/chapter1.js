@@ -1,4 +1,3 @@
-
 import {
     CourseSliderOne21,
     CourseSliderOne22,
@@ -6,8 +5,17 @@ import {
     Speaker12,
 } from "../../assets/Course1/Topic1/Point2"
 import { Speaker11 } from "../../assets/Course1/Topic1/Point1"
-import { Speaker13 } from "../../assets/Course1/Topic1/Point3"
+
+import {
+    CourseSliderOne31,
+    CourseSliderOne32,
+    CourseSliderOne33,
+    Speaker13,
+} from "../../assets/Course1/Topic1/Point3"
+// import { Speaker14 } from "../../assets/Course1/Topic1/Point4"
+
 import Speaker14 from "../../assets/Course1/Topic1/Point4/speaker14.mp3"
+
 import { Speaker21 } from "../../assets/Course1/Topic2"
 import {
     Video31,
@@ -108,7 +116,21 @@ const chapter1Data = {
                 ],
                 media: {
                     type: "animation",
-                    component: "AnimateScience",
+                    component: "Slider",
+                    data: [
+                        {
+                            source: CourseSliderOne31,
+                            alt: "image1",
+                        },
+                        {
+                            source: CourseSliderOne32,
+                            alt: "image2",
+                        },
+                        {
+                            source: CourseSliderOne33,
+                            alt: "image3",
+                        },
+                    ],
                 },
             },
             4: {
@@ -124,7 +146,7 @@ const chapter1Data = {
                     {
                         component: "Note",
                         data: {
-                            text: "Всем вместе и каждому в отдельности нужно предпринимать все возможные меры, чтобы не брать у природы в долг. Во многом именно в этом и суть концепции устойчивого развития.",
+                            text: "Всем вместе и каждому в отдельности нужно предпринимать все возможные меры, чтобы не брать у природы в долг. Во многом именно в этом и суть концепции устойчивого развития. ",
                         },
                     },
                 ],
@@ -145,7 +167,7 @@ const chapter1Data = {
                     {
                         component: "Text",
                         data: {
-                            text: "ESG включает аспекты системы устойчивого развития, целями которой являются бережное обращение с ресурсами, обеспечение равных прав для различных групп людей, охрана здоровья и выстраивание системы, которая будет эффективно этими аспектами управлять."
+                            text: "ESG включает аспекты системы устойчивого развития, целями которой являются бережное обращение с ресурсами, обеспечение равных прав для различных групп людей, охрана здоровья и выстраивание системы, которая будет эффективно этими аспектами управлять.",
                         },
                     },
                     {
@@ -153,7 +175,10 @@ const chapter1Data = {
                         data: {
                             title: "Для достижения этих целей нужны:",
                             items: [
-                                { id: 1, text: "команда;" },
+                                {
+                                    id: 1,
+                                    text: "команда;",
+                                },
                                 {
                                     id: 2,
                                     text: "регламентирующие корпоративные процессы;",
@@ -171,7 +196,11 @@ const chapter1Data = {
                     component: "Ecology",
                 },
                 links: [
-                    { id: 1, text: "Отчет о деятельности Компании", url: "https://ar2021.phosagro.ru/reports/phosagro/annual/2021/gb/Russian/2030/.html" },
+                    {
+                        id: 1,
+                        text: "Отчет о деятельности Компании",
+                        url: "https://ar2021.phosagro.ru/reports/phosagro/annual/2021/gb/Russian/2030/.html",
+                    },
                 ],
             },
         },
@@ -384,10 +413,26 @@ const chapter1Data = {
                     },
                 },
                 links: [
-                    { id: 1, text: "Кодекс поведения Контрагента Компании", url: "https://cdn.phosagro.ru/upload/docs/Code_of_Conduct_for_Counterparties_2020_ru.pdf" },
-                    { id: 2, text: "Система оценки поставщиков и подрядчиков по критериям ESG", url: "https://cdn.phosagro.ru/upload/20201209_Green_ru.pdf" },
-                    { id: 3, text: "Деятельность компании в области устойчивого развития", url: "https://cdn.phosagro.ru/upload/docs/ESG_Review.pdf" },
-                    { id: 4, text: "Годовые интегрированные отчеты", url: "https://www.phosagro.ru/sustainability/" },
+                    {
+                        id: 1,
+                        text: "Кодекс поведения Контрагента Компании",
+                        url: "https://cdn.phosagro.ru/upload/docs/Code_of_Conduct_for_Counterparties_2020_ru.pdf",
+                    },
+                    {
+                        id: 2,
+                        text: "Система оценки поставщиков и подрядчиков по критериям ESG",
+                        url: "https://cdn.phosagro.ru/upload/20201209_Green_ru.pdf",
+                    },
+                    {
+                        id: 3,
+                        text: "Деятельность компании в области устойчивого развития",
+                        url: "https://cdn.phosagro.ru/upload/docs/ESG_Review.pdf",
+                    },
+                    {
+                        id: 4,
+                        text: "Годовые интегрированные отчеты",
+                        url: "https://www.phosagro.ru/sustainability/",
+                    },
                 ],
             },
         },

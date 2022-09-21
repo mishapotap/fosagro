@@ -14,6 +14,13 @@ import {
 } from "../assets/images"
 import { COLORS } from "../constants"
 
+import {
+    Line1Topic1,
+    Line1Topic2,
+    Line1Topic3,
+    Line1Topic4,
+} from "../assets/Course1/TimeLine"
+
 // TODO Добавить им разные координаты x y
 
 const timelineData = {
@@ -55,6 +62,7 @@ const timelineData = {
                 id: 2,
                 button: {
                     link: "topic1/point1",
+                    audio: Line1Topic1,
                     value: {
                         title: "Суть концепции устойчивого развития",
                         time: "2 мин",
@@ -112,6 +120,7 @@ const timelineData = {
                 id: 3,
                 button: {
                     link: "topic2/point1",
+                    audio: Line1Topic2,
                     value: {
                         title: "Концепции ESG",
                         time: "30 сек",
@@ -139,6 +148,7 @@ const timelineData = {
                 id: 4,
                 button: {
                     link: "topic3/point1",
+                    audio: Line1Topic3,
                     value: {
                         title: "А что в ФосАгро?",
                         time: "1 мин 20 сек",
@@ -207,6 +217,7 @@ const timelineData = {
                 id: 5,
                 button: {
                     link: "topic4/point1",
+                    audio: Line1Topic4,
                     value: {
                         title: "А что с поставщиками и потребителями?",
                         time: "1 мин 30 сек",

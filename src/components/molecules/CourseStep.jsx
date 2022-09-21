@@ -1,14 +1,13 @@
-import React, { useState } from "react"
+import React, { useState, useRef } from "react"
 import styled from "styled-components"
 import { observer } from "mobx-react-lite"
 import { Link } from "react-router-dom"
 import { ModalStore, SoundStore, CourseProgressStore } from "../../store"
 import { IntroModal, CourseStepButton, CourseStepPoint } from "../atoms"
-import { Click2 } from "../../assets/audio"
 import { getElWindowPos } from "../../utils"
 
 function CourseStep({button, points, dataModal, className, sectId, test, intro}) {
-    const clickSound = new Audio(Click2)
+    const soundButton = useRef()
 
     const [isActive, setIsАсtive] = useState(false);
 
@@ -20,7 +19,6 @@ function CourseStep({button, points, dataModal, className, sectId, test, intro})
     const closeIntroModal = () => {
         ModalStore.closeModal("intro");
         SoundStore.setIsPlayingSound(true);
-        clickSound.play();
     }
     let stepButtonParam;
 
@@ -33,15 +31,29 @@ function CourseStep({button, points, dataModal, className, sectId, test, intro})
     }
 
     function handleLinkClick(e) {
-        if (!CourseProgressStore.isSectAvailable(stepButtonParam)) {
-            e.preventDefault()
+        const stepBtn = e.currentTarget.querySelector('.course-step-btn')
+
+        // eslint-disable-next-line no-shadow
+        function stepButton() {
             CourseProgressStore.setNotifTimeout()
-            const stepBtn = e.currentTarget.querySelector('.course-step-btn')
 
             if (stepBtn) {
                 const {left, top} = getElWindowPos(stepBtn)
-                CourseProgressStore.setNotifPos({left: `${left}px`, top: `${top - 150}px`});
+                CourseProgressStore.setNotifPos({left: `${left - 50}px`, top: `${top - 150}px`});
             }
+        }
+
+        if (!CourseProgressStore.isSectAvailable(stepButtonParam)) {
+            e.preventDefault()
+
+            // eslint-disable-next-line no-inner-declarations
+            function eventEnded() {
+                stepButton()
+                soundButton.current.removeEventListener("ended", eventEnded)
+            }
+            
+            soundButton.current.play(); 
+            soundButton.current.addEventListener("ended", eventEnded, { once: true })       
         }
     }
 
@@ -83,6 +95,7 @@ function CourseStep({button, points, dataModal, className, sectId, test, intro})
                     className={`${className}-point`}
                     isActiveParent={isActive}/>
             )}
+            <Audio src={button.audio} ref={soundButton}/>
         </Container>
     )
 }
@@ -92,3 +105,7 @@ export default observer(CourseStep)
 const Container = styled.div``
 
 const Button = styled.button``
+
+const Audio = styled.audio`
+    display: none
+`
