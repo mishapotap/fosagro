@@ -5,6 +5,7 @@ import {
     Speaker12,
 } from "../../assets/Course1/Topic1/Point2"
 import { Speaker11 } from "../../assets/Course1/Topic1/Point1"
+
 import {
     CourseSliderOne31,
     CourseSliderOne32,
@@ -12,7 +13,9 @@ import {
     Speaker13,
 } from "../../assets/Course1/Topic1/Point3"
 // import { Speaker14 } from "../../assets/Course1/Topic1/Point4"
+
 import Speaker14 from "../../assets/Course1/Topic1/Point4/speaker14.mp3"
+
 import { Speaker21 } from "../../assets/Course1/Topic2"
 import {
     Video31,
@@ -60,9 +63,9 @@ const chapter1Data = {
                 audioSrc: Speaker12,
                 content: [
                     {
-                        component: "Text",
+                        component: "Note",
                         data: {
-                            text: "Главная задача  - <span>соблюсти баланс</span> между желанием человека комфортно жить и возможностями окружающей среды.",
+                            text: "Главная задача - соблюсти баланс между желанием человека комфортно жить и возможностями окружающей среды.",
                         },
                     },
                 ],

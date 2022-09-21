@@ -32,7 +32,8 @@ export default function ExtLinks({ links, className, showCursor = true }) {
                     className={`open-ext-links ${isLinksOpened ? "active" : ""}`}
                     onClick={() => setIsLinksOpened(!isLinksOpened)}
                 >
-                    <LinkIcon />
+                    <StyledLinkIcon />
+                    Посмотреть документы
                     {showCursor && (
                         <StyledCursor src={LinkCursor} alt="курсор" />
                     )}
@@ -59,10 +60,13 @@ export default function ExtLinks({ links, className, showCursor = true }) {
     )
 }
 
+const StyledLinkIcon = styled(LinkIcon)`
+    margin-right: 10px;
+`
+
 const OpenBtnContainer = styled.div`
-    width: 6vw;
-    height: 3.7vw;
     overflow: hidden;
+    padding: 10px 20px 20px;
 
     display: flex;
     justify-content: center;
@@ -127,16 +131,23 @@ const StyledCursor = styled.img`
 
 const OpenLinksBtn = styled.button`
     position: relative;
-    width: 4vw;
-    height: 2.6vw;
+    padding: 0.55em 2em;
     display: flex;
     align-items: center;
     justify-content: center;
 
-    background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='14' ry='14' stroke='%2300529BFF' stroke-width='2' stroke-dasharray='9%2c 7' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
-    border-radius: 14px;
+    background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='23' ry='23' stroke='%2300529BFF' stroke-width='2' stroke-dasharray='9%2c 7' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+    border-radius: 23px;
     background-color: ${COLORS.color_animate};
     transition: 0.3s;
+
+    font-family: CalibriLight, sans-serif;
+    font-size: 1.09vw;
+    color: ${COLORS.black};
+
+    @media ${DEVICE.laptop} {
+        font-size: 16px;
+    }
 
     @media ${DEVICE.laptopM} {
         background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='11' ry='11' stroke='%2300529BFF' stroke-width='2' stroke-dasharray='9%2c 7' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
@@ -150,6 +161,7 @@ const OpenLinksBtn = styled.button`
     &:hover,
     &.active {
         background-color: ${COLORS.blue};
+        color: ${COLORS.white};
 
         svg {
             fill: ${COLORS.white};
@@ -163,13 +175,13 @@ const OpenLinksBtn = styled.button`
 
 const LinksContainer = styled.div`
     position: absolute;
-    bottom: 0;
+    top: 0;
     left: 50%;
 
     display: none;
     z-index: 60;
     width: 28vw;
-    transform: translate(-50%, -10vh);
+    transform: translate(-50%, -100%);
 
     & > * {
         margin-bottom: 10px;
@@ -181,7 +193,7 @@ const LinksContainer = styled.div`
 
     @media ${DEVICE.laptopS} {
         position: static;
-        width: 100%;
+        width: 90vw;
         margin-top: 35px;
         transform: none;
 

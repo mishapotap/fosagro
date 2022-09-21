@@ -49,8 +49,6 @@ const timelineData = {
                             },
                         ],
                         title: "Введение",
-                        description:
-                            "Краткая выжимка в несколько слов о чем будет в разделе",
                         time: "55 сек",
                         bgColor: COLORS.orange,
                         image: CourseButtonImage1,
@@ -67,8 +65,6 @@ const timelineData = {
                     audio: Line1Topic1,
                     value: {
                         title: "Суть концепции устойчивого развития",
-                        description:
-                            "Краткая выжимка в несколько слов о чем будет в разделе",
                         time: "2 мин",
                         bgColor: COLORS.green_light,
                         image: CourseButtonImage2,
@@ -127,8 +123,6 @@ const timelineData = {
                     audio: Line1Topic2,
                     value: {
                         title: "Концепции ESG",
-                        description:
-                            "Краткая выжимка в несколько слов о чем будет в разделе",
                         time: "30 сек",
                         bgColor: COLORS.green_dark,
                         image: CourseButtonImage3,
@@ -157,8 +151,6 @@ const timelineData = {
                     audio: Line1Topic3,
                     value: {
                         title: "А что в ФосАгро?",
-                        description:
-                            "Краткая выжимка в несколько слов о чем будет в разделе",
                         time: "1 мин 20 сек",
                         bgColor: COLORS.brown_light,
                         image: CourseButtonImage4,
@@ -228,8 +220,6 @@ const timelineData = {
                     audio: Line1Topic4,
                     value: {
                         title: "А что с поставщиками и потребителями?",
-                        description:
-                            "Краткая выжимка в несколько слов о чем будет в разделе",
                         time: "1 мин 30 сек",
                         bgColor: COLORS.brown,
                         image: CourseButtonImage5,
@@ -268,8 +258,6 @@ const timelineData = {
                     link: "test",
                     value: {
                         title: "Тест",
-                        description:
-                            "Короткий тест на 5 вопросов по содержанию раздела.",
                         time: "≈4 мин",
                         bgColor: COLORS.blue,
                         image: CourseButtonImage6,
@@ -302,8 +290,6 @@ const timelineData = {
                             },
                         ],
                         title: "Введение",
-                        description:
-                            "Предостережения об ограниченности ресурсов планеты.",
                         time: "40 сек",
                         bgColor: COLORS.orange,
                         image: CourseButtonImage1,
@@ -319,8 +305,6 @@ const timelineData = {
                     link: "topic1/point1",
                     value: {
                         title: "Преобразования нашего мира, 17 целей",
-                        description:
-                            "Краткая выжимка в несколько слов о чем будет в разделе",
                         time: "4мин 30сек",
                         bgColor: COLORS.green_light,
                         image: CourseButtonImage2,
@@ -371,8 +355,6 @@ const timelineData = {
                     link: "topic2/point1",
                     value: {
                         title: "Как ФосАгро способствует достижению ЦУР ООН",
-                        description:
-                            "Краткая выжимка в несколько слов о чем будет в разделе",
                         time: "55 сек",
                         bgColor: COLORS.green_dark,
                         image: CourseButtonImage3,
@@ -401,8 +383,6 @@ const timelineData = {
                     link: "topic3/point1",
                     value: {
                         title: "Приоритизация ЦУР для ФосАгро",
-                        description:
-                            "Краткая выжимка в несколько слов о чем будет в разделе",
                         time: "1 мин 20 сек",
                         bgColor: COLORS.brown_light,
                         image: CourseButtonImage4,
@@ -482,8 +462,6 @@ const timelineData = {
                     link: "test",
                     value: {
                         title: "Тест",
-                        description:
-                            "Короткий тест на 5 вопросов по содержанию раздела.",
                         time: "≈4 мин",
                         bgColor: COLORS.blue,
                         image: CourseButtonImage6,
@@ -514,8 +492,6 @@ const timelineData = {
                             },
                         ],
                         title: "Введение",
-                        description:
-                            "Уникальные разработки и нновационныерешения.",
                         time: "21 сек",
                         bgColor: COLORS.orange,
                         image: CourseButtonImage1,
@@ -531,8 +507,6 @@ const timelineData = {
                     link: "topic1/point1",
                     value: {
                         title: "Мировой контекст развития инноваций",
-                        description:
-                            "Краткая выжимка в несколько слов о чем будет в разделе",
                         time: "1мин 40сек",
                         bgColor: COLORS.green_light,
                         image: CourseButtonImage2,
@@ -570,8 +544,6 @@ const timelineData = {
                     link: "topic2/point1",
                     value: {
                         title: "Как мы определяем свои приоритеты в развитии инноваций",
-                        description:
-                            "Краткая выжимка в несколько слов о чем будет в разделе",
                         time: "1мин 10сек",
                         bgColor: COLORS.green_dark,
                         image: CourseButtonImage3,
@@ -599,8 +571,6 @@ const timelineData = {
                     link: "topic3/point1",
                     value: {
                         title: "Что делаем мы для развития инноваций в производстве?",
-                        description:
-                            "Краткая выжимка в несколько слов о чем будет в разделе",
                         time: "1мин 20сек",
                         bgColor: COLORS.brown_light,
                         image: CourseButtonImage4,
@@ -628,8 +598,6 @@ const timelineData = {
                     link: "topic4/point1",
                     value: {
                         title: "Развитие элементов циркулярной экономики",
-                        description:
-                            "Краткая выжимка в несколько слов о чем будет в разделе",
                         time: "1мин 30сек",
                         bgColor: COLORS.brown,
                         image: CourseButtonImage5,
@@ -657,8 +625,6 @@ const timelineData = {
                     link: "topic5/point1",
                     value: {
                         title: "Работа с поставщиками",
-                        description:
-                            "Краткая выжимка в несколько слов о чем будет в разделе",
                         time: "1мин 30сек",
                         bgColor: COLORS.grey_light,
                         image: CourseButtonImage7,
@@ -686,8 +652,6 @@ const timelineData = {
                     link: "topic6/point1",
                     value: {
                         title: "Разработка новых продуктов",
-                        description:
-                            "Краткая выжимка в несколько слов о чем будет в разделе",
                         time: "1мин",
                         bgColor: COLORS.blue_light,
                         image: CourseButtonImage8,
@@ -715,8 +679,6 @@ const timelineData = {
                     link: "topic7/point1",
                     value: {
                         title: "Международное сотрудничество и поддержка молодых ученых",
-                        description:
-                            "Краткая выжимка в несколько слов о чем будет в разделе",
                         time: "2мин 10сек",
                         bgColor: COLORS.turquoise,
                         image: CourseButtonImage9,
@@ -744,8 +706,6 @@ const timelineData = {
                     link: "topic8/point1",
                     value: {
                         title: "Поддержка инновационных проектов",
-                        description:
-                            "Краткая выжимка в несколько слов о чем будет в разделе",
                         time: "1мин 10сек",
                         bgColor: COLORS.coral,
                         image: CourseButtonImage10,
@@ -774,8 +734,6 @@ const timelineData = {
                     link: "test",
                     value: {
                         title: "Тест",
-                        description:
-                            "Короткий тест на 5 вопросов по содержанию раздела.",
                         time: "≈4 мин",
                         bgColor: COLORS.blue,
                         image: CourseButtonImage6,
@@ -808,7 +766,6 @@ const timelineData = {
                             },
                         ],
                         title: "Введение",
-                        description: "",
                         time: "21 сек",
                         bgColor: COLORS.orange,
                         image: CourseButtonImage1,
@@ -824,8 +781,6 @@ const timelineData = {
                     link: "topic1/point1",
                     value: {
                         title: "Климатическая стратегия ФосАгро",
-                        description:
-                            "Краткая выжимка в несколько слов о чем будет в разделе",
                         time: "1мин 40сек",
                         bgColor: COLORS.green_light,
                         image: CourseButtonImage2,
@@ -863,8 +818,6 @@ const timelineData = {
                     link: "topic2/point1",
                     value: {
                         title: `Энергоэффек-тивность`,
-                        description:
-                            "Краткая выжимка в несколько слов о чем будет в разделе",
                         time: "30сек",
                         bgColor: COLORS.green_dark,
                         image: CourseButtonImage3,
@@ -902,8 +855,6 @@ const timelineData = {
                     link: "topic3/point1",
                     value: {
                         title: "Отходы",
-                        description:
-                            "Краткая выжимка в несколько слов о чем будет в разделе",
                         time: "1мин 20сек",
                         bgColor: COLORS.brown_light,
                         image: CourseButtonImage4,
@@ -931,8 +882,6 @@ const timelineData = {
                     link: "topic4/point1",
                     value: {
                         title: "Воздух",
-                        description:
-                            "Краткая выжимка в несколько слов о чем будет в разделе",
                         time: "1мин 30сек",
                         bgColor: COLORS.brown,
                         image: CourseButtonImage5,
@@ -960,8 +909,6 @@ const timelineData = {
                     link: "topic5/point1",
                     value: {
                         title: "Вода",
-                        description:
-                            "Краткая выжимка в несколько слов о чем будет в разделе",
                         time: "1мин 30сек",
                         bgColor: COLORS.grey_light,
                         image: CourseButtonImage7,
@@ -989,8 +936,6 @@ const timelineData = {
                     link: "topic6/point1",
                     value: {
                         title: "Биоразнообразие",
-                        description:
-                            "Краткая выжимка в несколько слов о чем будет в разделе",
                         time: "1мин 30сек",
                         bgColor: COLORS.blue_light,
                         image: CourseButtonImage8,
@@ -1018,8 +963,6 @@ const timelineData = {
                     link: "topic7/point1",
                     value: {
                         title: "Экологическая система управления ФосАгро",
-                        description:
-                            "Краткая выжимка в несколько слов о чем будет в разделе",
                         time: "1мин 30сек",
                         bgColor: COLORS.turquoise,
                         image: CourseButtonImage8,
@@ -1068,8 +1011,6 @@ const timelineData = {
                     link: "test",
                     value: {
                         title: "Тест",
-                        description:
-                            "Короткий тест на 5 вопросов по содержанию раздела.",
                         time: "≈4 мин",
                         bgColor: COLORS.blue,
                         image: CourseButtonImage6,
@@ -1098,8 +1039,6 @@ const timelineData = {
                             },
                         ],
                         title: "Введение",
-                        description:
-                            "Уникальные разработки и нновационныерешения.",
                         time: "21 сек",
                         bgColor: COLORS.orange,
                         image: CourseButtonImage1,
@@ -1115,8 +1054,6 @@ const timelineData = {
                     link: "topic1/point1",
                     value: {
                         title: "Как меняется климат и почему это опасно для человечества",
-                        description:
-                            "Краткая выжимка в несколько слов о чем будет в разделе",
                         time: "1мин 40сек",
                         bgColor: COLORS.green_light,
                         image: CourseButtonImage2,
@@ -1144,8 +1081,6 @@ const timelineData = {
                     link: "topic2/point1",
                     value: {
                         title: "Причины глобального потепления",
-                        description:
-                            "Краткая выжимка в несколько слов о чем будет в разделе",
                         time: "30сек",
                         bgColor: COLORS.green_dark,
                         image: CourseButtonImage3,
@@ -1203,8 +1138,6 @@ const timelineData = {
                     link: "topic3/point1",
                     value: {
                         title: "Что дальше?",
-                        description:
-                            "Краткая выжимка в несколько слов о чем будет в разделе",
                         time: "1мин 20сек",
                         bgColor: COLORS.brown_light,
                         image: CourseButtonImage4,
@@ -1252,8 +1185,6 @@ const timelineData = {
                     link: "topic4/point1",
                     value: {
                         title: "Углеродная нейтральность",
-                        description:
-                            "Краткая выжимка в несколько слов о чем будет в разделе",
                         time: "1мин 30сек",
                         bgColor: COLORS.brown,
                         image: CourseButtonImage5,
@@ -1281,7 +1212,6 @@ const timelineData = {
                     link: "topic5/point1",
                     value: {
                         title: "Работа с поставщиками",
-                        description: "Климат для ФосАгро",
                         time: "1мин 30сек",
                         bgColor: COLORS.grey_light,
                         image: CourseButtonImage7,
@@ -1310,8 +1240,6 @@ const timelineData = {
                     link: "test",
                     value: {
                         title: "Тест",
-                        description:
-                            "Короткий тест на 5 вопросов по содержанию раздела.",
                         time: "≈4 мин",
                         bgColor: COLORS.blue,
                         image: CourseButtonImage6,
@@ -1340,8 +1268,6 @@ const timelineData = {
                             },
                         ],
                         title: "Введение",
-                        description:
-                            "Уникальные разработки и нновационныерешения.",
                         time: "21 сек",
                         bgColor: COLORS.orange,
                         image: CourseButtonImage1,
@@ -1357,8 +1283,6 @@ const timelineData = {
                     link: "topic1/point1",
                     value: {
                         title: "Права человека и социальные принципы ФосАгро",
-                        description:
-                            "Краткая выжимка в несколько слов о чем будет в разделе",
                         time: "2мин",
                         bgColor: COLORS.green_light,
                         image: CourseButtonImage2,
@@ -1396,8 +1320,6 @@ const timelineData = {
                     link: "topic2/point1",
                     value: {
                         title: "Сотрудники ФосАгро - ключ к успеху Компании",
-                        description:
-                            "Краткая выжимка в несколько слов о чем будет в разделе",
                         time: "30сек",
                         bgColor: COLORS.green_dark,
                         image: CourseButtonImage3,
@@ -1455,8 +1377,6 @@ const timelineData = {
                     link: "topic3/point1",
                     value: {
                         title: "Охрана труда и промышленной безопасности",
-                        description:
-                            "Краткая выжимка в несколько слов о чем будет в разделе",
                         time: "1мин 20сек",
                         bgColor: COLORS.brown_light,
                         image: CourseButtonImage4,
@@ -1484,8 +1404,6 @@ const timelineData = {
                     link: "topic4/point1",
                     value: {
                         title: "Вовлечение местных сообществ",
-                        description:
-                            "Краткая выжимка в несколько слов о чем будет в разделе",
                         time: "1мин 30сек",
                         bgColor: COLORS.brown,
                         image: CourseButtonImage5,
@@ -1584,8 +1502,6 @@ const timelineData = {
                     link: "test",
                     value: {
                         title: "Тест",
-                        description:
-                            "Короткий тест на 5 вопросов по содержанию раздела.",
                         time: "≈4 мин",
                         bgColor: COLORS.blue,
                         image: CourseButtonImage6,
