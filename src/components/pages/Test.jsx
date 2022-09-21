@@ -17,6 +17,7 @@ import {
     Layout,
     ReviewModal,
     IntroModal,
+    WavesThreeJS
 } from "../atoms"
 
 import { StepProgressBar } from "../molecules";
@@ -49,6 +50,7 @@ export default function Test() {
 
     return (
         <Layout page="section">
+            <WavesThreeJS/>
             <AnimateLine color={COLORS.red}/>
             <Waves color={COLORS.red}/>
             <AnimateGas/>
