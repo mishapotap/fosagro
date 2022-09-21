@@ -3,7 +3,14 @@ import {
     CourseSliderTwo22,
     CourseSliderTwo23,
 } from "../../assets/Course2/Topic2"
-import { MainBG } from "../../assets/video"
+
+import {
+    Video32,
+    Video33,
+    Video34,
+    Video35,
+    Video36,
+} from "../../assets/Course2/Topic3"
 
 // TODO заполнить нормальные данные для аудио, видео, слайдеров и ссылок
 
@@ -41,8 +48,12 @@ const chapter2Data = {
                     component: "AnimateChart",
                 },
                 links: [
-                    {id: 1, text: "Римский клуб", url: "https://www.clubofrome.org/"}
-                ]
+                    {
+                        id: 1,
+                        text: "Римский клуб",
+                        url: "https://www.clubofrome.org/",
+                    },
+                ],
             },
             2: {
                 title: "Глобальный договор",
@@ -70,8 +81,12 @@ const chapter2Data = {
                     component: "AnimateGlobalContract",
                 },
                 links: [
-                    {id: 1, text: "Глобальный договор ООН", url: "http://globalcompact.ru/"}
-                ]
+                    {
+                        id: 1,
+                        text: "Глобальный договор ООН",
+                        url: "http://globalcompact.ru/",
+                    },
+                ],
             },
             3: {
                 title: "На повестке дня - устойчивое развитие",
@@ -207,7 +222,7 @@ const chapter2Data = {
                 media: {
                     type: "video",
                     component: "VideoPlayer",
-                    data: { src: MainBG },
+                    data: { src: Video32 },
                 },
             },
             3: {
@@ -230,7 +245,7 @@ const chapter2Data = {
                 media: {
                     type: "video",
                     component: "VideoPlayer",
-                    data: { src: MainBG },
+                    data: { src: Video33 },
                 },
             },
             4: {
@@ -264,7 +279,7 @@ const chapter2Data = {
                 media: {
                     type: "video",
                     component: "VideoPlayer",
-                    data: { src: MainBG },
+                    data: { src: Video34 },
                 },
                 links: [
                     {
@@ -301,7 +316,7 @@ const chapter2Data = {
                 media: {
                     type: "video",
                     component: "VideoPlayer",
-                    data: { src: MainBG },
+                    data: { src: Video35 },
                 },
                 links: [
                     {
@@ -349,7 +364,7 @@ const chapter2Data = {
                 media: {
                     type: "video",
                     component: "VideoPlayer",
-                    data: { src: MainBG },
+                    data: { src: Video36 },
                 },
             },
         },

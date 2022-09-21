@@ -38,7 +38,6 @@ import { Error404 } from "../pages"
 // (добавить доп поле в данных?)
 
 function CoursePage() {
-    SoundStore.setIsPlayingSound(false)
     const { id: courseId, sectId, pageId } = useParams()
     const pageData = CourseProgressStore.activePageData
     const location = useLocation()
@@ -78,6 +77,7 @@ function CoursePage() {
     useEffect(() => {
         CourseProgressStore.setIsTestActive(false)
         CourseProgressStore.setIsTimelinePageActive(false)
+        SoundStore.setIsPlayingSound(false)
     }, [])
 
     useEffect(() => {
