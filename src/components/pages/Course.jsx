@@ -172,7 +172,10 @@ const CourseSupTitle = styled.div`
     color: ${COLORS.blue};
 
     @media ${DEVICE.laptopM} {
-        font-size: 20px;
+        font-size: 1.2vw;
+    }
+    @media ${DEVICE.laptopS} {
+        font-size: 18px;
     }
 
     @media ${DEVICE.mobile} {

@@ -5,7 +5,7 @@ import { DEVICE } from "../../constants"
 
 export default function Layout({ page = "start", children, className }) {
     return (
-        <Container className={className} page={page}>
+        <Container className={`${className || ''} layout`} page={page}>
             {/* инструкция */}
             {page === "instruction" && <Header />}
             {/* меню */}

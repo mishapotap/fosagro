@@ -127,7 +127,13 @@ class CourseProgress {
     }
 
     get activeSectTitle() {
-        return this.isWrongPath ? "" : this.activeSectData.sectTitle
+       if (this.isWrongPath) {
+            return ''
+        }
+
+        if (this.activeSectData) return this.activeSectData.sectTitle
+
+        return ''
     }
 
     get activeSectColor() {
@@ -209,6 +215,21 @@ class CourseProgress {
         return this.courseProgressPercent(this.activeCourseId)
     }
 
+    get isTestAvailable() {
+        const courseSects = Object.keys(this.visitedPages[this.activeCourseId])
+        const okCourseSects = courseSects.filter(sect => sect !== 'test')
+        const notComplSect = okCourseSects.find(sectId => !this.isSectCompleted(sectId))
+        return !notComplSect
+    }
+
+    get introStartLink() {
+        return `/course${this.activeCourseId}/topic1/point1`
+    }
+
+    get instructionModalLink() {
+        return `/course${this.activeCourseId}`
+    }
+
     coursePagesCount(courseId) {
         if (coursePagesData[courseId]) {
             // потому что + тест и введение
@@ -263,7 +284,6 @@ class CourseProgress {
     }
 
     courseProgressPercent(courseId = 1) {
-
         const percent =
             (this.courseVisitedPagesCount(courseId) * 100) /
             this.coursePagesCount(courseId)
@@ -302,8 +322,27 @@ class CourseProgress {
         return isSectAvailable
     }
 
-    isSectCompleted(sectId) {
+    isPageAvailable(courseId, sectId, pageId) {
+        const visitedSects = this.visitedPages[courseId]
 
+        if (!visitedSects.intro) {
+            return false
+        }
+
+        const sects = Object.entries(visitedSects)
+        const notPassedSectBefore = sects.find(([id]) => id < sectId && !this.isSectCompleted(id))
+
+        if (notPassedSectBefore) {
+            return false
+        }
+
+        const beforePagesIds = visitedSects[sectId].filter(pId => pId < pageId)
+        const pageAvailable = beforePagesIds.length === +pageId - 1
+
+        return pageAvailable
+    }
+
+    isSectCompleted(sectId) {
         if (sectId === "test") {
             return this.visitedPages[this.activeCourseId].test
         }
@@ -335,6 +374,12 @@ class CourseProgress {
 
     setIsTimelinePageActive(val) {
         this.isTimelinePageActive = val
+    }
+
+    setActiveIds(courseId, sectId, pageId) {
+        this.setActiveCourseId(courseId)
+        this.setActiveSectId(sectId)
+        this.setActivePageId(pageId)
     }
 
     setActiveCourseId(id) {

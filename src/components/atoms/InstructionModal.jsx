@@ -1,7 +1,10 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable jsx-a11y/media-has-caption */
 /* eslint-disable react/jsx-no-bind */
 import "wicg-inert"
-import React from "react"
-import styled from "styled-components"
+import React, { useRef, useState } from "react"
+import styled, { css, keyframes } from "styled-components"
+import { observer } from "mobx-react-lite"
 import { Link } from "react-router-dom"
 import { Pagination, Navigation, EffectFade } from "swiper"
 import { Swiper, SwiperSlide } from "swiper/react"
@@ -23,33 +26,67 @@ import SendButton from "./SendButton"
 import * as routes from "../../constants/routes"
 import Modal from "./Modal"
 import Layout from "./Layout"
-import { ModalStore } from "../../store"
+import { CourseProgressStore, ModalStore } from "../../store"
 import { renderCustom } from "../../utils"
-import { Click1 } from "../../assets/audio"
+import { Click1, Instruction1, Instruction2 } from "../../assets/audio"
 
 // eslint-disable-next-line
 import "swiper/css"
 // eslint-disable-next-line
 import "swiper/css/effect-fade"
 
-export default function InstructionModal({ isOpen, onClose }) {
-
+function InstructionModal({ isOpen, onClose, makeAnim = true }) {
     // const baseUrl = "http://localhost:3000/course01/"
     // const instructionUrl = new URL("instruction", baseUrl)
     // console.log(instructionUrl.href)
 
     const clickSound = new Audio(Click1)
 
+    const audio1Ref = useRef(null)
+    const audio2Ref = useRef(null)
+
+    const [pauseAnims, setPauseAnims] = useState([false, false])
+
     const closeInstructionModal = () => {
         ModalStore.closeModal("instruction")
         clickSound.play()
     }
 
+    function handleAnimEnd() {
+        setTimeout(() => {
+            if (audio2Ref.current.paused) {
+                audio1Ref.current.play()
+            }
+        }, 1000)
+    }
+
+    function handleSlideChange(swiper) {
+        const { activeIndex } = swiper
+        if (activeIndex === 0) {
+            audio2Ref.current.pause()
+            audio1Ref.current.play()
+            if (makeAnim) setPauseAnims([false, true])
+        } else {
+            audio2Ref.current.play()
+            audio1Ref.current.pause()
+            if (makeAnim) setPauseAnims([true, false])
+        }
+    }
+
+    function handleInit() {
+        setPauseAnims([false, true])
+    }
+
     return (
-        <StyledModal isOpen={isOpen} onClose={onClose} navigateBack>
+        <StyledModal
+            isOpen={isOpen}
+            onClose={onClose}
+            navigateBack
+            onOpenAnimEnd={handleAnimEnd}
+        >
             <StyledLayout page="instruction">
                 <Container>
-                    <SliderContainer>
+                    <SliderContainer makeAnim={makeAnim}>
                         <Swiper
                             modules={[Pagination, Navigation, EffectFade]}
                             navigation={{
@@ -60,12 +97,19 @@ export default function InstructionModal({ isOpen, onClose }) {
                             effect="fade"
                             fadeEffect={{ crossFade: true }}
                             speed={400}
+                            onSlideChange={handleSlideChange}
+                            onInit={handleInit}
                         >
                             <SwiperSlide>
+                                <audio src={Instruction1} ref={audio1Ref} />
                                 <SlideInner>
-                                    <Slide1Cols>
+                                    <Slide1Cols
+                                        className={
+                                            pauseAnims[0] ? "anim-paused" : ""
+                                        }
+                                    >
                                         <SlideColsInner>
-                                            <Column>
+                                            <Column className="col-title">
                                                 <Title>
                                                     Инструкция по прохождению
                                                     курса
@@ -75,7 +119,7 @@ export default function InstructionModal({ isOpen, onClose }) {
                                                 </Title>
                                             </Column>
                                             <Column>
-                                                <Text>
+                                                <Text className="text-1">
                                                     Уважаемые пользователи, в
                                                     нашем курсе 6 разделов,
                                                     каждый из которых поделен на
@@ -88,8 +132,9 @@ export default function InstructionModal({ isOpen, onClose }) {
                                                     <AttentionImage
                                                         src={IconAttention}
                                                         alt="внимание"
+                                                        className="icon-attention"
                                                     />
-                                                    <Text>
+                                                    <Text className="text-2">
                                                         Однако прохождение курса
                                                         внутри раздела идет
                                                         последовательно, Вы не
@@ -98,7 +143,7 @@ export default function InstructionModal({ isOpen, onClose }) {
                                                         изучив предыдущую.
                                                     </Text>
                                                 </Row>
-                                                <Text>
+                                                <Text className="text-3">
                                                     В конце каждого раздела Вас
                                                     ждет простой тест на
                                                     несколько вопросов для
@@ -110,17 +155,22 @@ export default function InstructionModal({ isOpen, onClose }) {
                                 </SlideInner>
                             </SwiperSlide>
                             <SwiperSlide>
+                                <audio src={Instruction2} ref={audio2Ref} />
                                 <SlideInner>
-                                    <Slide2Cols>
+                                    <Slide2Cols
+                                        className={
+                                            pauseAnims[1] ? "anim-paused" : ""
+                                        }
+                                    >
                                         <SlideColsInner>
-                                            <Column>
+                                            <Column className="col-title">
                                                 <Title>
                                                     Краткая справка по навигации
                                                 </Title>
                                             </Column>
                                             <Column>
                                                 <ColBlock>
-                                                    <Text>
+                                                    <Text className="text-1">
                                                         Переход между страницами
                                                         осуществляется
                                                         прокруткой мыши/тачпада.
@@ -128,14 +178,14 @@ export default function InstructionModal({ isOpen, onClose }) {
                                                 </ColBlock>
                                                 <ColBlock>
                                                     <CourseImage />
-                                                    <Text>
+                                                    <Text className="text-2">
                                                         Кнопка открытия меню
                                                         курса.
                                                     </Text>
                                                 </ColBlock>
                                                 <ColBlock>
-                                                    <LinksImage/>
-                                                    <Text>
+                                                    <LinksImage />
+                                                    <Text className="text-3">
                                                         Ссылки на дополнительные
                                                         материалы вынесены в
                                                         виде такого элемента.
@@ -147,7 +197,7 @@ export default function InstructionModal({ isOpen, onClose }) {
                                                     <IconHeadphones inert="">
                                                         <Headphones />
                                                     </IconHeadphones>
-                                                    <Text>
+                                                    <Text className="text-4">
                                                         В нашем курсе
                                                         предполагается звуковое
                                                         сопровождение, аудиогид,
@@ -158,22 +208,22 @@ export default function InstructionModal({ isOpen, onClose }) {
                                                     </Text>
                                                 </IconRow>
                                                 <IconRow>
-                                                    <ElIcon>
+                                                    <ElIcon className="icon-sound">
                                                         <img
                                                             src={
                                                                 IconBlueBtnSound
                                                             }
-                                                            alt="зыук"
+                                                            alt="звук"
                                                         />
                                                     </ElIcon>
-                                                    <Text>
+                                                    <Text className="text-5">
                                                         Элемент
                                                         отключения/включения
                                                         музыки в проекте.
                                                     </Text>
                                                 </IconRow>
                                                 <IconRow>
-                                                    <ElIcon>
+                                                    <ElIcon className="icon-mail">
                                                         <img
                                                             src={
                                                                 IconBlueBtnMail
@@ -181,15 +231,15 @@ export default function InstructionModal({ isOpen, onClose }) {
                                                             alt="письмо"
                                                         />
                                                     </ElIcon>
-                                                    <Text>
+                                                    <Text className="text-6">
                                                         Элемент обратной связи,
-                                                        будем рады ваши отзывам
+                                                        будем рады вашим отзывам
                                                         и предложениям по
                                                         улучшению контента!
                                                     </Text>
                                                 </IconRow>
                                                 <IconRow>
-                                                    <ElIcon>
+                                                    <ElIcon className="icon-instruction">
                                                         <img
                                                             src={
                                                                 IconBlueBtnInstraction
@@ -197,15 +247,21 @@ export default function InstructionModal({ isOpen, onClose }) {
                                                             alt="инструкция"
                                                         />
                                                     </ElIcon>
-                                                    <Text>
-                                                        Элемент вызова данной инструкции.
+                                                    <Text className="text-7">
+                                                        Элемент вызова данной
+                                                        инструкции.
                                                     </Text>
                                                 </IconRow>
                                             </Column>
                                         </SlideColsInner>
                                     </Slide2Cols>
                                     <StartLearn>
-                                        <Link to={routes.COURSE01} onClick={() => closeInstructionModal()}>
+                                        <Link
+                                            to={CourseProgressStore.instructionModalLink}
+                                            onClick={() =>
+                                                closeInstructionModal()
+                                            }
+                                        >
                                             <SendButton
                                                 text="Начать обучение"
                                                 size="m"
@@ -228,6 +284,8 @@ export default function InstructionModal({ isOpen, onClose }) {
     )
 }
 
+export default observer(InstructionModal)
+
 // мне здесь не подходит min-height, поэтому чтобы работало корректно, перезаписываю
 const StyledLayout = styled(Layout)`
     height: 100%;
@@ -235,6 +293,7 @@ const StyledLayout = styled(Layout)`
 
 const StyledModal = styled(Modal)`
     height: 100%;
+    transition: 0.7s;
 
     .modal-window {
         background-color: transparent;
@@ -342,20 +401,6 @@ const Container = styled.div`
     }
 `
 
-const SliderContainer = styled.div`
-    margin: 0 auto;
-    height: 100%;
-    max-width: 81.8%;
-
-    @media ${DEVICE.laptopM} {
-        max-width: 85%;
-    }
-
-    @media ${DEVICE.mobile} {
-        max-width: 100%;
-    }
-`
-
 const SlideColsInner = styled.div`
     overflow: auto;
     max-height: 100%;
@@ -380,7 +425,6 @@ const LinksImage = styled.div`
         height: 32px;
         background: url(${IconLinksMob}) no-repeat center/contain;
     }
-
 `
 
 const CourseImage = styled.div`
@@ -649,4 +693,227 @@ const ColBlock = styled.div`
     > *:last-child {
         margin-bottom: 0;
     }
+`
+
+const appear = keyframes`
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+`
+
+const appearScale = keyframes`
+    0% {
+        opacity: 0;
+        transform: scale(0.6);
+    }
+
+    100% {
+        opacity: 1;
+        transform: none;
+    }
+`
+
+const fadeInDown = keyframes`
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: none;
+    }
+`
+
+const iconAppear = keyframes`
+    0% {
+        opacity: 0;
+        transform: translateX(-20px) translateY(15px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: none;
+    }
+`
+
+const textRightAppear = keyframes`
+    0% {
+        opacity: 0;
+        transform: translateX(25px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: none;
+    }
+`
+
+const textLeftAppear = keyframes`
+    0% {
+        opacity: 0;
+        transform: translateX(-25px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: none;
+    }
+`
+
+const SliderContainer = styled.div`
+    margin: 0 auto;
+    height: 100%;
+    max-width: 81.8%;
+
+    @media ${DEVICE.laptopM} {
+        max-width: 85%;
+    }
+
+    @media ${DEVICE.mobile} {
+        max-width: 100%;
+    }
+
+    ${Slide1Cols},
+    ${Slide2Cols} {
+        &.anim-paused {
+            animation-play-state: paused!important;
+
+            * {
+                animation-play-state: paused!important;
+            }
+        }
+    }
+
+    ${({ makeAnim }) =>
+        makeAnim &&
+        css`
+            ${Slide1Cols} {
+                .col-title,
+                .text-1,
+                .text-2,
+                .text-3,
+                .icon-attention {
+                    animation: ${appear} 1.3s ease-in-out both;
+                }
+
+                .col-title {
+                    animation-delay: 1s;
+                }
+
+                .text-1 {
+                    animation-delay: 6s;
+                    animation-name: ${textLeftAppear};
+                }
+
+                .icon-attention {
+                    animation-delay: 16s;
+                    animation-name: ${appearScale};
+                }
+
+                .text-2 {
+                    animation-delay: 17s;
+                    animation-name: ${textRightAppear};
+                }
+
+                .text-3 {
+                    animation-delay: 25s;
+                    animation-name: ${textLeftAppear};
+                }
+            }
+
+            ${Slide2Cols} {
+                .col-title,
+                .text-1,
+                .text-2,
+                .text-3,
+                .text-4,
+                .text-5,
+                .text-6,
+                .text-7,
+                .icon-mail,
+                .icon-instruction,
+                .icon-sound,
+                ${CourseImage}, ${LinksImage}, ${IconHeadphones} {
+                    animation: ${appear} 1.3s ease-in-out both;
+                }
+
+                .icon-mail,
+                .icon-instruction,
+                .icon-sound,
+                ${IconHeadphones} {
+                    animation-name: ${iconAppear};
+                }
+
+
+                .text-4,
+                .text-5,
+                .text-6,
+                .text-7 {
+                    animation-name: ${textRightAppear};
+                }
+
+                .col-title {
+                    animation-delay: 0.3s;
+                }
+
+                .text-1 {
+                    animation-delay: 3.5s;
+                }
+
+                ${CourseImage} {
+                    animation-delay: 8.5s;
+                }
+
+                .text-2 {
+                    animation-delay: 9.5s;
+                    animation-name: ${fadeInDown};
+                }
+
+                ${LinksImage} {
+                    animation-delay: 12s;
+                }
+
+                .text-3 {
+                    animation-delay: 13s;
+                    animation-name: ${fadeInDown};
+                }
+
+                ${IconHeadphones} {
+                    animation-delay: 18s;
+                }
+
+                .text-4 {
+                    animation-delay: 19s;
+                }
+
+                .icon-sound {
+                    animation-delay: 27s;
+                }
+
+                .text-5 {
+                    animation-delay: 28s;
+                }
+
+                .icon-mail {
+                    animation-delay: 32s;
+                }
+
+                .text-6 {
+                    animation-delay: 33s;
+                }
+
+                .icon-instruction {
+                    animation-delay: 39.5s;
+                }
+
+                .text-7 {
+                    animation-delay: 40.5s;
+                }
+            }
+        `}
 `

@@ -17,7 +17,6 @@ import { TestEnd } from "../../../assets/audio"
 // TODO сделать чтобы тест можно было снова пройти?
 
 function CourseTest() {
-    SoundStore.setIsPlayingSound(false)
     const audioRef = useRef(null)
     // если пользователь уходит в процессе решения теста, сбрасываем прогресс
 
@@ -25,6 +24,10 @@ function CourseTest() {
         if (!CourseTestStore.userPassedTest) {
             CourseTestStore.resetProgress()
         }
+    }, [])
+
+    useEffect(() => {
+        SoundStore.setIsPlayingSound(false)
     }, [])
 
     useEffect(() => {
