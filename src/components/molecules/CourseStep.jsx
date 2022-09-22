@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react"
 import styled from "styled-components"
+import { useNavigate } from "react-router"
 import { observer } from "mobx-react-lite"
 import { Link } from "react-router-dom"
 import { ModalStore, SoundStore, CourseProgressStore } from "../../store"
@@ -7,6 +8,8 @@ import { IntroModal, CourseStepButton, CourseStepPoint } from "../atoms"
 import { getElWindowPos } from "../../utils"
 
 function CourseStep({button, points, dataModal, className, sectId, test, intro}) {
+    const navigate = useNavigate()
+
     const soundButton = useRef()
 
     const [isActive, setIsАсtive] = useState(false);
@@ -31,20 +34,22 @@ function CourseStep({button, points, dataModal, className, sectId, test, intro})
     }
 
     function handleLinkClick(e) {
+        e.preventDefault()
+        soundButton.current.play()
+        const stepBtn = e.currentTarget.querySelector('.course-step-btn')
 
-        if (!CourseProgressStore.isSectAvailable(stepButtonParam)) {
-            e.preventDefault()
-            
-            soundButton.current.play();  
-            
-            CourseProgressStore.setNotifTimeout()
-            const stepBtn = e.currentTarget.querySelector('.course-step-btn')
+        setTimeout(() => {
+            if (!CourseProgressStore.isSectAvailable(stepButtonParam)) {
+                CourseProgressStore.setNotifTimeout()
 
-            if (stepBtn) {
-                const {left, top} = getElWindowPos(stepBtn)
-                CourseProgressStore.setNotifPos({left: `${left}px`, top: `${top - 150}px`});
+                if (stepBtn) {
+                    const {left, top} = getElWindowPos(stepBtn)
+                    CourseProgressStore.setNotifPos({left: `${left - 50}px`, top: `${top - 150}px`});
+                }
+            } else {
+                navigate(button.link)
             }
-        }
+        }, soundButton.current.duration * 1000)
     }
 
     return(
