@@ -44,10 +44,10 @@ function CourseStep({button, points, dataModal, className, sectId, test, intro})
 
                 if (stepBtn) {
                     const {left, top} = getElWindowPos(stepBtn)
-                    CourseProgressStore.setNotifPos({left: `${left - 50}px`, top: `${top - 150}px`});
+                    CourseProgressStore.setNotifPos({left: `${left}px`, top: `${top - 150}px`});
                 }
             } else {
-                navigate(button.link)
+                navigate( button.link )
             }
         }, soundButton.current.duration * 1000)
     }

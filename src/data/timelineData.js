@@ -27,6 +27,23 @@ import {
     Line2Topic3,
 } from "../assets/Course2/TimeLine"
 
+import {
+    Line3Topic1,
+    Line3Topic2,
+    Line3Topic3,
+    Line3Topic4,
+    Line3Topic5,
+    Line3Topic6,
+    Line3Topic7,
+} from "../assets/Course3/TimeLine"
+
+import {
+    Line6Topic1,
+    Line6Topic2,
+    Line6Topic3,
+    Line6Topic4,
+} from "../assets/Course6/TimeLine"
+
 import { Intro } from "../assets/audio"
 
 // TODO Добавить им разные координаты x y
@@ -503,6 +520,7 @@ const timelineData = {
                 id: 1,
                 intro: true,
                 button: {
+                    audio: Intro,
                     value: {
                         modal: [
                             {
@@ -524,6 +542,7 @@ const timelineData = {
                 id: 2,
                 button: {
                     link: "topic1/point1",
+                    audio: Line3Topic1,
                     value: {
                         title: "Мировой контекст развития инноваций",
                         time: "1мин 40сек",
@@ -561,6 +580,7 @@ const timelineData = {
                 id: 3,
                 button: {
                     link: "topic2/point1",
+                    audio: Line3Topic2,
                     value: {
                         title: "Как мы определяем свои приоритеты в развитии инноваций",
                         time: "1мин 10сек",
@@ -588,6 +608,7 @@ const timelineData = {
                 id: 4,
                 button: {
                     link: "topic3/point1",
+                    audio: Line3Topic3,
                     value: {
                         title: "Что делаем мы для развития инноваций в производстве?",
                         time: "1мин 20сек",
@@ -615,6 +636,7 @@ const timelineData = {
                 id: 5,
                 button: {
                     link: "topic4/point1",
+                    audio: Line3Topic4,
                     value: {
                         title: "Развитие элементов циркулярной экономики",
                         time: "1мин 30сек",
@@ -642,6 +664,7 @@ const timelineData = {
                 id: 6,
                 button: {
                     link: "topic5/point1",
+                    audio: Line3Topic5,
                     value: {
                         title: "Работа с поставщиками",
                         time: "1мин 30сек",
@@ -669,6 +692,7 @@ const timelineData = {
                 id: 7,
                 button: {
                     link: "topic6/point1",
+                    audio: Line3Topic6,
                     value: {
                         title: "Разработка новых продуктов",
                         time: "1мин",
@@ -696,6 +720,7 @@ const timelineData = {
                 id: 8,
                 button: {
                     link: "topic7/point1",
+                    audio: Line3Topic7,
                     value: {
                         title: "Международное сотрудничество и поддержка молодых ученых",
                         time: "2мин 10сек",
@@ -723,6 +748,7 @@ const timelineData = {
                 id: 9,
                 button: {
                     link: "topic8/point1",
+                    audio: Line3Topic7,
                     value: {
                         title: "Поддержка инновационных проектов",
                         time: "1мин 10сек",
@@ -1288,6 +1314,7 @@ const timelineData = {
                 id: 1,
                 intro: true,
                 button: {
+                    audio: Intro,
                     value: {
                         modal: [
                             {
@@ -1309,6 +1336,7 @@ const timelineData = {
                 id: 2,
                 button: {
                     link: "topic1/point1",
+                    audio: Line6Topic1,
                     value: {
                         title: "Права человека и социальные принципы ФосАгро",
                         time: "2мин",
@@ -1346,6 +1374,7 @@ const timelineData = {
                 id: 3,
                 button: {
                     link: "topic2/point1",
+                    audio: Line6Topic2,
                     value: {
                         title: "Сотрудники ФосАгро - ключ к успеху Компании",
                         time: "30сек",
@@ -1403,6 +1432,7 @@ const timelineData = {
                 id: 4,
                 button: {
                     link: "topic3/point1",
+                    audio: Line6Topic3,
                     value: {
                         title: "Охрана труда и промышленной безопасности",
                         time: "1мин 20сек",
@@ -1430,6 +1460,7 @@ const timelineData = {
                 id: 5,
                 button: {
                     link: "topic4/point1",
+                    audio: Line6Topic4,
                     value: {
                         title: "Вовлечение местных сообществ",
                         time: "1мин 30сек",

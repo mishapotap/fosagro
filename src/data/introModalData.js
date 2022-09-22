@@ -23,6 +23,7 @@ import {
     IntroModalThree11,
     IntroModalThree12,
     IntroModalThree13,
+    Intro3Speaker1,
 } from "../assets/Course3/Intro"
 
 import {
@@ -140,7 +141,7 @@ const introModalData = {
                     alt: "image3",
                 },
             ],
-            audio: "",
+            audio: Intro3Speaker1,
             note: "Каждый из нас может внести свой вклад. Любое предложение по улучшению производства может привести к большому инновационному рывку. Все мы немного изобретатели!",
         },
     ],
