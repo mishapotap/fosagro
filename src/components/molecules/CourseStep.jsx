@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react"
 import styled from "styled-components"
+import { useNavigate } from "react-router"
 import { observer } from "mobx-react-lite"
 import { Link } from "react-router-dom"
 import { ModalStore, SoundStore, CourseProgressStore } from "../../store"
@@ -7,6 +8,8 @@ import { IntroModal, CourseStepButton, CourseStepPoint } from "../atoms"
 import { getElWindowPos } from "../../utils"
 
 function CourseStep({button, points, dataModal, className, sectId, test, intro}) {
+    const navigate = useNavigate()
+
     const soundButton = useRef()
 
     const [isActive, setIsАсtive] = useState(false);
@@ -31,30 +34,22 @@ function CourseStep({button, points, dataModal, className, sectId, test, intro})
     }
 
     function handleLinkClick(e) {
+        e.preventDefault()
+        soundButton.current.play()
         const stepBtn = e.currentTarget.querySelector('.course-step-btn')
 
-        // eslint-disable-next-line no-shadow
-        function stepButton() {
-            CourseProgressStore.setNotifTimeout()
+        setTimeout(() => {
+            if (!CourseProgressStore.isSectAvailable(stepButtonParam)) {
+                CourseProgressStore.setNotifTimeout()
 
-            if (stepBtn) {
-                const {left, top} = getElWindowPos(stepBtn)
-                CourseProgressStore.setNotifPos({left: `${left - 50}px`, top: `${top - 150}px`});
+                if (stepBtn) {
+                    const {left, top} = getElWindowPos(stepBtn)
+                    CourseProgressStore.setNotifPos({left: `${left}px`, top: `${top - 150}px`});
+                }
+            } else {
+                navigate( button.link )
             }
-        }
-
-        if (!CourseProgressStore.isSectAvailable(stepButtonParam)) {
-            e.preventDefault()
-
-            // eslint-disable-next-line no-inner-declarations
-            function eventEnded() {
-                stepButton()
-                soundButton.current.removeEventListener("ended", eventEnded)
-            }
-            
-            soundButton.current.play(); 
-            soundButton.current.addEventListener("ended", eventEnded, { once: true })       
-        }
+        }, soundButton.current.duration * 1000)
     }
 
     return(

@@ -5,8 +5,8 @@ import {
     IntroModalOne21,
     IntroModalOne22,
     IntroModalOne23,
-    IntroSpeaker1,
-    IntroSpeaker2,
+    Intro1Speaker1,
+    Intro1Speaker2,
 } from "../assets/Course1/Into"
 import {
     IntroModalTwo11,
@@ -15,12 +15,15 @@ import {
     IntroModalTwo21,
     IntroModalTwo22,
     IntroModalTwo23,
+    Intro2Speaker1,
+    Intro2Speaker2,
 } from "../assets/Course2/Intro"
 
 import {
     IntroModalThree11,
     IntroModalThree12,
     IntroModalThree13,
+    Intro3Speaker1,
 } from "../assets/Course3/Intro"
 
 import {
@@ -62,7 +65,7 @@ const introModalData = {
                     alt: "image3",
                 },
             ],
-            audio: IntroSpeaker1,
+            audio: Intro1Speaker1,
         },
         {
             text: `В этом блоке вместе с вами мы разберемся, как появилась концепция «Устойчивое развитие», сконцентрируем внимание на той деятельности, которую ведет компания в этой области.`,
@@ -80,7 +83,7 @@ const introModalData = {
                     alt: "image3",
                 },
             ],
-            audio: IntroSpeaker2,
+            audio: Intro1Speaker2,
         },
     ],
     introModal2: [
@@ -100,7 +103,7 @@ const introModalData = {
                     alt: "image3",
                 },
             ],
-            audio: IntroSpeaker1,
+            audio: Intro2Speaker1,
         },
         {
             text: `При этом еще в XVIII веке английский экономист Томас Мальтус связывал причины социальных бедствий, политических потрясений и экологических катастроф с опережающим по отношению к ресурсам ростом численности населения. Эти идеи легли в основу концепции мальтузианства.`,
@@ -118,7 +121,7 @@ const introModalData = {
                     alt: "image3",
                 },
             ],
-            audio: "",
+            audio: Intro2Speaker2,
         },
     ],
     introModal3: [
@@ -138,7 +141,7 @@ const introModalData = {
                     alt: "image3",
                 },
             ],
-            audio: IntroSpeaker1,
+            audio: Intro3Speaker1,
             note: "Каждый из нас может внести свой вклад. Любое предложение по улучшению производства может привести к большому инновационному рывку. Все мы немного изобретатели!",
         },
     ],
@@ -159,13 +162,13 @@ const introModalData = {
                     alt: "image3",
                 },
             ],
-            audio: IntroSpeaker1,
+            audio: "",
             links: [
                 {
                     id: 1,
                     text: "Проект «Экология дело каждого»",
                     url: "https://www.xn--80afbcbeimqege7abfeb7wqb.xn--p1ai/",
-                }
+                },
             ],
         },
         {
@@ -184,14 +187,14 @@ const introModalData = {
                     alt: "image3",
                 },
             ],
-            audio: IntroSpeaker1,
+            audio: "",
             links: [
                 {
                     id: 1,
                     text: "Политика в области охраны окружающей среды ПАО «ФосАгро»",
                     url: "https://cdn.phosagro.ru/upload/docs/environmental_protection.pdf chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://cdn.phosagro.ru/upload/docs/environmental_protection.pdf",
                 },
-            ]
+            ],
         },
     ],
     introModal5: [
@@ -211,7 +214,7 @@ const introModalData = {
                     alt: "image3",
                 },
             ],
-            audio: IntroSpeaker1,
+            audio: "",
         },
     ],
     introModal6: [
@@ -231,7 +234,7 @@ const introModalData = {
                     alt: "image3",
                 },
             ],
-            audio: IntroSpeaker1,
+            audio: "",
         },
     ],
 }

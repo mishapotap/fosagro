@@ -2,6 +2,7 @@ import {
     CourseSliderTwo21,
     CourseSliderTwo22,
     CourseSliderTwo23,
+    Speaker21,
 } from "../../assets/Course2/Topic2"
 
 import {
@@ -12,6 +13,11 @@ import {
     Video36,
 } from "../../assets/Course2/Topic3"
 
+import { Speaker11 } from "../../assets/Course2/Topic1/Point1"
+import { Speaker12 } from "../../assets/Course2/Topic1/Point2"
+import { Speaker13 } from "../../assets/Course2/Topic1/Point3"
+import { Speaker31 } from "../../assets/Course2/Topic3/Point1"
+
 // TODO заполнить нормальные данные для аудио, видео, слайдеров и ссылок
 
 const chapter2Data = {
@@ -20,7 +26,7 @@ const chapter2Data = {
         pages: {
             1: {
                 title: "Пределы роста",
-                audioSrc: "",
+                audioSrc: Speaker11,
                 content: [
                     {
                         component: "List",
@@ -57,7 +63,7 @@ const chapter2Data = {
             },
             2: {
                 title: "Глобальный договор",
-                audioSrc: "",
+                audioSrc: Speaker12,
                 content: [
                     {
                         component: "List",
@@ -90,7 +96,7 @@ const chapter2Data = {
             },
             3: {
                 title: "На повестке дня - устойчивое развитие",
-                audioSrc: "",
+                audioSrc: Speaker13,
                 content: [
                     {
                         component: "List",
@@ -133,7 +139,7 @@ const chapter2Data = {
         pages: {
             1: {
                 title: "Роль ФосАгро",
-                audioSrc: "",
+                audioSrc: Speaker21,
                 content: [
                     {
                         component: "List",
@@ -181,7 +187,7 @@ const chapter2Data = {
         pages: {
             1: {
                 title: "Наши цели устойчивого развития",
-                audioSrc: "",
+                audioSrc: Speaker31,
                 content: [
                     {
                         component: "Text",

@@ -21,6 +21,31 @@ import {
     Line1Topic4,
 } from "../assets/Course1/TimeLine"
 
+import {
+    Line2Topic1,
+    Line2Topic2,
+    Line2Topic3,
+} from "../assets/Course2/TimeLine"
+
+import {
+    Line3Topic1,
+    Line3Topic2,
+    Line3Topic3,
+    Line3Topic4,
+    Line3Topic5,
+    Line3Topic6,
+    Line3Topic7,
+} from "../assets/Course3/TimeLine"
+
+import {
+    Line6Topic1,
+    Line6Topic2,
+    Line6Topic3,
+    Line6Topic4,
+} from "../assets/Course6/TimeLine"
+
+import { Intro } from "../assets/audio"
+
 // TODO Добавить им разные координаты x y
 
 const timelineData = {
@@ -37,6 +62,7 @@ const timelineData = {
                 id: 1,
                 intro: true,
                 button: {
+                    audio: Intro,
                     value: {
                         modal: [
                             {
@@ -273,11 +299,15 @@ const timelineData = {
         id: "02",
         title: "Цели устойчивого развития ООН",
         width: "2450",
+        metaTitle: "Цели устойчивого развития ООН",
+        metaDescription:
+            "Принята новая программа «Преобразование нашего мира: Повестка дня в области устойчивого развития на период до 2030 года».  Повестка дня включает 17 целей по построению устойчивого мира. Устойчивый мир — это баланс экономического роста, социальной и экологической ответственности.",
         timeline: [
             {
                 id: 1,
                 intro: true,
                 button: {
+                    audio: Intro,
                     value: {
                         modal: [
                             {
@@ -303,6 +333,7 @@ const timelineData = {
                 id: 2,
                 button: {
                     link: "topic1/point1",
+                    audio: Line2Topic1,
                     value: {
                         title: "Преобразования нашего мира, 17 целей",
                         time: "4мин 30сек",
@@ -353,6 +384,7 @@ const timelineData = {
                 id: 3,
                 button: {
                     link: "topic2/point1",
+                    audio: Line2Topic2,
                     value: {
                         title: "Как ФосАгро способствует достижению ЦУР ООН",
                         time: "55 сек",
@@ -381,6 +413,7 @@ const timelineData = {
                 id: 4,
                 button: {
                     link: "topic3/point1",
+                    audio: Line2Topic3,
                     value: {
                         title: "Приоритизация ЦУР для ФосАгро",
                         time: "1 мин 20 сек",
@@ -479,11 +512,15 @@ const timelineData = {
         supTitle:
             "Продукция компании, цикл производства и почему мы разрабатываем новые марки и виды продукции?",
         width: "3450",
+        metaTitle: "Инновационная деятельность ФосАгро",
+        metaDescription:
+            "Новаторство позволяет повысить эффективность и соблюсти баланс безопасности и экологичности. Инновации, технологии и уникальные компетенции наших работников позволяют ФосАгро уверенно смотреть в будущее и отвечать на вызовы сегодняшнего дня.",
         timeline: [
             {
                 id: 1,
                 intro: true,
                 button: {
+                    audio: Intro,
                     value: {
                         modal: [
                             {
@@ -505,6 +542,7 @@ const timelineData = {
                 id: 2,
                 button: {
                     link: "topic1/point1",
+                    audio: Line3Topic1,
                     value: {
                         title: "Мировой контекст развития инноваций",
                         time: "1мин 40сек",
@@ -542,6 +580,7 @@ const timelineData = {
                 id: 3,
                 button: {
                     link: "topic2/point1",
+                    audio: Line3Topic2,
                     value: {
                         title: "Как мы определяем свои приоритеты в развитии инноваций",
                         time: "1мин 10сек",
@@ -569,6 +608,7 @@ const timelineData = {
                 id: 4,
                 button: {
                     link: "topic3/point1",
+                    audio: Line3Topic3,
                     value: {
                         title: "Что делаем мы для развития инноваций в производстве?",
                         time: "1мин 20сек",
@@ -596,6 +636,7 @@ const timelineData = {
                 id: 5,
                 button: {
                     link: "topic4/point1",
+                    audio: Line3Topic4,
                     value: {
                         title: "Развитие элементов циркулярной экономики",
                         time: "1мин 30сек",
@@ -623,6 +664,7 @@ const timelineData = {
                 id: 6,
                 button: {
                     link: "topic5/point1",
+                    audio: Line3Topic5,
                     value: {
                         title: "Работа с поставщиками",
                         time: "1мин 30сек",
@@ -650,6 +692,7 @@ const timelineData = {
                 id: 7,
                 button: {
                     link: "topic6/point1",
+                    audio: Line3Topic6,
                     value: {
                         title: "Разработка новых продуктов",
                         time: "1мин",
@@ -677,6 +720,7 @@ const timelineData = {
                 id: 8,
                 button: {
                     link: "topic7/point1",
+                    audio: Line3Topic7,
                     value: {
                         title: "Международное сотрудничество и поддержка молодых ученых",
                         time: "2мин 10сек",
@@ -704,6 +748,7 @@ const timelineData = {
                 id: 9,
                 button: {
                     link: "topic8/point1",
+                    audio: Line3Topic7,
                     value: {
                         title: "Поддержка инновационных проектов",
                         time: "1мин 10сек",
@@ -749,6 +794,9 @@ const timelineData = {
         id: "04",
         title: "Экология",
         width: "3250",
+        metaTitle: "Экология",
+        metaDescription:
+            "Компания ФосАгро провела комплексную оценку своей деятельности, определила основные направления воздействия на компоненты окружающей среды. Экологическая стратегия Компании соотносится с Целями в области устойчивого развития ООН (ЦУР ООН)",
         timeline: [
             {
                 id: 1,
@@ -1026,6 +1074,9 @@ const timelineData = {
         id: "05",
         title: "Климат и энергоэффективность",
         width: "2750",
+        metaTitle: "Климат и энергоэффективность ",
+        metaDescription:
+            "Основная цель ФосАгро в области климата – снижение выбросов парниковых газов к 2028 году на 14% по отношению к базовому 2018 году. В 2021 году Компания стала партнером CGI Russia. С 2021 года ФосАгро публикует климатические отчеты по стандартам TCFD.",
         timeline: [
             {
                 id: 1,
@@ -1255,11 +1306,15 @@ const timelineData = {
         id: "06",
         title: "Социальная среда и права человека",
         width: "2950",
+        metaTitle: "Социальная среда и права человека ",
+        metaDescription:
+            "Социальная ответственность - общепризнанный этический стандарт ведения современного бизнеса. Программы по обеспечению социальной защищенности, соблюдению прав человека и развитию сотрудников лежат в основе деятельности ФосАгро.",
         timeline: [
             {
                 id: 1,
                 intro: true,
                 button: {
+                    audio: Intro,
                     value: {
                         modal: [
                             {
@@ -1281,6 +1336,7 @@ const timelineData = {
                 id: 2,
                 button: {
                     link: "topic1/point1",
+                    audio: Line6Topic1,
                     value: {
                         title: "Права человека и социальные принципы ФосАгро",
                         time: "2мин",
@@ -1318,6 +1374,7 @@ const timelineData = {
                 id: 3,
                 button: {
                     link: "topic2/point1",
+                    audio: Line6Topic2,
                     value: {
                         title: "Сотрудники ФосАгро - ключ к успеху Компании",
                         time: "30сек",
@@ -1375,6 +1432,7 @@ const timelineData = {
                 id: 4,
                 button: {
                     link: "topic3/point1",
+                    audio: Line6Topic3,
                     value: {
                         title: "Охрана труда и промышленной безопасности",
                         time: "1мин 20сек",
@@ -1402,6 +1460,7 @@ const timelineData = {
                 id: 5,
                 button: {
                     link: "topic4/point1",
+                    audio: Line6Topic4,
                     value: {
                         title: "Вовлечение местных сообществ",
                         time: "1мин 30сек",
