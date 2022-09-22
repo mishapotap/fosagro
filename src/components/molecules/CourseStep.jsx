@@ -31,29 +31,19 @@ function CourseStep({button, points, dataModal, className, sectId, test, intro})
     }
 
     function handleLinkClick(e) {
-        const stepBtn = e.currentTarget.querySelector('.course-step-btn')
-
-        // eslint-disable-next-line no-shadow
-        function stepButton() {
-            CourseProgressStore.setNotifTimeout()
-
-            if (stepBtn) {
-                const {left, top} = getElWindowPos(stepBtn)
-                CourseProgressStore.setNotifPos({left: `${left - 50}px`, top: `${top - 150}px`});
-            }
-        }
 
         if (!CourseProgressStore.isSectAvailable(stepButtonParam)) {
             e.preventDefault()
-
-            // eslint-disable-next-line no-inner-declarations
-            function eventEnded() {
-                stepButton()
-                soundButton.current.removeEventListener("ended", eventEnded)
-            }
             
-            soundButton.current.play(); 
-            soundButton.current.addEventListener("ended", eventEnded, { once: true })       
+            soundButton.current.play();  
+            
+            CourseProgressStore.setNotifTimeout()
+            const stepBtn = e.currentTarget.querySelector('.course-step-btn')
+
+            if (stepBtn) {
+                const {left, top} = getElWindowPos(stepBtn)
+                CourseProgressStore.setNotifPos({left: `${left}px`, top: `${top - 150}px`});
+            }
         }
     }
 
