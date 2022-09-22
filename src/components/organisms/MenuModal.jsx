@@ -7,10 +7,10 @@ import { MenuButton } from "../molecules"
 import { MenuProgressBar, Layout, Modal } from "../atoms"
 import { DEVICE } from "../../constants"
 import { MenuBackground } from "../../assets/images"
-import { ModalStore, SoundStore } from "../../store"
+import { ModalStore, SoundStore, CourseProgressStore } from "../../store"
 import { Click1 } from "../../assets/audio"
 
-export default function MenuModal({isOpen, onClose}) {
+function MenuModal({isOpen, onClose}) {
 
     const clickSound = new Audio(Click1);
 
@@ -19,7 +19,7 @@ export default function MenuModal({isOpen, onClose}) {
         SoundStore.setIsPlayingSound(true);
         clickSound.play();
     }
-    
+
     return (
         <StyledModal isOpen={isOpen} onClose={onClose}>
             <StyledLayout page="menu">
@@ -38,7 +38,7 @@ export default function MenuModal({isOpen, onClose}) {
                                     <MenuProgressBarContainer>
                                         <MenuProgressBar
                                             max={100}
-                                            value={item.progress}
+                                            value={CourseProgressStore.courseProgressPercent(item.id)}
                                             color={item.bgColor}
                                         />
                                     </MenuProgressBarContainer>
@@ -48,9 +48,11 @@ export default function MenuModal({isOpen, onClose}) {
                     </MenuWrap>
                 </MenuContainer>
             </StyledLayout>
-        </StyledModal> 
+        </StyledModal>
     )
 }
+
+export default observer(MenuModal)
 
 observer(MenuModal)
 
@@ -79,7 +81,7 @@ const MenuContainer = styled.div`
     height: 100%;
     padding: 0 2vw;
     overflow: hidden;
-    @media ${DEVICE.laptopS} { 
+    @media ${DEVICE.laptopS} {
         padding: 0 5vw;
     }
 
@@ -98,15 +100,15 @@ const MenuWrap = styled.div`
 `
 
 const MenuButtonContainer = styled.div`
-    @media ${DEVICE.laptopS} { 
+    @media ${DEVICE.laptopS} {
         margin-bottom: 5vw;
     }
 `
 
 const MenuProgressBarContainer = styled.div`
     margin-top: 80px;
-    
-    @media ${DEVICE.laptopS} { 
+
+    @media ${DEVICE.laptopS} {
         margin-top: 3vw;
     }
 

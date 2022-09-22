@@ -17,12 +17,13 @@ export default function TimelineFooter() {
 
 const Grid = styled.div`
     display: grid;
-    column-gap: 35px;
+    column-gap: 1.82vw;
     grid-template-columns: auto 1fr auto auto auto;
-    grid-template-rows: 90px;
+    grid-template-rows: 9.6vh;
     align-items: center;
     @media ${DEVICE.laptopS} {
         column-gap: 15px;
+        grid-template-rows: 80px;
     }
 `
 

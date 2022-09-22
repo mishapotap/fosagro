@@ -1,21 +1,36 @@
-import React from "react"
+/* eslint-disable no-unused-vars */
+import React, { useEffect } from "react"
 import styled from "styled-components"
-import { useParams } from "react-router"
+import { useNavigate, useParams } from "react-router"
 import CourseSlideLayout from "../atoms/CourseSlideLayout"
 import { CourseTest } from "../atoms"
 import { DEVICE } from "../../constants"
-import { CourseTestStore } from "../../store"
+import { CourseTestStore, CourseProgressStore } from "../../store"
 import { coursePagesData } from "../../data"
 import Error404 from "./Error404"
+import { showContent } from "../../constants/animations"
 
 export default function CourseTestPage() {
     const { id } = useParams()
+    const navigate = useNavigate()
 
-    if (!coursePagesData[id]) {
-        return <Error404/>
-    }
+    useEffect(() => {
+        if (coursePagesData[id]) {
+            // установить в store
+            CourseProgressStore.setIsTestActive(true)
+
+            if (!CourseProgressStore.isTestAvailable) {
+                navigate(`/course${id}`)
+            }
+        }
+    }, [])
 
     CourseTestStore.setActiveCourseId(id)
+
+    if (!coursePagesData[id]) {
+        return <Error404 />
+    }
+
 
     return (
         <StyledLayout type="test">
@@ -25,6 +40,8 @@ export default function CourseTestPage() {
 }
 
 const StyledLayout = styled(CourseSlideLayout)`
+    animation: ${showContent} 0.5s both;
+
     .back-to-chapter {
         @media ${DEVICE.laptopS} {
             margin-bottom: 60px;

@@ -7,8 +7,8 @@ import * as routes from "../../constants/routes"
 import "../../assets/fonts/index.css"
 import {
     SendButton,
-    NextQuestionButton,
-    BackToChapterButton,
+    NextButton,
+    PrevButton,
     Timer,
     InstructionModal,
     DocsLink,
@@ -133,8 +133,8 @@ export default function Test() {
             <ArrowRight color={COLORS.blue} />
             <Next />
             <Prev color={COLORS.orange} />
-            <NextQuestionButton />
-            <BackToChapterButton />
+            <NextButton />
+            <PrevButton />
             <Headphones />
             <Timer /> */}
             {/* <StepProgressBar slidesAmount="2" color={COLORS.green_light}/>
@@ -155,7 +155,7 @@ export default function Test() {
     )
 }
 
-const Container = styled.div`   
+const Container = styled.div`
     /* padding: 20px; */
 `
 const Text = styled.span``

@@ -20,6 +20,9 @@ export default function AudioPlayer({
     src,
     isOpened = true,
     className = "",
+    onPlay = () => {},
+    onPause = () => {},
+    onEnded = () => {},
 }) {
     const audioRef = useRef(null)
     const [isPlayingLocal, setIsPlayingLocal] = useState(false)
@@ -134,6 +137,7 @@ export default function AudioPlayer({
         }, 50)
 
         setIsPlayingLocal(true)
+        onPlay()
     }
 
     function handleError() {
@@ -142,6 +146,7 @@ export default function AudioPlayer({
 
     function handleEnd() {
         setProgressTime(fullTime)
+        onEnded()
     }
 
     function play() {
@@ -165,6 +170,7 @@ export default function AudioPlayer({
     function handlePause() {
         setIsPlayingLocal(false)
         clearInterval(intervalId.current)
+        onPause()
     }
 
     function togglePlay() {

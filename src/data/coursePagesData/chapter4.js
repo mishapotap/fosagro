@@ -80,16 +80,8 @@ const chapter4Data = {
                     },
                 },
                 links: [
-                    {
-                        id: 1,
-                        text: "TCFD отчет ФосАгро 2020",
-                        url: "chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://cdn.phosagro.ru/upload/iblock/35c/35c2ee0bc879eb911cb2aa1a4dddf722.pdf",
-                    },
-                    {
-                        id: 2,
-                        text: "Полный список сторонников TCFD",
-                        url: "https://www.fsb-tcfd.org/supporters/",
-                    },
+                    { id: 1, text: "TCFD отчет ФосАгро 2020", url: "https://cdn.phosagro.ru/upload/iblock/35c/35c2ee0bc879eb911cb2aa1a4dddf722.pdfchrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://cdn.phosagro.ru/upload/iblock/35c/35c2ee0bc879eb911cb2aa1a4dddf722.pdf" },
+                    { id: 2, text: "Полный список сторонников TCFD", url: "https://www.fsb-tcfd.org/supporters/" },
                 ],
             },
             2: {
@@ -431,9 +423,9 @@ const chapter4Data = {
                 links: [
                     {
                         id: 1,
-                        text: "Сертификаты соответствия ФосАгро",
-                        url: "https://www.phosagro.ru/upload/docs/iso-14001.pdf",
-                    },
+                        text: "Система экологического менеджмента",
+                        url: "https://www.phosagro.ru/sustainability/ecology/#accordion-ecology-management-system",
+                    }
                 ],
             },
             2: {
@@ -474,9 +466,9 @@ const chapter4Data = {
                 links: [
                     {
                         id: 1,
-                        text: "Подробнее об экомаркировке “Листок жизни”",
-                        url: "https://www.phosagro.ru/production/eco/vitality-leaf/ ",
-                    },
+                        text: "Экопреимущества",
+                        url: "https://www.phosagro.ru/production/eco/",
+                    }
                 ],
             },
             3: {

@@ -8,6 +8,7 @@ import { DEVICE, COLORS } from "../../constants"
 import { Fosagro, FosagroColored, LinkArrow } from "../../assets/svg"
 import { CourseMenuButton } from "../molecules"
 import { ModalStore, CourseProgressStore, SoundStore } from "../../store"
+import { Click2 } from "../../assets/audio"
 
 // TODO сделать ссылки RU EN рабочими
 // TODO сделать фиксированный хэдэр при скролле на моб?
@@ -32,24 +33,31 @@ function Header({
 
     const {activeSectColor, activeSectTitle} = CourseProgressStore
 
+    const clickSound = new Audio(Click2)
+
     const closeMenuModal = () => {
         ModalStore.closeModal("menu")
         SoundStore.setIsPlayingSound(true)
+    }
+
+    const handleClickLogo = () => {
+        SoundStore.setIsPlayingSound(true)
+        clickSound.play()
     }
 
     return (
         <Container>
             <HeaderInner>
                 <Logo>
-                    <Link to={routes.HOME} onClick={() => SoundStore.setIsPlayingSound(true)}>
-                        {colored ? <FosagroColored /> : <Fosagro />}
+                    <Link to={routes.HOME} onClick={() => handleClickLogo()}>
+                        <FosagroColored />
                     </Link>
                 </Logo>
                 {language && (
                     <LinksContainer>
                         <LinkToFosagro>
-                            <a href="https://www.phosagro.ru/" 
-                                target="_blank" 
+                            <a href="https://www.phosagro.ru/"
+                                target="_blank"
                                 rel="noopener noreferrer">
                                <LinkArrow className="linkArrow"/>
                                 <span>Корпоративный сайт</span>
@@ -234,7 +242,7 @@ const LinksContainer = styled.div`
     flex-grow: 1;
     justify-content: space-between;
     align-items: flex-end;
-    height: 100%;    
+    height: 100%;
 `
 
 const LinkToFosagro = styled.div`

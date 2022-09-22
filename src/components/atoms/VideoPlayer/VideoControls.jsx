@@ -172,7 +172,12 @@ const VideoPlayerBtn = styled.button`
 
 const FullscreenBtn = styled(VideoPlayerBtn)`
     margin-left: 30px;
-    width: ${({ isFullscreen }) => (isFullscreen ? "74px" : "54px")};
+    width: ${({ isFullscreen }) => (isFullscreen ? "50px" : "54px")};
+
+    @media ${DEVICE.laptopM} {
+        width: ${({ isFullscreen }) => (isFullscreen ? "37px" : "38px")};
+    }
+
 
     @media ${DEVICE.laptopS} {
         width: 45px;

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/media-has-caption */
 /* eslint-disable react/jsx-no-bind */
 import React, { useRef } from "react"
 import styled from "styled-components"
@@ -10,7 +11,7 @@ import { COLORS, DEVICE } from "../../../constants"
 import { borderAnimationM } from "../../../constants/animations"
 import { Letter } from "../../../assets/svg"
 
-import NextQuestionButton from "../NextQuestionButton"
+import NextButton from "../NextButton"
 import AnimatedBlueButton from "../AnimatedBlueButton"
 import SendButton from "../SendButton"
 import { Text, Label, Block, StyledTitle } from "./styledAtoms"
@@ -104,7 +105,7 @@ function FinalBlock() {
                             to={CourseTestStore.nextCourseLink}
                             className="continue-learn"
                         >
-                            <NextQuestionButton
+                            <NextButton
                                 text="Продолжить изучение"
                             />
                         </Link>

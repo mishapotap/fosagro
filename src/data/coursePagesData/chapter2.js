@@ -2,8 +2,21 @@ import {
     CourseSliderTwo21,
     CourseSliderTwo22,
     CourseSliderTwo23,
+    Speaker21,
 } from "../../assets/Course2/Topic2"
-import { MainBG } from "../../assets/video"
+
+import {
+    Video32,
+    Video33,
+    Video34,
+    Video35,
+    Video36,
+} from "../../assets/Course2/Topic3"
+
+import { Speaker11 } from "../../assets/Course2/Topic1/Point1"
+import { Speaker12 } from "../../assets/Course2/Topic1/Point2"
+import { Speaker13 } from "../../assets/Course2/Topic1/Point3"
+import { Speaker31 } from "../../assets/Course2/Topic3/Point1"
 
 // TODO заполнить нормальные данные для аудио, видео, слайдеров и ссылок
 
@@ -13,7 +26,7 @@ const chapter2Data = {
         pages: {
             1: {
                 title: "Пределы роста",
-                audioSrc: "",
+                audioSrc: Speaker11,
                 content: [
                     {
                         component: "List",
@@ -40,10 +53,17 @@ const chapter2Data = {
                     type: "animation",
                     component: "AnimateChart",
                 },
+                links: [
+                    {
+                        id: 1,
+                        text: "Римский клуб",
+                        url: "https://www.clubofrome.org/",
+                    },
+                ],
             },
             2: {
                 title: "Глобальный договор",
-                audioSrc: "",
+                audioSrc: Speaker12,
                 content: [
                     {
                         component: "List",
@@ -66,10 +86,17 @@ const chapter2Data = {
                     type: "animation",
                     component: "AnimateGlobalContract",
                 },
+                links: [
+                    {
+                        id: 1,
+                        text: "Глобальный договор ООН",
+                        url: "http://globalcompact.ru/",
+                    },
+                ],
             },
             3: {
                 title: "На повестке дня - устойчивое развитие",
-                audioSrc: "",
+                audioSrc: Speaker13,
                 content: [
                     {
                         component: "List",
@@ -101,8 +128,7 @@ const chapter2Data = {
                     {
                         id: 1,
                         text: "Повестка дня в области устойчивого развития на период до 2030 года",
-                        // TODO попросить рабочую ссылку?
-                        url: "https://www.un.org/ga/search/view_doc.asp?symbol=A/RES/70/1&Lang=R",
+                        url: "https://sdgs.un.org/ru/2030agenda",
                     },
                 ],
             },
@@ -113,7 +139,7 @@ const chapter2Data = {
         pages: {
             1: {
                 title: "Роль ФосАгро",
-                audioSrc: "",
+                audioSrc: Speaker21,
                 content: [
                     {
                         component: "List",
@@ -161,7 +187,7 @@ const chapter2Data = {
         pages: {
             1: {
                 title: "Наши цели устойчивого развития",
-                audioSrc: "",
+                audioSrc: Speaker31,
                 content: [
                     {
                         component: "Text",
@@ -202,15 +228,8 @@ const chapter2Data = {
                 media: {
                     type: "video",
                     component: "VideoPlayer",
-                    data: { src: MainBG },
+                    data: { src: Video32 },
                 },
-                links: [
-                    {
-                        id: 1,
-                        text: "Годовой отчет ФосАгро 2021 года",
-                        url: "chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://cdn.phosagro.ru/upload/iblock/dc9/dc9ee42f1af7716f4ce9cebfde271755.pdf",
-                    },
-                ],
             },
             3: {
                 title: "Какой вклад вносит Компания в достижение ЦУР 2?",
@@ -232,17 +251,8 @@ const chapter2Data = {
                 media: {
                     type: "video",
                     component: "VideoPlayer",
-                    data: { src: MainBG },
+                    data: { src: Video33 },
                 },
-                links: [
-                    { id: 1, text: "Каталог продукции ФосАгро", url: "https://www.phosagro.ru/production/" },
-                    // TODO добавить ссылку
-                    {
-                        id: 2,
-                        text: "Проекты ФосАгро, направленные на сохранение и повышение почвенного плодородия",
-                        url: "#",
-                    },
-                ],
             },
             4: {
                 title: "Какие цели ставит перед собой Компания?",
@@ -275,13 +285,13 @@ const chapter2Data = {
                 media: {
                     type: "video",
                     component: "VideoPlayer",
-                    data: { src: MainBG },
+                    data: { src: Video34 },
                 },
                 links: [
                     {
                         id: 1,
-                        text: "Приверженность ЦУР ООН в ФосАгро",
-                        url: "https://www.phosagro.ru/sustainability/",
+                        text: "Цель 2: Ликвидация голода",
+                        url: "https://www.phosagro.ru/sustainability/zero-hunger/",
                     },
                 ],
             },
@@ -312,7 +322,7 @@ const chapter2Data = {
                 media: {
                     type: "video",
                     component: "VideoPlayer",
-                    data: { src: MainBG },
+                    data: { src: Video35 },
                 },
                 links: [
                     {
@@ -360,7 +370,7 @@ const chapter2Data = {
                 media: {
                     type: "video",
                     component: "VideoPlayer",
-                    data: { src: MainBG },
+                    data: { src: Video36 },
                 },
             },
         },

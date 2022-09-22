@@ -1,6 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { Link, Outlet } from "react-router-dom"
+import { Helmet } from "react-helmet"
 import { menuButtonData } from "./data"
 import { MenuButton } from "./components/molecules"
 import { OOH } from "./assets/svg/static"
@@ -15,14 +16,24 @@ function App() {
 
     return (
         <Layout>
+            <Helmet>
+                <title data-rh="true">
+                    Учебный курс &laquo;Устойчивое развитие&raquo; компании
+                    ФосАгро
+                </title>
+                <meta
+                    name="description"
+                    content="Устойчивое развитие - термин популярный. Его обсуждают практически 
+                    на всех уровнях, во многих сферах. В этом курсе вы узнаете, что означает понятие устойчивого развития 
+                    для ФосАгро и какие мероприятия проводится компанией для обеспечения устойчивого развития."
+                />
+            </Helmet>
             <Background>
                 <Video src={MainBG} loop muted autoPlay playsInline />
             </Background>
             <Content>
                 <TextContainer>
-                    <Title>
-                        Учебный курс «Устойчивое развитие» компании ФосАгро
-                    </Title>
+                    <Title>Курс “Устойчивое развитие”</Title>
                     <Suptitle>
                         <div>Компания ФосАгро напрямую способствует</div>
                         <div>

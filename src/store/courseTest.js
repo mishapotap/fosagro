@@ -2,8 +2,6 @@ import { makeAutoObservable } from "mobx"
 import { coursePagesData, courseTestsData } from "../data"
 import { sectColors } from "../data/coursePagesData/general"
 
-// TODO создать нормальные данные для отрисовки секций
-
 class CourseTest {
     activeCourseId = 1
 
@@ -114,7 +112,14 @@ class CourseTest {
     get learnSectsData() {
         const courseData = coursePagesData[this.activeCourseId]
         const sectsData = this.learnSectsIds.map((id) => {
-
+            if (id === 'intro') {
+                return {
+                    id,
+                    title: 'Введение',
+                    link: `/course${this.activeCourseId}/intro`,
+                    color: sectColors.intro
+                }
+            }
             const { sectTitle } = courseData[id]
             const sectLink = `/course${this.activeCourseId}/topic${id}/point1`
             const sectColor = sectColors[id]
@@ -175,10 +180,11 @@ class CourseTest {
         return this.tests[this.activeCourseId].treeRightAnswCount
     }
 
-    // TODO ! проверять есть ли дальше курс, и только тогда покащывать в тесте кнопку прожолжжить обучение?
-    // eslint-disable-next-line class-methods-use-this
     get nextCourseLink() {
-        return `/course${+this.activeCourseId + 1}`
+        if (coursePagesData[this.activeCourseId + 1]) {
+            return `/course${+this.activeCourseId + 1}`
+        }
+        return '/'
     }
 
     get learnSectsIds() {
@@ -191,12 +197,14 @@ class CourseTest {
             const { correct, wrongAnswerSectId } = qData
 
             if (qData) {
-                if (
-                    // eslint-disable-next-line eqeqeq
-                    answId != correct &&
-                    !wrongSectIds.includes(wrongAnswerSectId)
-                ) {
-                    wrongSectIds.push(wrongAnswerSectId)
+                if (!wrongSectIds.includes(wrongAnswerSectId)) {
+                    if (typeof correct === "object") {
+
+                        if (!correct.includes(answId))
+                            wrongSectIds.push(wrongAnswerSectId)
+
+                    } else if (answId !== correct)
+                        wrongSectIds.push(wrongAnswerSectId)
                 }
             }
         })
@@ -245,9 +253,9 @@ class CourseTest {
 
             if (qData) {
                 // eslint-disable-next-line eqeqeq
-                if (answId == correct) {
-                    count += 1
-                }
+                if (typeof correct === 'object') {
+                    if (correct.includes(answId)) count += 1
+                } else if (answId === correct) count += 1
             }
         })
         return count

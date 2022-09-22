@@ -1,3 +1,7 @@
 export { default as FonAudio } from "./fonAudio.mp3"
 export { default as Click1 } from "./click1.mp3"
 export { default as Click2 } from "./click2.mp3"
+export { default as TestEnd } from "./TestEnd.mp3"
+export { default as Instruction1 } from "./Instruction1.wav"
+export { default as Instruction2 } from "./Instruction2.wav"
+export { default as Intro } from "./intro.mp3"

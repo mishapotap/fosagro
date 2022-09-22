@@ -4,9 +4,13 @@ import { coursePagesData } from "../data"
 import { COLORS } from "../constants"
 import { sectColors, sectsProgressTypes } from "../data/coursePagesData/general"
 
-// TODO отслеживать прогресс пользователя
-// TODO связать прогресс с кружками на таймлайне
-// (еще на гоавную проценты надо прохождения)
+// TODO сделать чтобы состояние устанавливалось в ls и бралось из него
+// (не только здесь, еще состояние тестов)
+
+// TODO сделать защиту роутов для страниц курса? (если пред темы не пройдены чтобы нельзя было попасть)
+
+// TODO сделать чтобы при нажатии на секцию открывалась страница на которой остановился
+// пользователь, а не с начала?
 
 class CourseProgress {
     activeSectId = 1
@@ -16,6 +20,85 @@ class CourseProgress {
     activeSectPageId = 1
 
     activeSectLink = ""
+
+    showNotification = false
+
+    isTestActive = false
+
+    userVisitedCourse = {
+        1: false,
+        2: false,
+        3: false,
+        4: false,
+        5: false,
+        6: false,
+    }
+
+    notifPos = { left: 0, top: 0 }
+
+    notifTimeoutId = null
+
+    isTimelinePageActive = true
+
+    isWrongPath = false
+
+    visitedPages = {
+        1: {
+            intro: false,
+            1: [],
+            4: [],
+            3: [],
+            2: [],
+            test: false,
+        },
+        2: {
+            intro: false,
+            1: [],
+            2: [],
+            3: [],
+            test: false,
+        },
+        3: {
+            intro: false,
+            1: [],
+            2: [],
+            3: [],
+            4: [],
+            5: [],
+            6: [],
+            7: [],
+            8: [],
+            test: false,
+        },
+        4: {
+            intro: false,
+            1: [],
+            2: [],
+            3: [],
+            4: [],
+            5: [],
+            6: [],
+            7: [],
+            test: false,
+        },
+        5: {
+            intro: false,
+            1: [],
+            2: [],
+            3: [],
+            4: [],
+            5: [],
+            test: false,
+        },
+        6: {
+            intro: false,
+            1: [],
+            2: [],
+            3: [],
+            4: [],
+            test: false,
+        },
+    }
 
     constructor() {
         makeAutoObservable(this)
@@ -32,24 +115,25 @@ class CourseProgress {
         return null
     }
 
-    get isWrongPath() {
-        return !this.activePageData
-    }
-
     get activePageData() {
         if (this.activeCourseData && this.activeSectData) {
             const pageData = this.activeSectData.pages[this.activeSectPageId]
             if (pageData) {
                 return pageData
             }
-
             return null
         }
         return null
     }
 
     get activeSectTitle() {
-        return this.isWrongPath ? "" : this.activeSectData.sectTitle
+       if (this.isWrongPath) {
+            return ''
+        }
+
+        if (this.activeSectData) return this.activeSectData.sectTitle
+
+        return ''
     }
 
     get activeSectColor() {
@@ -96,6 +180,16 @@ class CourseProgress {
         // eslint-disable-next-line prefer-const
         let newLink = `/course${this.activeCourseId}/`
 
+        if (this.isTestActive) {
+            const sectsCount = Object.keys(this.activeCourseData).length
+            const lastSectData = this.activeCourseData[sectsCount]
+
+            const lastPageId = Object.keys(lastSectData.pages).length
+            newLink += `topic${sectsCount}/point${lastPageId}`
+
+            return newLink
+        }
+
         const newPageId = +this.activeSectPageId - 1
         const prevPage = this.activeSectData.pages[newPageId]
         if (prevPage) {
@@ -110,29 +204,248 @@ class CourseProgress {
                 const pagesCount = Object.keys(prevSectData.pages).length
                 newLink += `topic${prevSectId}/point${pagesCount}`
             } else {
-                // переключить на прошлый курс, если есть
-                const prevCourseId = +this.activeCourseId - 1
-                const prevCourseData = coursePagesData[prevCourseId]
-                if (prevCourseData) {
-                    return `/course${prevCourseId}`
-                }
-                return "/course1"
+                return `/course${this.activeCourseId}`
             }
         }
 
         return newLink
     }
 
+    get activeCourseProgressPer() {
+        return this.courseProgressPercent(this.activeCourseId)
+    }
+
+    get isTestAvailable() {
+        const courseSects = Object.keys(this.visitedPages[this.activeCourseId])
+        const okCourseSects = courseSects.filter(sect => sect !== 'test')
+        const notComplSect = okCourseSects.find(sectId => !this.isSectCompleted(sectId))
+        return !notComplSect
+    }
+
+    get introStartLink() {
+        return `/course${this.activeCourseId}/topic1/point1`
+    }
+
+    get instructionModalLink() {
+        return `/course${this.activeCourseId}`
+    }
+
+    coursePagesCount(courseId) {
+        if (coursePagesData[courseId]) {
+            // потому что + тест и введение
+            let count = 2
+
+            Object.entries(coursePagesData[courseId]).forEach(
+                // eslint-disable-next-line no-unused-vars
+                ([sectId, sectData]) => {
+                    if (typeof sectData === "object") {
+                        const sectPagesCount = Object.keys(
+                            sectData.pages
+                        ).length
+                        count += sectPagesCount
+                    }
+                }
+            )
+
+            return count
+        }
+        return 0
+    }
+
+    setIsTestActive(val) {
+        this.isTestActive = val
+    }
+
+    sectPagesCount(courseId, sectId) {
+        const pages = Object.keys(coursePagesData[courseId][sectId].pages)
+        return pages.length
+    }
+
+    courseVisitedPagesCount(courseId) {
+        if (this.visitedPages[courseId]) {
+            let count = 0
+
+            Object.values(this.visitedPages[courseId]).forEach((pagesArr) => {
+                if (typeof pagesArr === "object") {
+                    pagesArr.forEach(() => {
+                        count += 1
+                    })
+                }
+            })
+
+            if (this.visitedPages[courseId].test) count += 1
+
+            if (this.visitedPages[courseId].intro) count += 1
+
+            return count
+        }
+
+        return 0
+    }
+
+    courseProgressPercent(courseId = 1) {
+        const percent =
+            (this.courseVisitedPagesCount(courseId) * 100) /
+            this.coursePagesCount(courseId)
+        return Math.trunc(percent)
+    }
+
+    isPageCompleted(sectId, pageId) {
+        const sectPagesArr = this.visitedPages[this.activeCourseId][sectId]
+        if (sectPagesArr) {
+            return sectPagesArr.includes(pageId)
+        }
+
+        return false
+    }
+
+    isSectAvailable(sectId) {
+        if (sectId === "intro") return true
+
+        const sectsBefore = []
+        Object.entries(this.visitedPages[this.activeCourseId]).forEach(
+            ([id]) => {
+                if (id === "intro") {
+                    sectsBefore.push(id)
+                } else if (id < sectId) {
+                    sectsBefore.push(id)
+                }
+            }
+        )
+
+        // секция доступна если все предыдущие пройдены
+        const notCompletedSect = sectsBefore.find(
+            (sect) => !this.isSectCompleted(sect)
+        )
+        const isSectAvailable = !notCompletedSect
+
+        return isSectAvailable
+    }
+
+    isPageAvailable(courseId, sectId, pageId) {
+        const visitedSects = this.visitedPages[courseId]
+
+        if (!visitedSects.intro) {
+            return false
+        }
+
+        const sects = Object.entries(visitedSects)
+        const notPassedSectBefore = sects.find(([id]) => id < sectId && !this.isSectCompleted(id))
+
+        if (notPassedSectBefore) {
+            return false
+        }
+
+        const beforePagesIds = visitedSects[sectId].filter(pId => pId < pageId)
+        const pageAvailable = beforePagesIds.length === +pageId - 1
+
+        return pageAvailable
+    }
+
+    isSectCompleted(sectId) {
+        if (sectId === "test") {
+            return this.visitedPages[this.activeCourseId].test
+        }
+
+        if (sectId === "intro") {
+            return this.visitedPages[this.activeCourseId].intro
+        }
+
+        const visitedPagesArr = this.visitedPages[this.activeCourseId][sectId]
+
+        if (visitedPagesArr) {
+            const visitedPagesCount = visitedPagesArr.length
+            return (
+                this.sectPagesCount(this.activeCourseId, sectId) ===
+                visitedPagesCount
+            )
+        }
+
+        return false
+    }
+
+    setTestPassed() {
+        this.visitedPages[this.activeCourseId].test = true
+    }
+
+    setIntroPassed() {
+        this.visitedPages[this.activeCourseId].intro = true
+    }
+
+    setIsTimelinePageActive(val) {
+        this.isTimelinePageActive = val
+    }
+
+    setActiveIds(courseId, sectId, pageId) {
+        this.setActiveCourseId(courseId)
+        this.setActiveSectId(sectId)
+        this.setActivePageId(pageId)
+    }
+
     setActiveCourseId(id) {
-        this.activeCourseId = id
+        if (coursePagesData[id]) {
+            this.activeCourseId = +id
+            this.isWrongPath = false
+        } else {
+            this.isWrongPath = true
+        }
     }
 
     setActiveSectId(id) {
-        this.activeSectId = id
+        if (coursePagesData[this.activeCourseId][id]) {
+            this.activeSectId = +id
+            this.isWrongPath = false
+        } else {
+            this.isWrongPath = true
+        }
     }
 
     setActivePageId(id) {
-        this.activeSectPageId = id
+        const { pages } =
+            coursePagesData[this.activeCourseId][this.activeSectId]
+        // eslint-disable-next-line eqeqeq
+        const pageData = Object.keys(pages).find((i) => i == id)
+        if (pageData) {
+            this.activeSectPageId = +id
+            this.isWrongPath = false
+        } else {
+            this.isWrongPath = true
+        }
+    }
+
+    setVisitedPage() {
+        const visitedSectPages =
+            this.visitedPages[this.activeCourseId][this.activeSectId]
+
+        if (!visitedSectPages.includes(this.activeSectPageId)) {
+            this.visitedPages[this.activeCourseId][this.activeSectId].push(
+                this.activeSectPageId
+            )
+        }
+    }
+
+    setUserVisitedCourse(courseId) {
+        if (!this.userVisitedCourse[courseId]) {
+            this.userVisitedCourse[courseId] = true
+        }
+    }
+
+    setShowNotification(val) {
+        this.showNotification = val
+    }
+
+    setNotifTimeout() {
+        if (this.notifTimeoutId) clearTimeout(this.notifTimeoutId)
+
+        this.showNotification = true
+
+        this.notifTimeoutId = setTimeout(() => {
+            this.setShowNotification(false)
+        }, 2000)
+    }
+
+    setNotifPos(posData) {
+        this.notifPos = posData
     }
 }
 

@@ -1,15 +1,16 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-use-before-define */
 /* eslint-disable react/jsx-no-bind */
 import React, { useEffect, useRef, useState } from "react"
-import { useParams, useLocation } from "react-router"
+import { useParams, useLocation, useNavigate } from "react-router"
 import styled, { css, keyframes } from "styled-components"
 import { Link } from "react-router-dom"
 import { CSSTransition } from "react-transition-group"
 import { observer } from "mobx-react-lite"
 
-import BackToChapterButton from "./BackToChapterButton"
-import NextQuestionButton from "./NextQuestionButton"
+import PrevButton from "./PrevButton"
+import NextButton from "./NextButton"
 import CourseSlideLayout from "./CourseSlideLayout"
 import { StepProgressBar } from "../molecules"
 import { Title, ContentBlock, Label, BubbleContainer } from "./Content"
@@ -29,20 +30,29 @@ import { Error404 } from "../pages"
 // TODO может стоит как-то поправить анимации некоторые на моб, или убрать их?
 // (текст в AnmateGlobal и AnimateChart например получается очень маленький)
 
-// TODO изменить расположение аудиоплеера? (также в IntroModal)
-
 // TODO сделать чтобы плавно появлялись элементы
 // (чтобы прошлое состояние не было видно)
 
 // TODO сделать плавное переключение получше?
 
+// TODO сделать чтобы переключение слайдера было по времени с аудио?
+// (добавить доп поле в данных?)
+
 function CoursePage() {
-    SoundStore.setIsPlayingSound(false)
     const { id: courseId, sectId, pageId } = useParams()
     const pageData = CourseProgressStore.activePageData
     const location = useLocation()
+    const navigate = useNavigate()
 
-    const [key, setKey] = useState(1)
+    const [key, _setKey] = useState(1)
+    const [mediaKey, setMediaKey] = useState(1)
+    const [audioPlaying, setAudioPlaying] = useState(false)
+    const [videoPlaying, setVideoPlaying] = useState(false)
+
+    function setKey(val) {
+        _setKey(val)
+        setMediaKey(val)
+    }
 
     const audioColRef = useRef(null)
     const contentColRef = useRef(null)
@@ -51,10 +61,18 @@ function CoursePage() {
     const isFirstRender = useRef(true)
     const colsRef = useRef(null)
 
+    const audioTmId = useRef(null)
+    const videoTmId = useRef(null)
+    const animTmId = useRef(null)
+
+    const didAudioEnded = useRef(null)
+    const wasFirstPlay = useRef(false)
+
     const [showSlide, setShowSlide] = useState(true)
     const [leftSlide, setLeftSlide] = useState(false)
     const [rightSlide, setRightSlide] = useState(false)
 
+    const [pauseAnim, setPauseAnim] = useState(true)
     const [makeBubbles, setMakeBubbles] = useState(false)
 
     function setIds() {
@@ -62,6 +80,26 @@ function CoursePage() {
         CourseProgressStore.setActiveSectId(sectId)
         CourseProgressStore.setActivePageId(pageId)
     }
+
+    useEffect(() => {
+        CourseProgressStore.setIsTestActive(false)
+        CourseProgressStore.setIsTimelinePageActive(false)
+        SoundStore.setIsPlayingSound(false)
+
+        animTmId.current = setTimeout(() => {
+            const audioEl = document.querySelector('.audio-player audio')
+
+            if (!audioSrc || (audioEl && audioEl.paused)) {
+                setPauseAnim(false)
+            }
+        }, 2000);
+
+        return () => {
+            if (audioTmId.current) clearTimeout(audioTmId.current)
+            if (videoTmId.current) clearTimeout(videoTmId.current)
+            if (animTmId.current) clearTimeout(animTmId.current)
+        }
+    }, [])
 
     useEffect(() => {
         if (pageData) {
@@ -75,6 +113,9 @@ function CoursePage() {
                 setMakeBubbles(false)
             }
         }
+
+        didAudioEnded.current = false
+        wasFirstPlay.current = false
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [CourseProgressStore.activePageData])
 
@@ -93,10 +134,33 @@ function CoursePage() {
                 slideContent.scrollTop = 0
             }, 100)
         }
+
+        if (!CourseProgressStore.isWrongPath) {
+            const pageAvailable = CourseProgressStore.isPageAvailable(courseId, sectId, pageId);
+
+            if (!pageAvailable) {
+                navigate(`/course${courseId}`)
+            } else {
+                CourseProgressStore.setVisitedPage()
+            }
+        }
+
+        setAudioPlaying(false)
+
+        audioTmId.current = setTimeout(() => {
+            setAudioPlaying(true)
+        }, 1500);
+
+        setVideoPlaying(false)
+
+        videoTmId.current = setTimeout(() => {
+            setVideoPlaying(true)
+        }, 1600);
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location])
 
-    if (!pageData) {
+    if (CourseProgressStore.isWrongPath || !pageData) {
         return <Error404 />
     }
 
@@ -125,12 +189,35 @@ function CoursePage() {
     function handleExited() {
         setKey(key + 1)
         setIds()
+        CourseProgressStore.setVisitedPage()
         setShowSlide(true)
     }
 
     function handleEntered() {
         setLeftSlide(false)
         setRightSlide(false)
+    }
+
+    function onAudioPlay() {
+        setPauseAnim(false)
+
+        if (!wasFirstPlay.current) wasFirstPlay.current = true
+
+        if (didAudioEnded.current) {
+            // запустить анимацию заново
+            setMediaKey(mediaKey + 1)
+        }
+    }
+
+    function onAudioPause() {
+        if (wasFirstPlay.current && !leftSlide && !rightSlide) {
+            setPauseAnim(true)
+        }
+    }
+
+    function onAudioEnded() {
+        didAudioEnded.current = true
+        setPauseAnim(false)
     }
 
     const { component, data: mData, type: mediaType } = pageData.media
@@ -161,7 +248,15 @@ function CoursePage() {
                     nodeRef={audioColRef}
                 >
                     <AudioColumn ref={audioColRef} className="slide" key={key}>
-                        {audioSrc && <StyledAudioPlayer src={audioSrc} />}
+                        {audioSrc && (
+                            <StyledAudioPlayer
+                                src={audioSrc}
+                                isPlaying={audioPlaying}
+                                onPlay={onAudioPlay}
+                                onPause={onAudioPause}
+                                onEnded={onAudioEnded}
+                            />
+                        )}
                     </AudioColumn>
                 </CSSTransition>
                 <CSSTransition
@@ -231,7 +326,7 @@ function CoursePage() {
                             className="prev-btn"
                             onClick={handleBackClick}
                         >
-                            <BackToChapterButton text="Назад" />
+                            <PrevButton text="Назад" />
                         </Link>
                         <StepProgressBar />
                         <Link
@@ -239,7 +334,7 @@ function CoursePage() {
                             className="next-btn"
                             onClick={handleNextClick}
                         >
-                            <NextQuestionButton text="Вперед" />
+                            <NextButton text="Вперед" />
                         </Link>
                     </Nav>
                 </NavColumn>
@@ -256,11 +351,12 @@ function CoursePage() {
                         animation={animation}
                         objectSlider={objectSlider}
                         ref={mediaColRef}
+                        className={animation && pauseAnim ? "anim-paused" : ""}
                     >
                         <MediaColInner>
-                            <Media key={key}>
+                            <Media key={mediaKey}>
                                 {MediaComponent && (
-                                    <MediaComponent data={mediaData} />
+                                    <MediaComponent data={mediaData} isPlaying={videoPlaying} />
                                 )}
                             </Media>
                             {links && links.length > 0 && (
@@ -283,7 +379,7 @@ const ContentWrapper = styled.div`
 
 const StyledExtLinks = styled(ExtLinks)`
     bottom: 5px;
-    right: 36%;
+    right: 25%;
     z-index: 50;
 `
 
@@ -479,6 +575,14 @@ const MediaColumn = styled.div`
     grid-area: 1 / 3 / 4 / 4;
     overflow: hidden;
     padding-top: 20px;
+
+    &.anim-paused {
+        animation-play-state: paused;
+
+        * {
+            animation-play-state: paused;
+        }
+    }
 
     ${({ video }) =>
         video &&

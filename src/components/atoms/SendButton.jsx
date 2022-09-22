@@ -3,12 +3,13 @@ import styled from "styled-components"
 import { COLORS, DEVICE } from "../../constants"
 import { Spinner } from "../../assets/svg"
 
-export default function SendButton({ text, loading, onClick, disabled }) {
+export default function SendButton({ text, loading, onClick, disabled, color = COLORS.blue }) {
     return (
         <Container
             className={loading && "loading"}
             disabled={disabled}
             onClick={onClick}
+            color={color}
         >
             {text}
             {loading && <Spinner width="28%" color={COLORS.blue} />}
@@ -25,8 +26,8 @@ const Container = styled.button`
 
     padding: 0.85em 3.1em;
     border-radius: 2.7em;
-    border: 1px solid ${COLORS.blue};
-    background-color: ${COLORS.blue};
+    border: 1px solid ${({color}) => color};
+    background-color: ${({color}) => color};
 
     /* text */
     font-family: "CalibriRegular";
@@ -43,7 +44,7 @@ const Container = styled.button`
     &:focus {
         transition: all 0.3s;
         background-color: ${COLORS.white};
-        color: ${COLORS.blue};
+        color: ${({color}) => color};
     }
 
     &:disabled {

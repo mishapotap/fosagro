@@ -4,18 +4,21 @@ import {
     CourseSliderThree11,
     CourseSliderThree12,
     CourseSliderThree13,
+    Speaker11,
 } from "../../assets/Course3/Topic1/Point1"
 
 import {
     CourseSliderThree21,
     CourseSliderThree22,
     CourseSliderThree23,
+    Speaker12,
 } from "../../assets/Course3/Topic1/Point2"
 
 import {
     CourseSliderThree81,
     CourseSliderThree82,
     CourseSliderThree83,
+    Speaker81,
 } from "../../assets/Course3/Topic8"
 
 const chapter3Data = {
@@ -24,7 +27,7 @@ const chapter3Data = {
         pages: {
             1: {
                 title: "Новый мир",
-                audioSrc: "",
+                audioSrc: Speaker11,
                 content: [
                     {
                         component: "List",
@@ -67,7 +70,7 @@ const chapter3Data = {
             },
             2: {
                 title: "Глобальные задачи",
-                audioSrc: "",
+                audioSrc: Speaker12,
                 content: [
                     {
                         component: "List",
@@ -272,7 +275,12 @@ const chapter3Data = {
                     {
                         id: 1,
                         text: "Годовой отчет за 2021 год",
-                        url: "chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://cdn.phosagro.ru/upload/iblock/dc9/dc9ee42f1af7716f4ce9cebfde271755.pdf",
+                        url: "https://cdn.phosagro.ru/upload/iblock/dc9/dc9ee42f1af7716f4ce9cebfde271755.pdfchrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://cdn.phosagro.ru/upload/iblock/dc9/dc9ee42f1af7716f4ce9cebfde271755.pdf",
+                    },
+                    {
+                        id: 2,
+                        text: "Фосфогипс",
+                        url: "https://www.phosagro.ru/production/phosphogypsum/pavement/",
                     },
                 ],
             },
@@ -312,6 +320,13 @@ const chapter3Data = {
                         src: MainBG,
                     },
                 },
+                links: [
+                    {
+                        id: 1,
+                        text: "Как стать нашим поставщиком",
+                        url: "https://www.phosagro.ru/procurement/to-suppliers/how-to-be-a-supplier/",
+                    },
+                ],
             },
         },
     },
@@ -352,6 +367,18 @@ const chapter3Data = {
                         src: MainBG,
                     },
                 },
+                links: [
+                    {
+                        id: 1,
+                        text: "Новый продукт ApaSil",
+                        url: "https://apasil.phosagro.ru/?utm_source=phosagro.ru&utm_medium=banner_main_page&utm_campaign=apasil",
+                    },
+                    {
+                        id: 2,
+                        text: "Продуктовый каталог",
+                        url: "https://shop.phosagro.com/",
+                    },
+                ],
             },
         },
     },
@@ -385,6 +412,13 @@ const chapter3Data = {
                         src: MainBG,
                     },
                 },
+                links: [
+                    {
+                        id: 1,
+                        text: "Международные проекты",
+                        url: "https://www.phosagro.ru/international-projects/",
+                    },
+                ],
             },
         },
     },
@@ -393,7 +427,7 @@ const chapter3Data = {
         pages: {
             1: {
                 title: "Все мы немного изобретатели!",
-                audioSrc: "",
+                audioSrc: Speaker81,
                 content: [
                     {
                         component: "Text",
@@ -420,13 +454,6 @@ const chapter3Data = {
                         },
                     ],
                 },
-                links: [
-                    {
-                        id: 1,
-                        text: "Годовые интегрированные отчеты",
-                        url: "https://www.phosagro.ru/investors/reports/year/",
-                    },
-                ],
             },
         },
     },
