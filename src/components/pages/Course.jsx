@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useRef } from "react"
 import styled from "styled-components"
 import { Helmet } from "react-helmet"
 import { useLocation, useNavigate, useParams } from "react-router"
@@ -17,6 +17,7 @@ function Course() {
     const { id } = useParams()
     const location = useLocation()
     const navigate = useNavigate()
+    const titleAudio = useRef()
 
     useEffect(() => {
         if (location.pathname.includes("instruction")) {
@@ -76,6 +77,7 @@ function Course() {
                 <CourseMenu dataLine={dataLine} dataModal={dataModal} />
                 <TimelineFooter />
             </Container>
+            <Audio src={dataLine.titleAudio} ref={titleAudio}/>
         </StyledLayout>
     )
 }
@@ -182,3 +184,5 @@ const CourseSupTitle = styled.div`
         font-size: 16px;
     }
 `
+
+const Audio = styled.audio``

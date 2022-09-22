@@ -15,8 +15,13 @@ function CourseStep({button, points, dataModal, className, sectId, test, intro})
     const [isActive, setIsАсtive] = useState(false);
 
     const openIntroModal = () => {
-        ModalStore.showModal("intro");
-        SoundStore.setIsPlayingSound(false);
+
+        soundButton.current.play()
+
+        setTimeout(() => {
+            ModalStore.showModal("intro");
+            SoundStore.setIsPlayingSound(false);
+        }, soundButton.current.duration * 1000)        
     }
 
     const closeIntroModal = () => {
@@ -44,7 +49,7 @@ function CourseStep({button, points, dataModal, className, sectId, test, intro})
 
                 if (stepBtn) {
                     const {left, top} = getElWindowPos(stepBtn)
-                    CourseProgressStore.setNotifPos({left: `${left}px`, top: `${top - 150}px`});
+                    CourseProgressStore.setNotifPos({left: `${left - 50}px`, top: `${top - 150}px`});
                 }
             } else {
                 navigate( button.link )
