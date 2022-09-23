@@ -1,43 +1,57 @@
+import { Video11 } from "../../assets/Course6/Topic1/Point1"
+
 import {
     CourseSliderSix11,
     CourseSliderSix12,
     CourseSliderSix13,
+    Speaker12,
 } from "../../assets/Course6/Topic1/Point2"
+
+import { Video21 } from "../../assets/Course6/Topic2/Point1"
+import { Video22 } from "../../assets/Course6/Topic2/Point2"
 
 import {
     CourseSliderSix21,
     CourseSliderSix22,
     CourseSliderSix23,
+    Speaker23,
 } from "../../assets/Course6/Topic2/Point3"
 
 import {
     CourseSliderSix24,
     CourseSliderSix25,
     CourseSliderSix26,
+    Speaker24,
 } from "../../assets/Course6/Topic2/Point4"
+
+import { Video31 } from "../../assets/Course6/Topic3"
 
 import {
     CourseSliderSix41,
     CourseSliderSix42,
     CourseSliderSix43,
+    Speaker41,
 } from "../../assets/Course6/Topic4/Point1"
 
 import {
     CourseSliderSix44,
     CourseSliderSix45,
     CourseSliderSix46,
+    Speaker42,
 } from "../../assets/Course6/Topic4/Point2"
 
 import {
     CourseSliderSix47,
     CourseSliderSix48,
     CourseSliderSix49,
+    Speaker43,
 } from "../../assets/Course6/Topic4/Point3"
 
 import {
     CourseSliderSix410,
     CourseSliderSix411,
     CourseSliderSix412,
+    Speaker44,
 } from "../../assets/Course6/Topic4/Point4"
 
 import {
@@ -50,21 +64,22 @@ import {
     CourseSliderSix416,
     CourseSliderSix417,
     CourseSliderSix418,
+    Speaker46,
 } from "../../assets/Course6/Topic4/Point6"
 
 import {
     CourseSliderSix419,
     CourseSliderSix420,
     CourseSliderSix421,
+    Speaker47,
 } from "../../assets/Course6/Topic4/Point7"
 
 import {
     CourseSliderSix422,
     CourseSliderSix423,
     CourseSliderSix424,
+    Speaker48,
 } from "../../assets/Course6/Topic4/Point8"
-
-import { MainBG } from "../../assets/video"
 
 const chapter6Data = {
     1: {
@@ -102,20 +117,45 @@ const chapter6Data = {
                     type: "video",
                     component: "VideoPlayer",
                     data: {
-                        src: MainBG,
+                        src: Video11,
                     },
                 },
                 links: [
-                    {id: 1, text: "Политика управления персоналом ФосАгро", url: "https://www.phosagro.ru/upload/docs/hr_policy.pdf"},
-                    {id: 2, text: "Заявление о прозрачности в отношении закона «О современном рабстве»", url: "https://www.phosagro.ru/upload/docs/About_morern_sl.pdf"},
-                    {id: 3, text: "Кодекс этики", url: "https://cdn.phosagro.ru/upload/docs/ethics_code.pdf"},
-                    {id: 4, text: "Международный билль о правах человека", url: "https://www.ohchr.org/ru/what-are-human-rights/international-bill-human-rights"},
-                    {id: 5, text: "Всеобщая декларация международной организации труда", url: "https://www.ohchr.org/ru/what-are-human-rights"},
-                    {id: 6, text: "Кодекс поведения Контрагента Компании", url: "https://www.phosagro.ru/upload/docs/Code_of_Conduct_for_Counterparties_2020_ru.pdf"}
-                ]
+                    {
+                        id: 1,
+                        text: "Политика управления персоналом ФосАгро",
+                        url: "https://www.phosagro.ru/upload/docs/hr_policy.pdf",
+                    },
+                    {
+                        id: 2,
+                        text: "Заявление о прозрачности в отношении закона «О современном рабстве»",
+                        url: "https://www.phosagro.ru/upload/docs/About_morern_sl.pdf",
+                    },
+                    {
+                        id: 3,
+                        text: "Кодекс этики",
+                        url: "https://cdn.phosagro.ru/upload/docs/ethics_code.pdf",
+                    },
+                    {
+                        id: 4,
+                        text: "Международный билль о правах человека",
+                        url: "https://www.ohchr.org/ru/what-are-human-rights/international-bill-human-rights",
+                    },
+                    {
+                        id: 5,
+                        text: "Всеобщая декларация международной организации труда",
+                        url: "https://www.ohchr.org/ru/what-are-human-rights",
+                    },
+                    {
+                        id: 6,
+                        text: "Кодекс поведения Контрагента Компании",
+                        url: "https://www.phosagro.ru/upload/docs/Code_of_Conduct_for_Counterparties_2020_ru.pdf",
+                    },
+                ],
             },
             2: {
                 title: "Социальные инструменты ФосАгро",
+                audioSrc: Speaker12,
                 content: [
                     {
                         component: "Label",
@@ -238,7 +278,7 @@ const chapter6Data = {
                     type: "video",
                     component: "VideoPlayer",
                     data: {
-                        src: MainBG,
+                        src: Video21,
                     },
                 },
             },
@@ -273,13 +313,13 @@ const chapter6Data = {
                     type: "video",
                     component: "VideoPlayer",
                     data: {
-                        src: MainBG,
+                        src: Video22,
                     },
                 },
             },
             3: {
                 title: "Наша молодежь",
-                audioSrc: "",
+                audioSrc: Speaker23,
                 content: [
                     {
                         component: "Label",
@@ -342,7 +382,7 @@ const chapter6Data = {
             },
             4: {
                 title: "Наша поддержка",
-                audioSrc: "",
+                audioSrc: Speaker24,
                 content: [
                     {
                         component: "List",
@@ -433,23 +473,35 @@ const chapter6Data = {
                     type: "video",
                     component: "VideoPlayer",
                     data: {
-                        src: MainBG,
+                        src: Video31,
                     },
                 },
                 links: [
-                    {id: 1, text: "Политика в области охраны труда, промышленной и пожарной безопасности", url: "https://cdn.phosagro.ru/upload/docs/sustainability/Industrial-fire-safety-policy.pdf"},
-                    {id: 2, text: "Соответствие системы менеджмента международным стандартам", url: "https://www.phosagro.ru/upload/docs/iso-45001-2018-21-1584-026.pdf"},
-                    {id: 3, text: "«Золотые правила» ФосАгро", url: "https://www.phosagro.ru/files/golden_rules.pdf"}
-                ]
-            }
-        }
+                    {
+                        id: 1,
+                        text: "Политика в области охраны труда, промышленной и пожарной безопасности",
+                        url: "https://cdn.phosagro.ru/upload/docs/sustainability/Industrial-fire-safety-policy.pdf",
+                    },
+                    {
+                        id: 2,
+                        text: "Соответствие системы менеджмента международным стандартам",
+                        url: "https://www.phosagro.ru/upload/docs/iso-45001-2018-21-1584-026.pdf",
+                    },
+                    {
+                        id: 3,
+                        text: "«Золотые правила» ФосАгро",
+                        url: "https://www.phosagro.ru/files/golden_rules.pdf",
+                    },
+                ],
+            },
+        },
     },
     4: {
         sectTitle: "Вовлечение местных сообществ",
         pages: {
             1: {
                 title: "Социальные программы ФосАгро",
-                audioSrc: "",
+                audioSrc: Speaker41,
                 content: [
                     {
                         component: "Text",
@@ -477,12 +529,16 @@ const chapter6Data = {
                     ],
                 },
                 links: [
-                    {id: 1, text: "Программы вовлечения местных сообществ", url: "https://www.phosagro.ru/sustainability/social-response/#accordion-communities"}
-                ]
+                    {
+                        id: 1,
+                        text: "Программы вовлечения местных сообществ",
+                        url: "https://www.phosagro.ru/sustainability/social-response/#accordion-communities",
+                    },
+                ],
             },
             2: {
                 title: "Любимые города",
-                audioSrc: "",
+                audioSrc: Speaker42,
                 content: [
                     {
                         component: "Label",
@@ -518,7 +574,7 @@ const chapter6Data = {
             },
             3: {
                 title: "Школа-ВУЗ-предприятие",
-                audioSrc: "",
+                audioSrc: Speaker43,
                 content: [
                     {
                         component: "Label",
@@ -554,7 +610,7 @@ const chapter6Data = {
             },
             4: {
                 title: "Образование, здоровье, духовность",
-                audioSrc: "",
+                audioSrc: Speaker44,
                 content: [
                     {
                         component: "Label",
@@ -626,7 +682,7 @@ const chapter6Data = {
             },
             6: {
                 title: "Связь поколений",
-                audioSrc: "",
+                audioSrc: Speaker46,
                 content: [
                     {
                         component: "Label",
@@ -662,7 +718,7 @@ const chapter6Data = {
             },
             7: {
                 title: "Помогать важно",
-                audioSrc: "",
+                audioSrc: Speaker47,
                 content: [
                     {
                         component: "Label",
@@ -698,7 +754,7 @@ const chapter6Data = {
             },
             8: {
                 title: "Спорт",
-                audioSrc: "",
+                audioSrc: Speaker48,
                 content: [
                     {
                         component: "Label",

@@ -45,6 +45,7 @@ import {
     IntroModalSix11,
     IntroModalSix12,
     IntroModalSix13,
+    Intro6Speaker1,
 } from "../assets/Course6/Intro"
 
 const introModalData = {
@@ -234,7 +235,7 @@ const introModalData = {
                     alt: "image3",
                 },
             ],
-            audio: "",
+            audio: Intro6Speaker1,
         },
     ],
 }
