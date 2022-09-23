@@ -21,7 +21,7 @@ function CourseStep({button, points, dataModal, className, sectId, test, intro})
         setTimeout(() => {
             ModalStore.showModal("intro");
             SoundStore.setIsPlayingSound(false);
-        }, soundButton.current.duration * 1000)        
+        }, soundButton.current.duration * 1000)
     }
 
     const closeIntroModal = () => {
@@ -78,8 +78,9 @@ function CourseStep({button, points, dataModal, className, sectId, test, intro})
                         // TODO прописать data (картинки и аудио)
                         items={dataModal}/>
                     </>
-                // eslint-disable-next-line react/jsx-no-bind
-                : <Link to={ button.link } onClick={handleLinkClick}>
+                    // : <Link to={ CourseProgressStore.timelineBtnLink(sectId, test) } onClick={handleLinkClick}>
+                    // eslint-disable-next-line react/jsx-no-bind
+                    : <Link to={button.link } onClick={handleLinkClick}>
                     <CourseStepButton data={button.value}
                         className={`${className}-button`}
                         isActive={isActive}

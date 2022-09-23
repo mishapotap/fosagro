@@ -261,6 +261,10 @@ class CourseTest {
         return count
     }
 
+    get dataForLS() {
+        return this.tests
+    }
+
     resetProgress() {
         this.tests[this.activeCourseId] = {
             learnSectsIds: [],
@@ -278,6 +282,10 @@ class CourseTest {
             showTreeWait: false,
             showTreeEnd: false,
         }
+    }
+
+    setTestsData(data) {
+        this.test = data
     }
 
     setLearnSectId(id) {

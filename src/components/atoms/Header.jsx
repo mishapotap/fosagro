@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 import { observer } from "mobx-react-lite"
 import * as routes from "../../constants/routes"
 import { DEVICE, COLORS } from "../../constants"
-import { Fosagro, FosagroColored, LinkArrow } from "../../assets/svg"
+import { FosagroColored, LinkArrow } from "../../assets/svg"
 import { CourseMenuButton } from "../molecules"
 import { ModalStore, CourseProgressStore, SoundStore } from "../../store"
 import { Click2 } from "../../assets/audio"
@@ -159,17 +159,18 @@ const BackToMain = styled.div`
 `
 
 const HeaderSectTitle = styled.div`
-    flex: 0 1 100%;
+    position: absolute;
+    bottom: 0;
+    transform: translateY(calc(100% + 7px));
+
+    @media ${DEVICE.laptopS} {
+        transform: translateY(100%);
+    }
 `
 
 const SectTitle = styled.div`
     display: flex;
     align-items: flex-end;
-    margin-top: 10px;
-
-    @media ${DEVICE.laptopS} {
-        margin-top: 8px;
-    }
 `
 
 const SectTitleDecor = styled.div`
@@ -200,6 +201,8 @@ const SectTitleText = styled.div`
 `
 
 const HeaderInner = styled.div`
+    position: relative;
+
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;

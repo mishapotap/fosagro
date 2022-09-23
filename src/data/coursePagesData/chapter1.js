@@ -115,7 +115,7 @@ const chapter1Data = {
                     },
                 ],
                 media: {
-                    type: "animation",
+                    type: "circleSlider",
                     component: "Slider",
                     data: [
                         {

@@ -69,7 +69,7 @@ export default function IntroModal({ isOpen, onClose, items }) {
     function handleSlideChange(swiper) {
         const { activeIndex, previousIndex } = swiper
 
-        setTimeout(() => {
+        // setTimeout(() => {
             setSlidersAutoplay((prevState) => ({
                 ...prevState,
                 // ставим новому круглому слайдеру автоплэй
@@ -85,7 +85,7 @@ export default function IntroModal({ isOpen, onClose, items }) {
                 // выключаем аудио у старого слайда
                 [previousIndex]: false,
             }))
-        }, 1000)
+        // }, 1000)
     }
 
     function handleClose() {
@@ -182,6 +182,7 @@ export default function IntroModal({ isOpen, onClose, items }) {
                                                             CourseProgressStore.introStartLink
                                                         }
                                                         onClick={handleClose}
+                                                        className="start-link start-link-1"
                                                     >
                                                         <SendButton
                                                             text="Начать изучение курса"
@@ -208,6 +209,24 @@ export default function IntroModal({ isOpen, onClose, items }) {
                                                     <ExtLinks links={links} />
                                                 )}
                                             </SlideCol>
+                                            <StartLinkCol>
+                                                {index === items.length - 1 && (
+                                                    <Link
+                                                        to={
+                                                            CourseProgressStore.introStartLink
+                                                        }
+                                                        onClick={handleClose}
+                                                        className="start-link start-link-2"
+                                                    >
+                                                        <SendButton
+                                                            text="Начать изучение курса"
+                                                            color={
+                                                                COLORS.orange
+                                                            }
+                                                        />
+                                                    </Link>
+                                                )}
+                                            </StartLinkCol>
                                         </SlideCols>
                                     </SlideInner>
                                 </SwiperSlide>
@@ -385,11 +404,31 @@ const SwiperBtnsContainer = styled.div`
 
 // решила использовать grid, чтобы можно переместить аудиоплеер в конец на мобилке
 const SlideCols = styled.div`
+    position: relative;
     display: grid;
     grid-template: 11vh auto / 7% 41% 52%;
 
     @media ${DEVICE.laptopS} {
-        grid-template: auto auto auto auto / 100%;
+        grid-template: auto auto auto auto auto / 100%;
+    }
+
+    .start-link-1 {
+        margin-right: -20px;
+
+        @media ${DEVICE.laptopS} {
+            display: none;
+        }
+    }
+`
+
+const StartLinkCol = styled.div`
+    display: none;
+
+    @media ${DEVICE.laptopS} {
+        display: flex;
+        justify-content: center;
+        grid-area: 4 / 1 / 5 / 2;
+        margin-bottom: 30px;
     }
 `
 
@@ -408,7 +447,7 @@ const SlideCol = styled.div`
 
         @media ${DEVICE.laptopS} {
             justify-self: flex-start;
-            grid-area: 4 / 1 / 5 / 2;
+            grid-area: 5 / 1 / 6 / 2;
             margin-bottom: 300px;
         }
     }
@@ -416,7 +455,7 @@ const SlideCol = styled.div`
     &.content {
         grid-area: 2 / 2 / 3 / 3;
         padding-right: 23px;
-        padding-bottom: ${({ hasControls }) => (hasControls ? "17vh" : "30px")};
+        padding-bottom: ${({ hasControls }) => (hasControls ? "17vh" : "6vh")};
 
         display: flex;
         flex-direction: column;

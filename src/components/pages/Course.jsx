@@ -22,7 +22,9 @@ function Course() {
     useEffect(() => {
         if (location.pathname.includes("instruction")) {
             ModalStore.showModal("instruction")
-        } else if (location.pathname.includes("intro")) {
+        }
+
+        if (location.pathname.includes("intro")) {
             ModalStore.showModal("intro")
         }
     }, [location])
@@ -37,17 +39,22 @@ function Course() {
             if (
                 dataLine &&
                 dataModal &&
-                !CourseProgressStore.userVisitedCourse[id]
+                !CourseProgressStore.userVisitedAnyCourse
             ) {
-                navigate("instruction")
+                navigate('instruction')
+                CourseProgressStore.setUserVisitedAnyCourse()
                 CourseProgressStore.setUserVisitedCourse(id)
             }
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [id, dataLine, dataModal])
+    }, [id])
 
     useEffect(() => {
         CourseProgressStore.setIsTimelinePageActive(true)
+
+        return () => {
+            if (ModalStore.isVisible.instruction) ModalStore.closeModal('instruction')
+        }
     }, [])
 
     if (!dataLine && !dataModal) {

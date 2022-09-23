@@ -23,12 +23,12 @@ import { Headphones, ArrowRight, ArrowLeft } from "../../assets/svg"
 import { COLORS, DEVICE } from "../../constants"
 import { MenuBackground } from "../../assets/images"
 import SendButton from "./SendButton"
-import * as routes from "../../constants/routes"
 import Modal from "./Modal"
 import Layout from "./Layout"
 import { CourseProgressStore, ModalStore } from "../../store"
 import { renderCustom } from "../../utils"
 import { Click1, Instruction1, Instruction2 } from "../../assets/audio"
+import AudioPlayer from "./AudioPlayer"
 
 // eslint-disable-next-line
 import "swiper/css"
@@ -42,10 +42,8 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
 
     const clickSound = new Audio(Click1)
 
-    const audio1Ref = useRef(null)
-    const audio2Ref = useRef(null)
-
-    const [pauseAnims, setPauseAnims] = useState([false, false])
+    const [pauseAnims, setPauseAnims] = useState({ 0: false, 1: false })
+    const [playAudio, setPlayAudio] = useState({ 0: false, 1: false })
 
     const closeInstructionModal = () => {
         ModalStore.closeModal("instruction")
@@ -54,27 +52,36 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
 
     function handleAnimEnd() {
         setTimeout(() => {
-            if (audio2Ref.current.paused) {
-                audio1Ref.current.play()
-            }
+            setPlayAudio({ 0: true, 1: false })
         }, 1000)
     }
 
     function handleSlideChange(swiper) {
         const { activeIndex } = swiper
         if (activeIndex === 0) {
-            audio2Ref.current.pause()
-            audio1Ref.current.play()
-            if (makeAnim) setPauseAnims([false, true])
+            if (makeAnim) {
+                setPauseAnims({ 0: false, 1: true })
+            }
+            setPlayAudio({ 0: true, 1: false })
         } else {
-            audio2Ref.current.play()
-            audio1Ref.current.pause()
-            if (makeAnim) setPauseAnims([true, false])
+            if (makeAnim) {
+                setPauseAnims({ 0: true, 1: false })
+            }
+            setPlayAudio({ 0: false, 1: true })
         }
     }
 
+    function handleAudioEnded(index) {
+        setPauseAnims(() => ({ ...pauseAnims, [index]: false }))
+    }
+
     function handleInit() {
-        setPauseAnims([false, true])
+        setPauseAnims({ 0: false, 1: true })
+    }
+
+    function handleAudioPause(index) {
+        // остановить анимацию
+        setPauseAnims(() => ({ ...pauseAnims, [index]: true }))
     }
 
     return (
@@ -101,7 +108,12 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                             onInit={handleInit}
                         >
                             <SwiperSlide>
-                                <audio src={Instruction1} ref={audio1Ref} />
+                                <StyledAudioPlayer
+                                    src={Instruction1}
+                                    isPlaying={playAudio[0]}
+                                    onPause={() => handleAudioPause(0)}
+                                    onEnded={() => handleAudioEnded(0)}
+                                />
                                 <SlideInner>
                                     <Slide1Cols
                                         className={
@@ -155,7 +167,12 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                 </SlideInner>
                             </SwiperSlide>
                             <SwiperSlide>
-                                <audio src={Instruction2} ref={audio2Ref} />
+                                <StyledAudioPlayer
+                                    src={Instruction2}
+                                    isPlaying={playAudio[1]}
+                                    onPause={() => handleAudioPause(1)}
+                                    onEnded={() => handleAudioEnded(1)}
+                                />
                                 <SlideInner>
                                     <Slide2Cols
                                         className={
@@ -257,7 +274,9 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                     </Slide2Cols>
                                     <StartLearn>
                                         <Link
-                                            to={CourseProgressStore.instructionModalLink}
+                                            to={
+                                                CourseProgressStore.instructionModalLink
+                                            }
                                             onClick={() =>
                                                 closeInstructionModal()
                                             }
@@ -289,6 +308,15 @@ export default observer(InstructionModal)
 // мне здесь не подходит min-height, поэтому чтобы работало корректно, перезаписываю
 const StyledLayout = styled(Layout)`
     height: 100%;
+
+    .content {
+        padding-left: 5px;
+    }
+`
+
+const StyledAudioPlayer = styled(AudioPlayer)`
+    position: absolute;
+    left: 0;
 `
 
 const StyledModal = styled(Modal)`
@@ -378,15 +406,23 @@ const Container = styled.div`
 
     .swiper-pagination {
         position: absolute;
-        right: 0;
+        right: 9%;
         top: 0;
+
+        @media ${DEVICE.laptopS} {
+            right: 0;
+        }
     }
 
     .button-next {
         position: absolute;
         bottom: 2px;
-        right: 2px;
+        right: 10%;
         z-index: 20;
+
+        @media ${DEVICE.laptopS} {
+            right: 0;
+        }
     }
 
     .button-prev {
@@ -415,6 +451,17 @@ const SlideInner = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+
+    max-width: 82%;
+    margin: 0 auto;
+
+    @media ${DEVICE.laptopM} {
+        max-width: 85%;
+    }
+
+    @media ${DEVICE.mobile} {
+        max-width: 100%;
+    }
 `
 
 const LinksImage = styled.div`
@@ -444,7 +491,7 @@ const CourseImage = styled.div`
 
 const StartLearn = styled.div`
     position: absolute;
-    right: 2px;
+    right: 10%;
     bottom: 2px;
 `
 
@@ -744,7 +791,7 @@ const iconAppear = keyframes`
 const textRightAppear = keyframes`
     0% {
         opacity: 0;
-        transform: translateX(25px);
+        transform: translateX(45px);
     }
 
     100% {
@@ -756,7 +803,7 @@ const textRightAppear = keyframes`
 const textLeftAppear = keyframes`
     0% {
         opacity: 0;
-        transform: translateX(-25px);
+        transform: translateX(-45px);
     }
 
     100% {
@@ -768,23 +815,24 @@ const textLeftAppear = keyframes`
 const SliderContainer = styled.div`
     margin: 0 auto;
     height: 100%;
-    max-width: 81.8%;
+    /* max-width: 81.8%; */
+    max-width: 100%;
 
-    @media ${DEVICE.laptopM} {
+    /* @media ${DEVICE.laptopM} {
         max-width: 85%;
     }
 
     @media ${DEVICE.mobile} {
         max-width: 100%;
-    }
+    } */
 
     ${Slide1Cols},
     ${Slide2Cols} {
         &.anim-paused {
-            animation-play-state: paused!important;
+            animation-play-state: paused !important;
 
             * {
-                animation-play-state: paused!important;
+                animation-play-state: paused !important;
             }
         }
     }
@@ -848,7 +896,6 @@ const SliderContainer = styled.div`
                 ${IconHeadphones} {
                     animation-name: ${iconAppear};
                 }
-
 
                 .text-4,
                 .text-5,
