@@ -7,8 +7,6 @@ import { sectColors, sectsProgressTypes } from "../data/coursePagesData/general"
 // TODO сделать чтобы состояние устанавливалось в ls и бралось из него
 // (не только здесь, еще состояние тестов)
 
-// TODO сделать защиту роутов для страниц курса? (если пред темы не пройдены чтобы нельзя было попасть)
-
 // TODO сделать чтобы при нажатии на секцию открывалась страница на которой остановился
 // пользователь, а не с начала?
 
@@ -18,8 +16,6 @@ class CourseProgress {
     activeCourseId = 1
 
     activeSectPageId = 1
-
-    activeSectLink = ""
 
     showNotification = false
 
@@ -33,6 +29,10 @@ class CourseProgress {
         5: false,
         6: false,
     }
+
+    userVisitedAnyCourse = false
+
+    dontShowInstructionExpires = 0
 
     notifPos = { left: 0, top: 0 }
 
@@ -127,13 +127,13 @@ class CourseProgress {
     }
 
     get activeSectTitle() {
-       if (this.isWrongPath) {
-            return ''
+        if (this.isWrongPath) {
+            return ""
         }
 
         if (this.activeSectData) return this.activeSectData.sectTitle
 
-        return ''
+        return ""
     }
 
     get activeSectColor() {
@@ -217,8 +217,10 @@ class CourseProgress {
 
     get isTestAvailable() {
         const courseSects = Object.keys(this.visitedPages[this.activeCourseId])
-        const okCourseSects = courseSects.filter(sect => sect !== 'test')
-        const notComplSect = okCourseSects.find(sectId => !this.isSectCompleted(sectId))
+        const okCourseSects = courseSects.filter((sect) => sect !== "test")
+        const notComplSect = okCourseSects.find(
+            (sectId) => !this.isSectCompleted(sectId)
+        )
         return !notComplSect
     }
 
@@ -228,6 +230,28 @@ class CourseProgress {
 
     get instructionModalLink() {
         return `/course${this.activeCourseId}`
+    }
+
+    get isSlideBeforeTest() {
+        return this.nextPageLink.includes("test")
+    }
+
+    timelineBtnLink(sectId, isTest) {
+        if (isTest) return "test"
+
+        const pagesData = this.visitedPages[this.activeCourseId][sectId]
+        if (!pagesData) return `topic${sectId}/point1`
+
+        // проверить посещал ли пользователь секцию, перенести к последней посещенной странице
+        if (pagesData.length > 0) {
+            if (!this.isSectCompleted(sectId)) {
+                const largestNum = pagesData.reduce((accVal, currentVal) =>
+                    Math.max(accVal, currentVal)
+                )
+                return `topic${sectId}/point${largestNum}`
+            }
+        }
+        return `topic${sectId}/point1`
     }
 
     coursePagesCount(courseId) {
@@ -250,10 +274,6 @@ class CourseProgress {
             return count
         }
         return 0
-    }
-
-    setIsTestActive(val) {
-        this.isTestActive = val
     }
 
     sectPagesCount(courseId, sectId) {
@@ -330,13 +350,17 @@ class CourseProgress {
         }
 
         const sects = Object.entries(visitedSects)
-        const notPassedSectBefore = sects.find(([id]) => id < sectId && !this.isSectCompleted(id))
+        const notPassedSectBefore = sects.find(
+            ([id]) => id < sectId && !this.isSectCompleted(id)
+        )
 
         if (notPassedSectBefore) {
             return false
         }
 
-        const beforePagesIds = visitedSects[sectId].filter(pId => pId < pageId)
+        const beforePagesIds = visitedSects[sectId].filter(
+            (pId) => pId < pageId
+        )
         const pageAvailable = beforePagesIds.length === +pageId - 1
 
         return pageAvailable
@@ -362,6 +386,42 @@ class CourseProgress {
         }
 
         return false
+    }
+
+    get dataForLS() {
+        const seconds = 48 * 60 * 60 * 1000
+        const date = new Date()
+
+        return {
+            userVisitedAnyCourse: {
+                userVisitedAnyCourse: true,
+                expires: date.getTime() + seconds,
+            },
+            // visitedPages: this.visitedPages,
+        }
+    }
+
+    setProgressDataFromLs(data) {
+        const {
+            userVisitedAnyCourse: { userVisitedAnyCourse, expires },
+            // visitedPages,
+        } = data
+
+        const now = new Date()
+
+        if (now.getTime() > expires) {
+            this.userVisitedAnyCourse = false
+        } else {
+            this.userVisitedAnyCourse = userVisitedAnyCourse
+        }
+    }
+
+    setIsTestActive(val) {
+        this.isTestActive = val
+    }
+
+    setUserVisitedAnyCourse() {
+        this.userVisitedAnyCourse = true
     }
 
     setTestPassed() {
@@ -417,10 +477,12 @@ class CourseProgress {
         const visitedSectPages =
             this.visitedPages[this.activeCourseId][this.activeSectId]
 
-        if (!visitedSectPages.includes(this.activeSectPageId)) {
-            this.visitedPages[this.activeCourseId][this.activeSectId].push(
-                this.activeSectPageId
-            )
+        if (visitedSectPages) {
+            if (!visitedSectPages.includes(this.activeSectPageId)) {
+                this.visitedPages[this.activeCourseId][this.activeSectId].push(
+                    this.activeSectPageId
+                )
+            }
         }
     }
 

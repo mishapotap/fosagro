@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react"
+/* eslint-disable no-unused-vars */
+import React, { useEffect, useState, useRef } from "react"
 import styled, { css } from "styled-components"
 import { observer } from "mobx-react-lite"
 import { StepProgressBarImages } from "../atoms"
@@ -34,6 +35,9 @@ function StepProgressBar({
 
     const pointArray = getPointsArr()
     const [points, setPoints] = useState(pointArray)
+    const [showPercent, setShowPercent] = useState(true)
+    const progrPerRef = useRef(null)
+    const [showPerNumbers, setShowPerNumbers] = useState(progressWidth)
 
     useEffect(() => {
         const newArr = getPointsArr()
@@ -45,35 +49,56 @@ function StepProgressBar({
 
         setProgressWidth(oneSlideValue * progressSlides)
         setPoints(newPoints)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [CourseProgressStore.activeSectId, CourseProgressStore.activeSectPageId])
+
+    function onTrend() {
+        setShowPerNumbers(progressWidth)
+        progrPerRef.current.style.left = `calc(${progressWidth}% - 19px)`
+        setShowPercent(true)
+    }
+
+    useEffect(() => {
+        setShowPercent(false)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [CourseProgressStore.activeSectPageId])
+
+    useEffect(() => {
+        setShowPercent(true)
+        onTrend()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <Container width={width} className="step-progress-bar">
-                <StepProgressBarImages
-                    type={progressType}
-                    progressWidth={progressWidth}
-                />
-                <ProgressPoints>
-                    {points.map((item) => (
-                        <Point
-                            position={item.position}
-                            key={item.key}
-                            colorPoint={item.colorPoint}
-                        />
-                    ))}
-                </ProgressPoints>
-                <ProgressLine
-                    color={activeSectColor}
-                    progressWidth={progressWidth}
-                />
-                <ProgressPercent
-                    color={activeSectColor}
-                    progressWidth={progressWidth}
-                >
-                    {Math.round(progressWidth)}%
-                </ProgressPercent>
-            </Container>
+            <StepProgressBarImages
+                type={progressType}
+                progressWidth={progressWidth}
+            />
+            <ProgressPoints>
+                {points.map((item) => (
+                    <Point
+                        position={item.position}
+                        key={item.key}
+                        colorPoint={item.colorPoint}
+                    />
+                ))}
+            </ProgressPoints>
+            <ProgressLine
+                color={activeSectColor}
+                progressWidth={progressWidth}
+                // eslint-disable-next-line react/jsx-no-bind
+                onTransitionEnd={onTrend}
+            />
+            <ProgressPercent
+                color={activeSectColor}
+                progressWidth={progressWidth}
+                className={showPercent && "show"}
+                ref={progrPerRef}
+            >
+                {Math.round(showPerNumbers)}%
+            </ProgressPercent>
+        </Container>
     )
 }
 
@@ -141,7 +166,7 @@ const Point = styled.div`
 const ProgressPercent = styled.span`
     position: absolute;
     bottom: 0;
-    left: calc(${(props) => props.progressWidth}% - 19px);
+    left: 0;
     ${(props) =>
         props.progressWidth === 100 &&
         css`
@@ -155,4 +180,10 @@ const ProgressPercent = styled.span`
     line-height: 25px;
 
     color: ${(props) => props.color};
+    opacity: 0;
+    transition: opacity 0.2s;
+
+    &.show {
+        opacity: 1;
+    }
 `
