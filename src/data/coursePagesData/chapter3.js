@@ -1,5 +1,3 @@
-import { MainBG } from "../../assets/video"
-
 import {
     CourseSliderThree11,
     CourseSliderThree12,
@@ -13,6 +11,13 @@ import {
     CourseSliderThree23,
     Speaker12,
 } from "../../assets/Course3/Topic1/Point2"
+
+import { Video21 } from "../../assets/Course3/Topic2"
+import { Video31 } from "../../assets/Course3/Topic3"
+import { Video41 } from "../../assets/Course3/Topic4"
+import { Video51 } from "../../assets/Course3/Topic5"
+import { Video61 } from "../../assets/Course3/Topic6"
+import { Video71 } from "../../assets/Course3/Topic7"
 
 import {
     CourseSliderThree81,
@@ -163,7 +168,7 @@ const chapter3Data = {
                     type: "video",
                     component: "VideoPlayer",
                     data: {
-                        src: MainBG,
+                        src: Video21,
                     },
                 },
                 links: [
@@ -230,7 +235,7 @@ const chapter3Data = {
                     type: "video",
                     component: "VideoPlayer",
                     data: {
-                        src: MainBG,
+                        src: Video31,
                     },
                 },
             },
@@ -268,7 +273,7 @@ const chapter3Data = {
                     type: "video",
                     component: "VideoPlayer",
                     data: {
-                        src: MainBG,
+                        src: Video41,
                     },
                 },
                 links: [
@@ -317,7 +322,7 @@ const chapter3Data = {
                     type: "video",
                     component: "VideoPlayer",
                     data: {
-                        src: MainBG,
+                        src: Video51,
                     },
                 },
                 links: [
@@ -364,7 +369,7 @@ const chapter3Data = {
                     type: "video",
                     component: "VideoPlayer",
                     data: {
-                        src: MainBG,
+                        src: Video61,
                     },
                 },
                 links: [
@@ -409,7 +414,7 @@ const chapter3Data = {
                     type: "video",
                     component: "VideoPlayer",
                     data: {
-                        src: MainBG,
+                        src: Video71,
                     },
                 },
                 links: [
