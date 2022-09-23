@@ -23,6 +23,7 @@ export default function CourseTestPage() {
                 navigate(`/course${id}`)
             }
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     CourseTestStore.setActiveCourseId(id)

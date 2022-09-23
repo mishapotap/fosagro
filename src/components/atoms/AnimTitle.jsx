@@ -32,6 +32,7 @@ function AnimTitle({ data = {} }) {
         return () => {
             intervalIds.forEach((id) => clearTimeout(id))
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (

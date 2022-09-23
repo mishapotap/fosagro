@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import styled from "styled-components"
 import { Helmet } from "react-helmet"
 import { useLocation, useNavigate, useParams } from "react-router"
@@ -13,11 +13,13 @@ import Error404 from "./Error404"
 import { CourseProgressStore, ModalStore } from "../../store"
 import Notification from '../atoms/Notification'
 
+
 function Course() {
     const { id } = useParams()
     const location = useLocation()
     const navigate = useNavigate()
     const titleAudio = useRef()
+    const [isPlaying, setIsPlaying] = useState(false)
 
     useEffect(() => {
         if (location.pathname.includes("instruction")) {
@@ -57,6 +59,26 @@ function Course() {
         }
     }, [])
 
+    useEffect(() => {
+        function titleSoundPlay() {
+            if(!ModalStore.isVisible.instruction && !ModalStore.isVisible.intro) {
+                setIsPlaying(true)
+                titleAudio.current.play()
+            }
+            window.removeEventListener("click", titleSoundPlay)
+        }
+        window.addEventListener("click", titleSoundPlay, { ones: true})
+    }, [location])
+
+    useEffect(() => {
+        document.addEventListener("click", () => {
+            if(isPlaying) { 
+                titleAudio.current.pause()
+                setIsPlaying(false)
+            }
+        }, { once: true })
+    }, [isPlaying, location])
+
     if (!dataLine && !dataModal) {
         return <Error404 />
     }
@@ -84,7 +106,8 @@ function Course() {
                 <CourseMenu dataLine={dataLine} dataModal={dataModal} />
                 <TimelineFooter />
             </Container>
-            <Audio src={dataLine.titleAudio} ref={titleAudio}/>
+            <Audio src={dataLine.titleAudio} 
+                ref={titleAudio}/>
         </StyledLayout>
     )
 }

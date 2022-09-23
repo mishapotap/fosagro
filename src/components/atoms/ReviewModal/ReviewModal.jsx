@@ -20,7 +20,7 @@ function ReviewModal({ isOpen, onClose }) {
 
     const feedBackAudio = new Audio(FeedBack)
     // eslint-disable-next-line no-unused-expressions
-    isOpen && feedBackAudio.play()
+    isOpen && setTimeout(() => feedBackAudio.play(), 500)
 
     // думаю это состояние должно быть локальным, чтобы когда компонент будет создан заново,
     // нам не показывалось сообщение об успехе напр, а можно было снова отправить отзыв
