@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { observer } from "mobx-react-lite"
-import { ModalStore } from "../../store"
+import { ModalStore, SoundStore } from "../../store"
 import { COLORS, DEVICE } from "../../constants"
 import { BurgerIcon } from "../../assets/svg"
 import { MenuModal } from "../organisms"
@@ -12,13 +12,14 @@ function CourseMenuButton({colored}) {
     const clickSound = new Audio(Click1)
 
     const openMenu = () => {
-        ModalStore.showModal("menu");
-        clickSound.play();
+        ModalStore.showModal("menu")
+        clickSound.play()
+        SoundStore.setIsPlayingSound(true)
     }
 
     const closeMenu = () => {
-        ModalStore.closeModal("menu");
-        clickSound.play();
+        ModalStore.closeModal("menu")
+        clickSound.play()
     }
 
     return (

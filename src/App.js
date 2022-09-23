@@ -33,7 +33,7 @@ function App() {
                 <Video src={MainBG} loop muted autoPlay playsInline />
             </Background>
             <Container>
-                    {/* <ContentWrapper> */}
+                {/* <ContentWrapper> */}
                 <Content>
                     <TextContainer>
                         <Title>Курс “Устойчивое развитие”</Title>

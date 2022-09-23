@@ -9,6 +9,7 @@ import { DEVICE } from "../../constants"
 import { CourseContent } from "../atoms"
 
 export default function CourseContentPage() {
+
     const navigate = useNavigate()
     const { id: courseId, sectId, pageId } = useParams()
     const [showContent, setShowContent] = useState(false)

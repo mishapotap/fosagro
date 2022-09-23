@@ -24,6 +24,7 @@ function Content() {
                 setMakeBubbles(false)
             }
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pageData])
 
     return (

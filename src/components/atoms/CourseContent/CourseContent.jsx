@@ -11,7 +11,7 @@ import { observer } from "mobx-react-lite"
 import { Title } from "../Content"
 import { DEVICE } from "../../../constants"
 import AudioPlayer from "../AudioPlayer"
-import { CourseProgressStore, SoundStore } from "../../../store"
+import { CourseProgressStore, SoundStore, ModalStore } from "../../../store"
 
 import Nav from "./Nav"
 import Content from "./Content"
@@ -98,7 +98,26 @@ function CoursePage({ setIds, onDisappear }) {
                 setPauseAnim(false)
             }
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isVisible])
+
+    useEffect(() => {
+        // eslint-disable-next-line no-unused-expressions
+        if(ModalStore.isVisible.mail || ModalStore.isVisible.menu) 
+         {
+            setAudioPlaying(false)
+            setVideoPlaying(false)
+            onAudioPause()
+        } 
+        else {
+            setTimeout(() => {
+                onAudioPlay()
+                setAudioPlaying(true)
+                setVideoPlaying(true)
+            }, 500)
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ModalStore.isVisible.mail, ModalStore.isVisible.menu])
 
     function setRestartAnim() {
         _setRestartAnim(true)
