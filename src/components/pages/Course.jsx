@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import styled from "styled-components"
 import { Helmet } from "react-helmet"
 import { useLocation, useNavigate, useParams } from "react-router"
@@ -13,15 +13,20 @@ import Error404 from "./Error404"
 import { CourseProgressStore, ModalStore } from "../../store"
 import Notification from '../atoms/Notification'
 
+
 function Course() {
     const { id } = useParams()
     const location = useLocation()
     const navigate = useNavigate()
+    const titleAudio = useRef()
+    const [isPlaying, setIsPlaying] = useState(false)
 
     useEffect(() => {
         if (location.pathname.includes("instruction")) {
             ModalStore.showModal("instruction")
-        } else if (location.pathname.includes("intro")) {
+        }
+
+        if (location.pathname.includes("intro")) {
             ModalStore.showModal("intro")
         }
     }, [location])
@@ -36,18 +41,43 @@ function Course() {
             if (
                 dataLine &&
                 dataModal &&
-                !CourseProgressStore.userVisitedCourse[id]
+                !CourseProgressStore.userVisitedAnyCourse
             ) {
-                navigate("instruction")
+                navigate('instruction')
+                CourseProgressStore.setUserVisitedAnyCourse()
                 CourseProgressStore.setUserVisitedCourse(id)
             }
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [id, dataLine, dataModal])
+    }, [id])
 
     useEffect(() => {
         CourseProgressStore.setIsTimelinePageActive(true)
+
+        return () => {
+            if (ModalStore.isVisible.instruction) ModalStore.closeModal('instruction')
+        }
     }, [])
+
+    useEffect(() => {
+        function titleSoundPlay() {
+            if(!ModalStore.isVisible.instruction && !ModalStore.isVisible.intro) {
+                setIsPlaying(true)
+                titleAudio.current.play()
+            }
+            window.removeEventListener("click", titleSoundPlay)
+        }
+        window.addEventListener("click", titleSoundPlay, { ones: true})
+    }, [location])
+
+    useEffect(() => {
+        document.addEventListener("click", () => {
+            if(isPlaying) { 
+                titleAudio.current.pause()
+                setIsPlaying(false)
+            }
+        }, { once: true })
+    }, [isPlaying, location])
 
     if (!dataLine && !dataModal) {
         return <Error404 />
@@ -76,6 +106,8 @@ function Course() {
                 <CourseMenu dataLine={dataLine} dataModal={dataModal} />
                 <TimelineFooter />
             </Container>
+            <Audio src={dataLine.titleAudio} 
+                ref={titleAudio}/>
         </StyledLayout>
     )
 }
@@ -182,3 +214,5 @@ const CourseSupTitle = styled.div`
         font-size: 16px;
     }
 `
+
+const Audio = styled.audio``

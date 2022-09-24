@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from "react"
 import styled from "styled-components"
 import { Link, Outlet } from "react-router-dom"
@@ -23,59 +24,74 @@ function App() {
                 </title>
                 <meta
                     name="description"
-                    content="Устойчивое развитие - термин популярный. Его обсуждают практически 
-                    на всех уровнях, во многих сферах. В этом курсе вы узнаете, что означает понятие устойчивого развития 
+                    content="Устойчивое развитие - термин популярный. Его обсуждают практически
+                    на всех уровнях, во многих сферах. В этом курсе вы узнаете, что означает понятие устойчивого развития
                     для ФосАгро и какие мероприятия проводится компанией для обеспечения устойчивого развития."
                 />
             </Helmet>
             <Background>
                 <Video src={MainBG} loop muted autoPlay playsInline />
             </Background>
-            <Content>
-                <TextContainer>
-                    <Title>Курс “Устойчивое развитие”</Title>
-                    <Suptitle>
-                        <div>Компания ФосАгро напрямую способствует</div>
-                        <div>
-                            достижению <span> 11 целей</span> устойчивого
-                            развития ООН
-                            <img src={OOH} alt="OOH" />
-                        </div>
-                    </Suptitle>
-                </TextContainer>
-                <MenuContainer>
-                    {menuButtonData.map((item) => (
-                        <Link
-                            to={`/course${item.id}`}
-                            key={item.index}
-                            onClick={() => clickSound.play()}
-                        >
-                            <MenuButton
-                                index={item.index}
-                                text={item.text}
-                                bgColor={item.bgColor}
-                                bgAnimateColor={item.bgAnimateColor}
-                                rotate={item.rotate}
-                            />
-                        </Link>
-                    ))}
-                </MenuContainer>
-            </Content>
-            <Footer>
-                <CopyRight>© Группа компаний ФосАгро 2001 — 2022</CopyRight>
-                <LinkAVT
-                    href="https://avt.digital/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    <img src={AVTdigital} alt="AVTdigital" />
-                    Разработано AVT Digital
-                </LinkAVT>
-            </Footer>
+            <Container>
+                {/* <ContentWrapper> */}
+                <Content>
+                    <TextContainer>
+                        <Title>Курс “Устойчивое развитие”</Title>
+                        <Suptitle>
+                            <div>Компания ФосАгро напрямую способствует</div>
+                            <div>
+                                достижению <span> 11 целей</span> устойчивого
+                                развития ООН
+                                <img src={OOH} alt="OOH" />
+                            </div>
+                        </Suptitle>
+                    </TextContainer>
+                    <MenuContainer>
+                        {menuButtonData.map((item) => (
+                            <Link
+                                to={`/course${item.id}`}
+                                key={item.index}
+                                onClick={() => clickSound.play()}
+                            >
+                                <MenuButton
+                                    index={item.index}
+                                    text={item.text}
+                                    bgColor={item.bgColor}
+                                    bgAnimateColor={item.bgAnimateColor}
+                                    rotate={item.rotate}
+                                />
+                            </Link>
+                        ))}
+                    </MenuContainer>
+                </Content>
+                {/* </ContentWrapper> */}
+                <Footer>
+                    <CopyRight>© Группа компаний ФосАгро 2001 — 2022</CopyRight>
+                    <LinkAVT
+                        href="https://avt.digital/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <img src={AVTdigital} alt="AVTdigital" />
+                        Разработано AVT Digital
+                    </LinkAVT>
+                </Footer>
+            </Container>
             <Outlet />
         </Layout>
     )
 }
+
+const Container = styled.div`
+    max-height: 100%;
+    height: 100%;
+    overflow: hidden;
+`
+
+const ContentWrapper = styled.div`
+    /* max-height: 94%; */
+    /* overflow: auto; */
+`
 
 const Background = styled.div`
     position: absolute;

@@ -44,13 +44,14 @@ import {
     Line6Topic4,
 } from "../assets/Course6/TimeLine"
 
-import { Intro } from "../assets/audio"
+import { Intro, Course1, Course2, Course3, Course6 } from "../assets/audio"
 
 // TODO Добавить им разные координаты x y
 
 const timelineData = {
     course1: {
         id: "01",
+        titleAudio: Course1,
         title: '"Устойчивое развитие" - модный термин или реальность, которая касается каждого?',
         width: "2700",
         metaTitle:
@@ -297,6 +298,7 @@ const timelineData = {
     },
     course2: {
         id: "02",
+        titleAudio: Course2,
         title: "Цели устойчивого развития ООН",
         width: "2450",
         metaTitle: "Цели устойчивого развития ООН",
@@ -508,6 +510,7 @@ const timelineData = {
     },
     course3: {
         id: "03",
+        titleAudio: Course3,
         title: "Инновационная деятельность ФосАгро",
         supTitle:
             "Продукция компании, цикл производства и почему мы разрабатываем новые марки и виды продукции?",
@@ -792,6 +795,7 @@ const timelineData = {
     },
     course4: {
         id: "04",
+        titleAudio: "",
         title: "Экология",
         width: "3250",
         metaTitle: "Экология",
@@ -1072,6 +1076,7 @@ const timelineData = {
     },
     course5: {
         id: "05",
+        titleAudio: "",
         title: "Климат и энергоэффективность",
         width: "2750",
         metaTitle: "Климат и энергоэффективность ",
@@ -1304,6 +1309,7 @@ const timelineData = {
     },
     course6: {
         id: "06",
+        titleAudio: Course6,
         title: "Социальная среда и права человека",
         width: "2950",
         metaTitle: "Социальная среда и права человека ",

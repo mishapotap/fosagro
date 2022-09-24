@@ -6,7 +6,7 @@ export default function useOnScreen(ref, rootMargin = "100px") {
 
     useEffect(() => {
         // eslint-disable-next-line no-console
-        console.log(ref.current)
+        // console.log(ref.current)
         if (ref.current == null) return
         const observer = new IntersectionObserver(
             ([entry]) => setIsVisible(entry.isIntersecting),

@@ -23,6 +23,7 @@ export default function CourseTestPage() {
                 navigate(`/course${id}`)
             }
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     CourseTestStore.setActiveCourseId(id)
@@ -40,7 +41,7 @@ export default function CourseTestPage() {
 }
 
 const StyledLayout = styled(CourseSlideLayout)`
-    animation: ${showContent} 0.5s both;
+    animation: ${showContent} 0.2s both;
 
     .back-to-chapter {
         @media ${DEVICE.laptopS} {
