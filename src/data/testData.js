@@ -25,6 +25,24 @@ const listData = [
     },
 ]
 
+const points = new Map([
+    [
+        "2.4500",
+        {
+            x: 2,
+            y: 4500,
+        },
+    ],
+    [
+        "8.3000",
+        {
+            x: 8,
+            y: 3000,
+        },
+    ],
+])
+
 export default {
     listData,
+    points,
 }
