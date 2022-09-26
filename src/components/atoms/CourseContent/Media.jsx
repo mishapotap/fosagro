@@ -39,6 +39,10 @@ function Media({ pauseAnim, videoPlaying, restartAnim }) {
         }
     }, [restartAnim])
 
+    let mediaProps = {data: mediaData};
+
+    if (video) mediaProps = {...mediaProps, isPlaying: videoPlaying}
+
     return (
         <Container
             className={`${
@@ -54,8 +58,8 @@ function Media({ pauseAnim, videoPlaying, restartAnim }) {
                 <StyledMedia>
                     {MediaComponent && (
                         <MediaComponent
-                            data={mediaData}
-                            isPlaying={videoPlaying}
+                            // eslint-disable-next-line react/jsx-props-no-spreading
+                            {...mediaProps}
                         />
                     )}
                 </StyledMedia>

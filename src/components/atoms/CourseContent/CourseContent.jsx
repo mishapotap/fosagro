@@ -16,6 +16,7 @@ import { CourseProgressStore, SoundStore, ModalStore } from "../../../store"
 import Nav from "./Nav"
 import Content from "./Content"
 import Media from "./Media"
+import NewSectWindow from "./NewSectWindow"
 
 // TODO сделать чтобы плавно появлялись элементы
 // (чтобы прошлое состояние не было видно)
@@ -24,6 +25,11 @@ import Media from "./Media"
 
 // TODO сделать чтобы переключение слайдера было по времени с аудио?
 // (добавить доп поле в данных?)
+
+// TODO сделать чтобы анимация включалась и без аудио
+// (может быть только тогда, когда звук отключен для всего курса?)
+
+// TODO сделать выключение аудио когда общий звук отключён
 
 function CoursePage({ setIds, onDisappear }) {
     const pageData = CourseProgressStore.activePageData
@@ -56,8 +62,11 @@ function CoursePage({ setIds, onDisappear }) {
     const [pauseAnim, setPauseAnim] = useState(true)
     const [restartAnim, _setRestartAnim] = useState(false)
 
-    const [isVisible, _setIsVisible] = useState(false)
+    const [isVisible, _setIsVisible] = useState(null)
     const intObserver = useRef(null)
+    const sectChanged = useRef(true)
+
+    const showWhenVisible = useRef(false)
 
     function setIsVisible(val) {
         _setIsVisible(val)
@@ -65,17 +74,91 @@ function CoursePage({ setIds, onDisappear }) {
     }
 
     function makeObserve(el, rootMargin = "-50%") {
-        intObserver.current = new IntersectionObserver(
-            ([entry]) => setIsVisible(entry.isIntersecting),
-            { rootMargin }
-        )
-        intObserver.current.observe(el)
+        if (el) {
+            intObserver.current = new IntersectionObserver(
+                ([entry]) => {
+                    setIsVisible(entry.isIntersecting)
+                },
+                { rootMargin }
+            )
+            intObserver.current.observe(el)
+        }
     }
 
     function unObserve(el) {
-        if (intObserver.current) {
-            intObserver.current.unobserve(el)
-            setIsVisible(false)
+        if (el) {
+            if (intObserver.current) {
+                intObserver.current.unobserve(el)
+                setIsVisible(false)
+            }
+        }
+    }
+
+    function setMediaDelay() {
+        clearTimeout(videoTmId.current)
+        clearTimeout(audioTmId.current)
+        clearTimeout(animTmId.current)
+
+        if (!sectChanged.current) {
+            if (audioSrc) {
+                audioTmId.current = setTimeout(() => {
+                    setAudioPlaying(true)
+                    console.log('рвубить аудио');
+                    sectChanged.current = false
+                }, 1000)
+            }
+
+            if (isVideo) {
+                videoTmId.current = setTimeout(() => {
+                    if (isVisibleRef.current) {
+                        setVideoPlaying(true)
+                    } else {
+                        showWhenVisible.current = true
+                    }
+                    sectChanged.current = false
+                }, 1000)
+            }
+
+            if (isAnimation) {
+                animTmId.current = setTimeout(() => {
+                    if (isVisibleRef.current) {
+                        setPauseAnim(false)
+                    } else {
+                        showWhenVisible.current = true
+                    }
+                    sectChanged.current = false
+                }, 1000)
+            }
+        } else {
+            if (audioSrc) {
+                audioTmId.current = setTimeout(() => {
+                    setAudioPlaying(true)
+                    console.log('рвубить аудио');
+                    sectChanged.current = false
+                }, 4000)
+            }
+
+            if (isVideo) {
+                videoTmId.current = setTimeout(() => {
+                    if (isVisibleRef.current) {
+                        setVideoPlaying(true)
+                    } else {
+                        showWhenVisible.current = true
+                    }
+                    sectChanged.current = false
+                }, 4000)
+            }
+
+            if (isAnimation) {
+                animTmId.current = setTimeout(() => {
+                    if (isVisibleRef.current) {
+                        setPauseAnim(false)
+                    } else {
+                        showWhenVisible.current = true
+                    }
+                    sectChanged.current = false
+                }, 4000)
+            }
         }
     }
 
@@ -90,12 +173,16 @@ function CoursePage({ setIds, onDisappear }) {
     useEffect(() => {
         if (isVisible) {
             const video = document.querySelector("video")
-            if (video && video.paused) {
-                video.play()
-            }
+            if (showWhenVisible.current) {
+                showWhenVisible.current = false
 
-            if (isAnimation && pauseAnim) {
-                setPauseAnim(false)
+                if (video && video.paused) {
+                    video.play()
+                }
+
+                if (isAnimation && pauseAnim) {
+                    setPauseAnim(false)
+                }
             }
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -103,18 +190,12 @@ function CoursePage({ setIds, onDisappear }) {
 
     useEffect(() => {
         // eslint-disable-next-line no-unused-expressions
-        if(ModalStore.isVisible.mail || ModalStore.isVisible.menu) 
+        if(ModalStore.isVisible.mail || ModalStore.isVisible.menu)
          {
             setAudioPlaying(false)
             setVideoPlaying(false)
+            setPauseAnim(true)
             onAudioPause()
-        } 
-        else {
-            setTimeout(() => {
-                onAudioPlay()
-                setAudioPlaying(true)
-                setVideoPlaying(true)
-            }, 500)
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ModalStore.isVisible.mail, ModalStore.isVisible.menu])
@@ -132,26 +213,27 @@ function CoursePage({ setIds, onDisappear }) {
         CourseProgressStore.setIsTimelinePageActive(false)
         SoundStore.setIsPlayingSound(false)
 
-        animTmId.current = setTimeout(() => {
-            const audioEl = document.querySelector(".audio-player audio")
-
-            if (
-                (!audioSrc || (audioEl && audioEl.paused)) &&
-                isVisibleRef.current
-            ) {
-                setPauseAnim(false)
-            }
-        }, 2000)
+        const medColRef = mediaColRef.current
 
         return () => {
             if (audioTmId.current) clearTimeout(audioTmId.current)
             if (videoTmId.current) clearTimeout(videoTmId.current)
             if (animTmId.current) clearTimeout(animTmId.current)
+            unObserve(medColRef)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
+        sectChanged.current = true
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [CourseProgressStore.activeSectId])
+
+    useEffect(() => {
+        // clearTimeout(videoTmId.current)
+        // clearTimeout(audioTmId.current)
+        // clearTimeout(animTmId.current)
+
         didAudioEnded.current = false
         wasFirstPlay.current = false
 
@@ -159,7 +241,12 @@ function CoursePage({ setIds, onDisappear }) {
 
         setTimeout(() => {
             makeObserve(mediaColRef.current)
+        }, 50)
+
+        setTimeout(() => {
+            setMediaDelay()
         }, 100)
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [CourseProgressStore.activePageData])
 
@@ -173,23 +260,12 @@ function CoursePage({ setIds, onDisappear }) {
         }
 
         setPauseAnim(true)
-
         setAudioPlaying(false)
-
-        audioTmId.current = setTimeout(() => {
-            setAudioPlaying(true)
-        }, 1500)
-
         setVideoPlaying(false)
 
-        // услеют ли тут новые данные продгрухиться?
-        if (isVideo) {
-            videoTmId.current = setTimeout(() => {
-                if (isVisibleRef.current) {
-                    setVideoPlaying(true)
-                }
-            }, 1600)
-        }
+        clearTimeout(videoTmId.current)
+        clearTimeout(audioTmId.current)
+        clearTimeout(animTmId.current)
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location])
@@ -240,7 +316,6 @@ function CoursePage({ setIds, onDisappear }) {
 
     function onAudioPlay() {
         if (isVisibleRef.current) setPauseAnim(false)
-
         if (!wasFirstPlay.current) wasFirstPlay.current = true
 
         if (didAudioEnded.current) {
@@ -341,6 +416,7 @@ function CoursePage({ setIds, onDisappear }) {
                     />
                 </MediaColumn>
             </CSSTransition>
+            <NewSectWindow />
         </Columns>
     )
 }

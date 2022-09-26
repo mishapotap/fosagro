@@ -38,7 +38,7 @@ root.render(
         </BrowserRouter>
 )
 
-// TODO позже раскомментировать можетт изменить
+// TODO позже раскомментировать, может изменить
 // взять данные из store, установить в ls
 function handleWindowUnload() {
     // const testsVal = JSON.stringify(CourseTestStore.dataForLS)

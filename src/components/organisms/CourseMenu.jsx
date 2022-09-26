@@ -69,7 +69,7 @@ function CourseMenu({ dataLine, dataModal }) {
                 <Waves color={COLORS.white}/>
             </Line>
             {dataLine.timeline.map((section) => (
-                <CourseStep key={ section.id } sectId={section.id - 1} intro={section.intro} test={section.test} button={section.button} points={section.points} dataModal={dataModal} className="active"/>
+                <CourseStep key={ section.id } sectId={section.id} intro={section.intro} test={section.test} button={section.button} points={section.points} dataModal={dataModal} className="active"/>
             ))}
     </MenuContainer>
     )

@@ -91,6 +91,7 @@ export default function IntroModal({ isOpen, onClose, items }) {
     function handleClose() {
         CourseProgressStore.setIntroPassed()
         onClose()
+        setSlidersAudio({0: false, 1: false})
     }
 
     return (

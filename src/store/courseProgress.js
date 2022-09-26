@@ -1,14 +1,8 @@
 /* eslint-disable class-methods-use-this */
 import { makeAutoObservable } from "mobx"
-import { coursePagesData } from "../data"
+import { coursePagesData, timelineData } from "../data"
 import { COLORS } from "../constants"
 import { sectColors, sectsProgressTypes } from "../data/coursePagesData/general"
-
-// TODO сделать чтобы состояние устанавливалось в ls и бралось из него
-// (не только здесь, еще состояние тестов)
-
-// TODO сделать чтобы при нажатии на секцию открывалась страница на которой остановился
-// пользователь, а не с начала?
 
 class CourseProgress {
     activeSectId = 1
@@ -104,6 +98,15 @@ class CourseProgress {
         makeAutoObservable(this)
     }
 
+    get userPassedFullCourse() {
+        const chaptersIds = Object.keys(coursePagesData)
+        const notPassedChapter = chaptersIds.find(
+            (id) => this.courseProgressPercent(id) !== 100
+        )
+
+        return !notPassedChapter
+    }
+
     get activeCourseData() {
         return coursePagesData[this.activeCourseId] || null
     }
@@ -144,6 +147,15 @@ class CourseProgress {
         return this.isWrongPath
             ? "grass"
             : sectsProgressTypes[this.activeSectId]
+    }
+
+    get activeSectBtnData() {
+        const tlData = timelineData[`course${this.activeCourseId}`].timeline
+        const sectItem = tlData.find((i) => i.id === this.activeSectId)
+        if (sectItem) {
+            return sectItem.button
+        }
+        return {}
     }
 
     get activeSectPagesCount() {
@@ -244,12 +256,10 @@ class CourseProgress {
 
         // проверить посещал ли пользователь секцию, перенести к последней посещенной странице
         if (pagesData.length > 0) {
-            if (!this.isSectCompleted(sectId)) {
-                const largestNum = pagesData.reduce((accVal, currentVal) =>
-                    Math.max(accVal, currentVal)
-                )
-                return `topic${sectId}/point${largestNum}`
-            }
+            const largestNum = pagesData.reduce((accVal, currentVal) =>
+                Math.max(accVal, currentVal)
+            )
+            return `topic${sectId}/point${largestNum}`
         }
         return `topic${sectId}/point1`
     }
@@ -397,6 +407,7 @@ class CourseProgress {
                 userVisitedAnyCourse: true,
                 expires: date.getTime() + seconds,
             },
+            // TODO позже раскомментировать
             // visitedPages: this.visitedPages,
         }
     }
@@ -404,7 +415,7 @@ class CourseProgress {
     setProgressDataFromLs(data) {
         const {
             userVisitedAnyCourse: { userVisitedAnyCourse, expires },
-            // visitedPages,
+            visitedPages,
         } = data
 
         const now = new Date()
@@ -413,6 +424,10 @@ class CourseProgress {
             this.userVisitedAnyCourse = false
         } else {
             this.userVisitedAnyCourse = userVisitedAnyCourse
+        }
+
+        if (visitedPages) {
+            this.visitedPages = visitedPages
         }
     }
 
@@ -443,6 +458,8 @@ class CourseProgress {
     }
 
     setActiveCourseId(id) {
+        this.setActivePageId(1)
+        this.setActiveSectId(1)
         if (coursePagesData[id]) {
             this.activeCourseId = +id
             this.isWrongPath = false
@@ -452,6 +469,7 @@ class CourseProgress {
     }
 
     setActiveSectId(id) {
+        this.setActivePageId(1)
         if (coursePagesData[this.activeCourseId][id]) {
             this.activeSectId = +id
             this.isWrongPath = false
@@ -503,7 +521,7 @@ class CourseProgress {
 
         this.notifTimeoutId = setTimeout(() => {
             this.setShowNotification(false)
-        }, 2000)
+        }, 2200)
     }
 
     setNotifPos(posData) {
