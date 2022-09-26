@@ -40,7 +40,7 @@ const StyledNav = styled.div`
         width: 33vw;
 
         @media ${DEVICE.laptopS} {
-            width: 100%;
+            width: 94%;
             max-width: 600px;
             margin: 0 auto;
         }

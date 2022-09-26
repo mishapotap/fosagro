@@ -193,7 +193,7 @@ const LinksContainer = styled.div`
 
     @media ${DEVICE.laptopS} {
         position: static;
-        width: 90vw;
+        width: 88vw;
         margin-top: 35px;
         transform: none;
 

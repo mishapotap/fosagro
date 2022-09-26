@@ -33,38 +33,38 @@ function App() {
                 <Video src={MainBG} loop muted autoPlay playsInline />
             </Background>
             <Container>
-                {/* <ContentWrapper> */}
-                <Content>
-                    <TextContainer>
-                        <Title>Курс “Устойчивое развитие”</Title>
-                        <Suptitle>
-                            <div>Компания ФосАгро напрямую способствует</div>
-                            <div>
-                                достижению <span> 11 целей</span> устойчивого
-                                развития ООН
-                                <img src={OOH} alt="OOH" />
-                            </div>
-                        </Suptitle>
-                    </TextContainer>
-                    <MenuContainer>
-                        {menuButtonData.map((item) => (
-                            <Link
-                                to={`/course${item.id}`}
-                                key={item.index}
-                                onClick={() => clickSound.play()}
-                            >
-                                <MenuButton
-                                    index={item.index}
-                                    text={item.text}
-                                    bgColor={item.bgColor}
-                                    bgAnimateColor={item.bgAnimateColor}
-                                    rotate={item.rotate}
-                                />
-                            </Link>
-                        ))}
-                    </MenuContainer>
-                </Content>
-                {/* </ContentWrapper> */}
+                <ContentWrapper>
+                    <Content>
+                        <TextContainer>
+                            <Title>Курс “Устойчивое развитие”</Title>
+                            <Suptitle>
+                                <div>Компания ФосАгро напрямую способствует</div>
+                                <div>
+                                    достижению <span> 11 целей</span> устойчивого
+                                    развития ООН
+                                    <img src={OOH} alt="OOH" />
+                                </div>
+                            </Suptitle>
+                        </TextContainer>
+                        <MenuContainer>
+                            {menuButtonData.map((item) => (
+                                <Link
+                                    to={`/course${item.id}`}
+                                    key={item.index}
+                                    onClick={() => clickSound.play()}
+                                >
+                                    <MenuButton
+                                        index={item.index}
+                                        text={item.text}
+                                        bgColor={item.bgColor}
+                                        bgAnimateColor={item.bgAnimateColor}
+                                        rotate={item.rotate}
+                                    />
+                                </Link>
+                            ))}
+                        </MenuContainer>
+                    </Content>
+                </ContentWrapper>
                 <Footer>
                     <CopyRight>© Группа компаний ФосАгро 2001 — 2022</CopyRight>
                     <LinkAVT
@@ -86,15 +86,28 @@ const Container = styled.div`
     max-height: 100%;
     height: 100%;
     overflow: hidden;
+    padding-bottom: 45px;
+    padding-top: 4vh;
+
+    display: flex;
+    align-items: center;
+
+    @media ${DEVICE.laptopS} {
+        padding-top: 0;
+    }
 `
 
 const ContentWrapper = styled.div`
-    /* max-height: 94%; */
-    /* overflow: auto; */
+    max-height: 100%;
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+        width: 0;
+    }
 `
 
 const Background = styled.div`
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -139,7 +152,8 @@ const Video = styled.video`
 const Content = styled.div`
     display: flex;
     align-items: center;
-    min-height: 100%;
+    overflow: hidden;
+    padding: 20px 0;
 
     @media ${DEVICE.laptopS} {
         flex-direction: column;

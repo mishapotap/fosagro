@@ -47,14 +47,14 @@ function Header({
 
     return (
         <Container>
-            <HeaderInner>
+            <HeaderInner language={language}>
                 <Logo>
                     <Link to={routes.HOME} onClick={() => handleClickLogo()}>
                         <FosagroColored />
                     </Link>
                 </Logo>
                 {language && (
-                    <LinksContainer>
+                    <>
                         <LinkToFosagro>
                             <a href="https://www.phosagro.ru/"
                                 target="_blank"
@@ -81,7 +81,7 @@ function Header({
                                 </Link>
                             </Language>
                         </LanguageContainer>
-                    </LinksContainer>
+                    </>
                 )}
                 {course && <CourseMenuButton colored={colored} />}
                 {sectTitle && (
@@ -204,7 +204,6 @@ const HeaderInner = styled.div`
     position: relative;
 
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
 
@@ -249,6 +248,15 @@ const LinksContainer = styled.div`
 `
 
 const LinkToFosagro = styled.div`
+
+    flex: 0 1 100%;
+
+    @media ${DEVICE.laptopS} {
+        position: absolute;
+        bottom: 0;
+        transform: translateY(100%);
+    }
+
     a {
         display: flex;
         align-items: flex-end;
@@ -264,9 +272,6 @@ const LinkToFosagro = styled.div`
 
         color: ${COLORS.blue};
         transition: all 0.3s;
-        @media ${DEVICE.mobile} {
-            display: none;
-        }
     }
 
     .linkArrow {

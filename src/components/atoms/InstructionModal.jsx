@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 /* eslint-disable react/jsx-no-bind */
 import "wicg-inert"
-import React, { useRef, useState } from "react"
+import React, { useState } from "react"
 import styled, { css, keyframes } from "styled-components"
 import { observer } from "mobx-react-lite"
 import { Link } from "react-router-dom"
@@ -50,7 +50,7 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
         clickSound.play()
     }
 
-    function handleAnimEnd() {
+    function handleModalAnimEnd() {
         setTimeout(() => {
             setPlayAudio({ 0: true, 1: false })
         }, 1000)
@@ -84,15 +84,29 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
         setPauseAnims(() => ({ ...pauseAnims, [index]: true }))
     }
 
+    const isVisible = (ele, container) => {
+        const { bottom, height, top } = ele.getBoundingClientRect();
+        const containerRect = container.getBoundingClientRect();
+
+        return top <= containerRect.top ? containerRect.top - top <= height : bottom - containerRect.bottom <= height;
+    };
+
+    function handleContainerAnimStart(e) {
+        const container = e.target.closest('.slide-inner')
+        if (container && !isVisible(e.target, container)) {
+            e.target.scrollIntoView({behavior: 'smooth'})
+        }
+    }
+
     return (
         <StyledModal
             isOpen={isOpen}
             onClose={onClose}
             navigateBack
-            onOpenAnimEnd={handleAnimEnd}
+            onOpenAnimEnd={handleModalAnimEnd}
         >
             <StyledLayout page="instruction">
-                <Container>
+                <Container onAnimationStart={handleContainerAnimStart}>
                     <SliderContainer makeAnim={makeAnim}>
                         <Swiper
                             modules={[Pagination, Navigation, EffectFade]}
@@ -108,185 +122,204 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                             onInit={handleInit}
                         >
                             <SwiperSlide>
-                                <StyledAudioPlayer
-                                    src={Instruction1}
-                                    isPlaying={playAudio[0]}
-                                    onPause={() => handleAudioPause(0)}
-                                    onEnded={() => handleAudioEnded(0)}
-                                />
-                                <SlideInner>
-                                    <Slide1Cols
-                                        className={
-                                            pauseAnims[0] ? "anim-paused" : ""
-                                        }
-                                    >
-                                        <SlideColsInner>
-                                            <Column className="col-title">
-                                                <Title>
-                                                    Инструкция по прохождению
-                                                    курса
-                                                    <TitleAccent>
-                                                        «Устойчивое развитие»
-                                                    </TitleAccent>
-                                                </Title>
-                                            </Column>
-                                            <Column>
-                                                <Text className="text-1">
-                                                    Уважаемые пользователи, в
-                                                    нашем курсе 6 разделов,
-                                                    каждый из которых поделен на
-                                                    темы. Вы можете выбрать
-                                                    какой раздел изучать, вне
-                                                    зависимости от их
-                                                    последовательности.
-                                                </Text>
-                                                <Row>
-                                                    <AttentionImage
-                                                        src={IconAttention}
-                                                        alt="внимание"
-                                                        className="icon-attention"
-                                                    />
-                                                    <Text className="text-2">
-                                                        Однако прохождение курса
-                                                        внутри раздела идет
-                                                        последовательно, Вы не
-                                                        можете перейти к
-                                                        следующей теме, не
-                                                        изучив предыдущую.
+                                <SlideInner className="slide-inner">
+                                    <SlideContentWrapper>
+                                        <Slide1Cols
+                                            className={
+                                                pauseAnims[0]
+                                                    ? "anim-paused"
+                                                    : ""
+                                            }
+                                        >
+                                            <SlideColsInner>
+                                                <Column className="col-title">
+                                                    <Title>
+                                                        Инструкция по
+                                                        прохождению курса
+                                                        <TitleAccent>
+                                                            «Устойчивое
+                                                            развитие»
+                                                        </TitleAccent>
+                                                    </Title>
+                                                </Column>
+                                                <Column>
+                                                    <Text className="text-1">
+                                                        Уважаемые пользователи,
+                                                        в нашем курсе 6
+                                                        разделов, каждый из
+                                                        которых поделен на темы.
+                                                        Вы можете выбрать какой
+                                                        раздел изучать, вне
+                                                        зависимости от их
+                                                        последовательности.
                                                     </Text>
-                                                </Row>
-                                                <Text className="text-3">
-                                                    В конце каждого раздела Вас
-                                                    ждет простой тест на
-                                                    несколько вопросов для
-                                                    проверки усвоенных знаний.
-                                                </Text>
-                                            </Column>
-                                        </SlideColsInner>
-                                    </Slide1Cols>
+                                                    <Row>
+                                                        <AttentionImage
+                                                            src={IconAttention}
+                                                            alt="внимание"
+                                                            className="icon-attention"
+                                                        />
+                                                        <Text className="text-2">
+                                                            Однако прохождение
+                                                            курса внутри раздела
+                                                            идет
+                                                            последовательно, Вы
+                                                            не можете перейти к
+                                                            следующей теме, не
+                                                            изучив предыдущую.
+                                                        </Text>
+                                                    </Row>
+                                                    <Text className="text-3">
+                                                        В конце каждого раздела
+                                                        Вас ждет простой тест на
+                                                        несколько вопросов для
+                                                        проверки усвоенных
+                                                        знаний.
+                                                    </Text>
+                                                </Column>
+                                            </SlideColsInner>
+                                        </Slide1Cols>
+                                    </SlideContentWrapper>
+                                    <StyledAudioPlayer
+                                        src={Instruction1}
+                                        isPlaying={playAudio[0]}
+                                        onPause={() => handleAudioPause(0)}
+                                        onEnded={() => handleAudioEnded(0)}
+                                    />
                                 </SlideInner>
                             </SwiperSlide>
                             <SwiperSlide>
-                                <StyledAudioPlayer
-                                    src={Instruction2}
-                                    isPlaying={playAudio[1]}
-                                    onPause={() => handleAudioPause(1)}
-                                    onEnded={() => handleAudioEnded(1)}
-                                />
-                                <SlideInner>
-                                    <Slide2Cols
-                                        className={
-                                            pauseAnims[1] ? "anim-paused" : ""
-                                        }
-                                    >
-                                        <SlideColsInner>
-                                            <Column className="col-title">
-                                                <Title>
-                                                    Краткая справка по навигации
-                                                </Title>
-                                            </Column>
-                                            <Column>
-                                                <ColBlock>
-                                                    <Text className="text-1">
-                                                        Переход между страницами
-                                                        осуществляется
-                                                        прокруткой мыши/тачпада.
-                                                    </Text>
-                                                </ColBlock>
-                                                <ColBlock>
-                                                    <CourseImage />
-                                                    <Text className="text-2">
-                                                        Кнопка открытия меню
-                                                        курса.
-                                                    </Text>
-                                                </ColBlock>
-                                                <ColBlock>
-                                                    <LinksImage />
-                                                    <Text className="text-3">
-                                                        Ссылки на дополнительные
-                                                        материалы вынесены в
-                                                        виде такого элемента.
-                                                    </Text>
-                                                </ColBlock>
-                                            </Column>
-                                            <Column>
-                                                <IconRow>
-                                                    <IconHeadphones inert="">
-                                                        <Headphones />
-                                                    </IconHeadphones>
-                                                    <Text className="text-4">
-                                                        В нашем курсе
-                                                        предполагается звуковое
-                                                        сопровождение, аудиогид,
-                                                        управление им
-                                                        осуществляется при
-                                                        нажатии на данный
-                                                        элемент.
-                                                    </Text>
-                                                </IconRow>
-                                                <IconRow>
-                                                    <ElIcon className="icon-sound">
-                                                        <img
-                                                            src={
-                                                                IconBlueBtnSound
-                                                            }
-                                                            alt="звук"
-                                                        />
-                                                    </ElIcon>
-                                                    <Text className="text-5">
-                                                        Элемент
-                                                        отключения/включения
-                                                        музыки в проекте.
-                                                    </Text>
-                                                </IconRow>
-                                                <IconRow>
-                                                    <ElIcon className="icon-mail">
-                                                        <img
-                                                            src={
-                                                                IconBlueBtnMail
-                                                            }
-                                                            alt="письмо"
-                                                        />
-                                                    </ElIcon>
-                                                    <Text className="text-6">
-                                                        Элемент обратной связи,
-                                                        будем рады вашим отзывам
-                                                        и предложениям по
-                                                        улучшению контента!
-                                                    </Text>
-                                                </IconRow>
-                                                <IconRow>
-                                                    <ElIcon className="icon-instruction">
-                                                        <img
-                                                            src={
-                                                                IconBlueBtnInstraction
-                                                            }
-                                                            alt="инструкция"
-                                                        />
-                                                    </ElIcon>
-                                                    <Text className="text-7">
-                                                        Элемент вызова данной
-                                                        инструкции.
-                                                    </Text>
-                                                </IconRow>
-                                            </Column>
-                                        </SlideColsInner>
-                                    </Slide2Cols>
-                                    <StartLearn>
-                                        <Link
-                                            to={
-                                                CourseProgressStore.instructionModalLink
-                                            }
-                                            onClick={() =>
-                                                closeInstructionModal()
+                                <SlideInner className="slide-inner">
+                                    <SlideContentWrapper>
+                                        <Slide2Cols
+                                            className={
+                                                pauseAnims[1]
+                                                    ? "anim-paused"
+                                                    : ""
                                             }
                                         >
-                                            <SendButton
-                                                text="Начать обучение"
-                                                size="m"
-                                            />
-                                        </Link>
-                                    </StartLearn>
+                                            <SlideColsInner>
+                                                <Column className="col-title">
+                                                    <Title>
+                                                        Краткая справка по
+                                                        навигации
+                                                    </Title>
+                                                </Column>
+                                                <Column>
+                                                    <ColBlock>
+                                                        <Text className="text-1">
+                                                            Переход между
+                                                            страницами
+                                                            осуществляется
+                                                            прокруткой
+                                                            мыши/тачпада.
+                                                        </Text>
+                                                    </ColBlock>
+                                                    <ColBlock>
+                                                        <CourseImage />
+                                                        <Text className="text-2">
+                                                            Кнопка открытия меню
+                                                            курса.
+                                                        </Text>
+                                                    </ColBlock>
+                                                    <ColBlock>
+                                                        <LinksImage />
+                                                        <Text className="text-3">
+                                                            Ссылки на
+                                                            дополнительные
+                                                            материалы вынесены в
+                                                            виде такого
+                                                            элемента.
+                                                        </Text>
+                                                    </ColBlock>
+                                                </Column>
+                                                <Column>
+                                                    <IconRow>
+                                                        <IconHeadphones inert="">
+                                                            <Headphones />
+                                                        </IconHeadphones>
+                                                        <Text className="text-4">
+                                                            В нашем курсе
+                                                            предполагается
+                                                            звуковое
+                                                            сопровождение,
+                                                            аудиогид, управление
+                                                            им осуществляется
+                                                            при нажатии на
+                                                            данный элемент.
+                                                        </Text>
+                                                    </IconRow>
+                                                    <IconRow>
+                                                        <ElIcon className="icon-sound">
+                                                            <img
+                                                                src={
+                                                                    IconBlueBtnSound
+                                                                }
+                                                                alt="звук"
+                                                            />
+                                                        </ElIcon>
+                                                        <Text className="text-5">
+                                                            Элемент
+                                                            отключения/включения
+                                                            музыки в проекте.
+                                                        </Text>
+                                                    </IconRow>
+                                                    <IconRow>
+                                                        <ElIcon className="icon-mail">
+                                                            <img
+                                                                src={
+                                                                    IconBlueBtnMail
+                                                                }
+                                                                alt="письмо"
+                                                            />
+                                                        </ElIcon>
+                                                        <Text className="text-6">
+                                                            Элемент обратной
+                                                            связи, будем рады
+                                                            вашим отзывам и
+                                                            предложениям по
+                                                            улучшению контента!
+                                                        </Text>
+                                                    </IconRow>
+                                                    <IconRow>
+                                                        <ElIcon className="icon-instruction">
+                                                            <img
+                                                                src={
+                                                                    IconBlueBtnInstraction
+                                                                }
+                                                                alt="инструкция"
+                                                            />
+                                                        </ElIcon>
+                                                        <Text className="text-7">
+                                                            Элемент вызова
+                                                            данной инструкции.
+                                                        </Text>
+                                                    </IconRow>
+                                                </Column>
+                                            </SlideColsInner>
+                                        </Slide2Cols>
+                                        <StartLearn>
+                                            <Link
+                                                to={
+                                                    CourseProgressStore.instructionModalLink
+                                                }
+                                                onClick={() =>
+                                                    closeInstructionModal()
+                                                }
+                                            >
+                                                <SendButton
+                                                    text="Начать обучение"
+                                                    size="m"
+                                                />
+                                            </Link>
+                                        </StartLearn>
+                                    </SlideContentWrapper>
+                                    <StyledAudioPlayer
+                                        src={Instruction2}
+                                        isPlaying={playAudio[1]}
+                                        onPause={() => handleAudioPause(1)}
+                                        onEnded={() => handleAudioEnded(1)}
+                                    />
                                 </SlideInner>
                             </SwiperSlide>
                             <CircleBtn className="button-prev">
@@ -305,18 +338,31 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
 
 export default observer(InstructionModal)
 
-// мне здесь не подходит min-height, поэтому чтобы работало корректно, перезаписываю
 const StyledLayout = styled(Layout)`
     height: 100%;
 
     .content {
         padding-left: 5px;
+
+        @media ${DEVICE.laptopS} {
+            padding-left: 20px;
+        }
     }
 `
 
 const StyledAudioPlayer = styled(AudioPlayer)`
     position: absolute;
     left: 0;
+    top: 0;
+
+    @media ${DEVICE.laptopS} {
+        position: relative;
+    }
+`
+
+const SlideInner = styled.div`
+    height: 100%;
+    overflow: auto;
 `
 
 const StyledModal = styled(Modal)`
@@ -414,6 +460,19 @@ const Container = styled.div`
         }
     }
 
+    .swiper-slide {
+        padding: 9vh 0;
+
+        @media ${DEVICE.laptopM} {
+            padding-top: 8vh;
+        }
+
+        @media ${DEVICE.laptopS} {
+            padding-bottom: 9vh;
+            padding-top: 8vh;
+        }
+    }
+
     .button-next {
         position: absolute;
         bottom: 2px;
@@ -446,7 +505,7 @@ const SlideColsInner = styled.div`
     }
 `
 
-const SlideInner = styled.div`
+const SlideContentWrapper = styled.div`
     height: 100%;
     display: flex;
     align-items: center;
@@ -457,6 +516,11 @@ const SlideInner = styled.div`
 
     @media ${DEVICE.laptopM} {
         max-width: 85%;
+    }
+
+    @media ${DEVICE.laptopS} {
+        height: auto;
+        margin-bottom: 40px;
     }
 
     @media ${DEVICE.mobile} {
@@ -568,16 +632,6 @@ const Title = styled.div`
 const SlideCols = styled.div`
     width: 100%;
     height: 100%;
-    padding: 9vh 0;
-
-    @media ${DEVICE.laptopM} {
-        padding-top: 8vh;
-    }
-
-    @media ${DEVICE.laptopS} {
-        padding-bottom: 9vh;
-        padding-top: 8vh;
-    }
 `
 
 const Slide1Cols = styled(SlideCols)`

@@ -60,7 +60,7 @@ const timelineData = {
             "Что такое концепция устойчивого развития, которая часто ассоциируется с ESG? Каждая буква в аббревиатуре ESG несет свой смысл: E - экология, S - социальная сфера, G - корпоративное управление. Вместе они составляют аспекты системы устойчивого развития.",
         timeline: [
             {
-                id: 1,
+                id: 0,
                 intro: true,
                 button: {
                     audio: Intro,
@@ -86,7 +86,7 @@ const timelineData = {
                 },
             },
             {
-                id: 2,
+                id: 1,
                 button: {
                     link: "topic1/point1",
                     audio: Line1Topic1,
@@ -144,7 +144,7 @@ const timelineData = {
                 ],
             },
             {
-                id: 3,
+                id: 2,
                 button: {
                     link: "topic2/point1",
                     audio: Line1Topic2,
@@ -172,7 +172,7 @@ const timelineData = {
                 ],
             },
             {
-                id: 4,
+                id: 3,
                 button: {
                     link: "topic3/point1",
                     audio: Line1Topic3,
@@ -241,7 +241,7 @@ const timelineData = {
             },
 
             {
-                id: 5,
+                id: 4,
                 button: {
                     link: "topic4/point1",
                     audio: Line1Topic4,
@@ -279,7 +279,7 @@ const timelineData = {
                 ],
             },
             {
-                id: 6,
+                id: 5,
                 test: true,
                 button: {
                     link: "test",
@@ -306,7 +306,7 @@ const timelineData = {
             "Принята новая программа «Преобразование нашего мира: Повестка дня в области устойчивого развития на период до 2030 года».  Повестка дня включает 17 целей по построению устойчивого мира. Устойчивый мир — это баланс экономического роста, социальной и экологической ответственности.",
         timeline: [
             {
-                id: 1,
+                id: 0,
                 intro: true,
                 button: {
                     audio: Intro,
@@ -332,7 +332,7 @@ const timelineData = {
                 },
             },
             {
-                id: 2,
+                id: 1,
                 button: {
                     link: "topic1/point1",
                     audio: Line2Topic1,
@@ -383,7 +383,7 @@ const timelineData = {
                 ],
             },
             {
-                id: 3,
+                id: 2,
                 button: {
                     link: "topic2/point1",
                     audio: Line2Topic2,
@@ -412,7 +412,7 @@ const timelineData = {
                 ],
             },
             {
-                id: 4,
+                id: 3,
                 button: {
                     link: "topic3/point1",
                     audio: Line2Topic3,
@@ -491,7 +491,7 @@ const timelineData = {
                 ],
             },
             {
-                id: 5,
+                id: 4,
                 test: true,
                 button: {
                     link: "test",
@@ -520,7 +520,7 @@ const timelineData = {
             "Новаторство позволяет повысить эффективность и соблюсти баланс безопасности и экологичности. Инновации, технологии и уникальные компетенции наших работников позволяют ФосАгро уверенно смотреть в будущее и отвечать на вызовы сегодняшнего дня.",
         timeline: [
             {
-                id: 1,
+                id: 0,
                 intro: true,
                 button: {
                     audio: Intro,
@@ -542,7 +542,7 @@ const timelineData = {
                 },
             },
             {
-                id: 2,
+                id: 1,
                 button: {
                     link: "topic1/point1",
                     audio: Line3Topic1,
@@ -580,7 +580,7 @@ const timelineData = {
                 ],
             },
             {
-                id: 3,
+                id: 2,
                 button: {
                     link: "topic2/point1",
                     audio: Line3Topic2,
@@ -608,7 +608,7 @@ const timelineData = {
                 ],
             },
             {
-                id: 4,
+                id: 3,
                 button: {
                     link: "topic3/point1",
                     audio: Line3Topic3,
@@ -636,7 +636,7 @@ const timelineData = {
                 ],
             },
             {
-                id: 5,
+                id: 4,
                 button: {
                     link: "topic4/point1",
                     audio: Line3Topic4,
@@ -664,7 +664,7 @@ const timelineData = {
                 ],
             },
             {
-                id: 6,
+                id: 5,
                 button: {
                     link: "topic5/point1",
                     audio: Line3Topic5,
@@ -692,7 +692,7 @@ const timelineData = {
                 ],
             },
             {
-                id: 7,
+                id: 6,
                 button: {
                     link: "topic6/point1",
                     audio: Line3Topic6,
@@ -720,7 +720,7 @@ const timelineData = {
                 ],
             },
             {
-                id: 8,
+                id: 7,
                 button: {
                     link: "topic7/point1",
                     audio: Line3Topic7,
@@ -748,7 +748,7 @@ const timelineData = {
                 ],
             },
             {
-                id: 9,
+                id: 8,
                 button: {
                     link: "topic8/point1",
                     audio: Line3Topic7,
@@ -776,7 +776,7 @@ const timelineData = {
                 ],
             },
             {
-                id: 10,
+                id: 9,
                 test: true,
                 button: {
                     link: "test",
@@ -803,7 +803,7 @@ const timelineData = {
             "Компания ФосАгро провела комплексную оценку своей деятельности, определила основные направления воздействия на компоненты окружающей среды. Экологическая стратегия Компании соотносится с Целями в области устойчивого развития ООН (ЦУР ООН)",
         timeline: [
             {
-                id: 1,
+                id: 0,
                 intro: true,
                 button: {
                     value: {
@@ -828,7 +828,7 @@ const timelineData = {
                 },
             },
             {
-                id: 2,
+                id: 1,
                 button: {
                     link: "topic1/point1",
                     value: {
@@ -865,7 +865,7 @@ const timelineData = {
                 ],
             },
             {
-                id: 3,
+                id: 2,
                 button: {
                     link: "topic2/point1",
                     value: {
@@ -902,7 +902,7 @@ const timelineData = {
                 ],
             },
             {
-                id: 4,
+                id: 3,
                 button: {
                     link: "topic3/point1",
                     value: {
@@ -929,7 +929,7 @@ const timelineData = {
                 ],
             },
             {
-                id: 5,
+                id: 4,
                 button: {
                     link: "topic4/point1",
                     value: {
@@ -956,7 +956,7 @@ const timelineData = {
                 ],
             },
             {
-                id: 6,
+                id: 5,
                 button: {
                     link: "topic5/point1",
                     value: {
@@ -983,7 +983,7 @@ const timelineData = {
                 ],
             },
             {
-                id: 7,
+                id: 6,
                 button: {
                     link: "topic6/point1",
                     value: {
@@ -1010,7 +1010,7 @@ const timelineData = {
                 ],
             },
             {
-                id: 8,
+                id: 7,
                 button: {
                     link: "topic7/point1",
                     value: {
@@ -1057,7 +1057,7 @@ const timelineData = {
                 ],
             },
             {
-                id: 9,
+                id: 8,
                 test: true,
                 button: {
                     link: "test",
@@ -1084,7 +1084,7 @@ const timelineData = {
             "Основная цель ФосАгро в области климата – снижение выбросов парниковых газов к 2028 году на 14% по отношению к базовому 2018 году. В 2021 году Компания стала партнером CGI Russia. С 2021 года ФосАгро публикует климатические отчеты по стандартам TCFD.",
         timeline: [
             {
-                id: 1,
+                id: 0,
                 intro: true,
                 button: {
                     value: {
@@ -1105,7 +1105,7 @@ const timelineData = {
                 },
             },
             {
-                id: 2,
+                id: 1,
                 button: {
                     link: "topic1/point1",
                     value: {
@@ -1132,7 +1132,7 @@ const timelineData = {
                 ],
             },
             {
-                id: 3,
+                id: 2,
                 button: {
                     link: "topic2/point1",
                     value: {
@@ -1189,7 +1189,7 @@ const timelineData = {
                 ],
             },
             {
-                id: 4,
+                id: 3,
                 button: {
                     link: "topic3/point1",
                     value: {
@@ -1236,7 +1236,7 @@ const timelineData = {
                 ],
             },
             {
-                id: 5,
+                id: 4,
                 button: {
                     link: "topic4/point1",
                     value: {
@@ -1263,7 +1263,7 @@ const timelineData = {
                 ],
             },
             {
-                id: 6,
+                id: 5,
                 button: {
                     link: "topic5/point1",
                     value: {
@@ -1290,7 +1290,7 @@ const timelineData = {
                 ],
             },
             {
-                id: 7,
+                id: 6,
                 test: true,
                 button: {
                     link: "test",
@@ -1317,7 +1317,7 @@ const timelineData = {
             "Социальная ответственность - общепризнанный этический стандарт ведения современного бизнеса. Программы по обеспечению социальной защищенности, соблюдению прав человека и развитию сотрудников лежат в основе деятельности ФосАгро.",
         timeline: [
             {
-                id: 1,
+                id: 0,
                 intro: true,
                 button: {
                     audio: Intro,
@@ -1339,7 +1339,7 @@ const timelineData = {
                 },
             },
             {
-                id: 2,
+                id: 1,
                 button: {
                     link: "topic1/point1",
                     audio: Line6Topic1,
@@ -1377,7 +1377,7 @@ const timelineData = {
                 ],
             },
             {
-                id: 3,
+                id: 2,
                 button: {
                     link: "topic2/point1",
                     audio: Line6Topic2,
@@ -1435,7 +1435,7 @@ const timelineData = {
                 ],
             },
             {
-                id: 4,
+                id: 3,
                 button: {
                     link: "topic3/point1",
                     audio: Line6Topic3,
@@ -1463,7 +1463,7 @@ const timelineData = {
                 ],
             },
             {
-                id: 5,
+                id: 4,
                 button: {
                     link: "topic4/point1",
                     audio: Line6Topic4,
@@ -1561,7 +1561,7 @@ const timelineData = {
                 ],
             },
             {
-                id: 6,
+                id: 5,
                 test: true,
                 button: {
                     link: "test",
