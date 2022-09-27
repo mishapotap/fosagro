@@ -7,6 +7,7 @@ import styled from "styled-components"
 import { COLORS, DEVICE } from "../../constants"
 import { Close } from "../../assets/svg"
 
+// type для всех дефолтный, для модалки cookie - type = "cookie"
 export default function Modal({
     children,
     isOpen,
@@ -14,7 +15,8 @@ export default function Modal({
     closeBtnColor = COLORS.blue,
     className,
     onOpenAnimEnd = () => {},
-    navigateBack = false
+    navigateBack = false,
+    type = ""
 }) {
     const modalRef = useRef(null)
     const navigate = useNavigate()
@@ -88,9 +90,11 @@ export default function Modal({
         >
             <Container className={`${className} modal`} ref={modalRef}>
                 <ModalWindow className="modal-window" ref={modalRef}>
-                    <CloseBtn className="modal-close-btn" onClick={handleClose}>
-                        <Close color={closeBtnColor} />
-                    </CloseBtn>
+                    { type === "" &&
+                        <CloseBtn className="modal-close-btn" onClick={handleClose}>
+                            <Close color={closeBtnColor} />
+                        </CloseBtn>
+                    }
                     {children}
                 </ModalWindow>
                 <ModalMask className="modal-mask" onClick={handleClose} />

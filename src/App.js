@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React from "react"
+import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 import { Link, Outlet } from "react-router-dom"
 import { Helmet } from "react-helmet"
@@ -9,11 +9,19 @@ import { OOH } from "./assets/svg/static"
 import { AVTdigital } from "./assets/images"
 import { MainBG } from "./assets/video"
 import { COLORS, DEVICE } from "./constants"
-import { Layout } from "./components/atoms"
+import { Layout, CookieModal } from "./components/atoms"
 import { Click2 } from "./assets/audio"
+import { SoundStore } from "./store"
 
 function App() {
+    const [isOpenCookie, setIisOpenCookie] = useState(false)
     const clickSound = new Audio(Click2)
+
+    useEffect(() => {
+        setTimeout(() => {
+            setIisOpenCookie(true)
+        }, 500)
+    }, [])
 
     return (
         <Layout>
@@ -38,10 +46,12 @@ function App() {
                         <TextContainer>
                             <Title>Курс “Устойчивое развитие”</Title>
                             <Suptitle>
-                                <div>Компания ФосАгро напрямую способствует</div>
                                 <div>
-                                    достижению <span> 11 целей</span> устойчивого
-                                    развития ООН
+                                    Компания ФосАгро напрямую способствует
+                                </div>
+                                <div>
+                                    достижению <span> 11 целей</span>{" "}
+                                    устойчивого развития ООН
                                     <img src={OOH} alt="OOH" />
                                 </div>
                             </Suptitle>
@@ -51,7 +61,10 @@ function App() {
                                 <Link
                                     to={`/course${item.id}`}
                                     key={item.index}
-                                    onClick={() => clickSound.play()}
+                                    onClick={() =>
+                                        SoundStore.getIsPlaying() &&
+                                        clickSound.play()
+                                    }
                                 >
                                     <MenuButton
                                         index={item.index}
@@ -59,6 +72,7 @@ function App() {
                                         bgColor={item.bgColor}
                                         bgAnimateColor={item.bgAnimateColor}
                                         rotate={item.rotate}
+                                        duration={item.duration}
                                     />
                                 </Link>
                             ))}
@@ -78,6 +92,10 @@ function App() {
                 </Footer>
             </Container>
             <Outlet />
+            <CookieModal
+                isOpen={isOpenCookie}
+                onClose={() => setIisOpenCookie(false)}
+            />
         </Layout>
     )
 }

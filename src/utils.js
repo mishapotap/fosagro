@@ -55,3 +55,44 @@ export function getElWindowPos(el) {
         right: rect.left + el.offsetWidth,
     }
 }
+
+// получение длительности медиа для темы
+export function getMediaDuration(array) {
+    const valeurInitiale = 0
+    const duration = array.reduce(
+        (accumulateur, valeurCourante) => accumulateur + valeurCourante[1],
+        valeurInitiale
+    )
+
+    return duration
+}
+
+// длительность темы в секундах
+export function getMediaDurationSec(data, key = "") {
+    let duration = 0
+    if (key === "") {
+        duration = getMediaDuration(data)
+    } else {
+        const keyCourseArray = Object.keys(data)
+        keyCourseArray.forEach((keyObj) => {
+            duration += getMediaDuration(data[keyObj])
+        })
+    }
+
+    const min = Math.floor(duration / 60)
+
+    const sec =
+        Math.floor(duration - Math.floor(duration / 60) * 60) < 10
+            ? `${Math.floor(duration - Math.floor(duration / 60) * 60)}`
+            : Math.floor(duration - Math.floor(duration / 60) * 60)
+
+    let time = ""
+
+    if (key === "") {
+        time = (min > 0 ? `${min}мин ` : "") + (sec > 0 ? `${sec}сек` : "")
+    } else {
+        time = min > 0 ? `${min}мин ` : ""
+    }
+
+    return time
+}

@@ -3,12 +3,16 @@ import styled from "styled-components"
 import { COLORS, DEVICE } from "../../constants"
 import { borderAnimationM } from "../../constants/animations"
 
-export default function MenuButton({rotate = 0, bgColor = COLORS.white, bgAnimateColor = COLORS.white, index, text}) {
+export default function MenuButton({rotate = 0, bgColor = COLORS.white, bgAnimateColor = COLORS.white, index, text, duration = ""}) {
+
     return(
         <Container>
         <Circle bgColor={bgColor}>
             <CircleContetnt style={{color: COLORS.white}}>
-                <Index>{index}</Index>
+                <IndexContainer>
+                    <Index>{index}</Index>
+                    <Duration>{duration}</Duration>
+                </IndexContainer>
                 <Text>{text}</Text>
             </CircleContetnt>
                        
@@ -81,8 +85,30 @@ const CircleContetnt = styled.div`
     }
 `
 
+const IndexContainer = styled.div`
+    display: flex;
+    align-items: baseline;
+    justify-content: start;
+`
+
+const Duration = styled.div`
+    margin-left: 5px;
+    font-size: 0.94vw;
+    line-height: 3.6vw;
+    text-transform: lowercase;
+
+    @media ${DEVICE.laptopS} { 
+        font-size: 1.8vw;
+        line-height: 7vw;
+    }
+
+    @media ${DEVICE.mobile} { 
+        font-size: 2.5vw;
+        line-height: 9.1vw;
+    }
+`
+
 const Index = styled.div`
-    width: 100%;
     font-weight: 800;
     font-size: 3.6vw;
     line-height: 4.6vw;

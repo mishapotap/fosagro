@@ -44,6 +44,9 @@ import {
     Line6Topic4,
 } from "../assets/Course6/TimeLine"
 
+import { getMediaDurationSec } from "../utils"
+import mediaDuration from "./mediaDuration"
+
 import { Intro, Course1, Course2, Course3, Course6 } from "../assets/audio"
 
 // TODO Добавить им разные координаты x y
@@ -76,7 +79,7 @@ const timelineData = {
                             },
                         ],
                         title: "Введение",
-                        time: "55 сек",
+                        time: getMediaDurationSec(mediaDuration.course1[0]),
                         bgColor: COLORS.orange,
                         image: CourseButtonImage1,
                         rotate: "-64",
@@ -92,7 +95,7 @@ const timelineData = {
                     audio: Line1Topic1,
                     value: {
                         title: "Суть концепции устойчивого развития",
-                        time: "2 мин",
+                        time: getMediaDurationSec(mediaDuration.course1[1]),
                         bgColor: COLORS.green_light,
                         image: CourseButtonImage2,
                         rotate: "-127",
@@ -150,7 +153,7 @@ const timelineData = {
                     audio: Line1Topic2,
                     value: {
                         title: "Концепции ESG",
-                        time: "30 сек",
+                        time: getMediaDurationSec(mediaDuration.course1[2]),
                         bgColor: COLORS.green_dark,
                         image: CourseButtonImage3,
                         rotate: "105",
@@ -178,7 +181,7 @@ const timelineData = {
                     audio: Line1Topic3,
                     value: {
                         title: "А что в ФосАгро?",
-                        time: "1 мин 20 сек",
+                        time: getMediaDurationSec(mediaDuration.course1[3]),
                         bgColor: COLORS.brown_light,
                         image: CourseButtonImage4,
                         rotate: "165",
@@ -239,7 +242,6 @@ const timelineData = {
                     },
                 ],
             },
-
             {
                 id: 4,
                 button: {
@@ -247,7 +249,7 @@ const timelineData = {
                     audio: Line1Topic4,
                     value: {
                         title: "А что с поставщиками и потребителями?",
-                        time: "1 мин 30 сек",
+                        time: getMediaDurationSec(mediaDuration.course1[4]),
                         bgColor: COLORS.brown,
                         image: CourseButtonImage5,
                         rotate: "76",
@@ -285,7 +287,7 @@ const timelineData = {
                     link: "test",
                     value: {
                         title: "Тест",
-                        time: "≈4 мин",
+                        time: getMediaDurationSec(mediaDuration.course1[5]),
                         bgColor: COLORS.blue,
                         image: CourseButtonImage6,
                         rotate: "-150",
@@ -322,7 +324,7 @@ const timelineData = {
                             },
                         ],
                         title: "Введение",
-                        time: "40 сек",
+                        time: getMediaDurationSec(mediaDuration.course2[0]),
                         bgColor: COLORS.orange,
                         image: CourseButtonImage1,
                         rotate: "-64",
@@ -338,7 +340,7 @@ const timelineData = {
                     audio: Line2Topic1,
                     value: {
                         title: "Преобразования нашего мира, 17 целей",
-                        time: "4мин 30сек",
+                        time: getMediaDurationSec(mediaDuration.course2[1]),
                         bgColor: COLORS.green_light,
                         image: CourseButtonImage2,
                         rotate: "-145",
@@ -389,7 +391,7 @@ const timelineData = {
                     audio: Line2Topic2,
                     value: {
                         title: "Как ФосАгро способствует достижению ЦУР ООН",
-                        time: "55 сек",
+                        time: getMediaDurationSec(mediaDuration.course2[2]),
                         bgColor: COLORS.green_dark,
                         image: CourseButtonImage3,
                         rotate: "-77",
@@ -418,7 +420,7 @@ const timelineData = {
                     audio: Line2Topic3,
                     value: {
                         title: "Приоритизация ЦУР для ФосАгро",
-                        time: "1 мин 20 сек",
+                        time: getMediaDurationSec(mediaDuration.course2[3]),
                         bgColor: COLORS.brown_light,
                         image: CourseButtonImage4,
                         rotate: "165",
@@ -497,7 +499,7 @@ const timelineData = {
                     link: "test",
                     value: {
                         title: "Тест",
-                        time: "≈4 мин",
+                        time: getMediaDurationSec(mediaDuration.course2[4]),
                         bgColor: COLORS.blue,
                         image: CourseButtonImage6,
                         rotate: "-150",

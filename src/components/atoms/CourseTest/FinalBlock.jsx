@@ -28,7 +28,8 @@ function FinalBlock() {
 
     const openMailModal = () => {
         ModalStore.showModal("mail")
-        clickSound.play()
+        // eslint-disable-next-line no-unused-expressions
+        SoundStore.getIsPlaying() && clickSound.play()
     }
 
     return (

@@ -1,4 +1,6 @@
 import * as routes from "../constants/routes"
+import mediaDuration from "./mediaDuration"
+import { getMediaDurationSec } from "../utils"
 
 const menuButtonData = [
     {
@@ -9,7 +11,7 @@ const menuButtonData = [
         bgAnimateColor: "rgba(218, 170, 0, 0.5)",
         rotate: "9",
         href: routes.COURSE01,
-        progress: 26,
+        duration: getMediaDurationSec(mediaDuration.course1, "course"),
     },
     {
         id: 2,
@@ -19,7 +21,7 @@ const menuButtonData = [
         bgAnimateColor: "rgba(200, 130, 66, 0.5)",
         rotate: "-94",
         href: routes.COURSE02,
-        progress: 50,
+        duration: getMediaDurationSec(mediaDuration.course2, "course"),
     },
     {
         id: 3,
@@ -39,7 +41,6 @@ const menuButtonData = [
         bgAnimateColor: "rgba(182, 186, 41, 0.5)",
         rotate: "26",
         href: routes.COURSE04,
-        progress: 100,
     },
     {
         id: 5,
@@ -49,7 +50,6 @@ const menuButtonData = [
         bgAnimateColor: "rgba(103, 130, 58, 0.5)",
         rotate: "-65",
         href: routes.COURSE05,
-        progress: 78,
     },
     {
         id: 6,
@@ -59,7 +59,6 @@ const menuButtonData = [
         bgAnimateColor: "rgba(113, 178, 201, 0.5)",
         rotate: "55",
         href: routes.COURSE06,
-        progress: 90,
     },
 ]
 

@@ -17,7 +17,8 @@ function MenuModal({isOpen, onClose}) {
     const closeModal = () => {
         ModalStore.closeModal("menu");
         SoundStore.setIsPlayingSound(true);
-        clickSound.play();
+        // eslint-disable-next-line no-unused-expressions
+        SoundStore.getIsPlaying() && clickSound.play()
     }
 
     return (

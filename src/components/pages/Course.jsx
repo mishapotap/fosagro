@@ -10,9 +10,8 @@ import { MenuBackground } from "../../assets/images"
 import { TimelineFooter, CourseMenu } from "../organisms"
 import { introModalData } from "../../data"
 import Error404 from "./Error404"
-import { CourseProgressStore, ModalStore } from "../../store"
+import { CourseProgressStore, ModalStore, SoundStore } from "../../store"
 import Notification from '../atoms/Notification'
-
 
 function Course() {
     const { id } = useParams()
@@ -63,7 +62,8 @@ function Course() {
         function titleSoundPlay() {
             if(!ModalStore.isVisible.instruction && !ModalStore.isVisible.intro) {
                 setIsPlaying(true)
-                titleAudio.current.play()
+                // eslint-disable-next-line no-unused-expressions
+                SoundStore.getIsPlaying() && titleAudio.current.play()
             }
             window.removeEventListener("click", titleSoundPlay)
         }
