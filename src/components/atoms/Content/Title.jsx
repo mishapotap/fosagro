@@ -20,7 +20,7 @@ const Container = styled.div`
     line-height: 1.15;
 
     @media ${DEVICE.laptopM} {
-        font-size: 1.7vw;
+        font-size: 1.8vw;
     }
 
     @media ${DEVICE.laptop} {

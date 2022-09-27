@@ -11,7 +11,7 @@ export default function Layout({ page = "start", children, className }) {
             {/* меню */}
             {page === "menu" && <Header goBackToMain />}
             {/* входная страница */}
-            {page === "start" && <Header language />}
+            {page === "start" && <Header language fosagroSite />}
             {/* страница раздела с плавающими кружочками */}
             {page === "course" && <Header course />}
             {/* страница ошибки */}
@@ -24,6 +24,7 @@ export default function Layout({ page = "start", children, className }) {
                     sectTitle
                 />
             )}
+            {page === "final" && <Header goBackToMain fosagroSite colored />}
             <Content className="content">{children}</Content>
         </Container>
     )

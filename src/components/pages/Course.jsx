@@ -72,7 +72,7 @@ function Course() {
 
     useEffect(() => {
         document.addEventListener("click", () => {
-            if(isPlaying) { 
+            if(isPlaying) {
                 titleAudio.current.pause()
                 setIsPlaying(false)
             }
@@ -106,7 +106,7 @@ function Course() {
                 <CourseMenu dataLine={dataLine} dataModal={dataModal} />
                 <TimelineFooter />
             </Container>
-            <Audio src={dataLine.titleAudio} 
+            <Audio src={dataLine.titleAudio}
                 ref={titleAudio}/>
         </StyledLayout>
     )
@@ -159,12 +159,6 @@ const CourseNumber = styled.div`
     }
 
     @media ${DEVICE.laptopS} {
-        font-size: 60px;
-    }
-    @media ${DEVICE.tablet} {
-        font-size: 50px;
-    }
-    @media ${DEVICE.mobile} {
         font-size: 40px;
     }
 `
@@ -183,12 +177,6 @@ const CourseTitle = styled.div`
 
     @media ${DEVICE.laptopS} {
         max-width: 100%;
-        font-size: 33px;
-    }
-    @media ${DEVICE.tablet} {
-        font-size: 28px;
-    }
-    @media ${DEVICE.mobile} {
         font-size: 22px;
     }
 `
@@ -207,10 +195,6 @@ const CourseSupTitle = styled.div`
         font-size: 1.2vw;
     }
     @media ${DEVICE.laptopS} {
-        font-size: 18px;
-    }
-
-    @media ${DEVICE.mobile} {
         font-size: 16px;
     }
 `
