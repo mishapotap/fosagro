@@ -7,7 +7,7 @@ import { CourseProgressStore } from "../../../store"
 import { showContent } from "../../../constants/animations"
 import { DEVICE } from "../../../constants"
 
-function NewSectWindow() {
+function NewSectWindow({onExited}) {
     const newSectWindowRef = useRef(null)
     const [showNewSectW, setShowNewSectW] = useState(false)
 
@@ -55,6 +55,7 @@ function NewSectWindow() {
             unmountOnExit
             // eslint-disable-next-line react/jsx-no-bind
             onEntered={handleEntered}
+            onExited={onExited}
         >
             <Container ref={newSectWindowRef} className="new-sect">
                 <CourseStepButton isActive data={sectBtnData.value} />

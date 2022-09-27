@@ -250,6 +250,7 @@ export default function VideoPlayer({
         setIsStart(true)
         if (!isBottomControlsShown) setIsBottomControlsShown(true)
         setProgressTime(0)
+        if (isFullscreen) toggleFullscreen()
     }
 
     // при загрузке видео устанавливаем его длительность и убираем лоадер

@@ -205,7 +205,7 @@ const timelineData = {
                         value: {
                             color: COLORS.brown_light,
                             position: "top",
-                            text: "Наши результаты, снизили выбросы",
+                            text: "Доступные технологии, снизили выбросы",
                             top: "calc(50% - 150px + 95px)",
                             left: "1340px",
                         },
@@ -215,7 +215,7 @@ const timelineData = {
                         value: {
                             color: COLORS.brown_light,
                             position: "bottom",
-                            text: "Наши результаты, снизили сброс сточных вод",
+                            text: "Экология, снизили сброс сточных вод",
                             top: "calc(50% - 150px + 110px)",
                             left: "1420px",
                         },
@@ -225,7 +225,7 @@ const timelineData = {
                         value: {
                             color: COLORS.brown_light,
                             position: "top",
-                            text: "Наши результаты, проекты",
+                            text: "Социальная среда, проекты",
                             top: "calc(50% - 150px + 120px)",
                             left: "1500px",
                         },

@@ -25,13 +25,14 @@ function Header({
     sectTitle = false,
     // ссылка "вернуться на главную"
     goBackToMain = false,
+    fosagroSite = false,
 }) {
     // сделать норм
     const rusSiteLink = "/"
     const engSiteLink = "/"
     const isRus = false
 
-    const {activeSectColor, activeSectTitle} = CourseProgressStore
+    const { activeSectColor, activeSectTitle } = CourseProgressStore
 
     const clickSound = new Audio(Click2)
 
@@ -54,55 +55,52 @@ function Header({
                         <FosagroColored />
                     </Link>
                 </Logo>
+                {fosagroSite && (
+                    <LinkToFosagro>
+                        <a
+                            href="https://www.phosagro.ru/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <LinkArrow className="linkArrow" />
+                            <span>Корпоративный сайт</span>
+                        </a>
+                    </LinkToFosagro>
+                )}
                 {language && (
-                    <>
-                        <LinkToFosagro>
-                            <a href="https://www.phosagro.ru/"
-                                target="_blank"
-                                rel="noopener noreferrer">
-                               <LinkArrow className="linkArrow"/>
-                                <span>Корпоративный сайт</span>
-                            </a>
-                        </LinkToFosagro>
-                        <LanguageContainer>
-                            <Language>
-                                <Link
-                                    to={rusSiteLink}
-                                    className={isRus && "active"}
-                                >
-                                    RU
-                                </Link>
-                            </Language>
-                            <Language>
-                                <Link
-                                    to={engSiteLink}
-                                    className={!isRus && "active"}
-                                >
-                                    EN
-                                </Link>
-                            </Language>
-                        </LanguageContainer>
-                    </>
+                    <LanguageContainer>
+                        <Language>
+                            <Link
+                                to={rusSiteLink}
+                                className={isRus && "active"}
+                            >
+                                RU
+                            </Link>
+                        </Language>
+                        <Language>
+                            <Link
+                                to={engSiteLink}
+                                className={!isRus && "active"}
+                            >
+                                EN
+                            </Link>
+                        </Language>
+                    </LanguageContainer>
                 )}
                 {course && <CourseMenuButton colored={colored} />}
                 {sectTitle && (
                     <HeaderSectTitle>
                         <SectTitle>
                             <SectTitleDecor />
-                            <SectTitleText
-                                color={activeSectColor}
-                            >
+                            <SectTitleText color={activeSectColor}>
                                 {activeSectTitle}
                             </SectTitleText>
                         </SectTitle>
                     </HeaderSectTitle>
                 )}
                 {goBackToMain && (
-                    <BackToMain>
-                        <Link
-                            to={routes.HOME}
-                            onClick={() => closeMenuModal()}
-                        >
+                    <BackToMain colored={colored}>
+                        <Link to={routes.HOME} onClick={() => closeMenuModal()}>
                             Вернуться на главную
                         </Link>
                     </BackToMain>
@@ -132,6 +130,7 @@ const Logo = styled.div`
 `
 
 const BackToMain = styled.div`
+    flex-shrink: 0;
     margin-right: 100px;
     margin-top: 20px;
 
@@ -141,7 +140,7 @@ const BackToMain = styled.div`
 
     a {
         font-family: "FocoBold";
-        color: ${COLORS.white};
+        color: ${({colored}) => colored ? COLORS.blue : COLORS.white};
         font-size: 18px;
 
         &:hover,
@@ -249,7 +248,6 @@ const LinksContainer = styled.div`
 `
 
 const LinkToFosagro = styled.div`
-
     flex: 0 1 100%;
 
     @media ${DEVICE.laptopS} {
@@ -266,7 +264,7 @@ const LinkToFosagro = styled.div`
     span {
         margin-left: 12px;
 
-        font-family: 'CalibriBold';
+        font-family: "CalibriBold";
         font-weight: 700;
         font-size: 16px;
         line-height: 20px;

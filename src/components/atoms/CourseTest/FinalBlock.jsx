@@ -6,7 +6,12 @@ import { Link } from "react-router-dom"
 import { CSSTransition } from "react-transition-group"
 import { observer } from "mobx-react-lite"
 
-import { ModalStore, CourseTestStore, SoundStore } from "../../../store"
+import {
+    ModalStore,
+    CourseTestStore,
+    SoundStore,
+    CourseProgressStore,
+} from "../../../store"
 import { COLORS, DEVICE } from "../../../constants"
 import { borderAnimationM } from "../../../constants/animations"
 import { Letter } from "../../../assets/svg"
@@ -54,15 +59,30 @@ function FinalBlock() {
                     <Label>{CourseTestStore.finalContent.label}</Label>
                     <Text>{CourseTestStore.finalContent.text}</Text>
                     {CourseTestStore.allAnswersRight && (
-                        <Link
-                            to={CourseTestStore.nextCourseLink}
-                            className="next-chapter"
-                            onCLick={() => SoundStore.setIsPlayingSound(true)}
-                        >
-                            <SendButton
-                                text="Перейти к следующему разделу"
-                            />
-                        </Link>
+                        // eslint-disable-next-line react/jsx-no-useless-fragment
+                        <>
+                            {CourseProgressStore.userPassedFullCourse ? (
+                                <Link
+                                    to="/final"
+                                    className="next-chapter"
+                                    onClick={() =>
+                                        SoundStore.setIsPlayingSound(true)
+                                    }
+                                >
+                                    <SendButton text="Завершить обучение" />
+                                </Link>
+                            ) : (
+                                <Link
+                                    to={CourseTestStore.nextCourseLink}
+                                    className="next-chapter"
+                                    onClick={() =>
+                                        SoundStore.setIsPlayingSound(true)
+                                    }
+                                >
+                                    <SendButton text="Перейти к следующему разделу" />
+                                </Link>
+                            )}
+                        </>
                     )}
                     {!CourseTestStore.allAnswersRight && (
                         <SectButtons>
@@ -102,14 +122,21 @@ function FinalBlock() {
                         </AnimatedBlueButton>
                     </Feedback>
                     {!CourseTestStore.allAnswersRight && (
-                        <Link
-                            to={CourseTestStore.nextCourseLink}
-                            className="continue-learn"
-                        >
-                            <NextButton
-                                text="Продолжить изучение"
-                            />
-                        </Link>
+                        // eslint-disable-next-line react/jsx-no-useless-fragment
+                        <>
+                            {CourseProgressStore.userPassedFullCourse ? (
+                                <Link to="/final" className="continue-learn">
+                                    <NextButton text="Завершить обучение" />
+                                </Link>
+                            ) : (
+                                <Link
+                                    to={CourseTestStore.nextCourseLink}
+                                    className="continue-learn"
+                                >
+                                    <NextButton text="Продолжить изучение" />
+                                </Link>
+                            )}
+                        </>
                     )}
                 </FinBottom>
             </FinalStyledBlock>
@@ -300,7 +327,7 @@ const FinalStyledBlock = styled(Block)`
     padding-bottom: 20px;
 
     &.visible {
-        opacity: 1!important;
+        opacity: 1 !important;
     }
 
     @media ${DEVICE.laptopS} {

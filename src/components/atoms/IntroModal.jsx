@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/no-array-index-key */
 import React, { useEffect, useState, useRef } from "react"
@@ -26,24 +27,30 @@ export default function IntroModal({ isOpen, onClose, items }) {
 
     const [slidersAutoplay, setSlidersAutoplay] = useState({})
     const [slidersAudio, setSlidersAudio] = useState({})
+    const [slidersDelay, _setSlidersDelay] = useState({})
     const modalContent = useRef(null)
+    const swiperRef = useRef(null)
+    const slidersDelayRef = useRef(null)
+
+    function setSlidersDelay(val) {
+        slidersDelayRef.current = val
+        _setSlidersDelay(val)
+    }
 
     function setInitialState() {
         const initSliderAutoplState = {}
         const initAudiosState = {}
+        const initDelayState = {}
 
-        // изначально выключить автоплэй у каждого круглого слайдера
         items.forEach((i, index) => {
             initSliderAutoplState[index] = false
-        })
-
-        // изначально выключить проигрывание аудио у всех слайдов
-        items.forEach((i, index) => {
             initAudiosState[index] = false
+            initDelayState[index] = 5000
         })
 
         setSlidersAudio(initAudiosState)
         setSlidersAutoplay(initSliderAutoplState)
+        setSlidersDelay(initDelayState)
     }
 
     useEffect(() => {
@@ -60,8 +67,8 @@ export default function IntroModal({ isOpen, onClose, items }) {
 
     function handleOpenAnimEnd() {
         setTimeout(() => {
-            setSlidersAutoplay(() => ({ ...slidersAutoplay, 0: true }))
-            setSlidersAudio(() => ({ ...slidersAudio, 0: true }))
+            setSlidersAutoplay(() => ({...slidersAutoplay, 0: true}))
+            setSlidersAudio(() => ({...slidersAudio, 0: true}))
         }, 1000)
     }
 
@@ -69,29 +76,41 @@ export default function IntroModal({ isOpen, onClose, items }) {
     function handleSlideChange(swiper) {
         const { activeIndex, previousIndex } = swiper
 
-        // setTimeout(() => {
-            setSlidersAutoplay((prevState) => ({
-                ...prevState,
-                // ставим новому круглому слайдеру автоплэй
-                [activeIndex]: true,
-                // убираем у старого круглого слайдера автоплэй
-                [previousIndex]: false,
-            }))
+        setSlidersAutoplay((prevState) => ({
+            ...prevState,
+            // ставим новому круглому слайдеру автоплэй
+            [activeIndex]: true,
+            // убираем у старого круглого слайдера автоплэй
+            [previousIndex]: false,
+        }))
 
-            setSlidersAudio((prevState) => ({
-                ...prevState,
-                // включаем аудио у нового слайда
-                [activeIndex]: true,
-                // выключаем аудио у старого слайда
-                [previousIndex]: false,
-            }))
-        // }, 1000)
+        setSlidersAudio((prevState) => ({
+            ...prevState,
+            // включаем аудио у нового слайда
+            [activeIndex]: true,
+            // выключаем аудио у старого слайда
+            [previousIndex]: false,
+        }))
     }
 
     function handleClose() {
         CourseProgressStore.setIntroPassed()
         onClose()
-        setSlidersAudio({0: false, 1: false})
+    }
+
+    function handleAudioEnded(index) {
+        if (index === 0 && swiperRef.current) {
+            swiperRef.current.slideNext()
+        }
+    }
+
+    function handleInit(swiper) {
+        swiperRef.current = swiper
+    }
+
+    function handleAudioLoaded({target}, index) {
+        const delayTime = (target.duration * 1000) / 3
+        setSlidersDelay({...slidersDelayRef.current, [index]: delayTime})
     }
 
     return (
@@ -133,6 +152,7 @@ export default function IntroModal({ isOpen, onClose, items }) {
                         onSlideChange={handleSlideChange}
                         className="swiper-intro"
                         allowTouchMove={false}
+                        onInit={handleInit}
                     >
                         {items.map(
                             ({ text, audio, images, note, links }, index) => (
@@ -149,6 +169,8 @@ export default function IntroModal({ isOpen, onClose, items }) {
                                                         isPlaying={
                                                             slidersAudio[index]
                                                         }
+                                                        onEnded={() => handleAudioEnded(index)}
+                                                        onLoaded={(e) => handleAudioLoaded(e, index)}
                                                     />
                                                 )}
                                             </SlideCol>
@@ -203,7 +225,7 @@ export default function IntroModal({ isOpen, onClose, items }) {
                                                     makeAutoplay={
                                                         slidersAutoplay[index]
                                                     }
-                                                    delayTime={4300}
+                                                    delayTime={slidersDelay[index]}
                                                     index={index}
                                                 />
                                                 {links && links.length > 0 && (
