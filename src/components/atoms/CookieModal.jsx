@@ -2,10 +2,9 @@
 /* eslint-disable react/no-array-index-key */
 import React from "react"
 import styled from "styled-components"
-import { COLORS } from "../../constants"
 import Modal from "./Modal"
 import SendButton from "./SendButton"
-// import { COLORS, DEVICE } from "../../constants"
+import { COLORS, DEVICE } from "../../constants"
 
 export default function CookieModal({ isOpen, onClose }) {
 
@@ -28,7 +27,7 @@ export default function CookieModal({ isOpen, onClose }) {
                 <Text>Данный курс использует файлы cookie для подсчета и формирования визуализации прогресса изучения курса. Cookie хранятся в течение 30 дней.
                     Время изучения курса  - 60 минут.
                 </Text>
-                <SendButton text="Начать изучение курса" onClick={withCookie}/>
+                <SendButton text="Начать изучение курса" onClick={withCookie} className="cookie"/>
                 <WithOutCookie onClick={withOutCookie}>Начать изучение курса без подсчета прогресса изучения</WithOutCookie>
             </ModalContent>
         </StyledModal>
@@ -47,6 +46,27 @@ const StyledModal = styled(Modal)`
         border-radius: 30px;
 
         overflow: hidden;
+
+        @media ${DEVICE.laptopS} {
+            height: 18vw;
+            top: calc(100vh - 22vw);
+        }
+
+        @media ${DEVICE.tablet} {
+            top: calc(100vh - 26vw);
+            left: calc(50vw - 25vw);
+
+            max-width: 50vw;
+            height: 22vw;
+        }
+
+        @media ${DEVICE.mobile} {
+            top: calc(100vh - 55vw);
+            left: calc(50vw - 45vw);
+
+            max-width: 90vw;
+            height: 50vw;
+        }
     }
 `
       
@@ -64,6 +84,10 @@ const ModalContent = styled.div`
     padding: 2.25vw;
 
     text-align: center;
+
+    @media ${DEVICE.mobile} {
+        padding: 4vw;
+    }
 `
 
 const Text = styled.div`
@@ -73,6 +97,21 @@ const Text = styled.div`
     line-height: 1.4vw;
 
     color: ${COLORS.black};
+    
+    @media ${DEVICE.laptopS} {
+        font-size: 1.2vw;
+        line-height: 1.6vw;
+    }
+
+    @media ${DEVICE.tablet} {
+        font-size: 1.6vw;
+        line-height: 2vw;
+    }
+
+    @media ${DEVICE.mobile} {
+        font-size: 3.5vw;
+        line-height: 4.2vw;
+    }
 `
 
 const WithOutCookie = styled.div`
@@ -88,5 +127,20 @@ const WithOutCookie = styled.div`
 
     &:hover {
         border-bottom: 1px solid rgba(0, 82, 155, 1);
+    }
+
+    @media ${DEVICE.laptopS} {
+        font-size: 1.1vw;
+        line-height: 1.3vw;
+    }
+
+    @media ${DEVICE.tablet} {
+        font-size: 1.4vw;
+        line-height: 1.6vw;
+    }
+
+    @media ${DEVICE.mobile} {
+        font-size: 3vw;
+        line-height: 3.4vw;
     }
 `

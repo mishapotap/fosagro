@@ -46,6 +46,88 @@ const mediaDuration = {
         ],
         4: [["point", 180]],
     },
+    course3: {
+        0: [["point1", 14]],
+        1: [
+            ["point1", 37],
+            ["point2", 30],
+        ],
+        2: [["point1", 50]],
+        3: [["point1", 75]],
+        4: [["point1", 61]],
+        5: [["point1", 39]],
+        6: [["point1", 79]],
+        7: [["point1", 44]],
+        8: [["point1", 36]],
+        9: [["point", 180]],
+    },
+    course4: {
+        0: [
+            ["point1", 0],
+            ["point1", 0],
+        ],
+        1: [
+            ["point1", 0],
+            ["point2", 0],
+        ],
+        2: [
+            ["point1", 0],
+            ["point2", 0],
+        ],
+        3: [["point1", 0]],
+        4: [["point1", 0]],
+        5: [["point1", 0]],
+        6: [["point1", 0]],
+        7: [
+            ["point1", 0],
+            ["point1", 0],
+            ["point1", 0],
+        ],
+        8: [["point", 180]],
+    },
+    course5: {
+        0: [["point1", 0]],
+        1: [["point1", 0]],
+        2: [
+            ["point1", 0],
+            ["point2", 0],
+            ["point3", 0],
+            ["point4", 0],
+        ],
+        3: [
+            ["point1", 0],
+            ["point2", 0],
+            ["point3", 0],
+        ],
+        4: [["point1", 0]],
+        5: [["point1", 0]],
+        6: [["point", 180]],
+    },
+    course6: {
+        0: [["point1", 14]],
+        1: [
+            ["point1", 54],
+            ["point1", 18],
+        ],
+        2: [
+            ["point1", 69],
+            ["point2", 59],
+            ["point3", 22],
+            ["point4", 16],
+        ],
+        3: [["point1", 89]],
+        4: [
+            ["point1", 25],
+            ["point2", 19],
+            ["point3", 25],
+            ["point4", 52],
+            ["point5", 0],
+            ["point6", 10],
+            ["point7", 23],
+            ["point8", 14],
+        ],
+        5: [["point", 180]],
+    },
 }
 
 export default mediaDuration

@@ -32,6 +32,7 @@ const menuButtonData = [
         rotate: "26",
         href: routes.COURSE03,
         progress: 10,
+        duration: getMediaDurationSec(mediaDuration.course3, "course"),
     },
     {
         id: 4,
@@ -41,6 +42,7 @@ const menuButtonData = [
         bgAnimateColor: "rgba(182, 186, 41, 0.5)",
         rotate: "26",
         href: routes.COURSE04,
+        duration: getMediaDurationSec(mediaDuration.course4, "course"),
     },
     {
         id: 5,
@@ -50,6 +52,7 @@ const menuButtonData = [
         bgAnimateColor: "rgba(103, 130, 58, 0.5)",
         rotate: "-65",
         href: routes.COURSE05,
+        duration: getMediaDurationSec(mediaDuration.course5, "course"),
     },
     {
         id: 6,
@@ -59,6 +62,7 @@ const menuButtonData = [
         bgAnimateColor: "rgba(113, 178, 201, 0.5)",
         rotate: "55",
         href: routes.COURSE06,
+        duration: getMediaDurationSec(mediaDuration.course6, "course"),
     },
 ]
 

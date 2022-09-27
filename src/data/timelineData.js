@@ -287,7 +287,9 @@ const timelineData = {
                     link: "test",
                     value: {
                         title: "Тест",
-                        time: getMediaDurationSec(mediaDuration.course1[5]),
+                        time: `≈${getMediaDurationSec(
+                            mediaDuration.course1[5]
+                        )}`,
                         bgColor: COLORS.blue,
                         image: CourseButtonImage6,
                         rotate: "-150",
@@ -499,7 +501,9 @@ const timelineData = {
                     link: "test",
                     value: {
                         title: "Тест",
-                        time: getMediaDurationSec(mediaDuration.course2[4]),
+                        time: `≈${getMediaDurationSec(
+                            mediaDuration.course2[4]
+                        )}`,
                         bgColor: COLORS.blue,
                         image: CourseButtonImage6,
                         rotate: "-150",
@@ -534,7 +538,7 @@ const timelineData = {
                             },
                         ],
                         title: "Введение",
-                        time: "21 сек",
+                        time: getMediaDurationSec(mediaDuration.course3[0]),
                         bgColor: COLORS.orange,
                         image: CourseButtonImage1,
                         rotate: "-64",
@@ -550,7 +554,7 @@ const timelineData = {
                     audio: Line3Topic1,
                     value: {
                         title: "Мировой контекст развития инноваций",
-                        time: "1мин 40сек",
+                        time: getMediaDurationSec(mediaDuration.course3[1]),
                         bgColor: COLORS.green_light,
                         image: CourseButtonImage2,
                         rotate: "-145",
@@ -588,7 +592,7 @@ const timelineData = {
                     audio: Line3Topic2,
                     value: {
                         title: "Как мы определяем свои приоритеты в развитии инноваций",
-                        time: "1мин 10сек",
+                        time: getMediaDurationSec(mediaDuration.course3[2]),
                         bgColor: COLORS.green_dark,
                         image: CourseButtonImage3,
                         rotate: "-77",
@@ -616,7 +620,7 @@ const timelineData = {
                     audio: Line3Topic3,
                     value: {
                         title: "Что делаем мы для развития инноваций в производстве?",
-                        time: "1мин 20сек",
+                        time: getMediaDurationSec(mediaDuration.course3[3]),
                         bgColor: COLORS.brown_light,
                         image: CourseButtonImage4,
                         rotate: "165",
@@ -644,7 +648,7 @@ const timelineData = {
                     audio: Line3Topic4,
                     value: {
                         title: "Развитие элементов циркулярной экономики",
-                        time: "1мин 30сек",
+                        time: getMediaDurationSec(mediaDuration.course3[4]),
                         bgColor: COLORS.brown,
                         image: CourseButtonImage5,
                         rotate: "-77",
@@ -672,7 +676,7 @@ const timelineData = {
                     audio: Line3Topic5,
                     value: {
                         title: "Работа с поставщиками",
-                        time: "1мин 30сек",
+                        time: getMediaDurationSec(mediaDuration.course3[5]),
                         bgColor: COLORS.grey_light,
                         image: CourseButtonImage7,
                         rotate: "0",
@@ -700,7 +704,7 @@ const timelineData = {
                     audio: Line3Topic6,
                     value: {
                         title: "Разработка новых продуктов",
-                        time: "1мин",
+                        time: getMediaDurationSec(mediaDuration.course3[6]),
                         bgColor: COLORS.blue_light,
                         image: CourseButtonImage8,
                         rotate: "-77",
@@ -728,7 +732,7 @@ const timelineData = {
                     audio: Line3Topic7,
                     value: {
                         title: "Международное сотрудничество и поддержка молодых ученых",
-                        time: "2мин 10сек",
+                        time: getMediaDurationSec(mediaDuration.course3[7]),
                         bgColor: COLORS.turquoise,
                         image: CourseButtonImage9,
                         rotate: "165",
@@ -756,7 +760,7 @@ const timelineData = {
                     audio: Line3Topic7,
                     value: {
                         title: "Поддержка инновационных проектов",
-                        time: "1мин 10сек",
+                        time: getMediaDurationSec(mediaDuration.course3[8]),
                         bgColor: COLORS.coral,
                         image: CourseButtonImage10,
                         rotate: "-165",
@@ -784,7 +788,9 @@ const timelineData = {
                     link: "test",
                     value: {
                         title: "Тест",
-                        time: "≈4 мин",
+                        time: `≈${getMediaDurationSec(
+                            mediaDuration.course3[9]
+                        )}`,
                         bgColor: COLORS.blue,
                         image: CourseButtonImage6,
                         rotate: "-150",
@@ -820,7 +826,7 @@ const timelineData = {
                             },
                         ],
                         title: "Введение",
-                        time: "21 сек",
+                        time: getMediaDurationSec(mediaDuration.course4[0]),
                         bgColor: COLORS.orange,
                         image: CourseButtonImage1,
                         rotate: "-64",
@@ -835,7 +841,7 @@ const timelineData = {
                     link: "topic1/point1",
                     value: {
                         title: "Климатическая стратегия ФосАгро",
-                        time: "1мин 40сек",
+                        time: getMediaDurationSec(mediaDuration.course4[1]),
                         bgColor: COLORS.green_light,
                         image: CourseButtonImage2,
                         rotate: "-145",
@@ -872,7 +878,7 @@ const timelineData = {
                     link: "topic2/point1",
                     value: {
                         title: `Энергоэффек-тивность`,
-                        time: "30сек",
+                        time: getMediaDurationSec(mediaDuration.course4[2]),
                         bgColor: COLORS.green_dark,
                         image: CourseButtonImage3,
                         rotate: "-77",
@@ -909,7 +915,7 @@ const timelineData = {
                     link: "topic3/point1",
                     value: {
                         title: "Отходы",
-                        time: "1мин 20сек",
+                        time: getMediaDurationSec(mediaDuration.course4[3]),
                         bgColor: COLORS.brown_light,
                         image: CourseButtonImage4,
                         rotate: "165",
@@ -936,7 +942,7 @@ const timelineData = {
                     link: "topic4/point1",
                     value: {
                         title: "Воздух",
-                        time: "1мин 30сек",
+                        time: getMediaDurationSec(mediaDuration.course4[4]),
                         bgColor: COLORS.brown,
                         image: CourseButtonImage5,
                         rotate: "-77",
@@ -963,7 +969,7 @@ const timelineData = {
                     link: "topic5/point1",
                     value: {
                         title: "Вода",
-                        time: "1мин 30сек",
+                        time: getMediaDurationSec(mediaDuration.course4[5]),
                         bgColor: COLORS.grey_light,
                         image: CourseButtonImage7,
                         rotate: "0",
@@ -990,7 +996,7 @@ const timelineData = {
                     link: "topic6/point1",
                     value: {
                         title: "Биоразнообразие",
-                        time: "1мин 30сек",
+                        time: getMediaDurationSec(mediaDuration.course4[6]),
                         bgColor: COLORS.blue_light,
                         image: CourseButtonImage8,
                         rotate: "0",
@@ -1017,7 +1023,7 @@ const timelineData = {
                     link: "topic7/point1",
                     value: {
                         title: "Экологическая система управления ФосАгро",
-                        time: "1мин 30сек",
+                        time: getMediaDurationSec(mediaDuration.course4[7]),
                         bgColor: COLORS.turquoise,
                         image: CourseButtonImage8,
                         rotate: "0",
@@ -1065,7 +1071,9 @@ const timelineData = {
                     link: "test",
                     value: {
                         title: "Тест",
-                        time: "≈4 мин",
+                        time: `≈${getMediaDurationSec(
+                            mediaDuration.course4[8]
+                        )}`,
                         bgColor: COLORS.blue,
                         image: CourseButtonImage6,
                         rotate: "-150",
@@ -1097,7 +1105,7 @@ const timelineData = {
                             },
                         ],
                         title: "Введение",
-                        time: "21 сек",
+                        time: getMediaDurationSec(mediaDuration.course5[0]),
                         bgColor: COLORS.orange,
                         image: CourseButtonImage1,
                         rotate: "-64",
@@ -1112,7 +1120,7 @@ const timelineData = {
                     link: "topic1/point1",
                     value: {
                         title: "Как меняется климат и почему это опасно для человечества",
-                        time: "1мин 40сек",
+                        time: getMediaDurationSec(mediaDuration.course5[1]),
                         bgColor: COLORS.green_light,
                         image: CourseButtonImage2,
                         rotate: "-145",
@@ -1139,7 +1147,7 @@ const timelineData = {
                     link: "topic2/point1",
                     value: {
                         title: "Причины глобального потепления",
-                        time: "30сек",
+                        time: getMediaDurationSec(mediaDuration.course5[2]),
                         bgColor: COLORS.green_dark,
                         image: CourseButtonImage3,
                         rotate: "-77",
@@ -1196,7 +1204,7 @@ const timelineData = {
                     link: "topic3/point1",
                     value: {
                         title: "Что дальше?",
-                        time: "1мин 20сек",
+                        time: getMediaDurationSec(mediaDuration.course5[3]),
                         bgColor: COLORS.brown_light,
                         image: CourseButtonImage4,
                         rotate: "165",
@@ -1243,7 +1251,7 @@ const timelineData = {
                     link: "topic4/point1",
                     value: {
                         title: "Углеродная нейтральность",
-                        time: "1мин 30сек",
+                        time: getMediaDurationSec(mediaDuration.course5[4]),
                         bgColor: COLORS.brown,
                         image: CourseButtonImage5,
                         rotate: "-77",
@@ -1270,7 +1278,7 @@ const timelineData = {
                     link: "topic5/point1",
                     value: {
                         title: "Работа с поставщиками",
-                        time: "1мин 30сек",
+                        time: getMediaDurationSec(mediaDuration.course5[5]),
                         bgColor: COLORS.grey_light,
                         image: CourseButtonImage7,
                         rotate: "0",
@@ -1298,7 +1306,9 @@ const timelineData = {
                     link: "test",
                     value: {
                         title: "Тест",
-                        time: "≈4 мин",
+                        time: `≈${getMediaDurationSec(
+                            mediaDuration.course5[6]
+                        )}`,
                         bgColor: COLORS.blue,
                         image: CourseButtonImage6,
                         rotate: "-150",
@@ -1331,7 +1341,7 @@ const timelineData = {
                             },
                         ],
                         title: "Введение",
-                        time: "21 сек",
+                        time: getMediaDurationSec(mediaDuration.course6[0]),
                         bgColor: COLORS.orange,
                         image: CourseButtonImage1,
                         rotate: "-64",
@@ -1347,7 +1357,7 @@ const timelineData = {
                     audio: Line6Topic1,
                     value: {
                         title: "Права человека и социальные принципы ФосАгро",
-                        time: "2мин",
+                        time: getMediaDurationSec(mediaDuration.course6[1]),
                         bgColor: COLORS.green_light,
                         image: CourseButtonImage2,
                         rotate: "-145",
@@ -1385,7 +1395,7 @@ const timelineData = {
                     audio: Line6Topic2,
                     value: {
                         title: "Сотрудники ФосАгро - ключ к успеху Компании",
-                        time: "30сек",
+                        time: getMediaDurationSec(mediaDuration.course6[2]),
                         bgColor: COLORS.green_dark,
                         image: CourseButtonImage3,
                         rotate: "-77",
@@ -1443,7 +1453,7 @@ const timelineData = {
                     audio: Line6Topic3,
                     value: {
                         title: "Охрана труда и промышленной безопасности",
-                        time: "1мин 20сек",
+                        time: getMediaDurationSec(mediaDuration.course6[3]),
                         bgColor: COLORS.brown_light,
                         image: CourseButtonImage4,
                         rotate: "165",
@@ -1471,7 +1481,7 @@ const timelineData = {
                     audio: Line6Topic4,
                     value: {
                         title: "Вовлечение местных сообществ",
-                        time: "1мин 30сек",
+                        time: getMediaDurationSec(mediaDuration.course6[4]),
                         bgColor: COLORS.brown,
                         image: CourseButtonImage5,
                         rotate: "-77",
@@ -1569,7 +1579,9 @@ const timelineData = {
                     link: "test",
                     value: {
                         title: "Тест",
-                        time: "≈4 мин",
+                        time: `≈${getMediaDurationSec(
+                            mediaDuration.course6[5]
+                        )}`,
                         bgColor: COLORS.blue,
                         image: CourseButtonImage6,
                         rotate: "-150",
