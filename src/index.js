@@ -9,7 +9,8 @@ import {
     Course,
     Error404,
     CourseTestPage,
-    CourseContentPage
+    CourseContentPage,
+    Final
 } from "./components/pages"
 import GlobalStyle from "./globalStyles"
 import { BackgroundSound, InstructionModal, IntroModal } from "./components/atoms"
@@ -33,6 +34,7 @@ root.render(
                 />
                 <Route path="tutorial" element={<Tutorial />} />
                 <Route path="test" element={<Test />} />
+                <Route path="final" element={<Final />} />
                 <Route path="*" element={<Error404 />} />
             </Routes>
         </BrowserRouter>

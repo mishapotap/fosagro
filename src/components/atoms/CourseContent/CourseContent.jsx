@@ -18,26 +18,20 @@ import Content from "./Content"
 import Media from "./Media"
 import NewSectWindow from "./NewSectWindow"
 
-// TODO сделать чтобы плавно появлялись элементы
-// (чтобы прошлое состояние не было видно)
-
 // TODO сделать плавное переключение получше?
 
-// TODO сделать чтобы переключение слайдера было по времени с аудио?
-// (добавить доп поле в данных?)
+// TODO сделать чтобы анимация включалась и без аудио?
 
-// TODO сделать чтобы анимация включалась и без аудио
-// (может быть только тогда, когда звук отключен для всего курса?)
-
-// TODO сделать выключение аудио когда общий звук отключён
-
-function CoursePage({ setIds, onDisappear }) {
+function CourseContent({ setIds, onDisappear }) {
     const pageData = CourseProgressStore.activePageData
     const location = useLocation()
 
     const [key, setKey] = useState(1)
     const [audioPlaying, setAudioPlaying] = useState(false)
     const [videoPlaying, setVideoPlaying] = useState(false)
+    const [makeSliderAutoplay, setMakeSliderAutoplay] = useState(false)
+
+    const [sliderDelay, setSliderDelay] = useState(5000)
 
     const audioColRef = useRef(null)
     const contentColRef = useRef(null)
@@ -67,6 +61,7 @@ function CoursePage({ setIds, onDisappear }) {
     const sectChanged = useRef(true)
 
     const showWhenVisible = useRef(false)
+    const [sectWindowExited, setSectWindowExited] = useState(false)
 
     function setIsVisible(val) {
         _setIsVisible(val)
@@ -103,7 +98,13 @@ function CoursePage({ setIds, onDisappear }) {
             if (audioSrc) {
                 audioTmId.current = setTimeout(() => {
                     setAudioPlaying(true)
-                    console.log('рвубить аудио');
+                    sectChanged.current = false
+                }, 1000)
+            }
+
+            if (isCircleSlider) {
+                setTimeout(() => {
+                    setMakeSliderAutoplay(true)
                     sectChanged.current = false
                 }, 1000)
             }
@@ -129,36 +130,35 @@ function CoursePage({ setIds, onDisappear }) {
                     sectChanged.current = false
                 }, 1000)
             }
-        } else {
-            if (audioSrc) {
-                audioTmId.current = setTimeout(() => {
-                    setAudioPlaying(true)
-                    console.log('рвубить аудио');
-                    sectChanged.current = false
-                }, 4000)
-            }
+        }
+    }
 
-            if (isVideo) {
-                videoTmId.current = setTimeout(() => {
-                    if (isVisibleRef.current) {
-                        setVideoPlaying(true)
-                    } else {
-                        showWhenVisible.current = true
-                    }
-                    sectChanged.current = false
-                }, 4000)
-            }
+    function playMedia() {
+        sectChanged.current = false
 
-            if (isAnimation) {
-                animTmId.current = setTimeout(() => {
-                    if (isVisibleRef.current) {
-                        setPauseAnim(false)
-                    } else {
-                        showWhenVisible.current = true
-                    }
-                    sectChanged.current = false
-                }, 4000)
+        if (isAnimation) {
+            if (isVisibleRef.current) {
+                setPauseAnim(false)
+            } else {
+                showWhenVisible.current = true
             }
+        }
+
+        if (audioSrc) {
+            setAudioPlaying(true)
+        }
+
+        if (isCircleSlider) {
+            setMakeSliderAutoplay(true)
+        }
+
+        if (isVideo) {
+            if (isVisibleRef.current) {
+                setVideoPlaying(true)
+            } else {
+                showWhenVisible.current = true
+            }
+            sectChanged.current = false
         }
     }
 
@@ -169,6 +169,21 @@ function CoursePage({ setIds, onDisappear }) {
     const isVisibleRef = useRef(null)
     const isVideo = mediaType === "video"
     const isAnimation = mediaType === "animation"
+    const isCircleSlider = mediaType === "circleSlider"
+
+    function handleAudioLoaded({target}) {
+        const { duration } = target
+        const delay = duration * 1000 / 3
+        setSliderDelay(delay)
+    }
+
+    useEffect(() => {
+        if (sectWindowExited) {
+            playMedia()
+            setSectWindowExited(false)
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [sectWindowExited])
 
     useEffect(() => {
         if (isVisible) {
@@ -185,19 +200,18 @@ function CoursePage({ setIds, onDisappear }) {
                 }
             }
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isVisible])
 
     useEffect(() => {
         // eslint-disable-next-line no-unused-expressions
-        if(ModalStore.isVisible.mail || ModalStore.isVisible.menu)
-         {
+        if (ModalStore.isVisible.mail || ModalStore.isVisible.menu) {
             setAudioPlaying(false)
             setVideoPlaying(false)
             setPauseAnim(true)
             onAudioPause()
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ModalStore.isVisible.mail, ModalStore.isVisible.menu])
 
     function setRestartAnim() {
@@ -225,15 +239,13 @@ function CoursePage({ setIds, onDisappear }) {
     }, [])
 
     useEffect(() => {
-        sectChanged.current = true
+        setTimeout(() => {
+            sectChanged.current = true
+        }, 50);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [CourseProgressStore.activeSectId])
 
     useEffect(() => {
-        // clearTimeout(videoTmId.current)
-        // clearTimeout(audioTmId.current)
-        // clearTimeout(animTmId.current)
-
         didAudioEnded.current = false
         wasFirstPlay.current = false
 
@@ -263,6 +275,7 @@ function CoursePage({ setIds, onDisappear }) {
         setAudioPlaying(false)
         setVideoPlaying(false)
 
+        sectChanged.current = false
         clearTimeout(videoTmId.current)
         clearTimeout(audioTmId.current)
         clearTimeout(animTmId.current)
@@ -359,6 +372,7 @@ function CoursePage({ setIds, onDisappear }) {
                             onPlay={onAudioPlay}
                             onPause={onAudioPause}
                             onEnded={onAudioEnded}
+                            onLoaded={handleAudioLoaded}
                         />
                     )}
                 </AudioColumn>
@@ -411,17 +425,19 @@ function CoursePage({ setIds, onDisappear }) {
                     <Media
                         pauseAnim={pauseAnim}
                         videoPlaying={videoPlaying}
+                        makeSliderAutoplay={makeSliderAutoplay}
                         key={key}
                         restartAnim={restartAnim}
+                        sliderDelay={sliderDelay}
                     />
                 </MediaColumn>
             </CSSTransition>
-            <NewSectWindow />
+            <NewSectWindow onExited={() => setSectWindowExited(true)}/>
         </Columns>
     )
 }
 
-export default observer(CoursePage)
+export default observer(CourseContent)
 
 const StyledAudioPlayer = styled(AudioPlayer)`
     padding-left: 2.2vw;
@@ -567,6 +583,7 @@ const Columns = styled.div`
     .slide {
         animation-duration: 0.5s;
         animation-fill-mode: both;
+        animation-timing-function: ease-in-out;
 
         @media ${DEVICE.laptopS} {
             animation-duration: 0.5s;

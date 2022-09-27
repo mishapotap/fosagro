@@ -98,6 +98,7 @@ class CourseProgress {
         makeAutoObservable(this)
     }
 
+    // TODO надо проверить, правильно ли это работает
     get userPassedFullCourse() {
         const chaptersIds = Object.keys(coursePagesData)
         const notPassedChapter = chaptersIds.find(
