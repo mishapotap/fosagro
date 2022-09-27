@@ -6,7 +6,7 @@ import { CSSTransition } from "react-transition-group"
 import { observer } from "mobx-react-lite"
 import { Link } from "react-router-dom"
 
-import { CourseTestStore, CourseProgressStore } from "../../../store"
+import { CourseTestStore, CourseProgressStore, SoundStore } from "../../../store"
 import SendButton from "../SendButton"
 import { Text, Label, Block, StyledTitle } from "./styledAtoms"
 import { COLORS, DEVICE } from "../../../constants"
@@ -22,7 +22,8 @@ function StartBlock() {
         CourseTestStore.setShowStart(false)
         CourseTestStore.setShowTreeInit(false)
         CourseTestStore.setShowTreeStart(true)
-        clickSound.play()
+        // eslint-disable-next-line no-unused-expressions
+        SoundStore.getIsPlaying() && clickSound.play()
     }
 
     return (

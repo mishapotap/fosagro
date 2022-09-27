@@ -4,6 +4,7 @@ import { TimeIcon } from "../../assets/svg/static"
 import { COLORS, DEVICE } from "../../constants"
 import { borderAnimationM } from "../../constants/animations"
 import { Click2 } from "../../assets/audio"
+import { SoundStore } from "../../store"
 
 export default function CourseStepButton({
     data,
@@ -18,7 +19,8 @@ export default function CourseStepButton({
     const clickSound = new Audio(Click2)
 
     const handleClick = () => {
-        clickSound.play()
+        // eslint-disable-next-line no-unused-expressions
+        SoundStore.getIsPlaying() && clickSound.play()
     }
 
     return (

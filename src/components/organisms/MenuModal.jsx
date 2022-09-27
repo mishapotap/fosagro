@@ -7,6 +7,7 @@ import { MenuBackground } from "../../assets/images"
 import MenuButtons from "../molecules/MenuButtons"
 
 function MenuModal({isOpen, onClose}) {
+
     return (
         <StyledModal isOpen={isOpen} onClose={onClose}>
             <StyledLayout page="menu">

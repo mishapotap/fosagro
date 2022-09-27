@@ -3,6 +3,7 @@ import React, { useState, useRef } from "react"
 import styled from "styled-components"
 import { observer } from "mobx-react-lite"
 import { Link } from "react-router-dom"
+import { useLocation } from "react-router"
 import { ModalStore, SoundStore, CourseProgressStore } from "../../store"
 import { IntroModal, CourseStepButton, CourseStepPoint } from "../atoms"
 import { getElWindowPos } from "../../utils"
@@ -17,11 +18,15 @@ function CourseStep({
     intro,
 }) {
     const soundButton = useRef()
+    const { pathname } = useLocation()
+
+    const course = pathname.slice(1)
 
     const [isActive, setIsАсtive] = useState(false)
 
     const openIntroModal = () => {
-        soundButton.current.play()
+        // eslint-disable-next-line no-unused-expressions
+        SoundStore.getIsPlaying() && soundButton.current.play()
 
         setTimeout(() => {
             ModalStore.showModal("intro")
@@ -48,7 +53,8 @@ function CourseStep({
         if (!CourseProgressStore.isSectAvailable(stepButtonParam)) {
             e.preventDefault()
             CourseProgressStore.setNotifTimeout()
-            soundButton.current.play()
+            // eslint-disable-next-line no-unused-expressions
+            SoundStore.getIsPlaying() && soundButton.current.play()
 
             const stepBtn = e.currentTarget.querySelector(".course-step-btn")
             if (stepBtn) {

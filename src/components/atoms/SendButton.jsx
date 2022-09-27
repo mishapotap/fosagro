@@ -3,10 +3,10 @@ import styled from "styled-components"
 import { COLORS, DEVICE } from "../../constants"
 import { Spinner } from "../../assets/svg"
 
-export default function SendButton({ text, loading, onClick, disabled, color = COLORS.blue }) {
+export default function SendButton({ text, loading, onClick, disabled, color = COLORS.blue, className = "" }) {
     return (
         <Container
-            className={loading && "loading"}
+            className={loading && `loading}` || className}
             disabled={disabled}
             onClick={onClick}
             color={color}
@@ -71,6 +71,12 @@ const Container = styled.button`
 
         &:disabled {
             color: transparent;
+        }
+    }
+
+    &.cookie {
+        @media ${DEVICE.laptopS} {
+            padding: 0.45em 1.5em;
         }
     }
 

@@ -43,7 +43,8 @@ function Header({
 
     const handleClickLogo = () => {
         SoundStore.setIsPlayingSound(true)
-        clickSound.play()
+        // eslint-disable-next-line no-unused-expressions
+        SoundStore.getIsPlaying() && clickSound.play()
     }
 
     return (

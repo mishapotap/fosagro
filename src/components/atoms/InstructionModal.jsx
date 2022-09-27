@@ -36,7 +36,7 @@ import { MenuBackground } from "../../assets/images"
 import SendButton from "./SendButton"
 import Modal from "./Modal"
 import Layout from "./Layout"
-import { CourseProgressStore, ModalStore } from "../../store"
+import { CourseProgressStore, ModalStore, SoundStore } from "../../store"
 import { renderCustom } from "../../utils"
 import { Click1, Instruction1, Instruction2 } from "../../assets/audio"
 import AudioPlayer from "./AudioPlayer"
@@ -60,7 +60,8 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
 
     const closeInstructionModal = () => {
         ModalStore.closeModal("instruction")
-        clickSound.play()
+        // eslint-disable-next-line no-unused-expressions
+        SoundStore.getIsPlaying() && clickSound.play()
     }
 
     function handleModalAnimEnd() {

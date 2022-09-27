@@ -13,13 +13,15 @@ function CourseMenuButton({colored}) {
 
     const openMenu = () => {
         ModalStore.showModal("menu")
-        clickSound.play()
+        // eslint-disable-next-line no-unused-expressions
+        SoundStore.getIsPlaying() && clickSound.play()
         SoundStore.setIsPlayingSound(true)
     }
 
     const closeMenu = () => {
         ModalStore.closeModal("menu")
-        clickSound.play()
+        // eslint-disable-next-line no-unused-expressions
+        SoundStore.getIsPlaying() && clickSound.play()
     }
 
     return (

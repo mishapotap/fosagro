@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef } from "react"
 import styled from "styled-components"
 import { Helmet } from "react-helmet"
 import { useLocation, useNavigate, useParams } from "react-router"
@@ -10,16 +10,14 @@ import { MenuBackground } from "../../assets/images"
 import { TimelineFooter, CourseMenu } from "../organisms"
 import { introModalData } from "../../data"
 import Error404 from "./Error404"
-import { CourseProgressStore, ModalStore } from "../../store"
+import { CourseProgressStore, ModalStore, SoundStore } from "../../store"
 import Notification from '../atoms/Notification'
-
 
 function Course() {
     const { id } = useParams()
     const location = useLocation()
     const navigate = useNavigate()
     const titleAudio = useRef()
-    const [isPlaying, setIsPlaying] = useState(false)
 
     useEffect(() => {
         if (location.pathname.includes("instruction")) {
@@ -62,22 +60,24 @@ function Course() {
     useEffect(() => {
         function titleSoundPlay() {
             if(!ModalStore.isVisible.instruction && !ModalStore.isVisible.intro) {
-                setIsPlaying(true)
-                titleAudio.current.play()
+
+                // eslint-disable-next-line no-unused-expressions
+                (SoundStore.getIsPlaying() && !SoundStore.getPlayedTitleSound(`course${id}`)) && titleAudio.current.play()
+                SoundStore.setPlayedTitleSound(`course${id}`, true)
             }
             window.removeEventListener("click", titleSoundPlay)
         }
         window.addEventListener("click", titleSoundPlay, { ones: true})
-    }, [location])
+    }, [id, location])
 
     useEffect(() => {
         document.addEventListener("click", () => {
-            if(isPlaying) {
+            if(SoundStore.getPlayedTitleSound(`course${id}`)) {
                 titleAudio.current.pause()
-                setIsPlaying(false)
             }
         }, { once: true })
-    }, [isPlaying, location])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [SoundStore.getPlayedTitleSound(`course${id}`)])
 
     if (!dataLine && !dataModal) {
         return <Error404 />
