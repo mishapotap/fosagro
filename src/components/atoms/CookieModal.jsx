@@ -24,6 +24,7 @@ export default function CookieModal({ isOpen, onClose }) {
             type="cookie"
         >
             <ModalContent>
+                {/* TODO подсчитывать реальное время курса */}
                 <Text>Данный курс использует файлы cookie для подсчета и формирования визуализации прогресса изучения курса. Cookie хранятся в течение 30 дней.
                     Время изучения курса  - 60 минут.
                 </Text>
@@ -69,10 +70,10 @@ const StyledModal = styled(Modal)`
         }
     }
 `
-      
+
 const ModalContent = styled.div`
     position: relative;
-    
+
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -97,7 +98,7 @@ const Text = styled.div`
     line-height: 1.4vw;
 
     color: ${COLORS.black};
-    
+
     @media ${DEVICE.laptopS} {
         font-size: 1.2vw;
         line-height: 1.6vw;

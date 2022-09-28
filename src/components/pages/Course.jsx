@@ -22,6 +22,9 @@ function Course() {
     useEffect(() => {
         if (location.pathname.includes("instruction")) {
             ModalStore.showModal("instruction")
+            // когда инструкция автоматически открывается, проигрывается заголовок
+            // (может это временно, надеюсь ничего не порушила)
+            if (titleAudio.current) titleAudio.current.pause()
         }
 
         if (location.pathname.includes("intro")) {
@@ -78,6 +81,14 @@ function Course() {
         }, { once: true })
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [SoundStore.getPlayedTitleSound(`course${id}`)])
+
+
+    // useEffect(() => {
+    //     if (ModalStore.isVisible.instruction) {
+    //         titleAudio.current.pause()
+    //     }
+    // // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [ModalStore.isVisible.instruction])
 
     if (!dataLine && !dataModal) {
         return <Error404 />
