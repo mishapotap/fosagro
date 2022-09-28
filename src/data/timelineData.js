@@ -35,7 +35,18 @@ import {
     Line3Topic5,
     Line3Topic6,
     Line3Topic7,
+    Line3Topic8,
 } from "../assets/Course3/TimeLine"
+
+import {
+    Line4Topic1,
+    Line4Topic2,
+    Line4Topic3,
+    Line4Topic4,
+    Line4Topic5,
+    Line4Topic6,
+    Line4Topic7,
+} from "../assets/Course4/TimeLine"
 
 import {
     Line6Topic1,
@@ -47,7 +58,16 @@ import {
 import { getMediaDurationSec } from "../utils"
 import mediaDuration from "./mediaDuration"
 
-import { Intro, Course1, Course2, Course3, Course6 } from "../assets/audio"
+import {
+    Intro,
+    Course1,
+    Course2,
+    Course3,
+    Course4,
+    Course5,
+    Course6,
+    Test,
+} from "../assets/audio"
 
 // TODO Добавить им разные координаты x y
 
@@ -285,6 +305,7 @@ const timelineData = {
                 test: true,
                 button: {
                     link: "test",
+                    audio: Test,
                     value: {
                         title: "Тест",
                         time: `≈${getMediaDurationSec(
@@ -499,6 +520,7 @@ const timelineData = {
                 test: true,
                 button: {
                     link: "test",
+                    audio: Test,
                     value: {
                         title: "Тест",
                         time: `≈${getMediaDurationSec(
@@ -757,7 +779,7 @@ const timelineData = {
                 id: 8,
                 button: {
                     link: "topic8/point1",
-                    audio: Line3Topic7,
+                    audio: Line3Topic8,
                     value: {
                         title: "Поддержка инновационных проектов",
                         time: getMediaDurationSec(mediaDuration.course3[8]),
@@ -786,6 +808,7 @@ const timelineData = {
                 test: true,
                 button: {
                     link: "test",
+                    audio: Test,
                     value: {
                         title: "Тест",
                         time: `≈${getMediaDurationSec(
@@ -803,7 +826,7 @@ const timelineData = {
     },
     course4: {
         id: "04",
-        titleAudio: "",
+        titleAudio: Course4,
         title: "Экология",
         width: "3250",
         metaTitle: "Экология",
@@ -814,6 +837,7 @@ const timelineData = {
                 id: 0,
                 intro: true,
                 button: {
+                    audio: Intro,
                     value: {
                         modal: [
                             {
@@ -839,6 +863,7 @@ const timelineData = {
                 id: 1,
                 button: {
                     link: "topic1/point1",
+                    audio: Line4Topic1,
                     value: {
                         title: "Климатическая стратегия ФосАгро",
                         time: getMediaDurationSec(mediaDuration.course4[1]),
@@ -876,6 +901,7 @@ const timelineData = {
                 id: 2,
                 button: {
                     link: "topic2/point1",
+                    audio: Line4Topic2,
                     value: {
                         title: `Энергоэффек-тивность`,
                         time: getMediaDurationSec(mediaDuration.course4[2]),
@@ -913,6 +939,7 @@ const timelineData = {
                 id: 3,
                 button: {
                     link: "topic3/point1",
+                    audio: Line4Topic3,
                     value: {
                         title: "Отходы",
                         time: getMediaDurationSec(mediaDuration.course4[3]),
@@ -940,6 +967,7 @@ const timelineData = {
                 id: 4,
                 button: {
                     link: "topic4/point1",
+                    audio: Line4Topic4,
                     value: {
                         title: "Воздух",
                         time: getMediaDurationSec(mediaDuration.course4[4]),
@@ -967,6 +995,7 @@ const timelineData = {
                 id: 5,
                 button: {
                     link: "topic5/point1",
+                    audio: Line4Topic5,
                     value: {
                         title: "Вода",
                         time: getMediaDurationSec(mediaDuration.course4[5]),
@@ -994,6 +1023,7 @@ const timelineData = {
                 id: 6,
                 button: {
                     link: "topic6/point1",
+                    audio: Line4Topic6,
                     value: {
                         title: "Биоразнообразие",
                         time: getMediaDurationSec(mediaDuration.course4[6]),
@@ -1021,6 +1051,7 @@ const timelineData = {
                 id: 7,
                 button: {
                     link: "topic7/point1",
+                    audio: Line4Topic7,
                     value: {
                         title: "Экологическая система управления ФосАгро",
                         time: getMediaDurationSec(mediaDuration.course4[7]),
@@ -1069,6 +1100,7 @@ const timelineData = {
                 test: true,
                 button: {
                     link: "test",
+                    audio: Test,
                     value: {
                         title: "Тест",
                         time: `≈${getMediaDurationSec(
@@ -1086,7 +1118,7 @@ const timelineData = {
     },
     course5: {
         id: "05",
-        titleAudio: "",
+        titleAudio: Course5,
         title: "Климат и энергоэффективность",
         width: "2750",
         metaTitle: "Климат и энергоэффективность ",
@@ -1097,6 +1129,7 @@ const timelineData = {
                 id: 0,
                 intro: true,
                 button: {
+                    audio: Intro,
                     value: {
                         modal: [
                             {
@@ -1304,6 +1337,7 @@ const timelineData = {
                 test: true,
                 button: {
                     link: "test",
+                    audio: Test,
                     value: {
                         title: "Тест",
                         time: `≈${getMediaDurationSec(
@@ -1577,6 +1611,7 @@ const timelineData = {
                 test: true,
                 button: {
                     link: "test",
+                    audio: Test,
                     value: {
                         title: "Тест",
                         time: `≈${getMediaDurationSec(
