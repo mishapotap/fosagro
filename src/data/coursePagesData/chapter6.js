@@ -58,6 +58,7 @@ import {
     CourseSliderSix413,
     CourseSliderSix414,
     CourseSliderSix415,
+    Speaker45,
 } from "../../assets/Course6/Topic4/Point5"
 
 import {
@@ -646,7 +647,7 @@ const chapter6Data = {
             },
             5: {
                 title: "Духовное возрождение",
-                audioSrc: "",
+                audioSrc: Speaker45,
                 content: [
                     {
                         component: "Label",

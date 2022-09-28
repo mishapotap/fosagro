@@ -33,12 +33,15 @@ import {
     IntroModalFour21,
     IntroModalFour22,
     IntroModalFour23,
+    Intro4Speaker1,
+    Intro4Speaker2,
 } from "../assets/Course4/Intro"
 
 import {
     IntroModalFive11,
     IntroModalFive12,
     IntroModalFive13,
+    Intro5Speaker1,
 } from "../assets/Course5/Intro"
 
 import {
@@ -163,7 +166,7 @@ const introModalData = {
                     alt: "image3",
                 },
             ],
-            audio: "",
+            audio: Intro4Speaker1,
             links: [
                 {
                     id: 1,
@@ -188,7 +191,7 @@ const introModalData = {
                     alt: "image3",
                 },
             ],
-            audio: "",
+            audio: Intro4Speaker2,
             links: [
                 {
                     id: 1,
@@ -215,7 +218,7 @@ const introModalData = {
                     alt: "image3",
                 },
             ],
-            audio: "",
+            audio: Intro5Speaker1,
         },
     ],
     introModal6: [

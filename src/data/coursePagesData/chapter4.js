@@ -4,18 +4,21 @@ import {
     CourseSliderFour11,
     CourseSliderFour12,
     CourseSliderFour13,
+    Speaker71,
 } from "../../assets/Course4/Topic7/Point1"
 
 import {
     CourseSliderFour21,
     CourseSliderFour22,
     CourseSliderFour23,
+    Speaker72,
 } from "../../assets/Course4/Topic7/Point2"
 
 import {
     CourseSliderFour31,
     CourseSliderFour32,
     CourseSliderFour33,
+    Speaker73,
 } from "../../assets/Course4/Topic7/Point3"
 
 const chapter4Data = {
@@ -80,8 +83,16 @@ const chapter4Data = {
                     },
                 },
                 links: [
-                    { id: 1, text: "TCFD отчет ФосАгро 2020", url: "https://cdn.phosagro.ru/upload/iblock/35c/35c2ee0bc879eb911cb2aa1a4dddf722.pdfchrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://cdn.phosagro.ru/upload/iblock/35c/35c2ee0bc879eb911cb2aa1a4dddf722.pdf" },
-                    { id: 2, text: "Полный список сторонников TCFD", url: "https://www.fsb-tcfd.org/supporters/" },
+                    {
+                        id: 1,
+                        text: "TCFD отчет ФосАгро 2020",
+                        url: "https://cdn.phosagro.ru/upload/iblock/35c/35c2ee0bc879eb911cb2aa1a4dddf722.pdfchrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://cdn.phosagro.ru/upload/iblock/35c/35c2ee0bc879eb911cb2aa1a4dddf722.pdf",
+                    },
+                    {
+                        id: 2,
+                        text: "Полный список сторонников TCFD",
+                        url: "https://www.fsb-tcfd.org/supporters/",
+                    },
                 ],
             },
             2: {
@@ -374,7 +385,7 @@ const chapter4Data = {
         pages: {
             1: {
                 title: "Экологический менеджмент",
-                audioSrc: "",
+                audioSrc: Speaker71,
                 content: [
                     {
                         component: "Label",
@@ -425,12 +436,12 @@ const chapter4Data = {
                         id: 1,
                         text: "Система экологического менеджмента",
                         url: "https://www.phosagro.ru/sustainability/ecology/#accordion-ecology-management-system",
-                    }
+                    },
                 ],
             },
             2: {
                 title: "Экостандарт ФосАгро",
-                audioSrc: "",
+                audioSrc: Speaker72,
                 content: [
                     {
                         component: "Label",
@@ -468,12 +479,12 @@ const chapter4Data = {
                         id: 1,
                         text: "Экопреимущества",
                         url: "https://www.phosagro.ru/production/eco/",
-                    }
+                    },
                 ],
             },
             3: {
                 title: "Мелочей не бывает",
-                audioSrc: "",
+                audioSrc: Speaker73,
                 content: [
                     {
                         component: "Text",
