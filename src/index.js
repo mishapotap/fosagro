@@ -2,6 +2,7 @@
 import React from "react"
 import ReactDOM from "react-dom/client"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+import Cookies from "js-cookie"
 import App from "./App"
 import {
     Tutorial,
@@ -41,10 +42,9 @@ root.render(
 )
 
 // TODO позже раскомментировать, может изменить
-// взять данные из store, установить в ls
+// взять данные из store, установить в куки
 function handleWindowUnload() {
     // const testsVal = JSON.stringify(CourseTestStore.dataForLS)
-    // localStorage.setItem('courseTests', testsVal)
 
     const progressVal = JSON.stringify(CourseProgressStore.dataForLS)
     localStorage.setItem('courseProgress', progressVal)
@@ -52,12 +52,7 @@ function handleWindowUnload() {
 
 // взять данные из ls, установить в store
 function handleDocLoad() {
-    const testsLsData = localStorage.getItem('courseTests')
     const progressLsData = localStorage.getItem('courseProgress')
-
-    // if (testsLsData) {
-    //     CourseTestStore.setTestsData(JSON.parse(testsLsData))
-    // }
 
     if (progressLsData) {
         CourseProgressStore.setProgressDataFromLs(JSON.parse(progressLsData))

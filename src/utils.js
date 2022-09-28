@@ -89,10 +89,13 @@ export function getMediaDurationSec(data, key = "") {
     let time = ""
 
     if (key === "") {
-        time = (min > 0 ? `${min}мин ` : "") + (sec > 0 ? `${sec}сек` : "")
+        time = (min > 0 ? `${min} мин ` : "") + (sec > 0 ? `${sec} сек` : "")
     } else {
-        time = min > 0 ? `${min}мин ` : ""
+        time = min > 0 ? `${min} мин ` : ""
     }
 
     return time
+}
+
+export function getFullCourseDuration() {
 }

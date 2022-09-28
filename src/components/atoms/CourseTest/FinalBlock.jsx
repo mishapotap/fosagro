@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 /* eslint-disable react/jsx-no-bind */
-import React, { useRef } from "react"
+import React, { useRef, useEffect } from "react"
 import styled from "styled-components"
 import { Link } from "react-router-dom"
 import { CSSTransition } from "react-transition-group"
@@ -21,9 +21,36 @@ import AnimatedBlueButton from "../AnimatedBlueButton"
 import SendButton from "../SendButton"
 import { Text, Label, Block, StyledTitle } from "./styledAtoms"
 import { Click1 } from "../../../assets/audio"
+import { TestEndMusic } from "../../../assets/audio/test"
 
 function FinalBlock() {
     const finalRef = useRef(null)
+    const audioTextRef = useRef(null)
+    const audioMusicRef = useRef(null)
+
+    useEffect(() => {
+        if (CourseTestStore.showFinal) {
+            audioMusicRef.current.volume = 0.35
+            audioMusicRef.current.play()
+
+            setTimeout(() => {
+                audioTextRef.current.play()
+            }, 200);
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [CourseTestStore.showFinal])
+
+    useEffect(() => {
+
+        if (ModalStore.isVisible.mail || ModalStore.isVisible.menu) {
+            if (audioMusicRef.current) audioMusicRef.current.pause()
+            if (audioTextRef.current) audioTextRef.current.pause()
+        } else {
+            if (audioMusicRef.current) audioMusicRef.current.play()
+            if (audioTextRef.current) audioTextRef.current.play()
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ModalStore.isVisible.mail, ModalStore.isVisible.menu])
 
     function handleExited() {
         finalRef.current.style.opacity = 1
@@ -52,12 +79,14 @@ function FinalBlock() {
                     CourseTestStore.userPassedTest && "visible"
                 } final`}
             >
+                <audio src={TestEndMusic} ref={audioMusicRef} />
                 <FinalContent>
                     <StyledTitle color={COLORS.blue}>
                         {CourseTestStore.finalContent.title}
                     </StyledTitle>
                     <Label>{CourseTestStore.finalContent.label}</Label>
                     <Text>{CourseTestStore.finalContent.text}</Text>
+                    <audio src={CourseTestStore.finalContent.audio} ref={audioTextRef} />
                     {CourseTestStore.allAnswersRight && (
                         // eslint-disable-next-line react/jsx-no-useless-fragment
                         <>

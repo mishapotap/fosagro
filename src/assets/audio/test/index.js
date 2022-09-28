@@ -1,0 +1,7 @@
+export { default as Test0Right } from "./Test0Right.wav"
+export { default as Test5Right } from "./Test5Right.wav"
+export { default as Test12Right } from "./Test12Right.wav"
+export { default as Test34Right } from "./Test34Right.wav"
+export { default as TestEndMusic } from "./TestEndMusic.mp3"
+export { default as TestText } from "./TestText.wav"
+export { default as TestTitle } from "./TestTitle.wav"
