@@ -2,7 +2,7 @@ import React, { useMemo, useRef, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import DocsLink from "./DocsLink"
-import points from "../../data/testData"
+import { testPoints } from "../../data/testData"
 
 function Dots({count}) {
 
@@ -80,12 +80,14 @@ function Rig() {
 
 export default function WavesThreeJS() {
 
-    const [test, setTest] = useState(points)
+    const [test, setTest] = useState(testPoints)
 
-    // eslint-disable-next-line no-restricted-syntax
-    for(const item of test.points) {
-        console.log(item)
-    }
+    const testArray = []
+    const array = Object.keys(testPoints)
+    array.forEach((keyObj) => {
+        testArray.push(testPoints[keyObj])
+        console.log(testArray)
+    })
 
     return (
         <>
@@ -96,15 +98,15 @@ export default function WavesThreeJS() {
                 <Rig/>
                 {/* <primitive object={new THREE.AxesHelper(1000)} /> */}
             </Canvas>
-            {
-                // eslint-disable-next-line consistent-return
-                () => {
-                    // eslint-disable-next-line no-restricted-syntax, no-unreachable-loop
-                    for(const item of test.points) {
-                        return <DocsLink data={item[1]} text="" key={item[0]}/>
-                    }
-                }
-            }
+            <div>
+                {/* {
+                    array.forEach((keyObj) => {
+                        return <DocsLink data={testPoints[keyObj]} text="" key={testPoints[keyObj].keyObj}/>
+                        
+                    })
+                } */}
+                <DocsLink text=""/>
+            </div>
         </>
     )
 }
