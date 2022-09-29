@@ -12,6 +12,7 @@ import { Title } from "../Content"
 import { DEVICE } from "../../../constants"
 import AudioPlayer from "../AudioPlayer"
 import { CourseProgressStore, SoundStore, ModalStore } from "../../../store"
+import { Click2 } from "../../../assets/audio"
 
 import Nav from "./Nav"
 import Content from "./Content"
@@ -62,6 +63,8 @@ function CourseContent({ setIds, onDisappear }) {
 
     const showWhenVisible = useRef(false)
     const [sectWindowExited, setSectWindowExited] = useState(false)
+
+    const clickSound = new Audio(Click2)
 
     function setIsVisible(val) {
         _setIsVisible(val)
@@ -284,8 +287,8 @@ function CourseContent({ setIds, onDisappear }) {
     }, [location])
 
     function stopMedia() {
-        const audio = document.querySelector("audio")
-        const video = document.querySelector("video")
+        const audio = document.querySelector(".audio-player audio")
+        const video = document.querySelector(".audio-player video")
 
         if (audio) audio.pause()
         if (video) video.pause()
@@ -296,6 +299,7 @@ function CourseContent({ setIds, onDisappear }) {
         setLeftSlide(true)
         setRightSlide(false)
         setShowSlide(false)
+        clickSound.play()
     }
 
     function handleNextClick(e) {
@@ -306,6 +310,7 @@ function CourseContent({ setIds, onDisappear }) {
             setLeftSlide(false)
             setRightSlide(true)
             setShowSlide(false)
+            clickSound.play()
         }
         stopMedia()
     }
@@ -493,6 +498,7 @@ const NavColumn = styled.div`
     @media ${DEVICE.laptopS} {
         grid-area: 4 / 1 / 5 / 2;
         padding-left: 0;
+        padding-bottom: 20px;
     }
 `
 

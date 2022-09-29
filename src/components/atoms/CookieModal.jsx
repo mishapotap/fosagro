@@ -2,38 +2,57 @@
 /* eslint-disable react/no-array-index-key */
 import React from "react"
 import styled from "styled-components"
+import { observer } from "mobx-react-lite"
 import Modal from "./Modal"
 import SendButton from "./SendButton"
 import { COLORS, DEVICE } from "../../constants"
+import { getFullCourseDuration } from "../../utils"
+import { ModalStore, CookiesStore } from "../../store"
 
-export default function CookieModal({ isOpen, onClose }) {
+function CookieModal({ onClose }) {
+
+    function handleClose() {
+        onClose()
+        ModalStore.closeModal("cookie")
+    }
 
     function withCookie() {
-        onClose()
+        handleClose()
+        CookiesStore.setUserAcceptedCookies()
     }
 
     function withOutCookie() {
-        onClose()
+        handleClose()
     }
 
     return (
         <StyledModal
-            isOpen={isOpen}
-            onClose={onClose}
+            isOpen={ModalStore.isVisible.cookie}
+            onClose={handleClose}
             className="modal-cookie"
             type="cookie"
         >
             <ModalContent>
-                {/* TODO подсчитывать реальное время курса */}
-                <Text>Данный курс использует файлы cookie для подсчета и формирования визуализации прогресса изучения курса. Cookie хранятся в течение 30 дней.
-                    Время изучения курса  - 60 минут.
+                <Text>
+                    Данный курс использует файлы cookie для подсчета и
+                    формирования визуализации прогресса изучения курса. Cookie
+                    хранятся в течение 30 дней. Время изучения курса -{" "}
+                    {getFullCourseDuration()} минут.
                 </Text>
-                <SendButton text="Начать изучение курса" onClick={withCookie} className="cookie"/>
-                <WithOutCookie onClick={withOutCookie}>Начать изучение курса без подсчета прогресса изучения</WithOutCookie>
+                <SendButton
+                    text="Начать изучение курса"
+                    onClick={withCookie}
+                    className="cookie"
+                />
+                <WithOutCookie onClick={withOutCookie}>
+                    Начать изучение курса без подсчета прогресса изучения
+                </WithOutCookie>
             </ModalContent>
         </StyledModal>
     )
 }
+
+export default observer(CookieModal)
 
 const StyledModal = styled(Modal)`
     &.modal-cookie {
@@ -92,7 +111,7 @@ const ModalContent = styled.div`
 `
 
 const Text = styled.div`
-    font-family: 'CalibriRegular';
+    font-family: "CalibriRegular";
     font-weight: 300;
     font-size: 0.94vw;
     line-height: 1.4vw;
@@ -116,7 +135,7 @@ const Text = styled.div`
 `
 
 const WithOutCookie = styled.div`
-    font-family: 'CalibriRegular';
+    font-family: "CalibriRegular";
     font-weight: 300;
     font-size: 0.83vw;
     line-height: 1.25vw;

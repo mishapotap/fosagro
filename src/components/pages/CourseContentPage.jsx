@@ -34,7 +34,7 @@ export default function CourseContentPage() {
     }, [location])
 
     function setIds() {
-        CourseProgressStore.setActiveCourseId(courseId)
+        CourseProgressStore.setActiveChapterId(courseId)
         CourseProgressStore.setActiveSectId(sectId)
         CourseProgressStore.setActivePageId(pageId)
         if (!showContent) setShowContent(true)

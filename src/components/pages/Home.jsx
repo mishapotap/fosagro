@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react"
 import styled from "styled-components"
 import { Link, Outlet } from "react-router-dom"
 import { Helmet } from "react-helmet"
+import { observer } from "mobx-react-lite"
 import { menuButtonData } from "../../data"
 import { MenuButton } from "../molecules"
 import { Footer } from "../organisms"
@@ -12,10 +13,9 @@ import { MainBG } from "../../assets/video"
 import { COLORS, DEVICE } from "../../constants"
 import { Layout, CookieModal } from "../atoms"
 import { Click2, MainTitle, MainSupTitle } from "../../assets/audio"
-import { SoundStore } from "../../store"
+import { SoundStore, ModalStore } from "../../store"
 
 function Home() {
-    const [isOpenCookie, setIisOpenCookie] = useState(false)
     const [isTitlePlaying, setIsTitlePlaying] = useState(false)
     const [isSupTitlePlaying, setIsSupTitlePlaying] = useState(false)
 
@@ -27,10 +27,13 @@ function Home() {
     const supTitleRef = useRef(null)
 
     useEffect(() => {
-        setTimeout(() => {
-            setIisOpenCookie(true)
-        }, 500)
-    }, [])
+        if (ModalStore.isVisible.instruction || ModalStore.isVisible.mail) {
+            SoundStore.setIsPlayingSound(false)
+        } else {
+            SoundStore.setIsPlayingSound(true)
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ModalStore.isVisible.instruction, ModalStore.isVisible.mail])
 
     useEffect(() => {
         // eslint-disable-next-line no-unused-expressions, no-use-before-define
@@ -77,10 +80,9 @@ function Home() {
         }, 500)
     }
 
-    function handleCkick() {
-        setIisOpenCookie(false);
+    function handleClick() {
         // eslint-disable-next-line no-unused-expressions
-        !SoundStore.getPlayedTitleSound(`title`) && activeTitleSound();  
+        !SoundStore.getPlayedTitleSound(`title`) && activeTitleSound();
         SoundStore.setPlayedTitleSound('title', true)
     }
 
@@ -156,10 +158,7 @@ function Home() {
                 <AudioTitle src={ MainSupTitle } ref={supTitleSoundRef}/>
             </Container>
             <Outlet />
-            <CookieModal
-                isOpen={isOpenCookie}
-                onClose={() => handleCkick()}
-            />
+            <CookieModal onClose={() => handleClick()} />
         </Layout>
     )
 }
@@ -431,4 +430,4 @@ const LinkAVT = styled.a`
 
 const AudioTitle = styled.audio``
 
-export default Home
+export default observer(Home)

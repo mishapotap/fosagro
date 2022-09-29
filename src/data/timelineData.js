@@ -468,7 +468,7 @@ const timelineData = {
                         value: {
                             color: COLORS.brown_light,
                             position: "bottom",
-                            text: "Каков наш подход в области управления?",
+                            text: "ЦУР ООН 2: подход к управлению",
                             top: "calc(50% - 150px + 90px)",
                             left: "1260px",
                         },
@@ -478,7 +478,7 @@ const timelineData = {
                         value: {
                             color: COLORS.brown_light,
                             position: "top",
-                            text: "Какой вклад вносит Компания в достижение ЦУР 2?",
+                            text: "Вклад в достижение ЦУР ООН 2",
                             top: "calc(50% - 150px + 95px)",
                             left: "1345px",
                         },
@@ -488,7 +488,7 @@ const timelineData = {
                         value: {
                             color: COLORS.brown_light,
                             position: "bottom",
-                            text: "Какие цели ставит перед собой компания?",
+                            text: "Целевые показатели в области достижения ЦУР ООН 2",
                             top: "calc(50% - 150px + 115px)",
                             left: "1435px",
                         },
@@ -498,7 +498,7 @@ const timelineData = {
                         value: {
                             color: COLORS.brown_light,
                             position: "top",
-                            text: "Как компания двигается к достижению этих целей? ",
+                            text: "Результаты по достижению ЦУР ООН 2",
                             top: "calc(50% - 150px + 120px)",
                             left: "1525px",
                         },

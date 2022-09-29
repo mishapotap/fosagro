@@ -299,7 +299,7 @@ const Container = styled.div`
         z-index: -1;
 
         opacity: 0;
-        background: linear-gradient( 0deg, rgba(0,82,155,0.6) 0%, rgba(217,217,217,0) 100% );
+        background: linear-gradient( 0deg, rgba(0,82,155,0.3) 0%, rgba(217,217,217,0) 100% );
         transition: 0.5s;
     }
 
