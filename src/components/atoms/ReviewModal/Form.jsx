@@ -17,16 +17,18 @@ function Form() {
         } else {
             ReviewModalStore.setMessage("")
         }
+        
     }
 
     function handleSubmit(e) {
         e.preventDefault()
-        ReviewModalStore.handleSend(e)
         const val = textareaRef.current.value.trim()
 
         if (val) {
             ReviewModalStore.setMessage(val)
         }
+
+        ReviewModalStore.handleSend(e)
     }
 
     return (
