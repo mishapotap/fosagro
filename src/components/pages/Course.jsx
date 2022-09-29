@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useRef } from "react"
 import styled from "styled-components"
 import { Helmet } from "react-helmet"
@@ -11,7 +12,7 @@ import { Footer, CourseMenu } from "../organisms"
 import { introModalData } from "../../data"
 import Error404 from "./Error404"
 import { CourseProgressStore, ModalStore, SoundStore } from "../../store"
-import Notification from '../atoms/Notification'
+import Notification from "../atoms/Notification"
 
 function Course() {
     const { id } = useParams()
@@ -21,11 +22,11 @@ function Course() {
     const disabledRef = useRef(null)
     const wrapperRef = useRef(null)
 
+    const playTitleOnInstrClose = useRef(null)
+
     useEffect(() => {
         if (location.pathname.includes("instruction")) {
             ModalStore.showModal("instruction")
-            // когда инструкция автоматически открывается, проигрывается заголовок
-            // (может это временно, надеюсь ничего не порушила)
             if (titleAudio.current) titleAudio.current.pause()
         }
 
@@ -39,60 +40,87 @@ function Course() {
 
     useEffect(() => {
         if (id) {
-            CourseProgressStore.setActiveCourseId(id)
+            CourseProgressStore.setActiveChapterId(id)
 
             if (
                 dataLine &&
                 dataModal &&
-                !CourseProgressStore.userVisitedAnyCourse
+                !CourseProgressStore.userVisitedAnyChapter
             ) {
-                navigate('instruction')
-                CourseProgressStore.setUserVisitedAnyCourse()
-                CourseProgressStore.setUserVisitedCourse(id)
+                navigate("instruction")
+                CourseProgressStore.setUserVisitedAnyChapter(true)
             }
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id])
+
+    function activeTitleSound() {
+
+        setTimeout(() => {
+            if (ModalStore.isVisible.instruction) {
+                playTitleOnInstrClose.current = true
+                return
+            }
+            titleAudio.current.play()
+            disabledRef.current.classList.add("active")
+            wrapperRef.current.classList.add("active")
+        }, 500)
+        titleAudio.current.addEventListener("ended", () => {
+            disabledRef.current.classList.remove("active")
+            wrapperRef.current.classList.remove("active")
+        })
+    }
+
+    function titleSoundPlay() {
+        if (!ModalStore.isVisible.instruction && !ModalStore.isVisible.intro) {
+            if (SoundStore.getIsPlaying()) {
+                if (playTitleOnInstrClose.current) {
+                    activeTitleSound()
+                } else if (!SoundStore.getPlayedTitleSound(`course${id}`)) {
+                    activeTitleSound()
+                }
+            }
+            SoundStore.setPlayedTitleSound(`course${id}`, true)
+        }
+        window.removeEventListener("click", titleSoundPlay)
+    }
+
+    useEffect(() => {
+        window.addEventListener("click", titleSoundPlay, { ones: true })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [id, location])
 
     useEffect(() => {
         CourseProgressStore.setIsTimelinePageActive(true)
 
         return () => {
-            if (ModalStore.isVisible.instruction) ModalStore.closeModal('instruction')
+            if (ModalStore.isVisible.instruction)
+                ModalStore.closeModal("instruction")
+
+        window.removeEventListener("click", titleSoundPlay)
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
-        function activeTitleSound() {
+        if (ModalStore.isVisible.instruction || ModalStore.isVisible.mail) {
+            SoundStore.setIsPlayingSound(false)
+        } else {
+            SoundStore.setIsPlayingSound(true)
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ModalStore.isVisible.instruction, ModalStore.isVisible.mail])
+
+    useEffect(() => {
+        if (!ModalStore.isVisible.instruction && playTitleOnInstrClose.current) {
             setTimeout(() => {
-                titleAudio.current.play()
-                disabledRef.current.classList.add('active')
-                wrapperRef.current.classList.add('active')
-            }, 500)
-            titleAudio.current.addEventListener('ended', () => {
-                disabledRef.current.classList.remove('active')
-                wrapperRef.current.classList.remove('active')
-            })
+                titleSoundPlay()
+                playTitleOnInstrClose.current = false
+            }, 200);
         }
 
-        function titleSoundPlay() {
-            if(!ModalStore.isVisible.instruction && !ModalStore.isVisible.intro) {
-
-                // eslint-disable-next-line no-unused-expressions
-                (SoundStore.getIsPlaying() && !SoundStore.getPlayedTitleSound(`course${id}`)) && activeTitleSound()
-                SoundStore.setPlayedTitleSound(`course${id}`, true)
-            }
-            window.removeEventListener("click", titleSoundPlay)
-        }
-        window.addEventListener("click", titleSoundPlay, { ones: true})
-    }, [id, location])
-
-    // useEffect(() => {
-    //     if (ModalStore.isVisible.instruction) {
-    //         titleAudio.current.pause()
-    //     }
-    // // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [ModalStore.isVisible.instruction])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ModalStore.isVisible.instruction])
 
     if (!dataLine && !dataModal) {
         return <Error404 />
@@ -100,15 +128,16 @@ function Course() {
 
     return (
         <StyledLayout page="course">
-            {dataLine.metaTitle && <Helmet>
-                <title data-rh="true">{dataLine.metaTitle}</title>
-                <meta
-                    name="description"
-                    content={dataLine.metaDescription}
-                />
+            {dataLine.metaTitle && (
+                <Helmet>
+                    <title data-rh="true">{dataLine.metaTitle}</title>
+                    <meta
+                        name="description"
+                        content={dataLine.metaDescription}
+                    />
                 </Helmet>
-            }
-            <Notification/>
+            )}
+            <Notification />
             <Background />
             <Container>
                 <Wrapper ref={wrapperRef}>
@@ -118,12 +147,11 @@ function Course() {
                         <CourseSupTitle>{dataLine.supTitle}</CourseSupTitle>
                     )}
                 </Wrapper>
-                <ContainerDisabled ref={disabledRef}/>
+                <ContainerDisabled ref={disabledRef} />
                 <CourseMenu dataLine={dataLine} dataModal={dataModal} />
                 <Footer />
             </Container>
-            <Audio src={dataLine.titleAudio}
-                ref={titleAudio}/>
+            <Audio src={dataLine.titleAudio} ref={titleAudio} />
         </StyledLayout>
     )
 }
@@ -180,7 +208,7 @@ const ContainerDisabled = styled.div`
         left: 0;
         width: 100vw;
         height: 100vh;
-        background-color: rgba(0, 0, 0, 0.05)
+        background-color: rgba(0, 0, 0, 0.05);
     }
 `
 

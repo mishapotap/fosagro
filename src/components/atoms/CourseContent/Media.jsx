@@ -127,10 +127,10 @@ const Container = styled.div`
     }
 
     &.anim-paused {
-        animation-play-state: paused;
+        animation-play-state: paused!important;
 
         * {
-            animation-play-state: paused;
+            animation-play-state: paused!important;
         }
     }
 
@@ -222,16 +222,15 @@ const Container = styled.div`
 
             ${StyledMedia} {
                 position: relative;
-                padding-bottom: 30px;
+                padding-bottom: 45px;
                 padding-right: 10px;
                 width: 100%;
 
-                /* justify-content: flex-end !important; */
                 flex-direction: column;
                 align-items: flex-end;
 
                 @media ${DEVICE.laptopS} {
-                    width: 90%;
+                    width: 80%;
                     margin: 0 auto;
                     padding-right: 0;
                 }
@@ -253,10 +252,6 @@ const Container = styled.div`
 
                 .anim-chart {
                     max-height: 95%;
-                }
-
-                .anim-with-title {
-                    margin-top: 55px;
                 }
 
                 .anim-earth-wrapper {

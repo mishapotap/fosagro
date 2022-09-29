@@ -26,7 +26,7 @@ export default function CourseTestPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    CourseTestStore.setActiveCourseId(id)
+    CourseTestStore.setActiveChapterId(id)
 
     if (!coursePagesData[id]) {
         return <Error404 />

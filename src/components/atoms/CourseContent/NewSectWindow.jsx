@@ -27,6 +27,10 @@ function NewSectWindow({onExited}) {
                 setShowNewSectW(false)
             }, 2300)
         }
+
+        setTimeout(() => {
+            setShowNewSectW(false)
+        }, 3200)
     }
 
     function handleAudioEnded() {

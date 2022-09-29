@@ -33,7 +33,7 @@ export default function MenuButtons({ className }) {
                         <MenuProgressBarContainer className="progress-bar-cont">
                             <MenuProgressBar
                                 max={100}
-                                value={CourseProgressStore.courseProgressPercent(
+                                value={CourseProgressStore.chapterProgressPercent(
                                     item.id
                                 )}
                                 color={item.bgColor}

@@ -3,7 +3,7 @@ import { coursePagesData, courseTestsData } from "../data"
 import { sectColors } from "../data/coursePagesData/general"
 
 class CourseTest {
-    activeCourseId = 1
+    activeChapterId = 1
 
     tests = {
         // ключи - id курсов
@@ -110,18 +110,18 @@ class CourseTest {
     }
 
     get learnSectsData() {
-        const courseData = coursePagesData[this.activeCourseId]
+        const courseData = coursePagesData[this.activeChapterId]
         const sectsData = this.learnSectsIds.map((id) => {
             if (id === 'intro') {
                 return {
                     id,
                     title: 'Введение',
-                    link: `/course${this.activeCourseId}/intro`,
+                    link: `/course${this.activeChapterId}/intro`,
                     color: sectColors.intro
                 }
             }
             const { sectTitle } = courseData[id]
-            const sectLink = `/course${this.activeCourseId}/topic${id}/point1`
+            const sectLink = `/course${this.activeChapterId}/topic${id}/point1`
             const sectColor = sectColors[id]
 
             return {
@@ -137,52 +137,52 @@ class CourseTest {
 
     // eslint-disable-next-line class-methods-use-this
     get testQsData() {
-        return courseTestsData.testsQsData[this.activeCourseId]
+        return courseTestsData.testsQsData[this.activeChapterId]
     }
 
     get showStart() {
-        return this.tests[this.activeCourseId].showStart
+        return this.tests[this.activeChapterId].showStart
     }
 
     get showTest() {
-        return this.tests[this.activeCourseId].showTest
+        return this.tests[this.activeChapterId].showTest
     }
 
     get showFinal() {
-        return this.tests[this.activeCourseId].showFinal
+        return this.tests[this.activeChapterId].showFinal
     }
 
     get showTreeInit() {
-        return this.tests[this.activeCourseId].showTreeInit
+        return this.tests[this.activeChapterId].showTreeInit
     }
 
     get showTreeStart() {
-        return this.tests[this.activeCourseId].showTreeStart
+        return this.tests[this.activeChapterId].showTreeStart
     }
 
     get showTreeWait() {
-        return this.tests[this.activeCourseId].showTreeWait
+        return this.tests[this.activeChapterId].showTreeWait
     }
 
     get showTreeEnd() {
-        return this.tests[this.activeCourseId].showTreeEnd
+        return this.tests[this.activeChapterId].showTreeEnd
     }
 
     get showEndTestBtn() {
-        return this.tests[this.activeCourseId].showEndTestBtn
+        return this.tests[this.activeChapterId].showEndTestBtn
     }
 
     get userPassedTest() {
-        return this.tests[this.activeCourseId].userPassedTest
+        return this.tests[this.activeChapterId].userPassedTest
     }
 
     get treeRightAnswCount() {
-        return this.tests[this.activeCourseId].treeRightAnswCount
+        return this.tests[this.activeChapterId].treeRightAnswCount
     }
 
     get nextCourseLink() {
-        if (coursePagesData[this.activeCourseId + 1]) {
-            return `/course${+this.activeCourseId + 1}`
+        if (coursePagesData[+this.activeChapterId + 1]) {
+            return `/course${+this.activeChapterId + 1}`
         }
         return '/'
     }
@@ -224,19 +224,19 @@ class CourseTest {
     }
 
     get userAnswers() {
-        return this.tests[this.activeCourseId].userAnswers
+        return this.tests[this.activeChapterId].userAnswers
     }
 
     get activeQId() {
-        return this.tests[this.activeCourseId].activeQId
+        return this.tests[this.activeChapterId].activeQId
     }
 
     get isLastSlide() {
-        return this.tests[this.activeCourseId].isLastSlide
+        return this.tests[this.activeChapterId].isLastSlide
     }
 
     get nextBtnDisabled() {
-        if (!this.tests[this.activeCourseId].userAnswers[this.activeQId]) {
+        if (!this.tests[this.activeChapterId].userAnswers[this.activeQId]) {
             return true
         }
         return false
@@ -261,15 +261,15 @@ class CourseTest {
         return count
     }
 
-    get dataForLS() {
+    get dataForCookies() {
         return this.tests
     }
 
     resetProgress() {
-        this.tests[this.activeCourseId] = {
+        this.tests[this.activeChapterId] = {
             learnSectsIds: [],
             userAnswers: {},
-            activeQId: courseTestsData.testsQsData[this.activeCourseId][0].id,
+            activeQId: courseTestsData.testsQsData[this.activeChapterId][0].id,
             showStart: true,
             showFinal: false,
             showTest: false,
@@ -284,69 +284,70 @@ class CourseTest {
         }
     }
 
-    setTestsData(data) {
-        this.test = data
+    setDataFromCookies(dataString) {
+        const data = JSON.parse(dataString)
+        this.tests = data
     }
 
     setLearnSectId(id) {
-        this.tests[this.activeCourseId].learnSectsIds.push(id)
+        this.tests[this.activeChapterId].learnSectsIds.push(id)
     }
 
     setActiveQId(id) {
-        this.tests[this.activeCourseId].activeQId = id
+        this.tests[this.activeChapterId].activeQId = id
     }
 
     setShowStart(val) {
-        this.tests[this.activeCourseId].showStart = val
+        this.tests[this.activeChapterId].showStart = val
     }
 
     setShowTest(val) {
-        this.tests[this.activeCourseId].showTest = val
+        this.tests[this.activeChapterId].showTest = val
     }
 
     setShowFinal(val) {
-        this.tests[this.activeCourseId].showFinal = val
+        this.tests[this.activeChapterId].showFinal = val
     }
 
     setShowEndTestBtn(val) {
-        this.tests[this.activeCourseId].showEndTestBtn = val
+        this.tests[this.activeChapterId].showEndTestBtn = val
     }
 
     setUserAnswers(qId, aId) {
-        this.tests[this.activeCourseId].userAnswers[qId] = aId
+        this.tests[this.activeChapterId].userAnswers[qId] = aId
     }
 
     setTreeRightAnswCount() {
-        this.tests[this.activeCourseId].treeRightAnswCount =
+        this.tests[this.activeChapterId].treeRightAnswCount =
             this.rightAnswersCount
     }
 
     setIsLastSlide(val) {
-        this.tests[this.activeCourseId].isLastSlide = val
+        this.tests[this.activeChapterId].isLastSlide = val
     }
 
     setUserPassedTest(val) {
-        this.tests[this.activeCourseId].userPassedTest = val
+        this.tests[this.activeChapterId].userPassedTest = val
     }
 
     setShowTreeInit(val) {
-        this.tests[this.activeCourseId].showTreeInit = val
+        this.tests[this.activeChapterId].showTreeInit = val
     }
 
     setShowTreeStart(val) {
-        this.tests[this.activeCourseId].showTreeStart = val
+        this.tests[this.activeChapterId].showTreeStart = val
     }
 
     setShowTreeWait(val) {
-        this.tests[this.activeCourseId].showTreeWait = val
+        this.tests[this.activeChapterId].showTreeWait = val
     }
 
     setShowTreeEnd(val) {
-        this.tests[this.activeCourseId].showTreeEnd = val
+        this.tests[this.activeChapterId].showTreeEnd = val
     }
 
-    setActiveCourseId(val) {
-        this.activeCourseId = val
+    setActiveChapterId(val) {
+        this.activeChapterId = val
     }
 }
 

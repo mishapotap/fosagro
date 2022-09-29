@@ -101,7 +101,7 @@ const FirstColumn = styled.div`
     max-width: 51%;
     height: 100%;
 
-    overflow-y: auto;
+    overflow-y: hidden;
     padding-right: 10px;
 
     @media ${DEVICE.laptopS} {
@@ -117,16 +117,6 @@ const FirstColumn = styled.div`
 
     @media ${DEVICE.mobile} {
         max-width: 100%;
-    }
-
-    &::-webkit-scrollbar {
-        width: 3px;
-        background-color: transparent;
-    }
-
-    &::-webkit-scrollbar-thumb {
-        background-color: rgba(0, 82, 155, 0.6);
-        border-radius: 2em;
     }
 `
 

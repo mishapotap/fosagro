@@ -12,15 +12,17 @@ import {
     Final,
 } from "./components/pages"
 import { InstructionModal, IntroModal } from "./components/atoms"
-import { CourseProgressStore } from "./store"
+import { CookiesStore } from "./store"
 
 function App() {
     return (
         <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home />}>
+                <Route path="instruction" element={<InstructionModal/>} />
+            </Route>
             <Route path="course:id" element={<Course />}>
-                <Route path="instruction" element={InstructionModal} />
-                <Route path="intro" element={IntroModal} />
+                <Route path="instruction" element={<InstructionModal/>} />
+                <Route path="intro" element={<IntroModal/>} />
             </Route>
             <Route path="course:id/test" element={<CourseTestPage />} />
             <Route
@@ -35,22 +37,12 @@ function App() {
     )
 }
 
-// TODO позже раскомментировать, может изменить
-// взять данные из store, установить в куки
 function handleWindowUnload() {
-    // const testsVal = JSON.stringify(CourseTestStore.dataForLS)
-
-    const progressVal = JSON.stringify(CourseProgressStore.dataForLS)
-    localStorage.setItem("courseProgress", progressVal)
+    CookiesStore.setDataInCookies()
 }
 
-// взять данные из ls, установить в store
 function handleDocLoad() {
-    const progressLsData = localStorage.getItem("courseProgress")
-
-    if (progressLsData) {
-        CourseProgressStore.setProgressDataFromLs(JSON.parse(progressLsData))
-    }
+    CookiesStore.setDataFromCookies()
 }
 
 document.addEventListener("DOMContentLoaded", handleDocLoad)
