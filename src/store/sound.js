@@ -7,6 +7,7 @@ class Sound {
     }
 
     titleSound = {
+        title: false,
         corse1: false,
         corse2: false,
         corse3: false,

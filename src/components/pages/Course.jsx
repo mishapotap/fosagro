@@ -7,7 +7,7 @@ import timelineData from "../../data/timelineData"
 import { Layout } from "../atoms"
 import { COLORS, DEVICE } from "../../constants"
 import { MenuBackground } from "../../assets/images"
-import { TimelineFooter, CourseMenu } from "../organisms"
+import { Footer, CourseMenu } from "../organisms"
 import { introModalData } from "../../data"
 import Error404 from "./Error404"
 import { CourseProgressStore, ModalStore, SoundStore } from "../../store"
@@ -18,6 +18,8 @@ function Course() {
     const location = useLocation()
     const navigate = useNavigate()
     const titleAudio = useRef()
+    const disabledRef = useRef(null)
+    const wrapperRef = useRef(null)
 
     useEffect(() => {
         if (location.pathname.includes("instruction")) {
@@ -61,27 +63,29 @@ function Course() {
     }, [])
 
     useEffect(() => {
+        function activeTitleSound() {
+            setTimeout(() => {
+                titleAudio.current.play()
+                disabledRef.current.classList.add('active')
+                wrapperRef.current.classList.add('active')
+            }, 500)
+            titleAudio.current.addEventListener('ended', () => {
+                disabledRef.current.classList.remove('active')
+                wrapperRef.current.classList.remove('active')
+            })
+        }
+
         function titleSoundPlay() {
             if(!ModalStore.isVisible.instruction && !ModalStore.isVisible.intro) {
 
                 // eslint-disable-next-line no-unused-expressions
-                (SoundStore.getIsPlaying() && !SoundStore.getPlayedTitleSound(`course${id}`)) && titleAudio.current.play()
+                (SoundStore.getIsPlaying() && !SoundStore.getPlayedTitleSound(`course${id}`)) && activeTitleSound()
                 SoundStore.setPlayedTitleSound(`course${id}`, true)
             }
             window.removeEventListener("click", titleSoundPlay)
         }
         window.addEventListener("click", titleSoundPlay, { ones: true})
     }, [id, location])
-
-    useEffect(() => {
-        document.addEventListener("click", () => {
-            if(SoundStore.getPlayedTitleSound(`course${id}`)) {
-                titleAudio.current.pause()
-            }
-        }, { once: true })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [SoundStore.getPlayedTitleSound(`course${id}`)])
-
 
     // useEffect(() => {
     //     if (ModalStore.isVisible.instruction) {
@@ -107,15 +111,16 @@ function Course() {
             <Notification/>
             <Background />
             <Container>
-                <Wrapper>
+                <Wrapper ref={wrapperRef}>
                     <CourseNumber>{dataLine.id}</CourseNumber>
                     <CourseTitle>{dataLine.title}</CourseTitle>
                     {dataLine.supTitle && (
                         <CourseSupTitle>{dataLine.supTitle}</CourseSupTitle>
                     )}
                 </Wrapper>
+                <ContainerDisabled ref={disabledRef}/>
                 <CourseMenu dataLine={dataLine} dataModal={dataModal} />
-                <TimelineFooter />
+                <Footer />
             </Container>
             <Audio src={dataLine.titleAudio}
                 ref={titleAudio}/>
@@ -152,10 +157,30 @@ const Container = styled.div`
 `
 
 const Wrapper = styled.div`
+    z-index: 102;
+    position: relative;
     padding: 25px 0 0 60px;
+    transform-origin: 0 0;
+    transition: all 0.3s;
+    &.active {
+        transform: scale(1.2);
+    }
 
     @media ${DEVICE.laptopM} {
         padding: 0 0 0 calc(3vw - 20px);
+    }
+`
+
+const ContainerDisabled = styled.div`
+    transition: all 0.3s;
+    &.active {
+        z-index: 101;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.05)
     }
 `
 

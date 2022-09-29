@@ -62,7 +62,7 @@ const StyledModal = styled(Modal)`
         }
 
         @media ${DEVICE.mobile} {
-            top: calc(100vh - 55vw);
+            top: calc(100vh - 80vw);
             left: calc(50vw - 45vw);
 
             max-width: 90vw;

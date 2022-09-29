@@ -5,17 +5,18 @@ import { Mute, UnMute } from "../../assets/svg"
 import { AnimatedBlueButton } from "../atoms"
 import { SoundStore } from "../../store"
 
-function SoundButton() {
-    // TODO перенести состояние в mobX
+function SoundButton({background, color}) {
 
     return (
         <Wrapper>
             <AnimatedBlueButton
+                background={background}
+                color={color}
                 size="s"
                 rotate="60"
                 onClick={() => SoundStore.setIsPlayingUser(!SoundStore.getIsPlaying())}
             >
-                {SoundStore.getIsPlaying() ? <Mute /> : <UnMute />}
+                {SoundStore.getIsPlaying() ? <Mute color={color}/> : <UnMute color={color}/>}
             </AnimatedBlueButton>
         </Wrapper>
     )

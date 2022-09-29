@@ -8,8 +8,8 @@ const mediaDuration = {
         1: [
             ["point1", 21],
             ["point2", 14],
-            ["point3", 45],
-            ["point4", 8],
+            ["point3", 31],
+            ["point4", 23],
         ],
         2: [["point1", 39]],
         3: [
