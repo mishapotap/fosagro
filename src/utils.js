@@ -1,3 +1,5 @@
+import { mediaDuration } from "./data"
+
 /* eslint-disable no-unused-vars */
 export function formatTime(time) {
     const isoString = new Date(time * 1000).toISOString()
@@ -42,7 +44,7 @@ export async function makePostRequest(url, data) {
             // eslint-disable-next-line no-new
             // reject(new Error("Test error"))
             resolve("success")
-        }, 700)
+        }, 3000)
     })
 }
 
@@ -98,4 +100,20 @@ export function getMediaDurationSec(data, key = "") {
 }
 
 export function getFullCourseDuration() {
+    const chapters = Object.keys(mediaDuration)
+    const courseTime = chapters
+        .map((courseKey) => {
+            // длительность всех секций части курса
+            const chapterData = Object.entries(mediaDuration[courseKey])
+            const chapterTime = chapterData
+                .map(([sectKey, sectVal]) => getMediaDuration(sectVal))
+                .reduce((sum, current) => sum + current, 0)
+            return chapterTime
+        })
+        .reduce((sum, current) => sum + current, 0)
+
+    const formattedCourseTime = formatTime(courseTime)
+    const [mins, secs] = formattedCourseTime.split(":")
+
+    return secs ? +mins + 1 : mins
 }

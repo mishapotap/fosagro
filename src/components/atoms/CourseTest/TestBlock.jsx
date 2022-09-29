@@ -16,9 +16,11 @@ import NextButton from "../NextButton"
 import { DEVICE, COLORS } from "../../../constants"
 import { CourseProgressStore, CourseTestStore } from "../../../store"
 import { renderCustom } from "../../../utils"
+import { Click1 } from "../../../assets/audio"
 
 function TestBlock() {
     const testRef = useRef(null)
+    const clickBtnSound = new Audio(Click1)
 
     function handleInputChange(qId, aId) {
         CourseTestStore.setUserAnswers(qId, aId)
@@ -32,6 +34,8 @@ function TestBlock() {
     }
 
     function handleNextClick() {
+        clickBtnSound.play()
+
         if (CourseTestStore.isLastSlide) {
             CourseTestStore.setShowTest(false)
             setTimeout(() => {
@@ -122,14 +126,24 @@ function TestBlock() {
     )
 }
 
-const Test = styled.div``
+const Test = styled.div`
+    max-height: 100%;
+    height: 100%;
+`
 
 const TestNav = styled.div`
     display: flex;
     justify-content: flex-end;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    z-index: 50;
 `
 
 const TestSlider = styled.div`
+    max-height: 100%;
+    height: 100%;
+
     .swiper-pagination {
         position: absolute;
         top: 0;
@@ -137,15 +151,35 @@ const TestSlider = styled.div`
     }
 
     .swiper {
+        max-height: 100%;
+        height: 100%;
         padding: 8vh 15px 15px;
+        padding-bottom: 60px;
 
         @media ${DEVICE.laptopM} {
             padding-top: 58px;
         }
     }
 
+    .swiper-slide {
+        overflow: auto;
+        padding-left: 5px;
+
+        &::-webkit-scrollbar {
+            width: 3px;
+            background-color: transparent;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 82, 155, 0.6);
+            border-radius: 2em;
+        }
+    }
+
     .swiper-wrapper {
         margin-bottom: 30px;
+        max-height: 100%;
+        height: 100%;
     }
 
     .cur-slide-number {

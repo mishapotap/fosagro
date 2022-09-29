@@ -7,7 +7,7 @@ import { CourseProgressStore } from "../../store"
 
 function CourseProgressBar({ max = 100, color = COLORS.blue}) {
 
-  const value = CourseProgressStore.activeCourseProgressPer
+  const value = CourseProgressStore.activeChapterProgressPer
 
   return(
     <Container color={color}>

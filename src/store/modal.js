@@ -6,6 +6,7 @@ class Modal {
         menu: false,
         mail: false,
         intro: false,
+        cookie: false,
     }
 
     constructor() {
