@@ -6,7 +6,7 @@ import { AnimatedBlueButton, ReviewModal } from "../atoms"
 import { Letter } from "../../assets/svg"
 import { Click1 } from "../../assets/audio"
 
-function MailButton({ isTest }) {
+function MailButton({ isTest, color, background }) {
 
     const clickSound = new Audio(Click1)
 
@@ -25,11 +25,13 @@ function MailButton({ isTest }) {
     return (
         <Wrapper hide={isTest && CourseTestStore.showFinal}>
             <AnimatedBlueButton
+                background={background}
+                color={color}
                 size="s"
                 rotate="20"
                 onClick={() => openMail()}
             >
-                <Letter />
+                <Letter stroke={background} fill={color}/>
             </AnimatedBlueButton>
             <ReviewModal
                 isOpen={ModalStore.isVisible.mail}

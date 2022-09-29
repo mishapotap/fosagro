@@ -28,8 +28,8 @@ function Header({
     fosagroSite = false,
 }) {
     // сделать норм
-    const rusSiteLink = "/"
-    const engSiteLink = "/"
+    const rusSiteLink = "https://esg-course.phosagro.ru"
+    const engSiteLink = "https://esg-course.phosagro.com"
     const isRus = false
 
     const { activeSectColor, activeSectTitle } = CourseProgressStore
@@ -70,20 +70,24 @@ function Header({
                 {language && (
                     <LanguageContainer>
                         <Language>
-                            <Link
-                                to={rusSiteLink}
+                            <a
+                                href={rusSiteLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className={isRus && "active"}
                             >
                                 RU
-                            </Link>
+                            </a>
                         </Language>
                         <Language>
-                            <Link
-                                to={engSiteLink}
+                            <a
+                                href={engSiteLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className={!isRus && "active"}
                             >
                                 EN
-                            </Link>
+                            </a>
                         </Language>
                     </LanguageContainer>
                 )}

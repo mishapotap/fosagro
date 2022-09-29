@@ -7,7 +7,7 @@ import { AnimatedBlueButton, InstructionModal } from "../atoms"
 import { InstructionIcon } from "../../assets/svg"
 import { Click1 } from "../../assets/audio"
 
- function InstructionButton() {
+ function InstructionButton({background, color}) {
 
     const clickSound = new Audio(Click1)
 
@@ -27,11 +27,14 @@ import { Click1 } from "../../assets/audio"
         <Wrapper>
             <Link to="instruction">
                 <AnimatedBlueButton
+                    background={background}
+                    color={color}
                     size="s"
                     rotate="40"
                     onClick={() => openInstruction()}
                 >
-                    <InstructionIcon />
+                    <InstructionIcon fill={color}
+                    stroke={background}/>
                 </AnimatedBlueButton>
             </Link>
             <InstructionModal
