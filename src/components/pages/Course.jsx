@@ -28,10 +28,14 @@ function Course() {
         if (location.pathname.includes("instruction")) {
             ModalStore.showModal("instruction")
             if (titleAudio.current) titleAudio.current.pause()
+        } else if (ModalStore.isVisible.instruction) {
+            ModalStore.closeModal("instruction")
         }
 
         if (location.pathname.includes("intro")) {
             ModalStore.showModal("intro")
+        } else if (ModalStore.isVisible.intro) {
+            ModalStore.closeModal("intro")
         }
     }, [location])
 

@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useRef } from "react"
 import styled from "styled-components"
-import { Link, Outlet } from "react-router-dom"
+import { Link, Outlet, useLocation } from "react-router-dom"
 import { Helmet } from "react-helmet"
 import { observer } from "mobx-react-lite"
 import { menuButtonData } from "../../data"
@@ -25,6 +25,15 @@ function Home() {
     const supTitleSoundRef = useRef(null)
     const titleRef = useRef(null)
     const supTitleRef = useRef(null)
+    const location = useLocation()
+
+    useEffect(() => {
+        if (location.pathname.includes("instruction")) {
+            ModalStore.showModal("instruction")
+        } else if (ModalStore.isVisible.instruction) {
+            ModalStore.closeModal("instruction")
+        }
+    }, [location])
 
     useEffect(() => {
         if (ModalStore.isVisible.instruction || ModalStore.isVisible.mail) {
