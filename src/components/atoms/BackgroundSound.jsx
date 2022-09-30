@@ -10,6 +10,7 @@ function BackgroundSound () {
     useEffect(() => {
         function playSound() {
             SoundStore.setIsPlayingSound(true);
+            SoundStore.setIsPlayingUser(true);
             backSound.current.volume = 0.1;
             backSound.current.play();
             window.removeEventListener("click", playSound)

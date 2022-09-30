@@ -49,6 +49,14 @@ import {
 } from "../assets/Course4/TimeLine"
 
 import {
+    Line5Topic1,
+    Line5Topic2,
+    Line5Topic3,
+    Line5Topic4,
+    Line5Topic5,
+} from "../assets/Course5/TimeLine"
+
+import {
     Line6Topic1,
     Line6Topic2,
     Line6Topic3,
@@ -1151,6 +1159,7 @@ const timelineData = {
                 id: 1,
                 button: {
                     link: "topic1/point1",
+                    audio: Line5Topic1,
                     value: {
                         title: "Как меняется климат и почему это опасно для человечества",
                         time: getMediaDurationSec(mediaDuration.course5[1]),
@@ -1178,6 +1187,7 @@ const timelineData = {
                 id: 2,
                 button: {
                     link: "topic2/point1",
+                    audio: Line5Topic2,
                     value: {
                         title: "Причины глобального потепления",
                         time: getMediaDurationSec(mediaDuration.course5[2]),
@@ -1235,6 +1245,7 @@ const timelineData = {
                 id: 3,
                 button: {
                     link: "topic3/point1",
+                    audio: Line5Topic3,
                     value: {
                         title: "Что дальше?",
                         time: getMediaDurationSec(mediaDuration.course5[3]),
@@ -1282,6 +1293,7 @@ const timelineData = {
                 id: 4,
                 button: {
                     link: "topic4/point1",
+                    audio: Line5Topic4,
                     value: {
                         title: "Углеродная нейтральность",
                         time: getMediaDurationSec(mediaDuration.course5[4]),
@@ -1309,6 +1321,7 @@ const timelineData = {
                 id: 5,
                 button: {
                     link: "topic5/point1",
+                    audio: Line5Topic5,
                     value: {
                         title: "Работа с поставщиками",
                         time: getMediaDurationSec(mediaDuration.course5[5]),

@@ -2,7 +2,7 @@ import { makeAutoObservable } from "mobx"
 
 class Sound {
     play = {
-        isPlayingUser: true,
+        isPlayingUser: false,
         isPlayingSound: false,
     }
 

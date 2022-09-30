@@ -9,10 +9,9 @@ import { COLORS, DEVICE } from "../../constants"
 import { getFullCourseDuration } from "../../utils"
 import { ModalStore, CookiesStore } from "../../store"
 
-function CookieModal({ onClose }) {
+function CookieModal() {
 
     function handleClose() {
-        onClose()
         ModalStore.closeModal("cookie")
     }
 

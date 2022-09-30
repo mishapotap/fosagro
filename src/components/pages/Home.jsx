@@ -5,10 +5,8 @@ import { Link, Outlet } from "react-router-dom"
 import { Helmet } from "react-helmet"
 import { observer } from "mobx-react-lite"
 import { menuButtonData } from "../../data"
-import { MenuButton } from "../molecules"
-import { Footer } from "../organisms"
+import { MenuButton, FooterHome } from "../molecules"
 import { OOH } from "../../assets/svg/static"
-import { AVTdigital } from "../../assets/images"
 import { MainBG } from "../../assets/video"
 import { COLORS, DEVICE } from "../../constants"
 import { Layout, CookieModal } from "../atoms"
@@ -27,29 +25,20 @@ function Home() {
     const supTitleRef = useRef(null)
 
     useEffect(() => {
-        if (ModalStore.isVisible.instruction || ModalStore.isVisible.mail) {
-            SoundStore.setIsPlayingSound(false)
-        } else {
-            SoundStore.setIsPlayingSound(true)
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ModalStore.isVisible.instruction, ModalStore.isVisible.mail])
-
-    useEffect(() => {
         // eslint-disable-next-line no-unused-expressions, no-use-before-define
-        !SoundStore.getIsPlaying() && removeActiveTitleSound()
+        (!SoundStore.getIsPlaying() || ModalStore.isVisible.mail || ModalStore.isVisible.instruction) && removeActiveTitleSound()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [SoundStore.getIsPlaying(), isTitlePlaying, isSupTitlePlaying])
+    }, [SoundStore.getIsPlaying(), ModalStore.isVisible.mail, ModalStore.isVisible.instruction])
 
     function removeActiveTitleSound() {
         if(isTitlePlaying) {
-            titleRef.current.classList.remove('active')
             titleSoundRef.current.pause()
+            titleRef.current.classList.remove('active')
             setIsTitlePlaying(false)
         }
         if(isSupTitlePlaying) {
-            supTitleRef.current.classList.remove('active')
             supTitleSoundRef.current.pause()
+            supTitleRef.current.classList.remove('active')
             setIsSupTitlePlaying(false)
         }
     }
@@ -80,11 +69,15 @@ function Home() {
         }, 500)
     }
 
-    function handleClick() {
-        // eslint-disable-next-line no-unused-expressions
-        !SoundStore.getPlayedTitleSound(`title`) && activeTitleSound();
-        SoundStore.setPlayedTitleSound('title', true)
-    }
+    useEffect(() => {
+        function playTitle() {
+            // eslint-disable-next-line no-unused-expressions
+            !SoundStore.getPlayedTitleSound(`title`) && activeTitleSound();
+            SoundStore.setPlayedTitleSound('title', true)
+            window.removeEventListener("click", playTitle)
+        }
+        window.addEventListener("click", playTitle, { ones: true})
+    }, [])
 
     return (
         <Layout>
@@ -142,23 +135,12 @@ function Home() {
                         </MenuContainer>
                     </Content>
                 </ContentWrapper>
-                <FooterContainer>
-                    <CopyRight>© Группа компаний ФосАгро 2001 — 2022</CopyRight>
-                    <Footer className="home"/>
-                    <LinkAVT
-                        href="https://avt.digital/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <img src={AVTdigital} alt="AVTdigital" />
-                        Разработано AVT Digital
-                    </LinkAVT>
-                </FooterContainer>
+                <FooterHome/>
                 <AudioTitle src={ MainTitle } ref={titleSoundRef}/>
                 <AudioTitle src={ MainSupTitle } ref={supTitleSoundRef}/>
             </Container>
             <Outlet />
-            <CookieModal onClose={() => handleClick()} />
+            <CookieModal/>
         </Layout>
     )
 }
@@ -348,83 +330,6 @@ const Suptitle = styled.div`
         span {
             font-family: "CalibriBold";
         }
-    }
-`
-
-const FooterContainer = styled.div`
-    position: absolute;
-    left: 0;
-    bottom: 17px;
-
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: end;
-    width: 100%;
-    padding: 0 2.3vw 0 4.3vw;
-
-    font-size: 16px;
-    line-height: 20px;
-
-    @media ${DEVICE.laptopM} {
-        padding-left: 3vw;
-    }
-
-    @media ${DEVICE.laptopS} {
-        padding: 0 23px;
-    }
-
-    @media ${DEVICE.tablet} {
-        grid-template-columns: auto;
-        grid-template-rows: auto auto auto;
-        align-items: center;
-    }
-
-    @media ${DEVICE.mobile} {
-        font-size: 12px;
-        line-height: 14px;
-    }
-`
-
-const CopyRight = styled.div`
-    padding-bottom: 5px;
-    font-family: "CalibriBold";
-    font-weight: 700;
-
-    color: ${COLORS.copy_right};
-
-    opacity: 0.9;
-`
-
-const LinkAVT = styled.a`
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-
-    font-family: "CalibriRegular";
-    font-weight: 400;
-
-    color: ${COLORS.white};
-
-    opacity: 0.3;
-    transition: all 0.3s;
-
-    img {
-        margin-right: 5px;
-        @media ${DEVICE.tablet} {
-            width: 25px;
-        }
-
-        @media ${DEVICE.mobile} {
-            width: 18px;
-        }
-    }
-
-    &:hover {
-        opacity: 0.8;
-    }
-
-    @media ${DEVICE.tablet} {
-        justify-content: flex-start;
     }
 `
 
