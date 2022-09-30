@@ -213,6 +213,11 @@ function CourseContent({ setIds, onDisappear }) {
             setVideoPlaying(false)
             setPauseAnim(true)
             onAudioPause()
+        } else {
+            setAudioPlaying(true)
+            setVideoPlaying(true)
+            setPauseAnim(false)
+            onAudioPlay()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ModalStore.isVisible.mail, ModalStore.isVisible.menu])

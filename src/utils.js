@@ -21,22 +21,17 @@ export function renderCustom(swiper, current, total) {
 }
 
 export async function makePostRequest(url, data) {
-    // const settings = {
-    //     type: "POST",
-    //     body: JSON.stringify(data),
-    // }
-    // const response = await fetch(url, settings)
+    const settings = {
+        type: "POST",
+        body: JSON.stringify(data),
+    }
 
-    // if (!response.ok) {
-    //     throw new Error(
-    //         `Could not fetch ${url}, status: ${response.status}`
-    //     )
-    // }
+    const response = await fetch(url, settings)
+
+    if (!response.ok) {
+        throw new Error(`Could not fetch ${url}, status: ${response.status}`)
+    }
     // return response.json()
-
-    // ------ для проверки
-
-    // console.log("data", data)
 
     // eslint-disable-next-line no-new
     return new Promise((resolve, reject) => {

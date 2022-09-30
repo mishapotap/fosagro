@@ -22,6 +22,7 @@ function CourseMenuButton({colored}) {
         ModalStore.closeModal("menu")
         // eslint-disable-next-line no-unused-expressions
         SoundStore.getIsPlaying() && clickSound.play()
+        SoundStore.setIsPlayingSound(false)
     }
 
     return (

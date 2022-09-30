@@ -1,5 +1,15 @@
-import { MainBG } from "../../assets/video"
-// временно
+import { Video11, Video12 } from "../../assets/Course4/Topic1"
+
+import { Video21, Video22 } from "../../assets/Course4/Topic2"
+
+import Video31 from "../../assets/Course4/Topic3/video3.1.mp4"
+
+import Video41 from "../../assets/Course4/Topic4/video4.1.mp4"
+
+import Video51 from "../../assets/Course4/Topic5/video5.1.mp4"
+
+import Video61 from "../../assets/Course4/Topic6/video6.1.mp4"
+
 import {
     CourseSliderFour11,
     CourseSliderFour12,
@@ -79,7 +89,7 @@ const chapter4Data = {
                     type: "video",
                     component: "VideoPlayer",
                     data: {
-                        src: MainBG,
+                        src: Video11,
                     },
                 },
                 links: [
@@ -122,7 +132,7 @@ const chapter4Data = {
                     type: "video",
                     component: "VideoPlayer",
                     data: {
-                        src: MainBG,
+                        src: Video12,
                     },
                 },
             },
@@ -145,7 +155,7 @@ const chapter4Data = {
                     type: "video",
                     component: "VideoPlayer",
                     data: {
-                        src: MainBG,
+                        src: Video21,
                     },
                 },
                 links: [
@@ -179,7 +189,7 @@ const chapter4Data = {
                     type: "video",
                     component: "VideoPlayer",
                     data: {
-                        src: MainBG,
+                        src: Video22,
                     },
                 },
             },
@@ -227,7 +237,7 @@ const chapter4Data = {
                     type: "video",
                     component: "VideoPlayer",
                     data: {
-                        src: MainBG,
+                        src: Video31,
                     },
                 },
             },
@@ -279,7 +289,7 @@ const chapter4Data = {
                     type: "video",
                     component: "VideoPlayer",
                     data: {
-                        src: MainBG,
+                        src: Video41,
                     },
                 },
                 links: [
@@ -324,7 +334,7 @@ const chapter4Data = {
                     type: "video",
                     component: "VideoPlayer",
                     data: {
-                        src: MainBG,
+                        src: Video51,
                     },
                 },
                 links: [
@@ -367,7 +377,7 @@ const chapter4Data = {
                     type: "video",
                     component: "VideoPlayer",
                     data: {
-                        src: MainBG,
+                        src: Video61,
                     },
                 },
                 links: [
