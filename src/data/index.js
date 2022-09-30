@@ -2,6 +2,7 @@
 export { default as menuButtonData } from "./menuButtonData"
 export { default as courseStepButtonData1 } from "./courseStepButtonData"
 export { default as testData } from "./testData"
+// eslint-disable-next-line import/no-cycle
 export { default as timelineData } from "./timelineData"
 export { default as objectSliderData } from "./ObjectSliderData"
 export { default as introModalData } from "./introModalData"
