@@ -38,7 +38,7 @@ class CookiesStore {
     }
 
     setUserAcceptedCookies() {
-        Cookies.set('userAcceptedCookies', 'true')
+        Cookies.set('userAcceptedCookies', 'true', { expires: 30 })
     }
 
     // перед перезагрузкой странице/уходе с нее
@@ -59,6 +59,7 @@ class CookiesStore {
 
             Cookies.set("courseTests", testsVal, { expires: 30 })
             Cookies.set("courseProgress", progressVal, { expires: 30 })
+            Cookies.set('userAcceptedCookies', 'true', { expires: 30 })
         }
     }
 }
