@@ -10,7 +10,8 @@ function BackgroundSound () {
     useEffect(() => {
         function playSound() {
             SoundStore.setIsPlayingSound(true);
-            backSound.current.volume = 0.01;
+            SoundStore.setIsPlayingUser(true);
+            backSound.current.volume = 0.1;
             backSound.current.play();
             window.removeEventListener("click", playSound)
         }
@@ -19,8 +20,8 @@ function BackgroundSound () {
 
     useEffect(() => {
         // eslint-disable-next-line no-unused-expressions
-        SoundStore.getIsPlaying() 
-            ? backSound.current.play() 
+        SoundStore.getIsPlaying()
+            ? backSound.current.play()
             : backSound.current.pause();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [SoundStore.getIsPlaying()]);

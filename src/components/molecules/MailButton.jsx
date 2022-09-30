@@ -1,33 +1,37 @@
 import React from "react"
 import styled, { css } from "styled-components"
 import { observer } from "mobx-react-lite"
-import { ModalStore, CourseTestStore } from "../../store"
+import { ModalStore, CourseTestStore, SoundStore } from "../../store"
 import { AnimatedBlueButton, ReviewModal } from "../atoms"
 import { Letter } from "../../assets/svg"
 import { Click1 } from "../../assets/audio"
 
-function MailButton({ isTest }) {
+function MailButton({ isTest, color, background }) {
 
     const clickSound = new Audio(Click1)
 
     const openMail = () => {
         ModalStore.showModal("mail");
-        clickSound.play();
+        // eslint-disable-next-line no-unused-expressions
+        SoundStore.getIsPlaying() && clickSound.play()
     }
 
     const closeMail = () => {
         ModalStore.closeModal("mail");
-        clickSound.play();
+        // eslint-disable-next-line no-unused-expressions
+        SoundStore.getIsPlaying() && clickSound.play()
     }
 
     return (
         <Wrapper hide={isTest && CourseTestStore.showFinal}>
             <AnimatedBlueButton
+                background={background}
+                color={color}
                 size="s"
                 rotate="20"
                 onClick={() => openMail()}
             >
-                <Letter />
+                <Letter stroke={background} fill={color}/>
             </AnimatedBlueButton>
             <ReviewModal
                 isOpen={ModalStore.isVisible.mail}

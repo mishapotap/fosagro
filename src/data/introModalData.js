@@ -33,12 +33,15 @@ import {
     IntroModalFour21,
     IntroModalFour22,
     IntroModalFour23,
+    Intro4Speaker1,
+    Intro4Speaker2,
 } from "../assets/Course4/Intro"
 
 import {
     IntroModalFive11,
     IntroModalFive12,
     IntroModalFive13,
+    Intro5Speaker1,
 } from "../assets/Course5/Intro"
 
 import {
@@ -89,7 +92,7 @@ const introModalData = {
     ],
     introModal2: [
         {
-            text: `До начала 80-х годов XX века бизнес, как и все человечество, не придавал большого значения окружающей среде.  Стремление зарабатывать было основным. Отдельные разговоры об ограниченности ресурсов планеты мало влияли на общую ситуацию.`,
+            text: `До начала 80-х годов XX века бизнес, как и все человечество, не придавал большого значения окружающей среде.  Стремление зарабатывать было основным. Отдельные разговоры об ограниченности ресурсов планеты мало влияли на общественную ситуацию.`,
             images: [
                 {
                     source: IntroModalTwo11,
@@ -163,7 +166,7 @@ const introModalData = {
                     alt: "image3",
                 },
             ],
-            audio: "",
+            audio: Intro4Speaker1,
             links: [
                 {
                     id: 1,
@@ -188,7 +191,7 @@ const introModalData = {
                     alt: "image3",
                 },
             ],
-            audio: "",
+            audio: Intro4Speaker2,
             links: [
                 {
                     id: 1,
@@ -215,7 +218,7 @@ const introModalData = {
                     alt: "image3",
                 },
             ],
-            audio: "",
+            audio: Intro5Speaker1,
         },
     ],
     introModal6: [

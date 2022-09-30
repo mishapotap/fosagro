@@ -9,10 +9,10 @@ import { CourseProgressStore, SoundStore } from "../../store"
 
 export default function CourseSlideLayout({ className, type, children }) {
 
-    const { activeSectColor, activeCourseId } = CourseProgressStore
+    const { activeSectColor, activeChapterId } = CourseProgressStore
     const color = type === 'test' ? COLORS.blue : activeSectColor
 
-    const backChapterLink = `/course${activeCourseId}`
+    const backChapterLink = `/course${activeChapterId}`
 
     return (
         <StyledLayout page={type === 'test' ? "test" : "section"} className={className} type={type}>

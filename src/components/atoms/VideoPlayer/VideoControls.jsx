@@ -62,7 +62,7 @@ export default function VideoControls({
         <Container
             className={`${!isControlsShown ? "hide" : ""} ${
                 isLoaded ? "loaded" : ""
-            }`}
+            } ${isStart ? 'start' : ""}`}
         >
             <BigPlayBtn
                 isFullscreen={isFullscreen}
@@ -285,6 +285,29 @@ const Container = styled.div`
     transition: 0.5s;
 
     opacity: 0;
+
+    &:after {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 100%;
+
+        content: '';
+        pointer-events: none;
+        z-index: -1;
+
+        opacity: 0;
+        background: linear-gradient( 0deg, rgba(0,82,155,0.3) 0%, rgba(217,217,217,0) 100% );
+        transition: 0.5s;
+    }
+
+    &.start {
+        &:after {
+            opacity: 1;
+        }
+    }
 
     &.loaded {
         opacity: 1;

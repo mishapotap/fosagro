@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from "react"
+/* eslint-disable no-unused-vars */
+import React, { useEffect, useRef } from "react"
 import styled from "styled-components"
 import { Helmet } from "react-helmet"
 import { useLocation, useNavigate, useParams } from "react-router"
@@ -7,27 +8,34 @@ import timelineData from "../../data/timelineData"
 import { Layout } from "../atoms"
 import { COLORS, DEVICE } from "../../constants"
 import { MenuBackground } from "../../assets/images"
-import { TimelineFooter, CourseMenu } from "../organisms"
+import { Footer, CourseMenu } from "../organisms"
 import { introModalData } from "../../data"
 import Error404 from "./Error404"
-import { CourseProgressStore, ModalStore } from "../../store"
-import Notification from '../atoms/Notification'
-
+import { CourseProgressStore, ModalStore, SoundStore } from "../../store"
+import Notification from "../atoms/Notification"
 
 function Course() {
     const { id } = useParams()
     const location = useLocation()
     const navigate = useNavigate()
     const titleAudio = useRef()
-    const [isPlaying, setIsPlaying] = useState(false)
+    const disabledRef = useRef(null)
+    const wrapperRef = useRef(null)
+
+    const playTitleOnInstrClose = useRef(null)
 
     useEffect(() => {
         if (location.pathname.includes("instruction")) {
             ModalStore.showModal("instruction")
+            if (titleAudio.current) titleAudio.current.pause()
+        } else if (ModalStore.isVisible.instruction) {
+            ModalStore.closeModal("instruction")
         }
 
         if (location.pathname.includes("intro")) {
             ModalStore.showModal("intro")
+        } else if (ModalStore.isVisible.intro) {
+            ModalStore.closeModal("intro")
         }
     }, [location])
 
@@ -36,48 +44,87 @@ function Course() {
 
     useEffect(() => {
         if (id) {
-            CourseProgressStore.setActiveCourseId(id)
+            CourseProgressStore.setActiveChapterId(id)
 
             if (
                 dataLine &&
                 dataModal &&
-                !CourseProgressStore.userVisitedAnyCourse
+                !CourseProgressStore.userVisitedAnyChapter
             ) {
-                navigate('instruction')
-                CourseProgressStore.setUserVisitedAnyCourse()
-                CourseProgressStore.setUserVisitedCourse(id)
+                navigate("instruction")
+                CourseProgressStore.setUserVisitedAnyChapter(true)
             }
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id])
+
+    function activeTitleSound() {
+
+        setTimeout(() => {
+            if (ModalStore.isVisible.instruction) {
+                playTitleOnInstrClose.current = true
+                return
+            }
+            titleAudio.current.play()
+            disabledRef.current.classList.add("active")
+            wrapperRef.current.classList.add("active")
+        }, 500)
+        titleAudio.current.addEventListener("ended", () => {
+            disabledRef.current.classList.remove("active")
+            wrapperRef.current.classList.remove("active")
+        })
+    }
+
+    function titleSoundPlay() {
+        if (!ModalStore.isVisible.instruction && !ModalStore.isVisible.intro) {
+            if (SoundStore.getIsPlaying()) {
+                if (playTitleOnInstrClose.current) {
+                    activeTitleSound()
+                } else if (!SoundStore.getPlayedTitleSound(`course${id}`)) {
+                    activeTitleSound()
+                }
+            }
+            SoundStore.setPlayedTitleSound(`course${id}`, true)
+        }
+        window.removeEventListener("click", titleSoundPlay)
+    }
+
+    useEffect(() => {
+        window.addEventListener("click", titleSoundPlay, { ones: true })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [id, location])
 
     useEffect(() => {
         CourseProgressStore.setIsTimelinePageActive(true)
 
         return () => {
-            if (ModalStore.isVisible.instruction) ModalStore.closeModal('instruction')
+            if (ModalStore.isVisible.instruction)
+                ModalStore.closeModal("instruction")
+
+        window.removeEventListener("click", titleSoundPlay)
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
-        function titleSoundPlay() {
-            if(!ModalStore.isVisible.instruction && !ModalStore.isVisible.intro) {
-                setIsPlaying(true)
-                titleAudio.current.play()
-            }
-            window.removeEventListener("click", titleSoundPlay)
+        if (ModalStore.isVisible.instruction || ModalStore.isVisible.mail) {
+            SoundStore.setIsPlayingSound(false)
+        } else {
+            SoundStore.setIsPlayingSound(true)
         }
-        window.addEventListener("click", titleSoundPlay, { ones: true})
-    }, [location])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ModalStore.isVisible.instruction, ModalStore.isVisible.mail])
 
     useEffect(() => {
-        document.addEventListener("click", () => {
-            if(isPlaying) { 
-                titleAudio.current.pause()
-                setIsPlaying(false)
-            }
-        }, { once: true })
-    }, [isPlaying, location])
+        if (!ModalStore.isVisible.instruction && playTitleOnInstrClose.current) {
+            setTimeout(() => {
+                titleSoundPlay()
+                playTitleOnInstrClose.current = false
+            }, 200);
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ModalStore.isVisible.instruction])
 
     if (!dataLine && !dataModal) {
         return <Error404 />
@@ -85,29 +132,30 @@ function Course() {
 
     return (
         <StyledLayout page="course">
-            {dataLine.metaTitle && <Helmet>
-                <title data-rh="true">{dataLine.metaTitle}</title>
-                <meta
-                    name="description"
-                    content={dataLine.metaDescription}
-                />
+            {dataLine.metaTitle && (
+                <Helmet>
+                    <title data-rh="true">{dataLine.metaTitle}</title>
+                    <meta
+                        name="description"
+                        content={dataLine.metaDescription}
+                    />
                 </Helmet>
-            }
-            <Notification/>
+            )}
+            <Notification />
             <Background />
             <Container>
-                <Wrapper>
+                <Wrapper ref={wrapperRef}>
                     <CourseNumber>{dataLine.id}</CourseNumber>
                     <CourseTitle>{dataLine.title}</CourseTitle>
                     {dataLine.supTitle && (
                         <CourseSupTitle>{dataLine.supTitle}</CourseSupTitle>
                     )}
                 </Wrapper>
+                <ContainerDisabled ref={disabledRef} />
                 <CourseMenu dataLine={dataLine} dataModal={dataModal} />
-                <TimelineFooter />
+                <Footer />
             </Container>
-            <Audio src={dataLine.titleAudio} 
-                ref={titleAudio}/>
+            <Audio src={dataLine.titleAudio} ref={titleAudio} />
         </StyledLayout>
     )
 }
@@ -141,10 +189,30 @@ const Container = styled.div`
 `
 
 const Wrapper = styled.div`
+    z-index: 102;
+    position: relative;
     padding: 25px 0 0 60px;
+    transform-origin: 0 0;
+    transition: all 0.3s;
+    &.active {
+        transform: scale(1.2);
+    }
 
     @media ${DEVICE.laptopM} {
         padding: 0 0 0 calc(3vw - 20px);
+    }
+`
+
+const ContainerDisabled = styled.div`
+    transition: all 0.3s;
+    &.active {
+        z-index: 101;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.05);
     }
 `
 
@@ -159,12 +227,6 @@ const CourseNumber = styled.div`
     }
 
     @media ${DEVICE.laptopS} {
-        font-size: 60px;
-    }
-    @media ${DEVICE.tablet} {
-        font-size: 50px;
-    }
-    @media ${DEVICE.mobile} {
         font-size: 40px;
     }
 `
@@ -183,12 +245,6 @@ const CourseTitle = styled.div`
 
     @media ${DEVICE.laptopS} {
         max-width: 100%;
-        font-size: 33px;
-    }
-    @media ${DEVICE.tablet} {
-        font-size: 28px;
-    }
-    @media ${DEVICE.mobile} {
         font-size: 22px;
     }
 `
@@ -207,10 +263,6 @@ const CourseSupTitle = styled.div`
         font-size: 1.2vw;
     }
     @media ${DEVICE.laptopS} {
-        font-size: 18px;
-    }
-
-    @media ${DEVICE.mobile} {
         font-size: 16px;
     }
 `

@@ -23,6 +23,7 @@ export default function AudioPlayer({
     onPlay = () => {},
     onPause = () => {},
     onEnded = () => {},
+    onLoaded = () => {},
 }) {
     const audioRef = useRef(null)
     const [isPlayingLocal, setIsPlayingLocal] = useState(false)
@@ -101,6 +102,7 @@ export default function AudioPlayer({
             handlePause()
             window.removeEventListener("resize", setStrokeL)
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
@@ -157,7 +159,7 @@ export default function AudioPlayer({
         audioRef.current.pause()
     }
 
-    function handleLoaded() {
+    function handleLoaded(e) {
         const fullAudioTime = audioRef.current.duration
         if (fullAudioTime) setFullTime(fullAudioTime)
 
@@ -165,6 +167,7 @@ export default function AudioPlayer({
         setIsLoading(false)
         setIsError(false)
         if (isPlayingLocal) play()
+        onLoaded(e)
     }
 
     function handlePause() {

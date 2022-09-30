@@ -25,13 +25,14 @@ function Header({
     sectTitle = false,
     // ссылка "вернуться на главную"
     goBackToMain = false,
+    fosagroSite = false,
 }) {
     // сделать норм
-    const rusSiteLink = "/"
-    const engSiteLink = "/"
+    const rusSiteLink = "https://esg-course.phosagro.ru"
+    const engSiteLink = "https://esg-course.phosagro.com"
     const isRus = false
 
-    const {activeSectColor, activeSectTitle} = CourseProgressStore
+    const { activeSectColor, activeSectTitle } = CourseProgressStore
 
     const clickSound = new Audio(Click2)
 
@@ -42,66 +43,68 @@ function Header({
 
     const handleClickLogo = () => {
         SoundStore.setIsPlayingSound(true)
-        clickSound.play()
+        // eslint-disable-next-line no-unused-expressions
+        SoundStore.getIsPlaying() && clickSound.play()
     }
 
     return (
         <Container>
-            <HeaderInner>
+            <HeaderInner language={language}>
                 <Logo>
                     <Link to={routes.HOME} onClick={() => handleClickLogo()}>
                         <FosagroColored />
                     </Link>
                 </Logo>
+                {fosagroSite && (
+                    <LinkToFosagro>
+                        <a
+                            href="https://www.phosagro.ru/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <LinkArrow className="linkArrow" />
+                            <span>Корпоративный сайт</span>
+                        </a>
+                    </LinkToFosagro>
+                )}
                 {language && (
-                    <LinksContainer>
-                        <LinkToFosagro>
-                            <a href="https://www.phosagro.ru/"
+                    <LanguageContainer>
+                        <Language>
+                            <a
+                                href={rusSiteLink}
                                 target="_blank"
-                                rel="noopener noreferrer">
-                               <LinkArrow className="linkArrow"/>
-                                <span>Корпоративный сайт</span>
+                                rel="noopener noreferrer"
+                                className={isRus && "active"}
+                            >
+                                RU
                             </a>
-                        </LinkToFosagro>
-                        <LanguageContainer>
-                            <Language>
-                                <Link
-                                    to={rusSiteLink}
-                                    className={isRus && "active"}
-                                >
-                                    RU
-                                </Link>
-                            </Language>
-                            <Language>
-                                <Link
-                                    to={engSiteLink}
-                                    className={!isRus && "active"}
-                                >
-                                    EN
-                                </Link>
-                            </Language>
-                        </LanguageContainer>
-                    </LinksContainer>
+                        </Language>
+                        <Language>
+                            <a
+                                href={engSiteLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={!isRus && "active"}
+                            >
+                                EN
+                            </a>
+                        </Language>
+                    </LanguageContainer>
                 )}
                 {course && <CourseMenuButton colored={colored} />}
                 {sectTitle && (
                     <HeaderSectTitle>
                         <SectTitle>
                             <SectTitleDecor />
-                            <SectTitleText
-                                color={activeSectColor}
-                            >
+                            <SectTitleText color={activeSectColor}>
                                 {activeSectTitle}
                             </SectTitleText>
                         </SectTitle>
                     </HeaderSectTitle>
                 )}
                 {goBackToMain && (
-                    <BackToMain>
-                        <Link
-                            to={routes.HOME}
-                            onClick={() => closeMenuModal()}
-                        >
+                    <BackToMain colored={colored}>
+                        <Link to={routes.HOME} onClick={() => closeMenuModal()}>
                             Вернуться на главную
                         </Link>
                     </BackToMain>
@@ -131,6 +134,7 @@ const Logo = styled.div`
 `
 
 const BackToMain = styled.div`
+    flex-shrink: 0;
     margin-right: 100px;
     margin-top: 20px;
 
@@ -140,7 +144,7 @@ const BackToMain = styled.div`
 
     a {
         font-family: "FocoBold";
-        color: ${COLORS.white};
+        color: ${({colored}) => colored ? COLORS.blue : COLORS.white};
         font-size: 18px;
 
         &:hover,
@@ -204,7 +208,6 @@ const HeaderInner = styled.div`
     position: relative;
 
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
 
@@ -249,6 +252,14 @@ const LinksContainer = styled.div`
 `
 
 const LinkToFosagro = styled.div`
+    flex: 0 1 100%;
+
+    @media ${DEVICE.laptopS} {
+        position: absolute;
+        bottom: 0;
+        transform: translateY(100%);
+    }
+
     a {
         display: flex;
         align-items: flex-end;
@@ -257,16 +268,13 @@ const LinkToFosagro = styled.div`
     span {
         margin-left: 12px;
 
-        font-family: 'CalibriBold';
+        font-family: "CalibriBold";
         font-weight: 700;
         font-size: 16px;
         line-height: 20px;
 
         color: ${COLORS.blue};
         transition: all 0.3s;
-        @media ${DEVICE.mobile} {
-            display: none;
-        }
     }
 
     .linkArrow {

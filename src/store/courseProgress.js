@@ -1,36 +1,21 @@
 /* eslint-disable class-methods-use-this */
 import { makeAutoObservable } from "mobx"
-import { coursePagesData } from "../data"
+import { coursePagesData, timelineData } from "../data"
 import { COLORS } from "../constants"
 import { sectColors, sectsProgressTypes } from "../data/coursePagesData/general"
-
-// TODO сделать чтобы состояние устанавливалось в ls и бралось из него
-// (не только здесь, еще состояние тестов)
-
-// TODO сделать чтобы при нажатии на секцию открывалась страница на которой остановился
-// пользователь, а не с начала?
 
 class CourseProgress {
     activeSectId = 1
 
-    activeCourseId = 1
+    activeChapterId = 1
 
-    activeSectPageId = 1
+    activePageId = 1
 
     showNotification = false
 
     isTestActive = false
 
-    userVisitedCourse = {
-        1: false,
-        2: false,
-        3: false,
-        4: false,
-        5: false,
-        6: false,
-    }
-
-    userVisitedAnyCourse = false
+    userVisitedAnyChapter = false
 
     dontShowInstructionExpires = 0
 
@@ -104,20 +89,30 @@ class CourseProgress {
         makeAutoObservable(this)
     }
 
-    get activeCourseData() {
-        return coursePagesData[this.activeCourseId] || null
+    // TODO надо проверить, правильно ли это работает
+    get userPassedFullCourse() {
+        const chaptersIds = Object.keys(coursePagesData)
+        const notPassedChapter = chaptersIds.find(
+            (id) => this.chapterProgressPercent(id) !== 100
+        )
+
+        return !notPassedChapter
+    }
+
+    get activeChapterData() {
+        return coursePagesData[this.activeChapterId] || null
     }
 
     get activeSectData() {
-        if (this.activeCourseData) {
-            return this.activeCourseData[this.activeSectId] || null
+        if (this.activeChapterData) {
+            return this.activeChapterData[this.activeSectId] || null
         }
         return null
     }
 
     get activePageData() {
-        if (this.activeCourseData && this.activeSectData) {
-            const pageData = this.activeSectData.pages[this.activeSectPageId]
+        if (this.activeChapterData && this.activeSectData) {
+            const pageData = this.activeSectData.pages[this.activePageId]
             if (pageData) {
                 return pageData
             }
@@ -146,6 +141,15 @@ class CourseProgress {
             : sectsProgressTypes[this.activeSectId]
     }
 
+    get activeSectBtnData() {
+        const tlData = timelineData[`course${this.activeChapterId}`].timeline
+        const sectItem = tlData.find((i) => i.id === this.activeSectId)
+        if (sectItem) {
+            return sectItem.button
+        }
+        return {}
+    }
+
     get activeSectPagesCount() {
         if (this.isWrongPath) {
             return 1
@@ -156,9 +160,9 @@ class CourseProgress {
     }
 
     get nextPageLink() {
-        let newLink = `/course${this.activeCourseId}/`
+        let newLink = `/course${this.activeChapterId}/`
 
-        const newPageId = +this.activeSectPageId + 1
+        const newPageId = +this.activePageId + 1
         const nextPage = this.activeSectData.pages[newPageId]
         if (nextPage) {
             // новая страница секции
@@ -166,7 +170,7 @@ class CourseProgress {
         } else {
             const nextSectId = +this.activeSectId + 1
             // перейти на другую секцию
-            if (coursePagesData[this.activeCourseId][nextSectId]) {
+            if (coursePagesData[this.activeChapterId][nextSectId]) {
                 newLink += `topic${nextSectId}/point1`
             } else {
                 newLink += "test"
@@ -178,11 +182,11 @@ class CourseProgress {
 
     get prevPageLink() {
         // eslint-disable-next-line prefer-const
-        let newLink = `/course${this.activeCourseId}/`
+        let newLink = `/course${this.activeChapterId}/`
 
         if (this.isTestActive) {
-            const sectsCount = Object.keys(this.activeCourseData).length
-            const lastSectData = this.activeCourseData[sectsCount]
+            const sectsCount = Object.keys(this.activeChapterData).length
+            const lastSectData = this.activeChapterData[sectsCount]
 
             const lastPageId = Object.keys(lastSectData.pages).length
             newLink += `topic${sectsCount}/point${lastPageId}`
@@ -190,7 +194,7 @@ class CourseProgress {
             return newLink
         }
 
-        const newPageId = +this.activeSectPageId - 1
+        const newPageId = +this.activePageId - 1
         const prevPage = this.activeSectData.pages[newPageId]
         if (prevPage) {
             // новая страница секции
@@ -198,38 +202,38 @@ class CourseProgress {
         } else {
             const prevSectId = +this.activeSectId - 1
             const prevSectData =
-                coursePagesData[this.activeCourseId][prevSectId]
+                coursePagesData[this.activeChapterId][prevSectId]
             // перейти на предыдущую секцию если есть
             if (prevSectData) {
                 const pagesCount = Object.keys(prevSectData.pages).length
                 newLink += `topic${prevSectId}/point${pagesCount}`
             } else {
-                return `/course${this.activeCourseId}`
+                return `/course${this.activeChapterId}`
             }
         }
 
         return newLink
     }
 
-    get activeCourseProgressPer() {
-        return this.courseProgressPercent(this.activeCourseId)
+    get activeChapterProgressPer() {
+        return this.chapterProgressPercent(this.activeChapterId)
     }
 
     get isTestAvailable() {
-        const courseSects = Object.keys(this.visitedPages[this.activeCourseId])
-        const okCourseSects = courseSects.filter((sect) => sect !== "test")
-        const notComplSect = okCourseSects.find(
+        const chapterSects = Object.keys(this.visitedPages[this.activeChapterId])
+        const okChapterSects = chapterSects.filter((sect) => sect !== "test")
+        const notComplSect = okChapterSects.find(
             (sectId) => !this.isSectCompleted(sectId)
         )
         return !notComplSect
     }
 
     get introStartLink() {
-        return `/course${this.activeCourseId}/topic1/point1`
+        return `/course${this.activeChapterId}/topic1/point1`
     }
 
     get instructionModalLink() {
-        return `/course${this.activeCourseId}`
+        return `/course${this.activeChapterId}`
     }
 
     get isSlideBeforeTest() {
@@ -239,27 +243,25 @@ class CourseProgress {
     timelineBtnLink(sectId, isTest) {
         if (isTest) return "test"
 
-        const pagesData = this.visitedPages[this.activeCourseId][sectId]
+        const pagesData = this.visitedPages[this.activeChapterId][sectId]
         if (!pagesData) return `topic${sectId}/point1`
 
         // проверить посещал ли пользователь секцию, перенести к последней посещенной странице
         if (pagesData.length > 0) {
-            if (!this.isSectCompleted(sectId)) {
-                const largestNum = pagesData.reduce((accVal, currentVal) =>
-                    Math.max(accVal, currentVal)
-                )
-                return `topic${sectId}/point${largestNum}`
-            }
+            const largestNum = pagesData.reduce((accVal, currentVal) =>
+                Math.max(accVal, currentVal)
+            )
+            return `topic${sectId}/point${largestNum}`
         }
         return `topic${sectId}/point1`
     }
 
-    coursePagesCount(courseId) {
-        if (coursePagesData[courseId]) {
+    chapterPagesCount(chapterId) {
+        if (coursePagesData[chapterId]) {
             // потому что + тест и введение
             let count = 2
 
-            Object.entries(coursePagesData[courseId]).forEach(
+            Object.entries(coursePagesData[chapterId]).forEach(
                 // eslint-disable-next-line no-unused-vars
                 ([sectId, sectData]) => {
                     if (typeof sectData === "object") {
@@ -276,16 +278,16 @@ class CourseProgress {
         return 0
     }
 
-    sectPagesCount(courseId, sectId) {
-        const pages = Object.keys(coursePagesData[courseId][sectId].pages)
+    sectPagesCount(chapterId, sectId) {
+        const pages = Object.keys(coursePagesData[chapterId][sectId].pages)
         return pages.length
     }
 
-    courseVisitedPagesCount(courseId) {
-        if (this.visitedPages[courseId]) {
+    chapterVisitedPagesCount(chapterId) {
+        if (this.visitedPages[chapterId]) {
             let count = 0
 
-            Object.values(this.visitedPages[courseId]).forEach((pagesArr) => {
+            Object.values(this.visitedPages[chapterId]).forEach((pagesArr) => {
                 if (typeof pagesArr === "object") {
                     pagesArr.forEach(() => {
                         count += 1
@@ -293,9 +295,9 @@ class CourseProgress {
                 }
             })
 
-            if (this.visitedPages[courseId].test) count += 1
+            if (this.visitedPages[chapterId].test) count += 1
 
-            if (this.visitedPages[courseId].intro) count += 1
+            if (this.visitedPages[chapterId].intro) count += 1
 
             return count
         }
@@ -303,15 +305,15 @@ class CourseProgress {
         return 0
     }
 
-    courseProgressPercent(courseId = 1) {
+    chapterProgressPercent(chapterId = 1) {
         const percent =
-            (this.courseVisitedPagesCount(courseId) * 100) /
-            this.coursePagesCount(courseId)
+            (this.chapterVisitedPagesCount(chapterId) * 100) /
+            this.chapterPagesCount(chapterId)
         return Math.trunc(percent)
     }
 
     isPageCompleted(sectId, pageId) {
-        const sectPagesArr = this.visitedPages[this.activeCourseId][sectId]
+        const sectPagesArr = this.visitedPages[this.activeChapterId][sectId]
         if (sectPagesArr) {
             return sectPagesArr.includes(pageId)
         }
@@ -323,7 +325,7 @@ class CourseProgress {
         if (sectId === "intro") return true
 
         const sectsBefore = []
-        Object.entries(this.visitedPages[this.activeCourseId]).forEach(
+        Object.entries(this.visitedPages[this.activeChapterId]).forEach(
             ([id]) => {
                 if (id === "intro") {
                     sectsBefore.push(id)
@@ -342,8 +344,8 @@ class CourseProgress {
         return isSectAvailable
     }
 
-    isPageAvailable(courseId, sectId, pageId) {
-        const visitedSects = this.visitedPages[courseId]
+    isPageAvailable(chapterId, sectId, pageId) {
+        const visitedSects = this.visitedPages[chapterId]
 
         if (!visitedSects.intro) {
             return false
@@ -368,19 +370,19 @@ class CourseProgress {
 
     isSectCompleted(sectId) {
         if (sectId === "test") {
-            return this.visitedPages[this.activeCourseId].test
+            return this.visitedPages[this.activeChapterId].test
         }
 
         if (sectId === "intro") {
-            return this.visitedPages[this.activeCourseId].intro
+            return this.visitedPages[this.activeChapterId].intro
         }
 
-        const visitedPagesArr = this.visitedPages[this.activeCourseId][sectId]
+        const visitedPagesArr = this.visitedPages[this.activeChapterId][sectId]
 
         if (visitedPagesArr) {
             const visitedPagesCount = visitedPagesArr.length
             return (
-                this.sectPagesCount(this.activeCourseId, sectId) ===
+                this.sectPagesCount(this.activeChapterId, sectId) ===
                 visitedPagesCount
             )
         }
@@ -388,31 +390,21 @@ class CourseProgress {
         return false
     }
 
-    get dataForLS() {
-        const seconds = 48 * 60 * 60 * 1000
-        const date = new Date()
-
+    get dataForCookies() {
         return {
-            userVisitedAnyCourse: {
-                userVisitedAnyCourse: true,
-                expires: date.getTime() + seconds,
-            },
-            // visitedPages: this.visitedPages,
+            visitedPages: this.visitedPages,
         }
     }
 
-    setProgressDataFromLs(data) {
+    setDataFromCookies(dataString) {
+        const data = JSON.parse(dataString)
+
         const {
-            userVisitedAnyCourse: { userVisitedAnyCourse, expires },
-            // visitedPages,
+            visitedPages,
         } = data
 
-        const now = new Date()
-
-        if (now.getTime() > expires) {
-            this.userVisitedAnyCourse = false
-        } else {
-            this.userVisitedAnyCourse = userVisitedAnyCourse
+        if (visitedPages) {
+            this.visitedPages = visitedPages
         }
     }
 
@@ -420,31 +412,33 @@ class CourseProgress {
         this.isTestActive = val
     }
 
-    setUserVisitedAnyCourse() {
-        this.userVisitedAnyCourse = true
+    setUserVisitedAnyChapter(val) {
+        this.userVisitedAnyChapter = val
     }
 
     setTestPassed() {
-        this.visitedPages[this.activeCourseId].test = true
+        this.visitedPages[this.activeChapterId].test = true
     }
 
     setIntroPassed() {
-        this.visitedPages[this.activeCourseId].intro = true
+        this.visitedPages[this.activeChapterId].intro = true
     }
 
     setIsTimelinePageActive(val) {
         this.isTimelinePageActive = val
     }
 
-    setActiveIds(courseId, sectId, pageId) {
-        this.setActiveCourseId(courseId)
+    setActiveIds(chapterId, sectId, pageId) {
+        this.setActiveChapterId(chapterId)
         this.setActiveSectId(sectId)
         this.setActivePageId(pageId)
     }
 
-    setActiveCourseId(id) {
+    setActiveChapterId(id) {
+        this.setActivePageId(1)
+        this.setActiveSectId(1)
         if (coursePagesData[id]) {
-            this.activeCourseId = +id
+            this.activeChapterId = +id
             this.isWrongPath = false
         } else {
             this.isWrongPath = true
@@ -452,7 +446,8 @@ class CourseProgress {
     }
 
     setActiveSectId(id) {
-        if (coursePagesData[this.activeCourseId][id]) {
+        this.setActivePageId(1)
+        if (coursePagesData[this.activeChapterId][id]) {
             this.activeSectId = +id
             this.isWrongPath = false
         } else {
@@ -462,11 +457,11 @@ class CourseProgress {
 
     setActivePageId(id) {
         const { pages } =
-            coursePagesData[this.activeCourseId][this.activeSectId]
+            coursePagesData[this.activeChapterId][this.activeSectId]
         // eslint-disable-next-line eqeqeq
         const pageData = Object.keys(pages).find((i) => i == id)
         if (pageData) {
-            this.activeSectPageId = +id
+            this.activePageId = +id
             this.isWrongPath = false
         } else {
             this.isWrongPath = true
@@ -475,20 +470,14 @@ class CourseProgress {
 
     setVisitedPage() {
         const visitedSectPages =
-            this.visitedPages[this.activeCourseId][this.activeSectId]
+            this.visitedPages[this.activeChapterId][this.activeSectId]
 
         if (visitedSectPages) {
-            if (!visitedSectPages.includes(this.activeSectPageId)) {
-                this.visitedPages[this.activeCourseId][this.activeSectId].push(
-                    this.activeSectPageId
+            if (!visitedSectPages.includes(this.activePageId)) {
+                this.visitedPages[this.activeChapterId][this.activeSectId].push(
+                    this.activePageId
                 )
             }
-        }
-    }
-
-    setUserVisitedCourse(courseId) {
-        if (!this.userVisitedCourse[courseId]) {
-            this.userVisitedCourse[courseId] = true
         }
     }
 
@@ -503,7 +492,7 @@ class CourseProgress {
 
         this.notifTimeoutId = setTimeout(() => {
             this.setShowNotification(false)
-        }, 2000)
+        }, 2200)
     }
 
     setNotifPos(posData) {

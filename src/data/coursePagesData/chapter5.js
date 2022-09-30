@@ -1,41 +1,52 @@
-// временно
-import { MainBG } from "../../assets/video"
+import Speaker11 from "../../assets/Course5/Topic1/speaker11.mp3"
 
 import {
     CourseSliderFive21,
     CourseSliderFive22,
     CourseSliderFive23,
+    Speaker21,
 } from "../../assets/Course5/Topic2/Point1"
 
 import {
     CourseSliderFive24,
     CourseSliderFive25,
     CourseSliderFive26,
+    Speaker22,
 } from "../../assets/Course5/Topic2/Point2"
+
+import Speaker23 from "../../assets/Course5/Topic2/Point3/speaker23.mp3"
+
+import Speaker24 from "../../assets/Course5/Topic2/Point4/speaker24.mp3"
 
 import {
     CourseSliderFive31,
     CourseSliderFive32,
     CourseSliderFive33,
+    Speaker31,
 } from "../../assets/Course5/Topic3/Point1"
 
 import {
     CourseSliderFive34,
     CourseSliderFive35,
     CourseSliderFive36,
+    Speaker32,
 } from "../../assets/Course5/Topic3/Point2"
 
 import {
     CourseSliderFive37,
     CourseSliderFive38,
     CourseSliderFive39,
+    Speaker33,
 } from "../../assets/Course5/Topic3/Point3"
 
 import {
     CourseSliderFive41,
     CourseSliderFive42,
     CourseSliderFive43,
+    Speaker41,
 } from "../../assets/Course5/Topic4"
+
+import Video51 from "../../assets/Course5/Topic5/video5.1.mp4"
 
 const chapter5Data = {
     1: {
@@ -43,6 +54,7 @@ const chapter5Data = {
         pages: {
             1: {
                 title: "+1 градус",
+                audioSrc: Speaker11,
                 content: [
                     {
                         component: "List",
@@ -95,7 +107,7 @@ const chapter5Data = {
         pages: {
             1: {
                 title: "Природные аспекты",
-                audioSrc: "",
+                audioSrc: Speaker21,
                 content: [
                     {
                         component: "List",
@@ -136,7 +148,7 @@ const chapter5Data = {
             },
             2: {
                 title: "Антропогенные аспекты",
-                audioSrc: "",
+                audioSrc: Speaker22,
                 content: [
                     {
                         component: "Text",
@@ -166,7 +178,7 @@ const chapter5Data = {
             },
             3: {
                 title: "А что с влиянием человека?",
-                audioSrc: "",
+                audioSrc: Speaker23,
                 content: [
                     {
                         component: "List",
@@ -208,7 +220,7 @@ const chapter5Data = {
             },
             4: {
                 title: "+4 градуса",
-                audioSrc: "",
+                audioSrc: Speaker24,
                 content: [
                     {
                         component: "List",
@@ -256,7 +268,7 @@ const chapter5Data = {
         pages: {
             1: {
                 title: "Физические последствия",
-                audioSrc: "",
+                audioSrc: Speaker31,
                 content: [
                     {
                         component: "List",
@@ -312,7 +324,7 @@ const chapter5Data = {
             },
             2: {
                 title: "Социальные последствия",
-                audioSrc: "",
+                audioSrc: Speaker32,
                 content: [
                     {
                         component: "List",
@@ -357,7 +369,7 @@ const chapter5Data = {
             },
             3: {
                 title: "Экономические последствия",
-                audioSrc: "",
+                audioSrc: Speaker33,
                 content: [
                     {
                         component: "List",
@@ -401,6 +413,7 @@ const chapter5Data = {
         pages: {
             1: {
                 title: "Парижское соглашение",
+                audioSrc: Speaker41,
                 content: [
                     {
                         component: "Label",
@@ -480,7 +493,7 @@ const chapter5Data = {
                     type: "video",
                     component: "VideoPlayer",
                     data: {
-                        src: MainBG,
+                        src: Video51,
                     },
                 },
                 links: [

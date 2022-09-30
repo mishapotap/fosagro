@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 /* eslint-disable react/jsx-no-bind */
 import "wicg-inert"
-import React, { useRef, useState } from "react"
+import React, { useState } from "react"
 import styled, { css, keyframes } from "styled-components"
 import { observer } from "mobx-react-lite"
 import { Link } from "react-router-dom"
@@ -17,6 +17,17 @@ import {
     IconBlueBtnInstraction,
     IconLinksPc,
     IconLinksMob,
+    Chapter1BtnImg,
+    Chapter2BtnImg,
+    Chapter3BtnImg,
+    Chapter4BtnImg,
+    Chapter5BtnImg,
+    Chapter6BtnImg,
+    NextPageBtnImg,
+    PrevPageBtnImg,
+    TimelineBtnNextImg,
+    TimelineBtnPrevImg,
+    TimelineImg,
 } from "../../assets/svg/static/InstructionModal"
 
 import { Headphones, ArrowRight, ArrowLeft } from "../../assets/svg"
@@ -25,7 +36,7 @@ import { MenuBackground } from "../../assets/images"
 import SendButton from "./SendButton"
 import Modal from "./Modal"
 import Layout from "./Layout"
-import { CourseProgressStore, ModalStore } from "../../store"
+import { CourseProgressStore, ModalStore, SoundStore } from "../../store"
 import { renderCustom } from "../../utils"
 import { Click1, Instruction1, Instruction2 } from "../../assets/audio"
 import AudioPlayer from "./AudioPlayer"
@@ -34,6 +45,8 @@ import AudioPlayer from "./AudioPlayer"
 import "swiper/css"
 // eslint-disable-next-line
 import "swiper/css/effect-fade"
+
+// TODO постараться разделить код?
 
 function InstructionModal({ isOpen, onClose, makeAnim = true }) {
     // const baseUrl = "http://localhost:3000/course01/"
@@ -47,10 +60,11 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
 
     const closeInstructionModal = () => {
         ModalStore.closeModal("instruction")
-        clickSound.play()
+        // eslint-disable-next-line no-unused-expressions
+        SoundStore.getIsPlaying() && clickSound.play()
     }
 
-    function handleAnimEnd() {
+    function handleModalAnimEnd() {
         setTimeout(() => {
             setPlayAudio({ 0: true, 1: false })
         }, 1000)
@@ -71,6 +85,12 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
         }
     }
 
+    function handleClose() {
+        setPlayAudio({ 0: false, 1: false })
+        setPauseAnims({ 0: true, 1: true })
+        onClose()
+    }
+
     function handleAudioEnded(index) {
         setPauseAnims(() => ({ ...pauseAnims, [index]: false }))
     }
@@ -79,20 +99,39 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
         setPauseAnims({ 0: false, 1: true })
     }
 
+    function handleAudioPlay(index) {
+        setPauseAnims(() => ({ ...pauseAnims, [index]: false }))
+    }
+
     function handleAudioPause(index) {
-        // остановить анимацию
         setPauseAnims(() => ({ ...pauseAnims, [index]: true }))
+    }
+
+    const isVisible = (ele, container) => {
+        const { bottom, height, top } = ele.getBoundingClientRect()
+        const containerRect = container.getBoundingClientRect()
+
+        return top <= containerRect.top
+            ? containerRect.top - top <= height
+            : bottom - containerRect.bottom <= height
+    }
+
+    function handleContainerAnimStart(e) {
+        const container = e.target.closest(".slide-inner")
+        if (container && !isVisible(e.target, container)) {
+            e.target.scrollIntoView({ behavior: "smooth" })
+        }
     }
 
     return (
         <StyledModal
             isOpen={isOpen}
-            onClose={onClose}
+            onClose={handleClose}
             navigateBack
-            onOpenAnimEnd={handleAnimEnd}
+            onOpenAnimEnd={handleModalAnimEnd}
         >
             <StyledLayout page="instruction">
-                <Container>
+                <Container onAnimationStart={handleContainerAnimStart}>
                     <SliderContainer makeAnim={makeAnim}>
                         <Swiper
                             modules={[Pagination, Navigation, EffectFade]}
@@ -108,185 +147,327 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                             onInit={handleInit}
                         >
                             <SwiperSlide>
-                                <StyledAudioPlayer
-                                    src={Instruction1}
-                                    isPlaying={playAudio[0]}
-                                    onPause={() => handleAudioPause(0)}
-                                    onEnded={() => handleAudioEnded(0)}
-                                />
-                                <SlideInner>
-                                    <Slide1Cols
-                                        className={
-                                            pauseAnims[0] ? "anim-paused" : ""
-                                        }
-                                    >
-                                        <SlideColsInner>
-                                            <Column className="col-title">
-                                                <Title>
-                                                    Инструкция по прохождению
-                                                    курса
-                                                    <TitleAccent>
-                                                        «Устойчивое развитие»
-                                                    </TitleAccent>
-                                                </Title>
-                                            </Column>
-                                            <Column>
-                                                <Text className="text-1">
-                                                    Уважаемые пользователи, в
-                                                    нашем курсе 6 разделов,
-                                                    каждый из которых поделен на
-                                                    темы. Вы можете выбрать
-                                                    какой раздел изучать, вне
-                                                    зависимости от их
-                                                    последовательности.
-                                                </Text>
-                                                <Row>
-                                                    <AttentionImage
-                                                        src={IconAttention}
-                                                        alt="внимание"
-                                                        className="icon-attention"
-                                                    />
-                                                    <Text className="text-2">
-                                                        Однако прохождение курса
-                                                        внутри раздела идет
-                                                        последовательно, Вы не
-                                                        можете перейти к
-                                                        следующей теме, не
-                                                        изучив предыдущую.
-                                                    </Text>
-                                                </Row>
-                                                <Text className="text-3">
-                                                    В конце каждого раздела Вас
-                                                    ждет простой тест на
-                                                    несколько вопросов для
-                                                    проверки усвоенных знаний.
-                                                </Text>
-                                            </Column>
-                                        </SlideColsInner>
-                                    </Slide1Cols>
+                                <SlideInner className="slide-inner">
+                                    <SlideContentWrapper>
+                                        <Slide1Cols
+                                            className={
+                                                pauseAnims[0]
+                                                    ? "anim-paused"
+                                                    : ""
+                                            }
+                                        >
+                                            <SlideColsInner>
+                                                <Column className="col-title">
+                                                    <Title>
+                                                        Инструкция по
+                                                        прохождению курса
+                                                        <TitleAccent>
+                                                            «Устойчивое
+                                                            развитие»
+                                                        </TitleAccent>
+                                                    </Title>
+                                                </Column>
+                                                <Column>
+                                                    <ChaptersRow>
+                                                        <Text className="text-chapters">
+                                                            Уважаемые
+                                                            пользователи, в
+                                                            нашем курсе 6
+                                                            разделов, каждый из
+                                                            которых поделен на
+                                                            темы. Вы можете
+                                                            выбрать какой раздел
+                                                            изучать, вне
+                                                            зависимости от их
+                                                            последовательности.
+                                                        </Text>
+                                                        <ChaptersImages>
+                                                            <ChaptersImagesInner>
+                                                                <ChapterImgWrapper>
+                                                                    <img
+                                                                        src={
+                                                                            Chapter1BtnImg
+                                                                        }
+                                                                        className="chapter1-img"
+                                                                        alt="кнопка, ведущая на курс 1"
+                                                                    />
+                                                                </ChapterImgWrapper>
+                                                                <ChapterImgWrapper>
+                                                                    <img
+                                                                        src={
+                                                                            Chapter2BtnImg
+                                                                        }
+                                                                        className="chapter2-img"
+                                                                        alt="кнопка, ведущая на курс 1"
+                                                                    />
+                                                                </ChapterImgWrapper>
+                                                                <ChapterImgWrapper>
+                                                                    <img
+                                                                        src={
+                                                                            Chapter3BtnImg
+                                                                        }
+                                                                        className="chapter3-img"
+                                                                        alt="кнопка, ведущая на курс 1"
+                                                                    />
+                                                                </ChapterImgWrapper>
+                                                                <ChapterImgWrapper>
+                                                                    <img
+                                                                        src={
+                                                                            Chapter4BtnImg
+                                                                        }
+                                                                        className="chapter4-img"
+                                                                        alt="кнопка, ведущая на курс 1"
+                                                                    />
+                                                                </ChapterImgWrapper>
+                                                                <ChapterImgWrapper>
+                                                                    <img
+                                                                        src={
+                                                                            Chapter5BtnImg
+                                                                        }
+                                                                        className="chapter5-img"
+                                                                        alt="кнопка, ведущая на курс 1"
+                                                                    />
+                                                                </ChapterImgWrapper>
+                                                                <ChapterImgWrapper>
+                                                                    <img
+                                                                        src={
+                                                                            Chapter6BtnImg
+                                                                        }
+                                                                        className="chapter6-img"
+                                                                        alt="кнопка, ведущая на курс 1"
+                                                                    />
+                                                                </ChapterImgWrapper>
+                                                            </ChaptersImagesInner>
+                                                        </ChaptersImages>
+                                                    </ChaptersRow>
+                                                    <Slide1Center>
+                                                        <Text className="text-timeline">
+                                                            Меню разделов
+                                                            выполнено в виде
+                                                            таймлайна,
+                                                            переключаться по
+                                                            нему можно
+                                                            прокруткой мыши
+                                                            и/или стрелками
+                                                            внизу.
+                                                        </Text>
+
+                                                        <TimelineImgWrapper>
+                                                            <img
+                                                                src={
+                                                                    TimelineImg
+                                                                }
+                                                                alt="меню раздела"
+                                                                className="timeline-img"
+                                                            />
+                                                            <img
+                                                                src={
+                                                                    TimelineBtnPrevImg
+                                                                }
+                                                                className="tl-prev-btn"
+                                                                alt="кнопка прокрутки таймлайна влево"
+                                                            />
+                                                            <img
+                                                                src={
+                                                                    TimelineBtnNextImg
+                                                                }
+                                                                className="tl-next-btn"
+                                                                alt="кнопка прокрутки таймлайна вправо"
+                                                            />
+                                                        </TimelineImgWrapper>
+                                                        <Row>
+                                                            <AttentionImage
+                                                                src={
+                                                                    IconAttention
+                                                                }
+                                                                alt="внимание"
+                                                                className="icon-attention"
+                                                            />
+                                                            <Text className="text-attention">
+                                                                Прохождение
+                                                                курса внутри
+                                                                раздела идет
+                                                                последовательно,
+                                                                Вы не можете
+                                                                перейти к
+                                                                следующей теме,
+                                                                не изучив
+                                                                предыдущую.
+                                                            </Text>
+                                                        </Row>
+                                                    </Slide1Center>
+                                                    <TestTextWrapper>
+                                                        <Text className="text-test">
+                                                            В конце каждого
+                                                            раздела Вас ждет
+                                                            простой тест на
+                                                            несколько вопросов
+                                                            для проверки
+                                                            усвоенных знаний.
+                                                        </Text>
+                                                    </TestTextWrapper>
+                                                </Column>
+                                            </SlideColsInner>
+                                        </Slide1Cols>
+                                    </SlideContentWrapper>
+                                    <StyledAudioPlayer
+                                        src={Instruction1}
+                                        isPlaying={playAudio[0]}
+                                        onPause={() => handleAudioPause(0)}
+                                        onPlay={() => handleAudioPlay(0)}
+                                        onEnded={() => handleAudioEnded(0)}
+                                    />
                                 </SlideInner>
                             </SwiperSlide>
                             <SwiperSlide>
-                                <StyledAudioPlayer
-                                    src={Instruction2}
-                                    isPlaying={playAudio[1]}
-                                    onPause={() => handleAudioPause(1)}
-                                    onEnded={() => handleAudioEnded(1)}
-                                />
-                                <SlideInner>
-                                    <Slide2Cols
-                                        className={
-                                            pauseAnims[1] ? "anim-paused" : ""
-                                        }
-                                    >
-                                        <SlideColsInner>
-                                            <Column className="col-title">
-                                                <Title>
-                                                    Краткая справка по навигации
-                                                </Title>
-                                            </Column>
-                                            <Column>
-                                                <ColBlock>
-                                                    <Text className="text-1">
-                                                        Переход между страницами
-                                                        осуществляется
-                                                        прокруткой мыши/тачпада.
-                                                    </Text>
-                                                </ColBlock>
-                                                <ColBlock>
-                                                    <CourseImage />
-                                                    <Text className="text-2">
-                                                        Кнопка открытия меню
-                                                        курса.
-                                                    </Text>
-                                                </ColBlock>
-                                                <ColBlock>
-                                                    <LinksImage />
-                                                    <Text className="text-3">
-                                                        Ссылки на дополнительные
-                                                        материалы вынесены в
-                                                        виде такого элемента.
-                                                    </Text>
-                                                </ColBlock>
-                                            </Column>
-                                            <Column>
-                                                <IconRow>
-                                                    <IconHeadphones inert="">
-                                                        <Headphones />
-                                                    </IconHeadphones>
-                                                    <Text className="text-4">
-                                                        В нашем курсе
-                                                        предполагается звуковое
-                                                        сопровождение, аудиогид,
-                                                        управление им
-                                                        осуществляется при
-                                                        нажатии на данный
-                                                        элемент.
-                                                    </Text>
-                                                </IconRow>
-                                                <IconRow>
-                                                    <ElIcon className="icon-sound">
-                                                        <img
-                                                            src={
-                                                                IconBlueBtnSound
-                                                            }
-                                                            alt="звук"
-                                                        />
-                                                    </ElIcon>
-                                                    <Text className="text-5">
-                                                        Элемент
-                                                        отключения/включения
-                                                        музыки в проекте.
-                                                    </Text>
-                                                </IconRow>
-                                                <IconRow>
-                                                    <ElIcon className="icon-mail">
-                                                        <img
-                                                            src={
-                                                                IconBlueBtnMail
-                                                            }
-                                                            alt="письмо"
-                                                        />
-                                                    </ElIcon>
-                                                    <Text className="text-6">
-                                                        Элемент обратной связи,
-                                                        будем рады вашим отзывам
-                                                        и предложениям по
-                                                        улучшению контента!
-                                                    </Text>
-                                                </IconRow>
-                                                <IconRow>
-                                                    <ElIcon className="icon-instruction">
-                                                        <img
-                                                            src={
-                                                                IconBlueBtnInstraction
-                                                            }
-                                                            alt="инструкция"
-                                                        />
-                                                    </ElIcon>
-                                                    <Text className="text-7">
-                                                        Элемент вызова данной
-                                                        инструкции.
-                                                    </Text>
-                                                </IconRow>
-                                            </Column>
-                                        </SlideColsInner>
-                                    </Slide2Cols>
-                                    <StartLearn>
-                                        <Link
-                                            to={
-                                                CourseProgressStore.instructionModalLink
-                                            }
-                                            onClick={() =>
-                                                closeInstructionModal()
+                                <SlideInner className="slide-inner">
+                                    <SlideContentWrapper>
+                                        <Slide2Cols
+                                            className={
+                                                pauseAnims[1]
+                                                    ? "anim-paused"
+                                                    : ""
                                             }
                                         >
-                                            <SendButton
-                                                text="Начать обучение"
-                                                size="m"
-                                            />
-                                        </Link>
-                                    </StartLearn>
+                                            <SlideColsInner>
+                                                <Column className="col-title">
+                                                    <Title>
+                                                        Краткая справка по
+                                                        навигации
+                                                    </Title>
+                                                </Column>
+                                                <Column>
+                                                    <ColBlock>
+                                                        <Text className="text-nav">
+                                                            Переход между
+                                                            страницами
+                                                            осуществляется
+                                                            нажатием на данные
+                                                            элементы.
+                                                        </Text>
+                                                        <NavBtnsImgsRow>
+                                                            <img
+                                                                src={
+                                                                    PrevPageBtnImg
+                                                                }
+                                                                alt="кнопка назад"
+                                                                className="prev-page-btn"
+                                                            />
+                                                            <img
+                                                                src={
+                                                                    NextPageBtnImg
+                                                                }
+                                                                alt="кнопка вперед"
+                                                                className="next-page-btn"
+                                                            />
+                                                        </NavBtnsImgsRow>
+                                                    </ColBlock>
+                                                    <ColBlock>
+                                                        <CourseImage />
+                                                        <Text className="text-open-menu-btn">
+                                                            Кнопка открытия меню
+                                                            курса.
+                                                        </Text>
+                                                    </ColBlock>
+                                                    <ColBlock>
+                                                        <LinksImage />
+                                                        <Text className="text-links">
+                                                            Ссылки на
+                                                            дополнительные
+                                                            материалы вынесены в
+                                                            виде такого
+                                                            элемента.
+                                                        </Text>
+                                                    </ColBlock>
+                                                </Column>
+                                                <Column>
+                                                    <IconRow>
+                                                        <IconHeadphones inert="">
+                                                            <Headphones />
+                                                        </IconHeadphones>
+                                                        <Text className="text-audioguide">
+                                                            В нашем курсе
+                                                            предполагается
+                                                            звуковое
+                                                            сопровождение,
+                                                            аудиогид, управление
+                                                            им осуществляется
+                                                            при нажатии на
+                                                            данный элемент.
+                                                        </Text>
+                                                    </IconRow>
+                                                    <IconRow>
+                                                        <ElIcon className="icon-sound">
+                                                            <img
+                                                                src={
+                                                                    IconBlueBtnSound
+                                                                }
+                                                                alt="звук"
+                                                            />
+                                                        </ElIcon>
+                                                        <Text className="text-sound-btn">
+                                                            Элемент
+                                                            отключения/включения
+                                                            музыки в проекте.
+                                                        </Text>
+                                                    </IconRow>
+                                                    <IconRow>
+                                                        <ElIcon className="icon-mail">
+                                                            <img
+                                                                src={
+                                                                    IconBlueBtnMail
+                                                                }
+                                                                alt="письмо"
+                                                            />
+                                                        </ElIcon>
+                                                        <Text className="text-mail-btn">
+                                                            Элемент обратной
+                                                            связи, будем рады
+                                                            вашим отзывам и
+                                                            предложениям по
+                                                            улучшению контента!
+                                                        </Text>
+                                                    </IconRow>
+                                                    <IconRow>
+                                                        <ElIcon className="icon-instruction">
+                                                            <img
+                                                                src={
+                                                                    IconBlueBtnInstraction
+                                                                }
+                                                                alt="инструкция"
+                                                            />
+                                                        </ElIcon>
+                                                        <Text className="text-instruction-btn">
+                                                            Элемент вызова
+                                                            данной инструкции.
+                                                        </Text>
+                                                    </IconRow>
+                                                </Column>
+                                            </SlideColsInner>
+                                        </Slide2Cols>
+                                        <StartLearn>
+                                            <Link
+                                                to={
+                                                    CourseProgressStore.instructionModalLink
+                                                }
+                                                onClick={() =>
+                                                    closeInstructionModal()
+                                                }
+                                            >
+                                                <SendButton
+                                                    text="Начать обучение"
+                                                    size="m"
+                                                />
+                                            </Link>
+                                        </StartLearn>
+                                    </SlideContentWrapper>
+                                    <StyledAudioPlayer
+                                        src={Instruction2}
+                                        isPlaying={playAudio[1]}
+                                        onPause={() => handleAudioPause(1)}
+                                        onPlay={() => handleAudioPlay(1)}
+                                        onEnded={() => handleAudioEnded(1)}
+                                    />
                                 </SlideInner>
                             </SwiperSlide>
                             <CircleBtn className="button-prev">
@@ -305,18 +486,51 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
 
 export default observer(InstructionModal)
 
-// мне здесь не подходит min-height, поэтому чтобы работало корректно, перезаписываю
 const StyledLayout = styled(Layout)`
     height: 100%;
 
     .content {
         padding-left: 5px;
+
+        @media ${DEVICE.laptopS} {
+            padding-left: 20px;
+        }
     }
 `
 
 const StyledAudioPlayer = styled(AudioPlayer)`
     position: absolute;
     left: 0;
+    top: 0;
+
+    @media ${DEVICE.laptopS} {
+        position: relative;
+    }
+`
+
+const SlideInner = styled.div`
+    height: 100%;
+    overflow: auto;
+`
+
+const NavBtnsImgsRow = styled.div`
+    display: flex;
+
+    > * {
+        width: 4.7vw;
+
+        &:first-child {
+            margin-right: 2.5vw;
+
+            @media ${DEVICE.laptopS} {
+                margin-right: 30px;
+            }
+        }
+
+        @media ${DEVICE.laptopS} {
+            width: 60px;
+        }
+    }
 `
 
 const StyledModal = styled(Modal)`
@@ -330,16 +544,19 @@ const StyledModal = styled(Modal)`
 
     .content {
         padding-top: 0;
+
+        @media ${DEVICE.laptopS} {
+            padding-bottom: 0;
+        }
     }
 `
 
 const Container = styled.div`
     display: flex;
     align-items: center;
+    padding-bottom: 3vh;
 
     height: 100%;
-    padding-top: 5vh;
-    padding-bottom: 3vh;
 
     @media ${DEVICE.laptopM} {
         padding-top: 0;
@@ -354,6 +571,10 @@ const Container = styled.div`
 
     .swiper {
         height: 100%;
+    }
+
+    .swiper-wrapper {
+        padding-top: 4vh;
     }
 
     .cur-slide-number {
@@ -414,6 +635,15 @@ const Container = styled.div`
         }
     }
 
+    .swiper-slide {
+        padding: 2vh 0;
+
+        @media ${DEVICE.laptopS} {
+            padding-bottom: 13vh;
+            padding-top: 8px;
+        }
+    }
+
     .button-next {
         position: absolute;
         bottom: 2px;
@@ -428,7 +658,7 @@ const Container = styled.div`
     .button-prev {
         position: absolute;
         bottom: 2px;
-        left: 2px;
+        left: 10%;
         z-index: 20;
     }
 
@@ -446,17 +676,23 @@ const SlideColsInner = styled.div`
     }
 `
 
-const SlideInner = styled.div`
-    height: 100%;
+const SlideContentWrapper = styled.div`
+
     display: flex;
     align-items: center;
     justify-content: center;
 
+    height: 100%;
     max-width: 82%;
     margin: 0 auto;
 
     @media ${DEVICE.laptopM} {
         max-width: 85%;
+    }
+
+    @media ${DEVICE.laptopS} {
+        height: auto;
+        margin-bottom: 30px;
     }
 
     @media ${DEVICE.mobile} {
@@ -491,17 +727,25 @@ const CourseImage = styled.div`
 
 const StartLearn = styled.div`
     position: absolute;
-    right: 10%;
-    bottom: 2px;
+    right: 3.5%;
+    bottom: 38px;
+
+    @media ${DEVICE.laptopS} {
+        bottom: 33px;
+    }
 `
 
 const Text = styled.p`
     width: 100%;
 
     font-family: "CalibriLight", sans-serif;
-    line-height: 1.64;
+    line-height: 1.33;
     font-size: 1.3vw;
     color: ${COLORS.black};
+
+    @media ${DEVICE.laptopM} {
+        font-size: 1.15vw;
+    }
 
     @media ${DEVICE.laptop} {
         font-size: 16px;
@@ -521,7 +765,7 @@ const CircleBtn = styled.button`
 const Row = styled.div`
     display: flex;
     flex-direction: row;
-    align-items: normal;
+    align-items: center;
 
     @media ${DEVICE.laptopS} {
         flex-direction: column;
@@ -534,7 +778,7 @@ const Column = styled.div`
         display: block;
         height: auto;
 
-        margin-bottom: 40px;
+        margin-bottom: 30px;
 
         &:last-child {
             margin-bottom: 0;
@@ -556,6 +800,10 @@ const Title = styled.div`
     font-size: 2.24vw;
     line-height: 1.3;
 
+    @media ${DEVICE.laptopM} {
+        font-size: 1.8vw;
+    }
+
     @media ${DEVICE.laptop} {
         font-size: 23px;
     }
@@ -568,68 +816,35 @@ const Title = styled.div`
 const SlideCols = styled.div`
     width: 100%;
     height: 100%;
-    padding: 9vh 0;
-
-    @media ${DEVICE.laptopM} {
-        padding-top: 8vh;
-    }
-
-    @media ${DEVICE.laptopS} {
-        padding-bottom: 9vh;
-        padding-top: 8vh;
-    }
 `
 
 const Slide1Cols = styled(SlideCols)`
-    ${SlideColsInner} {
-        display: flex;
-        align-items: center;
-        height: 100%;
-
-        @media ${DEVICE.laptopS} {
-            display: block;
-        }
-    }
-
     ${Column} {
-        &:first-child {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-right: 7vw;
-
-            @media ${DEVICE.laptopS} {
-                margin-right: 0;
-            }
+        &.col-title {
+            margin-bottom: 3vh;
         }
 
-        &:last-child {
-            max-width: 42vw;
-
-            @media ${DEVICE.laptopS} {
-                max-width: none;
-            }
-        }
-
-        & > * {
-            &:first-child {
-                margin-bottom: 4.16vh;
-
-                @media ${DEVICE.laptopS} {
-                    margin-bottom: 40px;
-                }
-            }
-
-            &:nth-child(2) {
-                margin-bottom: 5.09vh;
-
-                @media ${DEVICE.laptopS} {
-                    margin-bottom: 40px;
-                }
-            }
-
+        &:nth-child(2) {
             &:last-child {
-                margin-bottom: 0;
+                margin-bottom: 10px;
+            }
+
+            & > * {
+                &:first-child {
+                    margin-bottom: 2.5vh;
+
+                    @media ${DEVICE.laptopS} {
+                        margin-bottom: 30px;
+                    }
+                }
+
+                &:nth-child(2) {
+                    margin-bottom: 20px;
+
+                    @media ${DEVICE.laptopS} {
+                        margin-bottom: 30px;
+                    }
+                }
             }
         }
     }
@@ -647,7 +862,7 @@ const Slide2Cols = styled(SlideCols)`
     ${SlideColsInner} {
         height: 100%;
         display: grid;
-        grid-template: repeat(2, auto) / repeat(2, 1fr);
+        grid-template: 70px auto / repeat(2, 1fr);
 
         @media ${DEVICE.laptopS} {
             display: block;
@@ -657,7 +872,19 @@ const Slide2Cols = styled(SlideCols)`
     ${Column} {
         &:nth-child(1) {
             grid-area: 1 / 1 / 2 / 2;
-            margin-bottom: 2vh;
+        }
+
+        &:nth-child(2),
+        &:last-child {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            padding-bottom: 9vh;
+
+            @media ${DEVICE.laptopS} {
+                padding-top: 0;
+            }
         }
 
         &:nth-child(2) {
@@ -676,9 +903,96 @@ const Slide2Cols = styled(SlideCols)`
             }
 
             @media ${DEVICE.laptopS} {
-                margin-bottom: 40px;
+                margin-bottom: 30px;
             }
         }
+    }
+`
+
+const ChaptersImagesInner = styled.div`
+    display: flex;
+
+    @media ${DEVICE.laptopS} {
+        flex-wrap: wrap;
+    }
+
+    > * {
+        flex: 0 1 16.6%;
+
+        @media ${DEVICE.laptopS} {
+            flex: 0 1 33%;
+        }
+
+        @media ${DEVICE.mobile} {
+            flex: 0 1 50%;
+        }
+    }
+`
+
+const ChaptersImages = styled.div`
+    padding: 0 10px;
+`
+
+const ChapterImgWrapper = styled.div``
+
+const ChaptersRow = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @media ${DEVICE.laptopS} {
+        flex-direction: column;
+    }
+
+    ${Text} {
+        flex: 0 1 43%;
+
+        @media ${DEVICE.laptopS} {
+            margin-bottom: 25px;
+        }
+    }
+
+    ${ChaptersImages} {
+        flex: 0 1 53%;
+        padding-left: 2.6vw;
+    }
+`
+
+const TimelineImgWrapper = styled.div`
+    position: relative;
+    padding-bottom: 20px;
+
+    .timeline-img {
+
+        @media ${DEVICE.laptopS} {
+            max-width: none;
+            height: 100%;
+        }
+    }
+
+    &::-webkit-scrollbar {
+        width: 0;
+    }
+
+    @media ${DEVICE.laptopS} {
+        padding-bottom: 30px;
+        height: 240px;
+        max-width: 100%;
+        overflow: auto;
+    }
+
+    .tl-prev-btn,
+    .tl-next-btn {
+        position: absolute;
+        bottom: 0;
+    }
+
+    .tl-prev-btn {
+        left: 0;
+    }
+
+    .tl-next-btn {
+        right: 0;
     }
 `
 
@@ -687,11 +1001,59 @@ const AttentionImage = styled.img`
     margin-right: 1.3vw;
     margin-left: -4%;
 
+    @media ${DEVICE.laptopM} {
+        width: 3.9vw;
+    }
+
     @media ${DEVICE.laptopS} {
         width: 60px;
         margin-bottom: 15px;
         margin-right: 0;
         margin-left: 0;
+    }
+`
+
+const Slide1Center = styled.div`
+    display: grid;
+    grid-template: repeat(2, auto) / 43% 50%;
+    justify-content: space-between;
+    row-gap: 25px;
+
+    @media ${DEVICE.laptopS} {
+        grid-template: repeat(3, auto) / 1fr;
+    }
+
+    ${TimelineImgWrapper} {
+        grid-area: 2 / 1 / 3 / 3;
+
+        @media ${DEVICE.laptopS} {
+            grid-area: 2 / 1 / 3 / 2;
+        }
+    }
+
+    & > ${Text} {
+        grid-area: 1 / 1 / 2 / 2;
+
+        @media ${DEVICE.laptopS} {
+            grid-area: 1 / 1 / 2 / 2;
+        }
+    }
+
+    & > ${Row} {
+        grid-area: 1 / 2 / 2 / 3;
+
+        @media ${DEVICE.laptopS} {
+            grid-area: 3 / 1 / 4 / 2;
+        }
+    }
+`
+
+const TestTextWrapper = styled.div`
+    display: flex;
+    justify-content: center;
+
+    ${Text} {
+        width: auto;
     }
 `
 
@@ -705,7 +1067,7 @@ const ElIcon = styled.div`
         width: 55px;
     }
 
-    @media ${DEVICE.mobileS} {
+    @media ${DEVICE.mobile} {
         width: 55px;
         margin-right: 0;
         margin-bottom: 15px;
@@ -788,7 +1150,7 @@ const iconAppear = keyframes`
     }
 `
 
-const textRightAppear = keyframes`
+const fadeInRight = keyframes`
     0% {
         opacity: 0;
         transform: translateX(45px);
@@ -800,7 +1162,7 @@ const textRightAppear = keyframes`
     }
 `
 
-const textLeftAppear = keyframes`
+const fadeInLeft = keyframes`
     0% {
         opacity: 0;
         transform: translateX(-45px);
@@ -815,16 +1177,7 @@ const textLeftAppear = keyframes`
 const SliderContainer = styled.div`
     margin: 0 auto;
     height: 100%;
-    /* max-width: 81.8%; */
     max-width: 100%;
-
-    /* @media ${DEVICE.laptopM} {
-        max-width: 85%;
-    }
-
-    @media ${DEVICE.mobile} {
-        max-width: 100%;
-    } */
 
     ${Slide1Cols},
     ${Slide2Cols} {
@@ -842,10 +1195,20 @@ const SliderContainer = styled.div`
         css`
             ${Slide1Cols} {
                 .col-title,
-                .text-1,
-                .text-2,
-                .text-3,
-                .icon-attention {
+                .text-chapters,
+                .text-attention,
+                .text-test,
+                .text-timeline,
+                .icon-attention,
+                .tl-prev-btn,
+                .tl-next-btn,
+                .chapter1-img,
+                .chapter2-img,
+                .chapter3-img,
+                .chapter4-img,
+                .chapter5-img,
+                .chapter6-img,
+                .timeline-img {
                     animation: ${appear} 1.3s ease-in-out both;
                 }
 
@@ -853,39 +1216,83 @@ const SliderContainer = styled.div`
                     animation-delay: 1s;
                 }
 
-                .text-1 {
+                .text-chapters {
                     animation-delay: 6s;
-                    animation-name: ${textLeftAppear};
+                    animation-name: ${appear};
+                }
+
+                .chapter1-img {
+                    animation-delay: 7s;
+                }
+
+                .chapter2-img {
+                    animation-delay: 8.2s;
+                }
+
+                .chapter3-img {
+                    animation-delay: 9.5s;
+                }
+
+                .chapter4-img {
+                    animation-delay: 10.2s;
+                }
+
+                .chapter5-img {
+                    animation-delay: 11.5s;
+                }
+
+                .chapter6-img {
+                    animation-delay: 12.8s;
+                }
+
+                /* примерное время, установить норм когда будет аудио */
+                .text-timeline {
+                    animation-delay: 16.6s;
+                }
+
+                .timeline-img {
+                    animation-delay: 18s;
+                }
+
+                .tl-prev-btn {
+                    animation-name: ${fadeInRight};
+                    animation-delay: 22s;
+                }
+
+                .tl-next-btn {
+                    animation-name: ${fadeInLeft};
+                    animation-delay: 23s;
                 }
 
                 .icon-attention {
-                    animation-delay: 16s;
+                    animation-delay: 26s;
                     animation-name: ${appearScale};
                 }
 
-                .text-2 {
-                    animation-delay: 17s;
-                    animation-name: ${textRightAppear};
+                .text-attention {
+                    animation-delay: 25s;
                 }
 
-                .text-3 {
-                    animation-delay: 25s;
-                    animation-name: ${textLeftAppear};
+                .text-test {
+                    animation-delay: 32.5s;
+                    animation-name: ${appear};
                 }
             }
 
             ${Slide2Cols} {
                 .col-title,
-                .text-1,
-                .text-2,
-                .text-3,
-                .text-4,
-                .text-5,
-                .text-6,
-                .text-7,
+                .text-nav,
+                .text-open-menu-btn,
+                .text-links,
+                .text-audioguide,
+                .text-sound-btn,
+                .text-mail-btn,
+                .text-instruction-btn,
                 .icon-mail,
                 .icon-instruction,
                 .icon-sound,
+                .prev-page-btn,
+                .next-page-btn,
                 ${CourseImage}, ${LinksImage}, ${IconHeadphones} {
                     animation: ${appear} 1.3s ease-in-out both;
                 }
@@ -897,26 +1304,36 @@ const SliderContainer = styled.div`
                     animation-name: ${iconAppear};
                 }
 
-                .text-4,
-                .text-5,
-                .text-6,
-                .text-7 {
-                    animation-name: ${textRightAppear};
+                .text-audioguide,
+                .text-sound-btn,
+                .text-mail-btn,
+                .text-instruction-btn {
+                    animation-name: ${fadeInRight};
                 }
 
                 .col-title {
                     animation-delay: 0.3s;
                 }
 
-                .text-1 {
+                .text-nav {
                     animation-delay: 3.5s;
+                }
+
+                .prev-page-btn {
+                    animation-name: ${fadeInRight};
+                    animation-delay: 5s;
+                }
+
+                .next-page-btn {
+                    animation-name: ${fadeInLeft};
+                    animation-delay: 6s;
                 }
 
                 ${CourseImage} {
                     animation-delay: 8.5s;
                 }
 
-                .text-2 {
+                .text-open-menu-btn {
                     animation-delay: 9.5s;
                     animation-name: ${fadeInDown};
                 }
@@ -925,7 +1342,7 @@ const SliderContainer = styled.div`
                     animation-delay: 12s;
                 }
 
-                .text-3 {
+                .text-links {
                     animation-delay: 13s;
                     animation-name: ${fadeInDown};
                 }
@@ -934,7 +1351,7 @@ const SliderContainer = styled.div`
                     animation-delay: 18s;
                 }
 
-                .text-4 {
+                .text-audioguide {
                     animation-delay: 19s;
                 }
 
@@ -942,7 +1359,7 @@ const SliderContainer = styled.div`
                     animation-delay: 27s;
                 }
 
-                .text-5 {
+                .text-sound-btn {
                     animation-delay: 28s;
                 }
 
@@ -950,7 +1367,7 @@ const SliderContainer = styled.div`
                     animation-delay: 32s;
                 }
 
-                .text-6 {
+                .text-mail-btn {
                     animation-delay: 33s;
                 }
 
@@ -958,7 +1375,7 @@ const SliderContainer = styled.div`
                     animation-delay: 39.5s;
                 }
 
-                .text-7 {
+                .text-instruction-btn {
                     animation-delay: 40.5s;
                 }
             }

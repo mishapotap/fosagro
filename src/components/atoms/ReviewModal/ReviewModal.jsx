@@ -9,7 +9,8 @@ import CurvedModal from "../CurvedModal"
 import { Flower } from "../../../assets/svg"
 import { COLORS, DEVICE } from "../../../constants"
 import SendButton from "../SendButton"
-import { ReviewModalStore } from "../../../store"
+// eslint-disable-next-line no-unused-vars
+import { ReviewModalStore, SoundStore } from "../../../store"
 import Rating from "./Rating"
 import Form from "./Form"
 import { FeedBack } from "../../../assets/audio"
@@ -20,7 +21,7 @@ function ReviewModal({ isOpen, onClose }) {
 
     const feedBackAudio = new Audio(FeedBack)
     // eslint-disable-next-line no-unused-expressions
-    isOpen && setTimeout(() => feedBackAudio.play(), 500)
+    isOpen && setTimeout(() => {feedBackAudio.play()}, 500)
 
     // думаю это состояние должно быть локальным, чтобы когда компонент будет создан заново,
     // нам не показывалось сообщение об успехе напр, а можно было снова отправить отзыв
@@ -28,12 +29,14 @@ function ReviewModal({ isOpen, onClose }) {
     const [sucIsVisible, setSucIsVisible] = useState(false)
 
     useEffect(() => () => {
-            ReviewModalStore.resetState()
-        }, [])
+        ReviewModalStore.resetState()
+    }, [])
 
     function closeModal(){
-        feedBackAudio.pause()
-        onClose()
+        if (!ReviewModalStore.isLoading) {
+            feedBackAudio.pause()
+            onClose()
+        }
     }
 
     return (

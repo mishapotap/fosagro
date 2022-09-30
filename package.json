@@ -10,6 +10,7 @@
         "@testing-library/user-event": "^13.5.0",
         "babel-plugin-glsl": "^1.0.0",
         "html-react-parser": "^3.0.4",
+        "js-cookie": "^3.0.1",
         "mobx": "^6.6.1",
         "mobx-react-lite": "^3.4.0",
         "react": "^18.2.0",

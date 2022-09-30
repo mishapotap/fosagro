@@ -13,7 +13,7 @@ function StepProgressBar({
     const slidesAmount = CourseProgressStore.activeSectPagesCount
     const { activeSectColor, progressType } = CourseProgressStore
 
-    const progressSlides = CourseProgressStore.activeSectPageId
+    const progressSlides = CourseProgressStore.activePageId
     const oneSlideValue = 100 / slidesAmount
 
     const [progressWidth, setProgressWidth] = useState(oneSlideValue)
@@ -50,7 +50,7 @@ function StepProgressBar({
         setProgressWidth(oneSlideValue * progressSlides)
         setPoints(newPoints)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [CourseProgressStore.activeSectId, CourseProgressStore.activeSectPageId])
+    }, [CourseProgressStore.activeSectId, CourseProgressStore.activePageId])
 
     function onTrend() {
         setShowPerNumbers(progressWidth)
@@ -61,7 +61,7 @@ function StepProgressBar({
     useEffect(() => {
         setShowPercent(false)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [CourseProgressStore.activeSectPageId])
+    }, [CourseProgressStore.activePageId])
 
     useEffect(() => {
         setShowPercent(true)

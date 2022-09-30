@@ -12,7 +12,7 @@ class ReviewModal {
 
     ratingVal = 0
 
-    message = ''
+    message = ""
 
     ratingHoverVal = 0
 
@@ -30,7 +30,7 @@ class ReviewModal {
         this.isLoading = true
         this.isError = false
 
-        makePostRequest("/test", {
+        makePostRequest("mail.php", {
             message: this.message,
             rating: this.ratingVal,
         })
@@ -43,15 +43,15 @@ class ReviewModal {
     }
 
     setRatingHoverVal(val) {
-        this.ratingHoverVal = val;
+        this.ratingHoverVal = val
     }
 
     setRatingVal(val) {
-        this.ratingVal = val;
+        this.ratingVal = val
     }
 
     setMessage(val) {
-        this.message = val;
+        this.message = val
     }
 
     setErrorState() {
@@ -71,7 +71,7 @@ class ReviewModal {
         this.isError = false
         this.isSuccess = false
         this.ratingVal = 0
-        this.message = ''
+        this.message = ""
         this.ratingHoverVal = 0
     }
 }

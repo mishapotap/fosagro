@@ -35,7 +35,26 @@ import {
     Line3Topic5,
     Line3Topic6,
     Line3Topic7,
+    Line3Topic8,
 } from "../assets/Course3/TimeLine"
+
+import {
+    Line4Topic1,
+    Line4Topic2,
+    Line4Topic3,
+    Line4Topic4,
+    Line4Topic5,
+    Line4Topic6,
+    Line4Topic7,
+} from "../assets/Course4/TimeLine"
+
+import {
+    Line5Topic1,
+    Line5Topic2,
+    Line5Topic3,
+    Line5Topic4,
+    Line5Topic5,
+} from "../assets/Course5/TimeLine"
 
 import {
     Line6Topic1,
@@ -44,7 +63,19 @@ import {
     Line6Topic4,
 } from "../assets/Course6/TimeLine"
 
-import { Intro, Course1, Course2, Course3, Course6 } from "../assets/audio"
+import { getMediaDurationSec } from "../utils"
+import mediaDuration from "./mediaDuration"
+
+import {
+    Intro,
+    Course1,
+    Course2,
+    Course3,
+    Course4,
+    Course5,
+    Course6,
+    Test,
+} from "../assets/audio"
 
 // TODO Добавить им разные координаты x y
 
@@ -60,7 +91,7 @@ const timelineData = {
             "Что такое концепция устойчивого развития, которая часто ассоциируется с ESG? Каждая буква в аббревиатуре ESG несет свой смысл: E - экология, S - социальная сфера, G - корпоративное управление. Вместе они составляют аспекты системы устойчивого развития.",
         timeline: [
             {
-                id: 1,
+                id: 0,
                 intro: true,
                 button: {
                     audio: Intro,
@@ -76,7 +107,7 @@ const timelineData = {
                             },
                         ],
                         title: "Введение",
-                        time: "55 сек",
+                        time: getMediaDurationSec(mediaDuration.course1[0]),
                         bgColor: COLORS.orange,
                         image: CourseButtonImage1,
                         rotate: "-64",
@@ -86,13 +117,13 @@ const timelineData = {
                 },
             },
             {
-                id: 2,
+                id: 1,
                 button: {
                     link: "topic1/point1",
                     audio: Line1Topic1,
                     value: {
                         title: "Суть концепции устойчивого развития",
-                        time: "2 мин",
+                        time: getMediaDurationSec(mediaDuration.course1[1]),
                         bgColor: COLORS.green_light,
                         image: CourseButtonImage2,
                         rotate: "-127",
@@ -144,13 +175,13 @@ const timelineData = {
                 ],
             },
             {
-                id: 3,
+                id: 2,
                 button: {
                     link: "topic2/point1",
                     audio: Line1Topic2,
                     value: {
                         title: "Концепции ESG",
-                        time: "30 сек",
+                        time: getMediaDurationSec(mediaDuration.course1[2]),
                         bgColor: COLORS.green_dark,
                         image: CourseButtonImage3,
                         rotate: "105",
@@ -172,13 +203,13 @@ const timelineData = {
                 ],
             },
             {
-                id: 4,
+                id: 3,
                 button: {
                     link: "topic3/point1",
                     audio: Line1Topic3,
                     value: {
                         title: "А что в ФосАгро?",
-                        time: "1 мин 20 сек",
+                        time: getMediaDurationSec(mediaDuration.course1[3]),
                         bgColor: COLORS.brown_light,
                         image: CourseButtonImage4,
                         rotate: "165",
@@ -202,7 +233,7 @@ const timelineData = {
                         value: {
                             color: COLORS.brown_light,
                             position: "top",
-                            text: "Наши результаты, снизили выбросы",
+                            text: "Доступные технологии, снизили выбросы",
                             top: "calc(50% - 150px + 95px)",
                             left: "1340px",
                         },
@@ -212,7 +243,7 @@ const timelineData = {
                         value: {
                             color: COLORS.brown_light,
                             position: "bottom",
-                            text: "Наши результаты, снизили сброс сточных вод",
+                            text: "Экология, снизили сброс сточных вод",
                             top: "calc(50% - 150px + 110px)",
                             left: "1420px",
                         },
@@ -222,7 +253,7 @@ const timelineData = {
                         value: {
                             color: COLORS.brown_light,
                             position: "top",
-                            text: "Наши результаты, проекты",
+                            text: "Социальная среда, проекты",
                             top: "calc(50% - 150px + 120px)",
                             left: "1500px",
                         },
@@ -239,15 +270,14 @@ const timelineData = {
                     },
                 ],
             },
-
             {
-                id: 5,
+                id: 4,
                 button: {
                     link: "topic4/point1",
                     audio: Line1Topic4,
                     value: {
                         title: "А что с поставщиками и потребителями?",
-                        time: "1 мин 30 сек",
+                        time: getMediaDurationSec(mediaDuration.course1[4]),
                         bgColor: COLORS.brown,
                         image: CourseButtonImage5,
                         rotate: "76",
@@ -279,13 +309,16 @@ const timelineData = {
                 ],
             },
             {
-                id: 6,
+                id: 5,
                 test: true,
                 button: {
                     link: "test",
+                    audio: Test,
                     value: {
                         title: "Тест",
-                        time: "≈4 мин",
+                        time: `≈${getMediaDurationSec(
+                            mediaDuration.course1[5]
+                        )}`,
                         bgColor: COLORS.blue,
                         image: CourseButtonImage6,
                         rotate: "-150",
@@ -306,7 +339,7 @@ const timelineData = {
             "Принята новая программа «Преобразование нашего мира: Повестка дня в области устойчивого развития на период до 2030 года».  Повестка дня включает 17 целей по построению устойчивого мира. Устойчивый мир — это баланс экономического роста, социальной и экологической ответственности.",
         timeline: [
             {
-                id: 1,
+                id: 0,
                 intro: true,
                 button: {
                     audio: Intro,
@@ -322,7 +355,7 @@ const timelineData = {
                             },
                         ],
                         title: "Введение",
-                        time: "40 сек",
+                        time: getMediaDurationSec(mediaDuration.course2[0]),
                         bgColor: COLORS.orange,
                         image: CourseButtonImage1,
                         rotate: "-64",
@@ -332,13 +365,13 @@ const timelineData = {
                 },
             },
             {
-                id: 2,
+                id: 1,
                 button: {
                     link: "topic1/point1",
                     audio: Line2Topic1,
                     value: {
                         title: "Преобразования нашего мира, 17 целей",
-                        time: "4мин 30сек",
+                        time: getMediaDurationSec(mediaDuration.course2[1]),
                         bgColor: COLORS.green_light,
                         image: CourseButtonImage2,
                         rotate: "-145",
@@ -383,13 +416,13 @@ const timelineData = {
                 ],
             },
             {
-                id: 3,
+                id: 2,
                 button: {
                     link: "topic2/point1",
                     audio: Line2Topic2,
                     value: {
                         title: "Как ФосАгро способствует достижению ЦУР ООН",
-                        time: "55 сек",
+                        time: getMediaDurationSec(mediaDuration.course2[2]),
                         bgColor: COLORS.green_dark,
                         image: CourseButtonImage3,
                         rotate: "-77",
@@ -412,13 +445,13 @@ const timelineData = {
                 ],
             },
             {
-                id: 4,
+                id: 3,
                 button: {
                     link: "topic3/point1",
                     audio: Line2Topic3,
                     value: {
                         title: "Приоритизация ЦУР для ФосАгро",
-                        time: "1 мин 20 сек",
+                        time: getMediaDurationSec(mediaDuration.course2[3]),
                         bgColor: COLORS.brown_light,
                         image: CourseButtonImage4,
                         rotate: "165",
@@ -443,7 +476,7 @@ const timelineData = {
                         value: {
                             color: COLORS.brown_light,
                             position: "bottom",
-                            text: "Каков наш подход в области управления?",
+                            text: "ЦУР ООН 2: подход к управлению",
                             top: "calc(50% - 150px + 90px)",
                             left: "1260px",
                         },
@@ -453,7 +486,7 @@ const timelineData = {
                         value: {
                             color: COLORS.brown_light,
                             position: "top",
-                            text: "Какой вклад вносит Компания в достижение ЦУР 2?",
+                            text: "Вклад в достижение ЦУР ООН 2",
                             top: "calc(50% - 150px + 95px)",
                             left: "1345px",
                         },
@@ -463,7 +496,7 @@ const timelineData = {
                         value: {
                             color: COLORS.brown_light,
                             position: "bottom",
-                            text: "Какие цели ставит перед собой компания?",
+                            text: "Целевые показатели в области достижения ЦУР ООН 2",
                             top: "calc(50% - 150px + 115px)",
                             left: "1435px",
                         },
@@ -473,7 +506,7 @@ const timelineData = {
                         value: {
                             color: COLORS.brown_light,
                             position: "top",
-                            text: "Как компания двигается к достижению этих целей? ",
+                            text: "Результаты по достижению ЦУР ООН 2",
                             top: "calc(50% - 150px + 120px)",
                             left: "1525px",
                         },
@@ -491,13 +524,16 @@ const timelineData = {
                 ],
             },
             {
-                id: 5,
+                id: 4,
                 test: true,
                 button: {
                     link: "test",
+                    audio: Test,
                     value: {
                         title: "Тест",
-                        time: "≈4 мин",
+                        time: `≈${getMediaDurationSec(
+                            mediaDuration.course2[4]
+                        )}`,
                         bgColor: COLORS.blue,
                         image: CourseButtonImage6,
                         rotate: "-150",
@@ -520,7 +556,7 @@ const timelineData = {
             "Новаторство позволяет повысить эффективность и соблюсти баланс безопасности и экологичности. Инновации, технологии и уникальные компетенции наших работников позволяют ФосАгро уверенно смотреть в будущее и отвечать на вызовы сегодняшнего дня.",
         timeline: [
             {
-                id: 1,
+                id: 0,
                 intro: true,
                 button: {
                     audio: Intro,
@@ -532,7 +568,7 @@ const timelineData = {
                             },
                         ],
                         title: "Введение",
-                        time: "21 сек",
+                        time: getMediaDurationSec(mediaDuration.course3[0]),
                         bgColor: COLORS.orange,
                         image: CourseButtonImage1,
                         rotate: "-64",
@@ -542,13 +578,13 @@ const timelineData = {
                 },
             },
             {
-                id: 2,
+                id: 1,
                 button: {
                     link: "topic1/point1",
                     audio: Line3Topic1,
                     value: {
                         title: "Мировой контекст развития инноваций",
-                        time: "1мин 40сек",
+                        time: getMediaDurationSec(mediaDuration.course3[1]),
                         bgColor: COLORS.green_light,
                         image: CourseButtonImage2,
                         rotate: "-145",
@@ -580,13 +616,13 @@ const timelineData = {
                 ],
             },
             {
-                id: 3,
+                id: 2,
                 button: {
                     link: "topic2/point1",
                     audio: Line3Topic2,
                     value: {
                         title: "Как мы определяем свои приоритеты в развитии инноваций",
-                        time: "1мин 10сек",
+                        time: getMediaDurationSec(mediaDuration.course3[2]),
                         bgColor: COLORS.green_dark,
                         image: CourseButtonImage3,
                         rotate: "-77",
@@ -608,13 +644,13 @@ const timelineData = {
                 ],
             },
             {
-                id: 4,
+                id: 3,
                 button: {
                     link: "topic3/point1",
                     audio: Line3Topic3,
                     value: {
                         title: "Что делаем мы для развития инноваций в производстве?",
-                        time: "1мин 20сек",
+                        time: getMediaDurationSec(mediaDuration.course3[3]),
                         bgColor: COLORS.brown_light,
                         image: CourseButtonImage4,
                         rotate: "165",
@@ -636,13 +672,13 @@ const timelineData = {
                 ],
             },
             {
-                id: 5,
+                id: 4,
                 button: {
                     link: "topic4/point1",
                     audio: Line3Topic4,
                     value: {
                         title: "Развитие элементов циркулярной экономики",
-                        time: "1мин 30сек",
+                        time: getMediaDurationSec(mediaDuration.course3[4]),
                         bgColor: COLORS.brown,
                         image: CourseButtonImage5,
                         rotate: "-77",
@@ -664,13 +700,13 @@ const timelineData = {
                 ],
             },
             {
-                id: 6,
+                id: 5,
                 button: {
                     link: "topic5/point1",
                     audio: Line3Topic5,
                     value: {
                         title: "Работа с поставщиками",
-                        time: "1мин 30сек",
+                        time: getMediaDurationSec(mediaDuration.course3[5]),
                         bgColor: COLORS.grey_light,
                         image: CourseButtonImage7,
                         rotate: "0",
@@ -692,13 +728,13 @@ const timelineData = {
                 ],
             },
             {
-                id: 7,
+                id: 6,
                 button: {
                     link: "topic6/point1",
                     audio: Line3Topic6,
                     value: {
                         title: "Разработка новых продуктов",
-                        time: "1мин",
+                        time: getMediaDurationSec(mediaDuration.course3[6]),
                         bgColor: COLORS.blue_light,
                         image: CourseButtonImage8,
                         rotate: "-77",
@@ -720,13 +756,13 @@ const timelineData = {
                 ],
             },
             {
-                id: 8,
+                id: 7,
                 button: {
                     link: "topic7/point1",
                     audio: Line3Topic7,
                     value: {
                         title: "Международное сотрудничество и поддержка молодых ученых",
-                        time: "2мин 10сек",
+                        time: getMediaDurationSec(mediaDuration.course3[7]),
                         bgColor: COLORS.turquoise,
                         image: CourseButtonImage9,
                         rotate: "165",
@@ -748,13 +784,13 @@ const timelineData = {
                 ],
             },
             {
-                id: 9,
+                id: 8,
                 button: {
                     link: "topic8/point1",
-                    audio: Line3Topic7,
+                    audio: Line3Topic8,
                     value: {
                         title: "Поддержка инновационных проектов",
-                        time: "1мин 10сек",
+                        time: getMediaDurationSec(mediaDuration.course3[8]),
                         bgColor: COLORS.coral,
                         image: CourseButtonImage10,
                         rotate: "-165",
@@ -776,13 +812,16 @@ const timelineData = {
                 ],
             },
             {
-                id: 10,
+                id: 9,
                 test: true,
                 button: {
                     link: "test",
+                    audio: Test,
                     value: {
                         title: "Тест",
-                        time: "≈4 мин",
+                        time: `≈${getMediaDurationSec(
+                            mediaDuration.course3[9]
+                        )}`,
                         bgColor: COLORS.blue,
                         image: CourseButtonImage6,
                         rotate: "-150",
@@ -795,7 +834,7 @@ const timelineData = {
     },
     course4: {
         id: "04",
-        titleAudio: "",
+        titleAudio: Course4,
         title: "Экология",
         width: "3250",
         metaTitle: "Экология",
@@ -803,9 +842,10 @@ const timelineData = {
             "Компания ФосАгро провела комплексную оценку своей деятельности, определила основные направления воздействия на компоненты окружающей среды. Экологическая стратегия Компании соотносится с Целями в области устойчивого развития ООН (ЦУР ООН)",
         timeline: [
             {
-                id: 1,
+                id: 0,
                 intro: true,
                 button: {
+                    audio: Intro,
                     value: {
                         modal: [
                             {
@@ -818,7 +858,7 @@ const timelineData = {
                             },
                         ],
                         title: "Введение",
-                        time: "21 сек",
+                        time: getMediaDurationSec(mediaDuration.course4[0]),
                         bgColor: COLORS.orange,
                         image: CourseButtonImage1,
                         rotate: "-64",
@@ -828,12 +868,13 @@ const timelineData = {
                 },
             },
             {
-                id: 2,
+                id: 1,
                 button: {
                     link: "topic1/point1",
+                    audio: Line4Topic1,
                     value: {
                         title: "Климатическая стратегия ФосАгро",
-                        time: "1мин 40сек",
+                        time: getMediaDurationSec(mediaDuration.course4[1]),
                         bgColor: COLORS.green_light,
                         image: CourseButtonImage2,
                         rotate: "-145",
@@ -865,12 +906,13 @@ const timelineData = {
                 ],
             },
             {
-                id: 3,
+                id: 2,
                 button: {
                     link: "topic2/point1",
+                    audio: Line4Topic2,
                     value: {
                         title: `Энергоэффек-тивность`,
-                        time: "30сек",
+                        time: getMediaDurationSec(mediaDuration.course4[2]),
                         bgColor: COLORS.green_dark,
                         image: CourseButtonImage3,
                         rotate: "-77",
@@ -902,12 +944,13 @@ const timelineData = {
                 ],
             },
             {
-                id: 4,
+                id: 3,
                 button: {
                     link: "topic3/point1",
+                    audio: Line4Topic3,
                     value: {
                         title: "Отходы",
-                        time: "1мин 20сек",
+                        time: getMediaDurationSec(mediaDuration.course4[3]),
                         bgColor: COLORS.brown_light,
                         image: CourseButtonImage4,
                         rotate: "165",
@@ -929,12 +972,13 @@ const timelineData = {
                 ],
             },
             {
-                id: 5,
+                id: 4,
                 button: {
                     link: "topic4/point1",
+                    audio: Line4Topic4,
                     value: {
                         title: "Воздух",
-                        time: "1мин 30сек",
+                        time: getMediaDurationSec(mediaDuration.course4[4]),
                         bgColor: COLORS.brown,
                         image: CourseButtonImage5,
                         rotate: "-77",
@@ -956,12 +1000,13 @@ const timelineData = {
                 ],
             },
             {
-                id: 6,
+                id: 5,
                 button: {
                     link: "topic5/point1",
+                    audio: Line4Topic5,
                     value: {
                         title: "Вода",
-                        time: "1мин 30сек",
+                        time: getMediaDurationSec(mediaDuration.course4[5]),
                         bgColor: COLORS.grey_light,
                         image: CourseButtonImage7,
                         rotate: "0",
@@ -983,12 +1028,13 @@ const timelineData = {
                 ],
             },
             {
-                id: 7,
+                id: 6,
                 button: {
                     link: "topic6/point1",
+                    audio: Line4Topic6,
                     value: {
                         title: "Биоразнообразие",
-                        time: "1мин 30сек",
+                        time: getMediaDurationSec(mediaDuration.course4[6]),
                         bgColor: COLORS.blue_light,
                         image: CourseButtonImage8,
                         rotate: "0",
@@ -1010,12 +1056,13 @@ const timelineData = {
                 ],
             },
             {
-                id: 8,
+                id: 7,
                 button: {
                     link: "topic7/point1",
+                    audio: Line4Topic7,
                     value: {
                         title: "Экологическая система управления ФосАгро",
-                        time: "1мин 30сек",
+                        time: getMediaDurationSec(mediaDuration.course4[7]),
                         bgColor: COLORS.turquoise,
                         image: CourseButtonImage8,
                         rotate: "0",
@@ -1057,13 +1104,16 @@ const timelineData = {
                 ],
             },
             {
-                id: 9,
+                id: 8,
                 test: true,
                 button: {
                     link: "test",
+                    audio: Test,
                     value: {
                         title: "Тест",
-                        time: "≈4 мин",
+                        time: `≈${getMediaDurationSec(
+                            mediaDuration.course4[8]
+                        )}`,
                         bgColor: COLORS.blue,
                         image: CourseButtonImage6,
                         rotate: "-150",
@@ -1076,7 +1126,7 @@ const timelineData = {
     },
     course5: {
         id: "05",
-        titleAudio: "",
+        titleAudio: Course5,
         title: "Климат и энергоэффективность",
         width: "2750",
         metaTitle: "Климат и энергоэффективность ",
@@ -1084,9 +1134,10 @@ const timelineData = {
             "Основная цель ФосАгро в области климата – снижение выбросов парниковых газов к 2028 году на 14% по отношению к базовому 2018 году. В 2021 году Компания стала партнером CGI Russia. С 2021 года ФосАгро публикует климатические отчеты по стандартам TCFD.",
         timeline: [
             {
-                id: 1,
+                id: 0,
                 intro: true,
                 button: {
+                    audio: Intro,
                     value: {
                         modal: [
                             {
@@ -1095,7 +1146,7 @@ const timelineData = {
                             },
                         ],
                         title: "Введение",
-                        time: "21 сек",
+                        time: getMediaDurationSec(mediaDuration.course5[0]),
                         bgColor: COLORS.orange,
                         image: CourseButtonImage1,
                         rotate: "-64",
@@ -1105,12 +1156,13 @@ const timelineData = {
                 },
             },
             {
-                id: 2,
+                id: 1,
                 button: {
                     link: "topic1/point1",
+                    audio: Line5Topic1,
                     value: {
                         title: "Как меняется климат и почему это опасно для человечества",
-                        time: "1мин 40сек",
+                        time: getMediaDurationSec(mediaDuration.course5[1]),
                         bgColor: COLORS.green_light,
                         image: CourseButtonImage2,
                         rotate: "-145",
@@ -1132,12 +1184,13 @@ const timelineData = {
                 ],
             },
             {
-                id: 3,
+                id: 2,
                 button: {
                     link: "topic2/point1",
+                    audio: Line5Topic2,
                     value: {
                         title: "Причины глобального потепления",
-                        time: "30сек",
+                        time: getMediaDurationSec(mediaDuration.course5[2]),
                         bgColor: COLORS.green_dark,
                         image: CourseButtonImage3,
                         rotate: "-77",
@@ -1189,12 +1242,13 @@ const timelineData = {
                 ],
             },
             {
-                id: 4,
+                id: 3,
                 button: {
                     link: "topic3/point1",
+                    audio: Line5Topic3,
                     value: {
                         title: "Что дальше?",
-                        time: "1мин 20сек",
+                        time: getMediaDurationSec(mediaDuration.course5[3]),
                         bgColor: COLORS.brown_light,
                         image: CourseButtonImage4,
                         rotate: "165",
@@ -1236,12 +1290,13 @@ const timelineData = {
                 ],
             },
             {
-                id: 5,
+                id: 4,
                 button: {
                     link: "topic4/point1",
+                    audio: Line5Topic4,
                     value: {
                         title: "Углеродная нейтральность",
-                        time: "1мин 30сек",
+                        time: getMediaDurationSec(mediaDuration.course5[4]),
                         bgColor: COLORS.brown,
                         image: CourseButtonImage5,
                         rotate: "-77",
@@ -1263,12 +1318,13 @@ const timelineData = {
                 ],
             },
             {
-                id: 6,
+                id: 5,
                 button: {
                     link: "topic5/point1",
+                    audio: Line5Topic5,
                     value: {
                         title: "Работа с поставщиками",
-                        time: "1мин 30сек",
+                        time: getMediaDurationSec(mediaDuration.course5[5]),
                         bgColor: COLORS.grey_light,
                         image: CourseButtonImage7,
                         rotate: "0",
@@ -1290,13 +1346,16 @@ const timelineData = {
                 ],
             },
             {
-                id: 7,
+                id: 6,
                 test: true,
                 button: {
                     link: "test",
+                    audio: Test,
                     value: {
                         title: "Тест",
-                        time: "≈4 мин",
+                        time: `≈${getMediaDurationSec(
+                            mediaDuration.course5[6]
+                        )}`,
                         bgColor: COLORS.blue,
                         image: CourseButtonImage6,
                         rotate: "-150",
@@ -1317,7 +1376,7 @@ const timelineData = {
             "Социальная ответственность - общепризнанный этический стандарт ведения современного бизнеса. Программы по обеспечению социальной защищенности, соблюдению прав человека и развитию сотрудников лежат в основе деятельности ФосАгро.",
         timeline: [
             {
-                id: 1,
+                id: 0,
                 intro: true,
                 button: {
                     audio: Intro,
@@ -1329,7 +1388,7 @@ const timelineData = {
                             },
                         ],
                         title: "Введение",
-                        time: "21 сек",
+                        time: getMediaDurationSec(mediaDuration.course6[0]),
                         bgColor: COLORS.orange,
                         image: CourseButtonImage1,
                         rotate: "-64",
@@ -1339,13 +1398,13 @@ const timelineData = {
                 },
             },
             {
-                id: 2,
+                id: 1,
                 button: {
                     link: "topic1/point1",
                     audio: Line6Topic1,
                     value: {
                         title: "Права человека и социальные принципы ФосАгро",
-                        time: "2мин",
+                        time: getMediaDurationSec(mediaDuration.course6[1]),
                         bgColor: COLORS.green_light,
                         image: CourseButtonImage2,
                         rotate: "-145",
@@ -1377,13 +1436,13 @@ const timelineData = {
                 ],
             },
             {
-                id: 3,
+                id: 2,
                 button: {
                     link: "topic2/point1",
                     audio: Line6Topic2,
                     value: {
                         title: "Сотрудники ФосАгро - ключ к успеху Компании",
-                        time: "30сек",
+                        time: getMediaDurationSec(mediaDuration.course6[2]),
                         bgColor: COLORS.green_dark,
                         image: CourseButtonImage3,
                         rotate: "-77",
@@ -1435,13 +1494,13 @@ const timelineData = {
                 ],
             },
             {
-                id: 4,
+                id: 3,
                 button: {
                     link: "topic3/point1",
                     audio: Line6Topic3,
                     value: {
                         title: "Охрана труда и промышленной безопасности",
-                        time: "1мин 20сек",
+                        time: getMediaDurationSec(mediaDuration.course6[3]),
                         bgColor: COLORS.brown_light,
                         image: CourseButtonImage4,
                         rotate: "165",
@@ -1463,13 +1522,13 @@ const timelineData = {
                 ],
             },
             {
-                id: 5,
+                id: 4,
                 button: {
                     link: "topic4/point1",
                     audio: Line6Topic4,
                     value: {
                         title: "Вовлечение местных сообществ",
-                        time: "1мин 30сек",
+                        time: getMediaDurationSec(mediaDuration.course6[4]),
                         bgColor: COLORS.brown,
                         image: CourseButtonImage5,
                         rotate: "-77",
@@ -1561,13 +1620,16 @@ const timelineData = {
                 ],
             },
             {
-                id: 6,
+                id: 5,
                 test: true,
                 button: {
                     link: "test",
+                    audio: Test,
                     value: {
                         title: "Тест",
-                        time: "≈4 мин",
+                        time: `≈${getMediaDurationSec(
+                            mediaDuration.course6[5]
+                        )}`,
                         bgColor: COLORS.blue,
                         image: CourseButtonImage6,
                         rotate: "-150",

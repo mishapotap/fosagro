@@ -12,26 +12,27 @@ import { Title } from "../Content"
 import { DEVICE } from "../../../constants"
 import AudioPlayer from "../AudioPlayer"
 import { CourseProgressStore, SoundStore, ModalStore } from "../../../store"
+import { Click2 } from "../../../assets/audio"
 
 import Nav from "./Nav"
 import Content from "./Content"
 import Media from "./Media"
-
-// TODO сделать чтобы плавно появлялись элементы
-// (чтобы прошлое состояние не было видно)
+import NewSectWindow from "./NewSectWindow"
 
 // TODO сделать плавное переключение получше?
 
-// TODO сделать чтобы переключение слайдера было по времени с аудио?
-// (добавить доп поле в данных?)
+// TODO сделать чтобы анимация включалась и без аудио?
 
-function CoursePage({ setIds, onDisappear }) {
+function CourseContent({ setIds, onDisappear }) {
     const pageData = CourseProgressStore.activePageData
     const location = useLocation()
 
     const [key, setKey] = useState(1)
     const [audioPlaying, setAudioPlaying] = useState(false)
     const [videoPlaying, setVideoPlaying] = useState(false)
+    const [makeSliderAutoplay, setMakeSliderAutoplay] = useState(false)
+
+    const [sliderDelay, setSliderDelay] = useState(5000)
 
     const audioColRef = useRef(null)
     const contentColRef = useRef(null)
@@ -56,8 +57,14 @@ function CoursePage({ setIds, onDisappear }) {
     const [pauseAnim, setPauseAnim] = useState(true)
     const [restartAnim, _setRestartAnim] = useState(false)
 
-    const [isVisible, _setIsVisible] = useState(false)
+    const [isVisible, _setIsVisible] = useState(null)
     const intObserver = useRef(null)
+    const sectChanged = useRef(true)
+
+    const showWhenVisible = useRef(false)
+    const [sectWindowExited, setSectWindowExited] = useState(false)
+
+    const clickSound = new Audio(Click2)
 
     function setIsVisible(val) {
         _setIsVisible(val)
@@ -65,17 +72,96 @@ function CoursePage({ setIds, onDisappear }) {
     }
 
     function makeObserve(el, rootMargin = "-50%") {
-        intObserver.current = new IntersectionObserver(
-            ([entry]) => setIsVisible(entry.isIntersecting),
-            { rootMargin }
-        )
-        intObserver.current.observe(el)
+        if (el) {
+            intObserver.current = new IntersectionObserver(
+                ([entry]) => {
+                    setIsVisible(entry.isIntersecting)
+                },
+                { rootMargin }
+            )
+            intObserver.current.observe(el)
+        }
     }
 
     function unObserve(el) {
-        if (intObserver.current) {
-            intObserver.current.unobserve(el)
-            setIsVisible(false)
+        if (el) {
+            if (intObserver.current) {
+                intObserver.current.unobserve(el)
+                setIsVisible(false)
+            }
+        }
+    }
+
+    function setMediaDelay() {
+        clearTimeout(videoTmId.current)
+        clearTimeout(audioTmId.current)
+        clearTimeout(animTmId.current)
+
+        if (!sectChanged.current) {
+            if (audioSrc) {
+                audioTmId.current = setTimeout(() => {
+                    setAudioPlaying(true)
+                    sectChanged.current = false
+                }, 1000)
+            }
+
+            if (isCircleSlider) {
+                setTimeout(() => {
+                    setMakeSliderAutoplay(true)
+                    sectChanged.current = false
+                }, 1000)
+            }
+
+            if (isVideo) {
+                videoTmId.current = setTimeout(() => {
+                    if (isVisibleRef.current) {
+                        setVideoPlaying(true)
+                    } else {
+                        showWhenVisible.current = true
+                    }
+                    sectChanged.current = false
+                }, 1000)
+            }
+
+            if (isAnimation) {
+                animTmId.current = setTimeout(() => {
+                    if (isVisibleRef.current) {
+                        setPauseAnim(false)
+                    } else {
+                        showWhenVisible.current = true
+                    }
+                    sectChanged.current = false
+                }, 1000)
+            }
+        }
+    }
+
+    function playMedia() {
+        sectChanged.current = false
+
+        if (isAnimation) {
+            if (isVisibleRef.current) {
+                setPauseAnim(false)
+            } else {
+                showWhenVisible.current = true
+            }
+        }
+
+        if (audioSrc) {
+            setAudioPlaying(true)
+        }
+
+        if (isCircleSlider) {
+            setMakeSliderAutoplay(true)
+        }
+
+        if (isVideo) {
+            if (isVisibleRef.current) {
+                setVideoPlaying(true)
+            } else {
+                showWhenVisible.current = true
+            }
+            sectChanged.current = false
         }
     }
 
@@ -86,37 +172,54 @@ function CoursePage({ setIds, onDisappear }) {
     const isVisibleRef = useRef(null)
     const isVideo = mediaType === "video"
     const isAnimation = mediaType === "animation"
+    const isCircleSlider = mediaType === "circleSlider"
+
+    function handleAudioLoaded({target}) {
+        const { duration } = target
+        const delay = duration * 1000 / 3
+        setSliderDelay(delay)
+    }
+
+    useEffect(() => {
+        if (sectWindowExited) {
+            playMedia()
+            setSectWindowExited(false)
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [sectWindowExited])
 
     useEffect(() => {
         if (isVisible) {
             const video = document.querySelector("video")
-            if (video && video.paused) {
-                video.play()
-            }
+            if (showWhenVisible.current) {
+                showWhenVisible.current = false
 
-            if (isAnimation && pauseAnim) {
-                setPauseAnim(false)
+                if (video && video.paused) {
+                    video.play()
+                }
+
+                if (isAnimation && pauseAnim) {
+                    setPauseAnim(false)
+                }
             }
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isVisible])
 
     useEffect(() => {
         // eslint-disable-next-line no-unused-expressions
-        if(ModalStore.isVisible.mail || ModalStore.isVisible.menu) 
-         {
+        if (ModalStore.isVisible.mail || ModalStore.isVisible.menu) {
             setAudioPlaying(false)
             setVideoPlaying(false)
+            setPauseAnim(true)
             onAudioPause()
-        } 
-        else {
-            setTimeout(() => {
-                onAudioPlay()
-                setAudioPlaying(true)
-                setVideoPlaying(true)
-            }, 500)
+        } else {
+            setAudioPlaying(true)
+            setVideoPlaying(true)
+            setPauseAnim(false)
+            onAudioPlay()
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ModalStore.isVisible.mail, ModalStore.isVisible.menu])
 
     function setRestartAnim() {
@@ -132,24 +235,23 @@ function CoursePage({ setIds, onDisappear }) {
         CourseProgressStore.setIsTimelinePageActive(false)
         SoundStore.setIsPlayingSound(false)
 
-        animTmId.current = setTimeout(() => {
-            const audioEl = document.querySelector(".audio-player audio")
-
-            if (
-                (!audioSrc || (audioEl && audioEl.paused)) &&
-                isVisibleRef.current
-            ) {
-                setPauseAnim(false)
-            }
-        }, 2000)
+        const medColRef = mediaColRef.current
 
         return () => {
             if (audioTmId.current) clearTimeout(audioTmId.current)
             if (videoTmId.current) clearTimeout(videoTmId.current)
             if (animTmId.current) clearTimeout(animTmId.current)
+            unObserve(medColRef)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    useEffect(() => {
+        setTimeout(() => {
+            sectChanged.current = true
+        }, 50);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [CourseProgressStore.activeSectId])
 
     useEffect(() => {
         didAudioEnded.current = false
@@ -159,7 +261,12 @@ function CoursePage({ setIds, onDisappear }) {
 
         setTimeout(() => {
             makeObserve(mediaColRef.current)
+        }, 50)
+
+        setTimeout(() => {
+            setMediaDelay()
         }, 100)
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [CourseProgressStore.activePageData])
 
@@ -173,30 +280,20 @@ function CoursePage({ setIds, onDisappear }) {
         }
 
         setPauseAnim(true)
-
         setAudioPlaying(false)
-
-        audioTmId.current = setTimeout(() => {
-            setAudioPlaying(true)
-        }, 1500)
-
         setVideoPlaying(false)
 
-        // услеют ли тут новые данные продгрухиться?
-        if (isVideo) {
-            videoTmId.current = setTimeout(() => {
-                if (isVisibleRef.current) {
-                    setVideoPlaying(true)
-                }
-            }, 1600)
-        }
+        sectChanged.current = false
+        clearTimeout(videoTmId.current)
+        clearTimeout(audioTmId.current)
+        clearTimeout(animTmId.current)
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location])
 
     function stopMedia() {
-        const audio = document.querySelector("audio")
-        const video = document.querySelector("video")
+        const audio = document.querySelector(".audio-player audio")
+        const video = document.querySelector(".audio-player video")
 
         if (audio) audio.pause()
         if (video) video.pause()
@@ -207,6 +304,7 @@ function CoursePage({ setIds, onDisappear }) {
         setLeftSlide(true)
         setRightSlide(false)
         setShowSlide(false)
+        clickSound.play()
     }
 
     function handleNextClick(e) {
@@ -217,6 +315,7 @@ function CoursePage({ setIds, onDisappear }) {
             setLeftSlide(false)
             setRightSlide(true)
             setShowSlide(false)
+            clickSound.play()
         }
         stopMedia()
     }
@@ -240,7 +339,6 @@ function CoursePage({ setIds, onDisappear }) {
 
     function onAudioPlay() {
         if (isVisibleRef.current) setPauseAnim(false)
-
         if (!wasFirstPlay.current) wasFirstPlay.current = true
 
         if (didAudioEnded.current) {
@@ -284,6 +382,7 @@ function CoursePage({ setIds, onDisappear }) {
                             onPlay={onAudioPlay}
                             onPause={onAudioPause}
                             onEnded={onAudioEnded}
+                            onLoaded={handleAudioLoaded}
                         />
                     )}
                 </AudioColumn>
@@ -336,16 +435,19 @@ function CoursePage({ setIds, onDisappear }) {
                     <Media
                         pauseAnim={pauseAnim}
                         videoPlaying={videoPlaying}
+                        makeSliderAutoplay={makeSliderAutoplay}
                         key={key}
                         restartAnim={restartAnim}
+                        sliderDelay={sliderDelay}
                     />
                 </MediaColumn>
             </CSSTransition>
+            <NewSectWindow onExited={() => setSectWindowExited(true)}/>
         </Columns>
     )
 }
 
-export default observer(CoursePage)
+export default observer(CourseContent)
 
 const StyledAudioPlayer = styled(AudioPlayer)`
     padding-left: 2.2vw;
@@ -401,6 +503,7 @@ const NavColumn = styled.div`
     @media ${DEVICE.laptopS} {
         grid-area: 4 / 1 / 5 / 2;
         padding-left: 0;
+        padding-bottom: 20px;
     }
 `
 
@@ -491,6 +594,7 @@ const Columns = styled.div`
     .slide {
         animation-duration: 0.5s;
         animation-fill-mode: both;
+        animation-timing-function: ease-in-out;
 
         @media ${DEVICE.laptopS} {
             animation-duration: 0.5s;

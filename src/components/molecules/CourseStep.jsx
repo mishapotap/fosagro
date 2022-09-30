@@ -1,102 +1,126 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useRef } from "react"
 import styled from "styled-components"
-import { useNavigate } from "react-router"
 import { observer } from "mobx-react-lite"
 import { Link } from "react-router-dom"
+import { useLocation } from "react-router"
 import { ModalStore, SoundStore, CourseProgressStore } from "../../store"
 import { IntroModal, CourseStepButton, CourseStepPoint } from "../atoms"
 import { getElWindowPos } from "../../utils"
 
-function CourseStep({button, points, dataModal, className, sectId, test, intro}) {
-    const navigate = useNavigate()
-
+function CourseStep({
+    button,
+    points,
+    dataModal,
+    className,
+    sectId,
+    test,
+    intro,
+}) {
     const soundButton = useRef()
+    const { pathname } = useLocation()
 
-    const [isActive, setIsАсtive] = useState(false);
+    const course = pathname.slice(1)
+
+    const [isActive, setIsАсtive] = useState(false)
 
     const openIntroModal = () => {
-
-        soundButton.current.play()
+        // eslint-disable-next-line no-unused-expressions
+        SoundStore.getIsPlaying() && soundButton.current.play()
 
         setTimeout(() => {
-            ModalStore.showModal("intro");
-            SoundStore.setIsPlayingSound(false);
+            ModalStore.showModal("intro")
+            SoundStore.setIsPlayingSound(false)
         }, soundButton.current.duration * 1000)
     }
 
     const closeIntroModal = () => {
-        ModalStore.closeModal("intro");
-        SoundStore.setIsPlayingSound(true);
+        ModalStore.closeModal("intro")
+        SoundStore.setIsPlayingSound(true)
     }
-    let stepButtonParam;
+    let stepButtonParam
 
     if (test) {
-        stepButtonParam = 'test'
+        stepButtonParam = "test"
     } else if (intro) {
-        stepButtonParam = 'intro'
+        stepButtonParam = "intro"
     } else {
         stepButtonParam = sectId
     }
 
     function handleLinkClick(e) {
-        e.preventDefault()
-        soundButton.current.play()
-        const stepBtn = e.currentTarget.querySelector('.course-step-btn')
 
-        setTimeout(() => {
-            if (!CourseProgressStore.isSectAvailable(stepButtonParam)) {
-                CourseProgressStore.setNotifTimeout()
+        if (!CourseProgressStore.isSectAvailable(stepButtonParam)) {
+            e.preventDefault()
+            CourseProgressStore.setNotifTimeout()
+            // eslint-disable-next-line no-unused-expressions
+            SoundStore.getIsPlaying() && soundButton.current.play()
 
-                if (stepBtn) {
-                    const {left, top} = getElWindowPos(stepBtn)
-                    CourseProgressStore.setNotifPos({left: `${left - 50}px`, top: `${top - 150}px`});
-                }
-            } else {
-                navigate( button.link )
+            const stepBtn = e.currentTarget.querySelector(".course-step-btn")
+            if (stepBtn) {
+                const { left, top } = getElWindowPos(stepBtn)
+                CourseProgressStore.setNotifPos({
+                    left: `${left - 10}px`,
+                    top: `${top - 150}px`,
+                })
             }
-        }, soundButton.current.duration * 1000)
+        }
     }
 
-    return(
-        <Container >
-            {
-                button.value.modal
-                ? <>
+    return (
+        <Container>
+            {button.value.modal ? (
+                <>
                     <Link to="intro">
-                      <Button onClick={() => openIntroModal()}>
-                        <CourseStepButton data={button.value}
-                            className={`${className}-button`}
-                            isActive={isActive}
-                            isCompleted={CourseProgressStore.isSectCompleted(stepButtonParam)}
-                            handleMouseOver={() => setIsАсtive(true)}
-                            handleMouseOut={() => setIsАсtive(false)}/>
+                        <Button onClick={() => openIntroModal()}>
+                            <CourseStepButton
+                                data={button.value}
+                                className={`${className}-button`}
+                                isActive={isActive}
+                                isCompleted={CourseProgressStore.isSectCompleted(
+                                    stepButtonParam
+                                )}
+                                handleMouseOver={() => setIsАсtive(true)}
+                                handleMouseOut={() => setIsАсtive(false)}
+                            />
                         </Button>
                     </Link>
                     <IntroModal
                         isOpen={ModalStore.isVisible.intro}
                         onClose={() => closeIntroModal()}
                         // TODO прописать data (картинки и аудио)
-                        items={dataModal}/>
-                    </>
-                    // : <Link to={ CourseProgressStore.timelineBtnLink(sectId, test) } onClick={handleLinkClick}>
-                    // eslint-disable-next-line react/jsx-no-bind
-                    : <Link to={button.link } onClick={handleLinkClick}>
-                    <CourseStepButton data={button.value}
+                        items={dataModal}
+                    />
+                </>
+            ) : (
+                // eslint-disable-next-line react/jsx-no-bind
+                <Link to={ CourseProgressStore.timelineBtnLink(sectId, test) } onClick={handleLinkClick}>
+                    <CourseStepButton
+                        data={button.value}
                         className={`${className}-button`}
                         isActive={isActive}
-                        isCompleted={CourseProgressStore.isSectCompleted(stepButtonParam)}
+                        isCompleted={CourseProgressStore.isSectCompleted(
+                            stepButtonParam
+                        )}
                         handleMouseOver={() => setIsАсtive(true)}
-                        handleMouseOut={() => setIsАсtive(false)}/>
+                        handleMouseOut={() => setIsАсtive(false)}
+                    />
                 </Link>
-            }
-            {points && points.map((item) =>
-                <CourseStepPoint
-                    isCompleted={CourseProgressStore.isPageCompleted(sectId, item.id)}
-                    key={item.id} data={item.value}
-                    className={`${className}-point`}
-                    isActiveParent={isActive}/>
             )}
-            <Audio src={button.audio} ref={soundButton}/>
+            {points &&
+                points.map((item) => (
+                    <CourseStepPoint
+                        isCompleted={CourseProgressStore.isPageCompleted(
+                            sectId,
+                            item.id
+                        )}
+                        key={item.id}
+                        data={item.value}
+                        className={`${className}-point`}
+                        isActiveParent={isActive}
+                    />
+                ))}
+            <Audio src={button.audio} ref={soundButton} />
         </Container>
     )
 }
@@ -108,5 +132,5 @@ const Container = styled.div``
 const Button = styled.button``
 
 const Audio = styled.audio`
-    display: none
+    display: none;
 `

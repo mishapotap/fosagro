@@ -7,13 +7,14 @@ import ExtLinks from "../ExtLinks"
 import { DEVICE } from "../../../constants"
 import { CourseProgressStore } from "../../../store"
 
-function Media({ pauseAnim, videoPlaying, restartAnim }) {
+function Media({ pauseAnim, videoPlaying, restartAnim, sliderDelay, makeSliderAutoplay }) {
     const pageData = CourseProgressStore.activePageData
 
     const { component, data: mData, type: mediaType } = pageData.media
     const MediaComponent = coursePageComponents[component]
     const mediaData = mData || {}
 
+    const [mediaKey, setMediaKey] = useState(1)
     const { links } = pageData
 
     const video = mediaType === "video"
@@ -33,11 +34,24 @@ function Media({ pauseAnim, videoPlaying, restartAnim }) {
         }, 400)
     }
 
+    // чтобы слайдер корректно работал
+    useEffect(() => {
+        if (circleSlider) {
+            setMediaKey(mediaKey + 1)
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [sliderDelay])
+
     useEffect(() => {
         if (restartAnim && !resetSettId.current) {
             resetAnimation(mediaContRef.current)
         }
     }, [restartAnim])
+
+    let mediaProps = {data: mediaData};
+
+    if (video) mediaProps = {...mediaProps, isPlaying: videoPlaying}
+    if (circleSlider) mediaProps = {...mediaProps, delayTime: sliderDelay, makeAutoplay: makeSliderAutoplay}
 
     return (
         <Container
@@ -51,11 +65,11 @@ function Media({ pauseAnim, videoPlaying, restartAnim }) {
             ref={mediaContRef}
         >
             <MediaColInner>
-                <StyledMedia>
+                <StyledMedia key={mediaKey}>
                     {MediaComponent && (
                         <MediaComponent
-                            data={mediaData}
-                            isPlaying={videoPlaying}
+                            // eslint-disable-next-line react/jsx-props-no-spreading
+                            {...mediaProps}
                         />
                     )}
                 </StyledMedia>
@@ -113,10 +127,10 @@ const Container = styled.div`
     }
 
     &.anim-paused {
-        animation-play-state: paused;
+        animation-play-state: paused!important;
 
         * {
-            animation-play-state: paused;
+            animation-play-state: paused!important;
         }
     }
 
@@ -208,16 +222,15 @@ const Container = styled.div`
 
             ${StyledMedia} {
                 position: relative;
-                padding-bottom: 30px;
+                padding-bottom: 45px;
                 padding-right: 10px;
                 width: 100%;
 
-                /* justify-content: flex-end !important; */
                 flex-direction: column;
                 align-items: flex-end;
 
                 @media ${DEVICE.laptopS} {
-                    width: 90%;
+                    width: 80%;
                     margin: 0 auto;
                     padding-right: 0;
                 }
@@ -239,10 +252,6 @@ const Container = styled.div`
 
                 .anim-chart {
                     max-height: 95%;
-                }
-
-                .anim-with-title {
-                    margin-top: 55px;
                 }
 
                 .anim-earth-wrapper {
