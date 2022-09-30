@@ -85,6 +85,12 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
         }
     }
 
+    function handleClose() {
+        setPlayAudio({ 0: false, 1: false })
+        setPauseAnims({ 0: true, 1: true })
+        onClose()
+    }
+
     function handleAudioEnded(index) {
         setPauseAnims(() => ({ ...pauseAnims, [index]: false }))
     }
@@ -120,7 +126,7 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
     return (
         <StyledModal
             isOpen={isOpen}
-            onClose={onClose}
+            onClose={handleClose}
             navigateBack
             onOpenAnimEnd={handleModalAnimEnd}
         >
