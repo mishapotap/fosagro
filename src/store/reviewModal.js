@@ -1,8 +1,6 @@
 import { makeAutoObservable } from "mobx"
 import { makePostRequest } from "../utils"
 
-// TODO сделать реальную отправку формы
-
 class ReviewModal {
     isLoading = false
 
