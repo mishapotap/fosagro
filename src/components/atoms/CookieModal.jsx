@@ -36,7 +36,7 @@ function CookieModal() {
                     Данный курс использует файлы cookie для подсчета и
                     формирования визуализации прогресса изучения курса. Cookie
                     хранятся в течение 30 дней. Время изучения курса -{" "}
-                    {getFullCourseDuration()} минут.
+                    {getFullCourseDuration()} минуты.
                 </Text>
                 <SendButton
                     text="Начать изучение курса"

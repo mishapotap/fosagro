@@ -108,7 +108,7 @@ export function getFullCourseDuration() {
         .reduce((sum, current) => sum + current, 0)
 
     const formattedCourseTime = formatTime(courseTime)
-    const [mins, secs] = formattedCourseTime.split(":")
+    const [h, mins, secs] = formattedCourseTime.split(":")
 
-    return secs ? +mins + 1 : mins
+    return secs ? h * 60 + (mins * 1 + 1) : h * 60 + mins * 1
 }

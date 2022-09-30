@@ -2,13 +2,14 @@ import { observer } from "mobx-react-lite";
 import React, { useRef, useState } from "react"
 import styled from "styled-components"
 import { CourseStep } from "../molecules"
-import { Waves } from "../../assets/svg"
+import { Waves, Prev, Next } from "../../assets/svg"
 import { COLORS } from "../../constants"
 
 function CourseMenu({ dataLine, dataModal }) {
     const ref = useRef(null);
     const line = useRef(null);
-
+    const [isStart, setIsStart] = useState(true);
+    const [isFinish, setIsFinish] = useState(false);
     const [isDown, setIsDown] = useState(false);
     const [startX, setstartX] = useState(0);
     const [scrollLeft, setscrollLeft] = useState(0);
@@ -54,24 +55,94 @@ function CourseMenu({ dataLine, dataModal }) {
                 ref.current.classList.remove('active');
             }
         }, 100);
+
+        // eslint-disable-next-line no-unused-expressions
+        Math.round(ref.current.clientWidth + ref.current.scrollLeft) >= line.current.clientWidth + line.current.offsetLeft
+            ? setIsStart(false) : setIsStart(true)
+
+        // eslint-disable-next-line no-unused-expressions
+        ref.current.scrollLeft === 0
+            ? setIsFinish(false) : setIsFinish(true)
+    }   
+
+    let buttonTime = 0
+    let buttonInterval = null
+
+    function handleNext() {
+        setIsFinish(true)
+
+        ref.current.classList.add('active')
+        buttonTime = 0
+
+        if(buttonInterval !== null) clearInterval(buttonInterval)
+
+        buttonInterval = setInterval(() => {
+            buttonTime += 10;
+            ref.current.scrollLeft += 10;
+            if(buttonTime > 100) {
+                clearInterval(buttonInterval);
+                ref.current.classList.remove('active');
+            }
+        }, 10);
+
+        // eslint-disable-next-line no-unused-expressions
+        Math.round(ref.current.clientWidth + ref.current.scrollLeft) >= line.current.clientWidth + line.current.offsetLeft
+            ? setIsStart(false) : setIsStart(true)
+    }
+
+    function handlePrew() {
+        setIsStart(true)
+
+        ref.current.classList.add('active')
+        buttonTime = 0
+
+        if(buttonInterval !== null) clearInterval(buttonInterval)
+
+        buttonInterval = setInterval(() => {
+            buttonTime += 10;
+            ref.current.scrollLeft -= 10;
+            if(buttonTime > 100) {
+                clearInterval(buttonInterval);
+                ref.current.classList.remove('active');
+            }
+        }, 10);
+
+        // eslint-disable-next-line no-unused-expressions
+        ref.current.scrollLeft === 0
+            ? setIsFinish(false) : setIsFinish(true)
     }
 
     return(
-        <MenuContainer
-            ref={ref}
-            onMouseDown={(e) => handleMouseDown(e)}
-            onMouseLeave={() => handleMouseLeave()}
-            onMouseUp={() => handleMouseUp()}
-            onMouseMove={(e) => handleMouseMove(e)}
-            onScroll={() => handleScroll()}
-            >
-            <Line width={dataLine.width} ref={line}>
-                <Waves color={COLORS.white}/>
-            </Line>
-            {dataLine.timeline.map((section) => (
-                <CourseStep key={ section.id } sectId={section.id} intro={section.intro} test={section.test} button={section.button} points={section.points} dataModal={dataModal} className="active"/>
-            ))}
-    </MenuContainer>
+        <>
+            <MenuContainer
+                ref={ref}
+                onMouseDown={(e) => handleMouseDown(e)}
+                onMouseLeave={() => handleMouseLeave()}
+                onMouseUp={() => handleMouseUp()}
+                onMouseMove={(e) => handleMouseMove(e)}
+                onScroll={() => handleScroll()}
+                >
+                <Line width={dataLine.width} ref={line}>
+                    <Waves color={COLORS.white}/>
+                </Line>
+                {dataLine.timeline.map((section) => (
+                    <CourseStep key={ section.id } sectId={section.id} intro={section.intro} test={section.test} button={section.button} points={section.points} dataModal={dataModal} className="active"/>
+                ))}
+            </MenuContainer>
+            {isFinish &&
+                <Button 
+                    className="button-prev"
+                    onClick={() => handlePrew()}>
+                    <Prev/>
+                </Button>
+            }
+            {isStart && 
+                <Button 
+                    className="button-next"
+                    onClick={() => handleNext()}>
+                    <Next/>
+                </Button>}
+    </>
     )
 }
 
@@ -113,4 +184,27 @@ const Line = styled.div`
     left: -377px;
     max-width: ${(props) => props.width}px;
     overflow: hidden;
+`
+
+const Button = styled.div`
+    position: fixed;
+    bottom: 15vh;
+    
+    cursor: pointer;
+
+    & svg {
+        transition: all 0.3s;
+    }
+
+    &:hover svg {
+        transform: scale(1.15);
+    }
+
+    &.button-prev {
+        left: 30px;
+    }
+
+    &.button-next {
+        right: 30px;
+    }
 `

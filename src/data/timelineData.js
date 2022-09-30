@@ -1,5 +1,3 @@
-// import * as routes from "../constants/routes"
-
 import {
     CourseButtonImage1,
     CourseButtonImage2,
