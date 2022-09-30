@@ -487,6 +487,7 @@ export default function VideoPlayer({
                             src={src}
                             loop={loop}
                             poster={poster}
+                            playsInline
                             onPause={handleVideoPause}
                             onPlay={handleVideoPlay}
                             onLoadedData={handleVideoLoad}

@@ -24,7 +24,7 @@ export default function Layout({ page = "start", children, className }) {
                     sectTitle
                 />
             )}
-            {page === "final" && <Header goBackToMain fosagroSite colored />}
+            {page === "final" && <Header goBackToMain fosagroSite />}
             <Content className="content">{children}</Content>
         </Container>
     )

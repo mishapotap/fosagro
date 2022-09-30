@@ -19,23 +19,52 @@ function ReviewModal({ isOpen, onClose }) {
     const successElRef = useRef(null)
     const contentElRef = useRef(null)
 
-    const feedBackAudio = new Audio(FeedBack)
+    const feedBackAudioRef = useRef(null)
     // eslint-disable-next-line no-unused-expressions
-    isOpen && setTimeout(() => {feedBackAudio.play()}, 500)
+
+    useEffect(() => {
+        if (!feedBackAudioRef.current) {
+            feedBackAudioRef.current = new Audio(FeedBack)
+        }
+    }, [])
+
+    useEffect(() => {
+        if (isOpen) {
+            setTimeout(() => {
+                if (feedBackAudioRef.current) {
+                    feedBackAudioRef.current.play()
+                }
+            }, 500)
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isOpen])
+
+    useEffect(() => {
+        if (ReviewModalStore.isLoading) {
+            feedBackAudioRef.current.pause()
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ReviewModalStore.isLoading])
 
     // думаю это состояние должно быть локальным, чтобы когда компонент будет создан заново,
     // нам не показывалось сообщение об успехе напр, а можно было снова отправить отзыв
     const [showSuccess, setShowSuccess] = useState(false)
     const [sucIsVisible, setSucIsVisible] = useState(false)
 
-    useEffect(() => () => {
-        ReviewModalStore.resetState()
-    }, [])
+    useEffect(
+        () => () => {
+            ReviewModalStore.resetState()
+        },
+        []
+    )
 
-    function closeModal(){
+    function closeModal() {
         if (!ReviewModalStore.isLoading) {
-            feedBackAudio.pause()
             onClose()
+            if (feedBackAudioRef.current) {
+                feedBackAudioRef.current.pause()
+                feedBackAudioRef.current = null
+            }
         }
     }
 

@@ -32,12 +32,12 @@ function CookieModal() {
             type="cookie"
         >
             <ModalContent>
-                <Text>
-                    Данный курс использует файлы cookie для подсчета и
-                    формирования визуализации прогресса изучения курса. Cookie
-                    хранятся в течение 30 дней. Время изучения курса -{" "}
-                    {getFullCourseDuration()} минуты.
-                </Text>
+                    <Text>
+                        Данный курс использует файлы cookie для подсчета и
+                        формирования визуализации прогресса изучения курса. Cookie
+                        хранятся в течение 30 дней. Время изучения курса -{" "}
+                        {getFullCourseDuration()} минуты.
+                    </Text>
                 <SendButton
                     text="Начать изучение курса"
                     onClick={withCookie}

@@ -289,7 +289,7 @@ const timelineData = {
                         value: {
                             color: COLORS.brown,
                             position: "top",
-                            text: "Зеленый стандарт",
+                            text: "Экопреимущества",
                             top: "calc(50% - 150px + 130px)",
                             left: "1880px",
                         },

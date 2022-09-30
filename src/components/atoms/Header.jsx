@@ -5,13 +5,12 @@ import { Link } from "react-router-dom"
 import { observer } from "mobx-react-lite"
 import * as routes from "../../constants/routes"
 import { DEVICE, COLORS } from "../../constants"
-import { FosagroColored, LinkArrow } from "../../assets/svg"
+import { Fosagro, FosagroColored, LinkArrow } from "../../assets/svg"
 import { CourseMenuButton } from "../molecules"
 import { ModalStore, CourseProgressStore, SoundStore } from "../../store"
 import { Click2 } from "../../assets/audio"
 
 // TODO сделать ссылки RU EN рабочими
-// TODO сделать фиксированный хэдэр при скролле на моб?
 
 function Header({
     // цветной ли (если нет, то все будет белое)
@@ -52,7 +51,7 @@ function Header({
             <HeaderInner language={language}>
                 <Logo>
                     <Link to={routes.HOME} onClick={() => handleClickLogo()}>
-                        <FosagroColored />
+                        { colored ? <FosagroColored /> : <Fosagro/> }
                     </Link>
                 </Logo>
                 {fosagroSite && (
@@ -165,10 +164,14 @@ const BackToMain = styled.div`
 const HeaderSectTitle = styled.div`
     position: absolute;
     bottom: 0;
-    transform: translateY(calc(100% + 7px));
+    transform: translateY(calc(100% + 2.5vh));
+
+    @media ${DEVICE.laptopM} {
+        transform: translateY(calc(100% + 2vh));
+    }
 
     @media ${DEVICE.laptopS} {
-        transform: translateY(100%);
+        transform: translateY(calc(100% + 4px));
     }
 `
 
@@ -212,7 +215,6 @@ const HeaderInner = styled.div`
     align-items: center;
 
     width: 100%;
-    margin-top: 1.3vh;
 
     @media ${DEVICE.laptopS} {
         margin-top: 0;
@@ -226,10 +228,7 @@ const Container = styled.div`
     left: 0;
     width: 100%;
 
-    display: flex;
-    align-items: center;
-
-    padding: 0 2.3vw 0 4.3vw;
+    padding: 2.6vh 2.3vw 0 4.3vw;
     height: 92px;
     z-index: 100;
 
@@ -239,16 +238,8 @@ const Container = styled.div`
     }
 
     @media ${DEVICE.laptopS} {
-        padding: 0 23px;
+        padding: 5px 23px;
     }
-`
-
-const LinksContainer = styled.div`
-    display: flex;
-    flex-grow: 1;
-    justify-content: space-between;
-    align-items: flex-end;
-    height: 100%;
 `
 
 const LinkToFosagro = styled.div`
@@ -273,11 +264,15 @@ const LinkToFosagro = styled.div`
         font-size: 16px;
         line-height: 20px;
 
-        color: ${COLORS.blue};
+        color: ${COLORS.white};
         transition: all 0.3s;
     }
 
     .linkArrow {
+        path {
+            fill: ${COLORS.white};
+        }
+
         @media ${DEVICE.mobile} {
             width: 25px;
             height: 25px;
@@ -286,11 +281,11 @@ const LinkToFosagro = styled.div`
 
     &:hover {
         span {
-            color: ${COLORS.white};
+            color: ${COLORS.blue};
         }
         .linkArrow {
             path {
-                fill: ${COLORS.white};
+                fill: ${COLORS.blue};
             }
         }
     }
