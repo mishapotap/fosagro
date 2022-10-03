@@ -17,7 +17,8 @@ function CourseStep({
     test,
     intro,
 }) {
-    const soundButton = useRef()
+    const soundButton = useRef(null)
+    const wrapRef = useRef(null)
     const { pathname } = useLocation()
 
     const course = pathname.slice(1)
@@ -54,7 +55,11 @@ function CourseStep({
             e.preventDefault()
             CourseProgressStore.setNotifTimeout()
             // eslint-disable-next-line no-unused-expressions
-            SoundStore.getIsPlaying() && soundButton.current.play()
+            SoundStore.getIsPlaying() && soundButton.current.play() && wrapRef.current.classList.add('active')
+
+            soundButton.current.addEventListener('ended', () => {
+                wrapRef.current.classList.remove('active')
+            })
 
             const stepBtn = e.currentTarget.querySelector(".course-step-btn")
             if (stepBtn) {
@@ -121,6 +126,7 @@ function CourseStep({
                     />
                 ))}
             <Audio src={button.audio} ref={soundButton} />
+            <Wrap ref={wrapRef}/>
         </Container>
     )
 }
@@ -133,4 +139,18 @@ const Button = styled.button``
 
 const Audio = styled.audio`
     display: none;
+`
+
+const Wrap = styled.div`
+    transition: all 0.3s;
+
+    &.active {
+        z-index: 10;
+        position: fixed;
+        top: 0;
+        left: 0;
+
+        width: 100vw;
+        height: 100vh;
+    }
 `

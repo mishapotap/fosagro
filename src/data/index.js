@@ -1,6 +1,5 @@
 // eslint-disable-next-line import/prefer-default-export, import/named
 export { default as menuButtonData } from "./menuButtonData"
-export { default as courseStepButtonData1 } from "./courseStepButtonData"
 export { default as testData } from "./testData"
 // eslint-disable-next-line import/no-cycle
 export { default as timelineData } from "./timelineData"
