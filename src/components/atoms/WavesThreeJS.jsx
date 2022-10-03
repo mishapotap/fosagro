@@ -1,8 +1,8 @@
 import React, { useMemo, useRef, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
-import DocsLink from "./DocsLink"
-import { testPoints } from "../../data/testData"
+import styled from 'styled-components'
+import testPoints from "../../data/testData"
 
 function Dots({count}) {
 
@@ -12,7 +12,8 @@ function Dots({count}) {
 
     const ref = useRef() 
     const { camera } = useThree()
-    camera.lookAt(0, 0, 1200)     
+    camera.lookAt(0, 0, 1200)  
+    camera.updateProjectionMatrix();   
 
     const { vec, transform, positions } = useMemo(() => {
 
@@ -41,20 +42,36 @@ function Dots({count}) {
   }, [])
 
     useFrame(({clock}) => {
-    
+        
         for (let i = 0; i < positions.length; i+=1) {
-                const t = clock.elapsedTime;
 
-                positions[i].y = Math.cos((t +
-                    (positions[i].x / wavewidth) +
-                    (positions[i].z / wavewidth) ) * wavespeed * 2) * waveheight *
-                    Math.cos(positions[i].z / wavewidth) 
+            console.log(i, i % 15, i % 1200)
 
-                vec.copy(positions[i])
-                transform.setPosition(vec)
+            const t = clock.elapsedTime;
+            positions[i].y = Math.cos((t +
+                (positions[i].x / wavewidth) +
+                (positions[i].z / wavewidth) ) * wavespeed * 2) * waveheight *
+                Math.cos(positions[i].z / wavewidth) 
+
+            vec.copy(positions[i])
+            transform.setPosition(vec)
 
             ref.current.setMatrixAt(i, transform)
             ref.current.instanceMatrix.needsUpdate = true
+
+            // ref.current.updateWorldMatrix(true, false);
+            // ref.current.getWorldPosition(vec);
+        
+            vec.project(camera);
+
+            // const a = vec.z / 9000;
+            // const b = vec.y / 450;
+            // // // convert the normalized position to CSS coordinates
+            // const x = (a *  .5 + .5) * window.innerWidth;
+            // const y = (b * -.5 + .5) * 450;
+            
+            // if ((i + 1) % 200 === 0) console.log(x.toFixed(4),y.toFixed(4))
+            // if ((i) % 100 === 0) console.log(x, y)
 
         }
     })
@@ -73,6 +90,7 @@ function Rig() {
     useFrame((state) => {
         camera.position.y = (-state.mouse.y * viewport.height - camera.position.y) * (Math.exp(state.mouse.y) / 100)
         camera.lookAt(0, (-state.mouse.y * viewport.height - camera.position.y) * (Math.exp(state.mouse.y) / 100), 1200)
+        camera.updateProjectionMatrix();
     })
 
     return null
@@ -80,33 +98,34 @@ function Rig() {
 
 export default function WavesThreeJS() {
 
-    const [test, setTest] = useState(testPoints)
+    const array = Object.keys(testPoints.testPoints)
 
-    const testArray = []
-    const array = Object.keys(testPoints)
-    array.forEach((keyObj) => {
-        testArray.push(testPoints[keyObj])
-        console.log(testArray)
-    })
+    const [test, setTest] = useState(testPoints.testPoints)    
 
     return (
         <>
             <Canvas
                 style={{height: '450px'}}
                 camera={{ position: [-400, 300, 1200], fov: 75, far: 2500}}>
-                <Dots count={600} data={test.points} setData={setTest}/>
+                <Dots count={600} data={test} setData={setTest}/>
                 <Rig/>
                 {/* <primitive object={new THREE.AxesHelper(1000)} /> */}
             </Canvas>
             <div>
-                {/* {
-                    array.forEach((keyObj) => {
-                        return <DocsLink data={testPoints[keyObj]} text="" key={testPoints[keyObj].keyObj}/>
-                        
-                    })
-                } */}
-                <DocsLink text=""/>
+                {
+                    array.map((item) =>(
+                        <TestPoint data={test[item]} key={item}/>
+                    ))
+                }
             </div>
         </>
     )
 }
+
+const TestPoint = styled.div`
+    display: block; 
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: red;
+`
