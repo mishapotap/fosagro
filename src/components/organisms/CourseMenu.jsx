@@ -71,18 +71,14 @@ function CourseMenu({ dataLine, dataModal }) {
     function handleNext() {
         setIsFinish(true)
 
-        ref.current.classList.add('active')
         buttonTime = 0
 
         if(buttonInterval !== null) clearInterval(buttonInterval)
 
         buttonInterval = setInterval(() => {
             buttonTime += 10;
-            ref.current.scrollLeft += 10;
-            if(buttonTime > 100) {
-                clearInterval(buttonInterval);
-                ref.current.classList.remove('active');
-            }
+            ref.current.scrollLeft += 20;
+            if(buttonTime > 100) clearInterval(buttonInterval) 
         }, 10);
 
         // eslint-disable-next-line no-unused-expressions
@@ -93,18 +89,14 @@ function CourseMenu({ dataLine, dataModal }) {
     function handlePrew() {
         setIsStart(true)
 
-        ref.current.classList.add('active')
         buttonTime = 0
 
         if(buttonInterval !== null) clearInterval(buttonInterval)
 
         buttonInterval = setInterval(() => {
             buttonTime += 10;
-            ref.current.scrollLeft -= 10;
-            if(buttonTime > 100) {
-                clearInterval(buttonInterval);
-                ref.current.classList.remove('active');
-            }
+            ref.current.scrollLeft -= 20;
+            if(buttonTime > 100) clearInterval(buttonInterval)
         }, 10);
 
         // eslint-disable-next-line no-unused-expressions
