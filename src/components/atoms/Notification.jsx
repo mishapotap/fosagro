@@ -48,7 +48,7 @@ const Container = styled.div`
     border-radius: 1.15em;
 
     transform: translate(-50%);
-    z-index: 100;
+    z-index: 150;
 
     @media ${DEVICE.laptopM} {
         max-width: 230px;

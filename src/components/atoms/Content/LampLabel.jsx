@@ -1,13 +1,14 @@
+/* eslint-disable no-unused-vars */
 import React from "react"
 import styled from "styled-components"
-import { Lamp } from "../../../assets/svg/static"
+import { Lamp } from "../../../assets/svg"
 import { COLORS, DEVICE } from "../../../constants"
 import Text from "./Text"
 
 export default function LampLabel({ text = "" }) {
     return (
         <Container>
-            <LampIcon src={Lamp} />
+            <StyledLamp/>
             <StyledText data={{ text }} />
         </Container>
     )
@@ -18,9 +19,10 @@ const Container = styled.div`
     align-items: flex-start;
 `
 
-const LampIcon = styled.img`
+const StyledLamp = styled(Lamp)`
     width: 2.5vw;
     margin-right: 12px;
+    flex-shrink: 0;
 
     @media ${DEVICE.laptopM} {
         width: 2vw;

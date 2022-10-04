@@ -45,6 +45,7 @@ export default function ObjectSlider({
                                         key={dataItem.alt}
                                         target="_blank"
                                         className="OOH"
+                                        data-ext-link
                                     >
                                         <img
                                             src={dataItem.source}
@@ -68,6 +69,7 @@ export default function ObjectSlider({
                                         key={dataItem.color}
                                         target="_blank"
                                         className="fosagro"
+                                        data-ext-link
                                     >
                                         <LinkContant
                                             color={dataItem.color}

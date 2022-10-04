@@ -242,7 +242,7 @@ export default function IntroModal({ isOpen, onClose, items }) {
                                                         className="start-link start-link-2"
                                                     >
                                                         <SendButton
-                                                            text="Начать изучение курса"
+                                                            text="Начать изучение раздела"
                                                             color={
                                                                 COLORS.orange
                                                             }

@@ -18,6 +18,9 @@ import Nav from "./Nav"
 import Content from "./Content"
 import Media from "./Media"
 import NewSectWindow from "./NewSectWindow"
+import PausedBtn from "./PausedBtn"
+
+import ExtLinkModal from "../ExtLinkModal"
 
 // TODO сделать плавное переключение получше?
 
@@ -32,12 +35,16 @@ function CourseContent({ setIds, onDisappear }) {
     const [videoPlaying, setVideoPlaying] = useState(false)
     const [makeSliderAutoplay, setMakeSliderAutoplay] = useState(false)
 
+    const autoPausedRef = useRef(false)
+
     const [sliderDelay, setSliderDelay] = useState(5000)
 
     const audioColRef = useRef(null)
     const contentColRef = useRef(null)
     const mediaColRef = useRef(null)
     const titleColRef = useRef(null)
+    const navColRef = useRef(null)
+
     const isFirstRender = useRef(true)
     const colsRef = useRef(null)
 
@@ -48,11 +55,17 @@ function CourseContent({ setIds, onDisappear }) {
     const didAudioEnded = useRef(null)
     const wasFirstPlay = useRef(false)
 
-    const navColRef = useRef(null)
-
     const [showSlide, setShowSlide] = useState(true)
     const [leftSlide, setLeftSlide] = useState(false)
     const [rightSlide, setRightSlide] = useState(false)
+
+    const [dontPlayMedia, setDontPlayMedia] = useState(false)
+
+    const [extModalLink, setExtModalLink] = useState("")
+
+    const [isAudioPaused, _setIsAudioPaused] = useState(true)
+    const isAudioPausedRef = useRef(false)
+    const [showPausedBtn, setShowPausedBtn] = useState(false)
 
     const [pauseAnim, setPauseAnim] = useState(true)
     const [restartAnim, _setRestartAnim] = useState(false)
@@ -65,6 +78,11 @@ function CourseContent({ setIds, onDisappear }) {
     const [sectWindowExited, setSectWindowExited] = useState(false)
 
     const clickSound = new Audio(Click2)
+
+    function setIsAudioPaused(val) {
+        _setIsAudioPaused(val)
+        isAudioPausedRef.current = val
+    }
 
     function setIsVisible(val) {
         _setIsVisible(val)
@@ -92,27 +110,26 @@ function CourseContent({ setIds, onDisappear }) {
         }
     }
 
+    // проигрывание медиа после задержки (тогда, когда не происходит смены секции)
     function setMediaDelay() {
-        clearTimeout(videoTmId.current)
-        clearTimeout(audioTmId.current)
-        clearTimeout(animTmId.current)
+        clearTimeouts()
 
         if (!sectChanged.current) {
-            if (audioSrc) {
+            if (isAudioRef.current) {
                 audioTmId.current = setTimeout(() => {
                     setAudioPlaying(true)
                     sectChanged.current = false
                 }, 1000)
             }
 
-            if (isCircleSlider) {
+            if (isCircleSliderRef.current) {
                 setTimeout(() => {
                     setMakeSliderAutoplay(true)
                     sectChanged.current = false
                 }, 1000)
             }
 
-            if (isVideo) {
+            if (isVideoRef.current) {
                 videoTmId.current = setTimeout(() => {
                     if (isVisibleRef.current) {
                         setVideoPlaying(true)
@@ -123,7 +140,7 @@ function CourseContent({ setIds, onDisappear }) {
                 }, 1000)
             }
 
-            if (isAnimation) {
+            if (isAnimationRef.current) {
                 animTmId.current = setTimeout(() => {
                     if (isVisibleRef.current) {
                         setPauseAnim(false)
@@ -136,32 +153,29 @@ function CourseContent({ setIds, onDisappear }) {
         }
     }
 
+    // проигрывание всех медиа при смене секции
+    // (если видео/анимация/слайдер вне области видимости, то они проигрываются, когда попадают в нее)
     function playMedia() {
         sectChanged.current = false
 
-        if (isAnimation) {
-            if (isVisibleRef.current) {
-                setPauseAnim(false)
-            } else {
-                showWhenVisible.current = true
-            }
-        }
-
-        if (audioSrc) {
+        if (isAudioRef.current) {
             setAudioPlaying(true)
         }
 
-        if (isCircleSlider) {
-            setMakeSliderAutoplay(true)
-        }
-
-        if (isVideo) {
-            if (isVisibleRef.current) {
-                setVideoPlaying(true)
-            } else {
-                showWhenVisible.current = true
+        if (isVisibleRef.current) {
+            if (isAnimationRef.current) {
+                setPauseAnim(false)
             }
-            sectChanged.current = false
+
+            if (isCircleSliderRef.current) {
+                setMakeSliderAutoplay(true)
+            }
+
+            if (isVideoRef.current) {
+                setVideoPlaying(true)
+            }
+        } else {
+            showWhenVisible.current = true
         }
     }
 
@@ -170,27 +184,70 @@ function CourseContent({ setIds, onDisappear }) {
     } = pageData
 
     const isVisibleRef = useRef(null)
-    const isVideo = mediaType === "video"
-    const isAnimation = mediaType === "animation"
-    const isCircleSlider = mediaType === "circleSlider"
 
-    function handleAudioLoaded({target}) {
+    const isAnimationRef = useRef(false)
+    const isCircleSliderRef = useRef(false)
+    const isVideoRef = useRef(false)
+    const isAudioRef = useRef(false)
+
+    useEffect(() => {
+        switch (mediaType) {
+            case "video":
+                isVideoRef.current = true
+                isAnimationRef.current = false
+                isCircleSliderRef.current = false
+                break
+
+            case "animation":
+                isAnimationRef.current = true
+                isVideoRef.current = false
+                isCircleSliderRef.current = false
+                break
+
+            case "circleSlider":
+                isCircleSliderRef.current = true
+                isVideoRef.current = false
+                isAnimationRef.current = false
+                break
+
+            default:
+                isCircleSliderRef.current = false
+                isAnimationRef.current = false
+                isVideoRef.current = false
+                break
+        }
+    }, [mediaType])
+
+    const { audioSrc, title } = pageData
+
+    useEffect(() => {
+        if (audioSrc) {
+            isAudioRef.current = true
+        } else {
+            isAudioRef.current = false
+        }
+    }, [audioSrc])
+
+    // установить задержку для круглого слайдера, чтобы она соответствовала длине аудио
+    function handleAudioLoaded({ target }) {
         const { duration } = target
-        const delay = duration * 1000 / 3
+        const delay = (duration * 1000) / 3
         setSliderDelay(delay)
     }
 
+    // после исчезновения модального окна включить медиа
     useEffect(() => {
         if (sectWindowExited) {
             playMedia()
             setSectWindowExited(false)
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [sectWindowExited])
 
+    // для мобилок - включаем медиа тогда, когда они попадут в область видимости
     useEffect(() => {
         if (isVisible) {
-            const video = document.querySelector("video")
+            const video = document.querySelector(".video-player video")
             if (showWhenVisible.current) {
                 showWhenVisible.current = false
 
@@ -198,7 +255,7 @@ function CourseContent({ setIds, onDisappear }) {
                     video.play()
                 }
 
-                if (isAnimation && pauseAnim) {
+                if (isAnimationRef.current && pauseAnim) {
                     setPauseAnim(false)
                 }
             }
@@ -206,21 +263,52 @@ function CourseContent({ setIds, onDisappear }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isVisible])
 
-    useEffect(() => {
-        // eslint-disable-next-line no-unused-expressions
-        if (ModalStore.isVisible.mail || ModalStore.isVisible.menu) {
+    function makePause() {
+        checkAutoPaused()
+        if (isVideoRef.current) setVideoPlaying(false)
+        if (isAnimationRef.current) setPauseAnim(true)
+        if (isAudioRef.current) {
+            // console.log('makePause setAudioPlaying(false)');
             setAudioPlaying(false)
-            setVideoPlaying(false)
-            setPauseAnim(true)
-            onAudioPause()
-        } else {
-            setAudioPlaying(true)
-            setVideoPlaying(true)
-            setPauseAnim(false)
-            onAudioPlay()
+        }
+    }
+
+    function makePlay() {
+        if (isVideoRef.current) setVideoPlaying(true)
+        if (isAnimationRef.current) setPauseAnim(false)
+        if (isAudioRef.current) {
+            setAudioPlaying(false)
+            setTimeout(() => {
+                setAudioPlaying(true)
+            }, 100)
+        }
+    }
+
+    function checkAutoPaused() {
+        if (isAudioRef.current && !isAudioPausedRef.current) {
+            autoPausedRef.current = true
+        } else if (isVideoRef.current) {
+            const video = document.querySelector(".video-player video")
+            if (video && !video.paused) autoPausedRef.current = true
+        }
+    }
+
+    // остановка/воспроизведение медиа при открытии модальных окон
+    // ! нет если extlink
+    useEffect(() => {
+        if (ModalStore.someModalShown) {
+            makePause()
+            // воспроизвести только если аудио/видео было остановлено автоматически,
+            // а не самим пользователем
+        } else if (autoPausedRef.current) {
+            if (!dontPlayMedia) {
+                makePlay()
+                autoPausedRef.current = false
+            }
+            setDontPlayMedia(false)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ModalStore.isVisible.mail, ModalStore.isVisible.menu])
+    }, [ModalStore.someModalShown])
 
     function setRestartAnim() {
         _setRestartAnim(true)
@@ -230,18 +318,58 @@ function CourseContent({ setIds, onDisappear }) {
         }, 200)
     }
 
+    // остановка/включение медиа при уходе/возвращении на страницу
+    function handleVisibilityChange() {
+        if (document.visibilityState === "hidden") {
+            makePause()
+        }
+
+        // включаем только если было остановлено автоматически, а не сам пользователь остановил
+        if (document.visibilityState === "visible") {
+            if (autoPausedRef.current && !ModalStore.someModalShown) {
+                autoPausedRef.current = false
+                makePlay()
+            }
+        }
+    }
+
+    // сбрасывание таймаутов
+    function clearTimeouts() {
+        if (audioTmId.current) clearTimeout(audioTmId.current)
+        if (videoTmId.current) clearTimeout(videoTmId.current)
+        if (animTmId.current) clearTimeout(animTmId.current)
+    }
+
+    // открытие модалки ExtLinkModal, при клике на ссылку, ведущую на сторонний ресурс
+    function handleDocClick(e) {
+        const { target } = e
+        const link = target.tagName === "A" ? target : target.closest("a")
+
+        if (link && link.hasAttribute("data-ext-link")) {
+            e.preventDefault()
+            const url = link.getAttribute("href")
+            setExtModalLink(url)
+            ModalStore.showModal("extLinks")
+        }
+    }
+
     useEffect(() => {
         CourseProgressStore.setIsTestActive(false)
         CourseProgressStore.setIsTimelinePageActive(false)
         SoundStore.setIsPlayingSound(false)
 
         const medColRef = mediaColRef.current
+        document.addEventListener("visibilitychange", handleVisibilityChange)
+        document.addEventListener("click", handleDocClick)
 
         return () => {
-            if (audioTmId.current) clearTimeout(audioTmId.current)
-            if (videoTmId.current) clearTimeout(videoTmId.current)
-            if (animTmId.current) clearTimeout(animTmId.current)
+            clearTimeouts()
             unObserve(medColRef)
+            document.removeEventListener(
+                "visibilitychange",
+                handleVisibilityChange
+            )
+            document.addEventListener("click", handleDocClick)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
@@ -249,7 +377,7 @@ function CourseContent({ setIds, onDisappear }) {
     useEffect(() => {
         setTimeout(() => {
             sectChanged.current = true
-        }, 50);
+        }, 50)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [CourseProgressStore.activeSectId])
 
@@ -270,6 +398,7 @@ function CourseContent({ setIds, onDisappear }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [CourseProgressStore.activePageData])
 
+    //
     useEffect(() => {
         if (isFirstRender.current) {
             isFirstRender.current = false
@@ -279,32 +408,29 @@ function CourseContent({ setIds, onDisappear }) {
             setKey(key + 1)
         }
 
-        setPauseAnim(true)
-        setAudioPlaying(false)
-        setVideoPlaying(false)
+        makePause()
 
         sectChanged.current = false
-        clearTimeout(videoTmId.current)
-        clearTimeout(audioTmId.current)
-        clearTimeout(animTmId.current)
-
+        clearTimeouts()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location])
 
     function stopMedia() {
         const audio = document.querySelector(".audio-player audio")
-        const video = document.querySelector(".audio-player video")
+        const video = document.querySelector(".video-player video")
 
         if (audio) audio.pause()
         if (video) video.pause()
     }
 
     function handleBackClick() {
-        stopMedia()
         setLeftSlide(true)
         setRightSlide(false)
         setShowSlide(false)
+
+        stopMedia()
         clickSound.play()
+        setShowPausedBtn(false)
     }
 
     function handleNextClick(e) {
@@ -318,6 +444,7 @@ function CourseContent({ setIds, onDisappear }) {
             clickSound.play()
         }
         stopMedia()
+        setShowPausedBtn(false)
     }
 
     function handleExited() {
@@ -339,26 +466,29 @@ function CourseContent({ setIds, onDisappear }) {
 
     function onAudioPlay() {
         if (isVisibleRef.current) setPauseAnim(false)
-        if (!wasFirstPlay.current) wasFirstPlay.current = true
+        if (!wasFirstPlay.current) {
+            wasFirstPlay.current = true
+            setShowPausedBtn(true)
+        }
 
         if (didAudioEnded.current) {
             // запустить анимацию заново
-            if (isAnimation) setRestartAnim(true)
+            if (isAnimationRef.current) setRestartAnim(true)
         }
+        setIsAudioPaused(false)
     }
 
     function onAudioPause() {
         if (wasFirstPlay.current && !leftSlide && !rightSlide) {
             setPauseAnim(true)
         }
+        setIsAudioPaused(true)
     }
 
     function onAudioEnded() {
         didAudioEnded.current = true
         setPauseAnim(false)
     }
-
-    const { audioSrc, title } = pageData
 
     return (
         <Columns
@@ -387,6 +517,7 @@ function CourseContent({ setIds, onDisappear }) {
                     )}
                 </AudioColumn>
             </CSSTransition>
+
             <CSSTransition
                 in={showSlide}
                 timeout={500}
@@ -399,6 +530,7 @@ function CourseContent({ setIds, onDisappear }) {
                     </Title>
                 </TitleColumn>
             </CSSTransition>
+
             <CSSTransition
                 in={showSlide}
                 timeout={500}
@@ -411,6 +543,7 @@ function CourseContent({ setIds, onDisappear }) {
                     <Content />
                 </ContentColumn>
             </CSSTransition>
+
             <CSSTransition
                 in={showSlide}
                 timeout={500}
@@ -442,7 +575,14 @@ function CourseContent({ setIds, onDisappear }) {
                     />
                 </MediaColumn>
             </CSSTransition>
-            <NewSectWindow onExited={() => setSectWindowExited(true)}/>
+
+            <NewSectWindow onExited={() => setSectWindowExited(true)} />
+            <PausedBtn
+                show={audioSrc && isAudioPaused && showPausedBtn}
+                onClick={makePlay}
+            />
+            {/* временно? */}
+            <ExtLinkModal link={extModalLink} onLeftSite={() => setDontPlayMedia(true)} />
         </Columns>
     )
 }

@@ -1347,7 +1347,7 @@ const timelineData = {
                     link: "topic5/point1",
                     audio: Line5Topic5,
                     value: {
-                        title: "Работа с поставщиками",
+                        title: "Климат для ФосАгро",
                         time: getMediaDurationSec(mediaDuration.course5[5]),
                         bgColor: COLORS.grey_light,
                         image: Line5Topic5Image,
@@ -1566,7 +1566,7 @@ const timelineData = {
                         value: {
                             color: COLORS.brown,
                             position: "bottom",
-                            text: "Безымянный пока что слайд",
+                            text: "Социальные программы ФосАгро",
                             top: "calc(50% - 150px + 85px)",
                             left: "1655px",
                         },

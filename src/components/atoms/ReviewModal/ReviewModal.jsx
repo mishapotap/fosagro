@@ -13,11 +13,12 @@ import SendButton from "../SendButton"
 import { ReviewModalStore, SoundStore } from "../../../store"
 import Rating from "./Rating"
 import Form from "./Form"
-import { FeedBack } from "../../../assets/audio"
+import { FeedBack, Click2 } from "../../../assets/audio"
 
 function ReviewModal({ isOpen, onClose }) {
     const successElRef = useRef(null)
     const contentElRef = useRef(null)
+    const makeSendSound = useRef(false)
 
     const feedBackAudioRef = useRef(null)
     // eslint-disable-next-line no-unused-expressions
@@ -41,10 +42,19 @@ function ReviewModal({ isOpen, onClose }) {
 
     useEffect(() => {
         if (ReviewModalStore.isLoading) {
-            feedBackAudioRef.current.pause()
+            if (feedBackAudioRef.current) feedBackAudioRef.current.pause()
+            makeSendSound.current = true
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ReviewModalStore.isLoading])
+
+    useEffect(() => {
+        if (ReviewModalStore.isSuccess) {
+            const audio = new Audio(Click2)
+            audio.play()
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ReviewModalStore.isSuccess])
 
     // думаю это состояние должно быть локальным, чтобы когда компонент будет создан заново,
     // нам не показывалось сообщение об успехе напр, а можно было снова отправить отзыв

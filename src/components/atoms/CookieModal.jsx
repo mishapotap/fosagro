@@ -29,15 +29,17 @@ function CookieModal() {
             isOpen={ModalStore.isVisible.cookie}
             onClose={handleClose}
             className="modal-cookie"
-            type="cookie"
+            noCloseBtn
         >
             <ModalContent>
-                    <Text>
-                        Данный курс использует файлы cookie для подсчета и
-                        формирования визуализации прогресса изучения курса. Cookie
-                        хранятся в течение 30 дней. Время изучения курса -{" "}
-                        {getFullCourseDuration()} минуты.
-                    </Text>
+                <Text>
+                    Данный курс использует файлы cookie для подсчета и
+                    формирования визуализации прогресса изучения курса. Cookie
+                    хранятся в течение 30 дней.
+                </Text>
+                <Text>
+                    Время изучения курса -{" "} {getFullCourseDuration()} минуты.
+                </Text>
                 <SendButton
                     text="Начать изучение курса"
                     onClick={withCookie}
@@ -46,6 +48,7 @@ function CookieModal() {
                 <WithOutCookie onClick={withOutCookie}>
                     Начать изучение курса без подсчета прогресса изучения
                 </WithOutCookie>
+                {/* <WithOutCookie onClick={() => ModalStore.showModal('cookieInfo')}>Подробнее о cookies</WithOutCookie> */}
             </ModalContent>
         </StyledModal>
     )
@@ -55,7 +58,7 @@ export default observer(CookieModal)
 
 const StyledModal = styled(Modal)`
     &.modal-cookie {
-        top: calc(100vh - 20vw);
+        top: calc(100vh - 21vw);
         left: calc(50vw - 19vw);
 
         width: 100%;

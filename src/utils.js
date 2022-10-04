@@ -26,11 +26,11 @@ export async function makePostRequest(url, data) {
         body: JSON.stringify(data),
     }
 
-    const response = await fetch(url, settings)
+    // const response = await fetch(url, settings)
 
-    if (!response.ok) {
-        throw new Error(`Could not fetch ${url}, status: ${response.status}`)
-    }
+    // if (!response.ok) {
+    //     throw new Error(`Could not fetch ${url}, status: ${response.status}`)
+    // }
     // return response.json()
 
     // eslint-disable-next-line no-new

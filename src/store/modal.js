@@ -7,10 +7,16 @@ class Modal {
         mail: false,
         intro: false,
         cookie: false,
+        extLinks: false,
+        cookieInfo: false
     }
 
     constructor() {
         makeAutoObservable(this)
+    }
+
+    get someModalShown() {
+        return Object.values(this.isVisible).find(val => val === true)
     }
 
     showModal(value) {

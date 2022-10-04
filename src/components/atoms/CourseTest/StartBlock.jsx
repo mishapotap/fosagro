@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-no-bind */
-import React, { useRef, useEffect } from "react"
+import React, { useRef, useEffect, useState } from "react"
 import styled from "styled-components"
 import { CSSTransition } from "react-transition-group"
 import { observer } from "mobx-react-lite"
@@ -24,8 +24,8 @@ function StartBlock() {
     const startRef = useRef(null)
     const audioTitleRef = useRef(null)
     const audioTextRef = useRef(null)
-    const audioTextStarted = useRef(false)
-    const audioTextEnded = useRef(false)
+    const [textAudioPlayed, setTextAudioPlayed] = useState(false)
+    const [textAudioEnded, setTextAudioEnded] = useState(false)
 
     const clickSound = new Audio(Click2)
 
@@ -37,23 +37,28 @@ function StartBlock() {
         SoundStore.getIsPlaying() && clickSound.play()
     }
 
+    function onTitleEnded() {
+        setTimeout(() => {
+            audioTextRef.current.play()
+        }, 300)
+    }
+
     useEffect(() => {
-        if (ModalStore.isVisible.mail || ModalStore.isVisible.menu) {
+        if (ModalStore.someModalShown) {
             if (audioTextRef.current) audioTextRef.current.pause()
             if (audioTitleRef.current) audioTitleRef.current.pause()
+        } else if (audioTextRef.current && textAudioPlayed && !textAudioEnded) {
+            setTimeout(() => {
+                audioTextRef.current.play()
+            }, 100);
         }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ModalStore.isVisible.mail, ModalStore.isVisible.menu])
+    }, [ModalStore.someModalShown])
 
     useEffect(() => {
         if (CourseTestStore.showStart) {
             if (audioTitleRef.current) audioTitleRef.current.play()
-
-            setTimeout(() => {
-                if (audioTextRef.current) {
-                    audioTextRef.current.play()
-                }
-            }, 800)
         } else {
             if (audioTitleRef.current) audioTitleRef.current.pause()
             if (audioTextRef.current) audioTextRef.current.pause()
@@ -71,8 +76,17 @@ function StartBlock() {
             onExited={() => CourseTestStore.setShowTest(true)}
         >
             <StartStyledBlock ref={startRef} className="start">
-                <audio src={TestTitle} ref={audioTitleRef} />
-                <audio src={TestText} ref={audioTextRef} />
+                <audio
+                    src={TestTitle}
+                    ref={audioTitleRef}
+                    onEnded={onTitleEnded}
+                />
+                <audio
+                    src={TestText}
+                    ref={audioTextRef}
+                    onPlay={() => setTextAudioPlayed(true)}
+                    onEnded={() => setTextAudioEnded(true)}
+                />
                 <StyledTitle color={COLORS.blue}>Тест</StyledTitle>
                 <Label>
                     Мы подготовили для Вас небольшой тест на знание пройденного

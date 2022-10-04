@@ -222,17 +222,22 @@ const Container = styled.div`
 
             ${StyledMedia} {
                 position: relative;
-                padding-bottom: 45px;
+                padding-bottom: 10vh;
                 padding-right: 10px;
                 width: 100%;
 
                 flex-direction: column;
                 align-items: flex-end;
 
+                @media ${DEVICE.laptopM} {
+                    padding-bottom: 12vh;
+                }
+
                 @media ${DEVICE.laptopS} {
                     width: 80%;
                     margin: 0 auto;
                     padding-right: 0;
+                    padding-bottom: 0;
                 }
 
                 @media ${DEVICE.mobile} {
@@ -248,10 +253,6 @@ const Container = styled.div`
                     @media ${DEVICE.laptopS} {
                         width: 100%;
                     }
-                }
-
-                .anim-chart {
-                    max-height: 95%;
                 }
 
                 .anim-earth-wrapper {
