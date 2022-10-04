@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import testPoints from "../../data/testData"
 
 function Dots({count, data,
-     setData
+     setData, lookAtZ
     }) {
 
     const wavespeed = 0.2;
@@ -14,7 +14,7 @@ function Dots({count, data,
 
     const ref = useRef() 
     const { camera } = useThree()
-    // camera.lookAt(0, 0, lookAtZ)
+    camera.lookAt(0, 0, 1200)
 
     const { vec, transform, positions } = useMemo(() => {
 
@@ -48,6 +48,7 @@ function Dots({count, data,
         for(let i = 0; i < 15; i+=1) {
             const t = clock.elapsedTime;
             for(let j = 0; j < count * 2; j+=1) {
+                positions[i*count*2 + j].z += lookAtZ
                 positions[i*count*2 + j].y = Math.cos((t +
                     (positions[i*count*2 + j].x / wavewidth) +
                     (positions[i*count*2 + j].z / wavewidth) ) * wavespeed * 2) * waveheight *
@@ -83,10 +84,10 @@ function Dots({count, data,
     )
 }
 
-function Controls({setCamera}) {
-    const { camera } = useThree()
-    setCamera(camera)
-}
+// function Controls({setCamera}) {
+//     const { camera } = useThree()
+//     setCamera(camera)
+// }
 
 export default function WavesThreeJS() {
 
@@ -94,7 +95,7 @@ export default function WavesThreeJS() {
 
     const [test, setTest] = useState(testPoints.testPoints)  
 
-    const [camera, setCamera] = useState(null);
+    // const [camera, setCamera] = useState(null);
     
     const [lookAtZ, setLookAtZ] = useState(1200)
     useEffect(() => {
@@ -103,14 +104,14 @@ export default function WavesThreeJS() {
 
 
     function handleWheel(e) { 
-        const vec = new THREE.Vector3()
-        const tempDel = 0.01
+        // const vec = new THREE.Vector3()
+        // const tempDel = 0.01
 
-        camera.lookAt(0, 0, lookAtZ+(e.deltaY*tempDel))
-        camera.position.lerp(vec.set(-400, 300, lookAtZ+e.deltaY), 0.01 )
-        camera.updateProjectionMatrix()
+        // camera.lookAt(0, 0, lookAtZ+(e.deltaY*tempDel))
+        // camera.position.lerp(vec.set(-400, 300, lookAtZ+e.deltaY), 0.01 )
+        // camera.updateProjectionMatrix()
 
-        setLookAtZ(lookAtZ+(e.deltaY*tempDel))
+        setLookAtZ(e.deltaY)
     
         
     }
@@ -121,7 +122,7 @@ export default function WavesThreeJS() {
                 camera={{ position: [-400, 300, 1200], fov: 75, far: 2500}}
                 onWheel={(e) => handleWheel(e)}>
                 <Dots count={600} data={test} setData={setTest} lookAtZ={lookAtZ}/>
-                <Controls setCamera={setCamera}/>
+                {/* <Controls setCamera={setCamera}/> */}
             </Canvas>
             <PointContainer>
                 {
