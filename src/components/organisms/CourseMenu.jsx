@@ -3,7 +3,7 @@ import React, { useRef, useState } from "react"
 import styled from "styled-components"
 import { CourseStep } from "../molecules"
 import { Waves, Prev, Next } from "../../assets/svg"
-import { COLORS } from "../../constants"
+import { COLORS, DEVICE } from "../../constants"
 
 function CourseMenu({ dataLine, dataModal }) {
     const ref = useRef(null);
@@ -76,10 +76,10 @@ function CourseMenu({ dataLine, dataModal }) {
         if(buttonInterval !== null) clearInterval(buttonInterval)
 
         buttonInterval = setInterval(() => {
-            buttonTime += 10;
-            ref.current.scrollLeft += 20;
-            if(buttonTime > 100) clearInterval(buttonInterval) 
-        }, 10);
+            buttonTime += 5;
+            ref.current.scrollLeft += window.innerWidth/2/30;
+            if(buttonTime > 150) clearInterval(buttonInterval) 
+        }, 30);
 
         // eslint-disable-next-line no-unused-expressions
         Math.round(ref.current.clientWidth + ref.current.scrollLeft) >= line.current.clientWidth + line.current.offsetLeft
@@ -94,10 +94,10 @@ function CourseMenu({ dataLine, dataModal }) {
         if(buttonInterval !== null) clearInterval(buttonInterval)
 
         buttonInterval = setInterval(() => {
-            buttonTime += 10;
-            ref.current.scrollLeft -= 20;
-            if(buttonTime > 100) clearInterval(buttonInterval)
-        }, 10);
+            buttonTime += 5;
+            ref.current.scrollLeft -= window.innerWidth/2/30;
+            if(buttonTime > 150) clearInterval(buttonInterval)
+        }, 30);
 
         // eslint-disable-next-line no-unused-expressions
         ref.current.scrollLeft === 0
@@ -181,6 +181,10 @@ const Line = styled.div`
 const Button = styled.div`
     position: fixed;
     bottom: 15vh;
+
+    @media ${DEVICE.mobile} {
+        display: none;
+    }
     
     cursor: pointer;
 
