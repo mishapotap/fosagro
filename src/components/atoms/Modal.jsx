@@ -7,7 +7,6 @@ import styled from "styled-components"
 import { COLORS, DEVICE } from "../../constants"
 import { Close } from "../../assets/svg"
 
-// type для всех дефолтный, для модалки cookie - type = "cookie"
 export default function Modal({
     children,
     isOpen,
@@ -16,7 +15,8 @@ export default function Modal({
     className,
     onOpenAnimEnd = () => {},
     navigateBack = false,
-    type = ""
+    // если нужна модалка без кнопки закрытия
+    noCloseBtn = false,
 }) {
     const modalRef = useRef(null)
     const navigate = useNavigate()
@@ -90,11 +90,14 @@ export default function Modal({
         >
             <Container className={`${className} modal`} ref={modalRef}>
                 <ModalWindow className="modal-window" ref={modalRef}>
-                    { type === "" &&
-                        <CloseBtn className="modal-close-btn" onClick={handleClose}>
+                    {!noCloseBtn && (
+                        <CloseBtn
+                            className="modal-close-btn"
+                            onClick={handleClose}
+                        >
                             <Close color={closeBtnColor} />
                         </CloseBtn>
-                    }
+                    )}
                     {children}
                 </ModalWindow>
                 <ModalMask className="modal-mask" onClick={handleClose} />
@@ -117,21 +120,43 @@ const Container = styled.div`
     height: 100vh;
 
     z-index: 200;
-    transition: 0.5s;
+
+    .modal-window,
+    .modal-mask {
+        transition: 0.7s;
+    }
 
     &.modal {
-        opacity: 0;
-        transform: scale(0.8);
+        .modal-window {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        .modal-mask {
+            opacity: 0;
+        }
     }
 
     &.modal-enter-done {
-        opacity: 1;
-        transform: scale(1);
+        .modal-window {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .modal-mask {
+            opacity: 1;
+        }
     }
 
     &.modal-exit {
-        opacity: 0;
-        transform: scale(0.8);
+        .modal-window {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        .modal-mask {
+            opacity: 0;
+        }
     }
 `
 

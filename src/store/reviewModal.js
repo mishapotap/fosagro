@@ -35,8 +35,9 @@ class ReviewModal {
             .then(() => {
                 this.setSuccessState()
             })
-            .catch(() => {
+            .catch((err) => {
                 this.setErrorState()
+                console.error('error', err);
             })
     }
 

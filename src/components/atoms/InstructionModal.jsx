@@ -92,7 +92,7 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
     }
 
     function handleAudioEnded(index) {
-        setPauseAnims(() => ({ ...pauseAnims, [index]: false }))
+        setPauseAnims((pauseAnimsVal) => ({ ...pauseAnimsVal, [index]: false }))
     }
 
     function handleInit() {
@@ -100,11 +100,11 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
     }
 
     function handleAudioPlay(index) {
-        setPauseAnims(() => ({ ...pauseAnims, [index]: false }))
+        setPauseAnims((pauseAnimsVal) => ({ ...pauseAnimsVal, [index]: false }))
     }
 
     function handleAudioPause(index) {
-        setPauseAnims(() => ({ ...pauseAnims, [index]: true }))
+        setPauseAnims((pauseAnimsVal) => ({ ...pauseAnimsVal, [index]: true }))
     }
 
     const isVisible = (ele, container) => {
@@ -310,6 +310,11 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                             </SlideColsInner>
                                         </Slide1Cols>
                                     </SlideContentWrapper>
+                                    {/* <CookiesInfoLink
+                                        onClick={() => ModalStore.showModal('cookiesInfo')}
+                                    >
+                                        Информация о cookies
+                                    </CookiesInfoLink> */}
                                     <StyledAudioPlayer
                                         src={Instruction1}
                                         isPlaying={playAudio[0]}
@@ -318,6 +323,7 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                         onEnded={() => handleAudioEnded(0)}
                                     />
                                 </SlideInner>
+
                             </SwiperSlide>
                             <SwiperSlide>
                                 <SlideInner className="slide-inner">
@@ -406,9 +412,7 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                                             />
                                                         </ElIcon>
                                                         <Text className="text-sound-btn">
-                                                            Элемент
-                                                            отключения/включения
-                                                            музыки в проекте.
+                                                        Элемент включения/отключения фонового голосового и музыкального сопровождения курса.
                                                         </Text>
                                                     </IconRow>
                                                     <IconRow>
@@ -461,6 +465,11 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                             </Link>
                                         </StartLearn>
                                     </SlideContentWrapper>
+                                    {/* <CookiesInfoLink
+                                        onClick={() => ModalStore.showModal('cookiesInfo')}
+                                    >
+                                        Информация о cookies
+                                    </CookiesInfoLink> */}
                                     <StyledAudioPlayer
                                         src={Instruction2}
                                         isPlaying={playAudio[1]}
@@ -469,6 +478,7 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                         onEnded={() => handleAudioEnded(1)}
                                     />
                                 </SlideInner>
+
                             </SwiperSlide>
                             <CircleBtn className="button-prev">
                                 <ArrowLeft color={COLORS.blue} />
@@ -485,6 +495,29 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
 }
 
 export default observer(InstructionModal)
+
+const CookiesInfoLink = styled.button`
+    position: absolute;
+    bottom: 4vh;
+    left: 50%;
+
+    transform: translate(-50%);
+    z-index: 50;
+
+    font-size: 1.2vw;
+    color: ${COLORS.blue};
+    border-bottom: 1px solid ${COLORS.blue};
+
+    @media ${DEVICE.laptop} {
+        font-size: 17px;
+    }
+
+    @media ${DEVICE.laptopS} {
+        position: static;
+        transform: none;
+        margin-bottom: 20px;
+    }
+`
 
 const StyledLayout = styled(Layout)`
     height: 100%;
@@ -692,7 +725,7 @@ const SlideContentWrapper = styled.div`
 
     @media ${DEVICE.laptopS} {
         height: auto;
-        margin-bottom: 30px;
+        margin-bottom: 15px;
     }
 
     @media ${DEVICE.mobile} {
@@ -831,7 +864,7 @@ const Slide1Cols = styled(SlideCols)`
 
             & > * {
                 &:first-child {
-                    margin-bottom: 2.5vh;
+                    margin-bottom: 7px;
 
                     @media ${DEVICE.laptopS} {
                         margin-bottom: 30px;
@@ -839,7 +872,7 @@ const Slide1Cols = styled(SlideCols)`
                 }
 
                 &:nth-child(2) {
-                    margin-bottom: 20px;
+                    margin-bottom: 7px;
 
                     @media ${DEVICE.laptopS} {
                         margin-bottom: 30px;
@@ -962,8 +995,12 @@ const TimelineImgWrapper = styled.div`
     position: relative;
     padding-bottom: 20px;
 
-    .timeline-img {
+    @media ${DEVICE.laptopM} {
+        margin: 0 auto;
+        max-width: 90%;
+    }
 
+    .timeline-img {
         @media ${DEVICE.laptopS} {
             max-width: none;
             height: 100%;
@@ -1320,12 +1357,10 @@ const SliderContainer = styled.div`
                 }
 
                 .prev-page-btn {
-                    animation-name: ${fadeInRight};
                     animation-delay: 5s;
                 }
 
                 .next-page-btn {
-                    animation-name: ${fadeInLeft};
                     animation-delay: 6s;
                 }
 
@@ -1364,19 +1399,19 @@ const SliderContainer = styled.div`
                 }
 
                 .icon-mail {
-                    animation-delay: 32s;
+                    animation-delay: 34.5s;
                 }
 
                 .text-mail-btn {
-                    animation-delay: 33s;
+                    animation-delay: 35.5s;
                 }
 
                 .icon-instruction {
-                    animation-delay: 39.5s;
+                    animation-delay: 40.5s;
                 }
 
                 .text-instruction-btn {
-                    animation-delay: 40.5s;
+                    animation-delay: 41.5s;
                 }
             }
         `}

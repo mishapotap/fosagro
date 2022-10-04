@@ -30,7 +30,7 @@ function NewSectWindow({onExited}) {
 
         setTimeout(() => {
             setShowNewSectW(false)
-        }, 3200)
+        }, 3800)
     }
 
     function handleAudioEnded() {
@@ -47,6 +47,10 @@ function NewSectWindow({onExited}) {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [showNewSectW])
+
+    useEffect(() => () => {
+            if (audioEl.current) audioEl.current.pause()
+        }, [])
 
     return (
         <CSSTransition

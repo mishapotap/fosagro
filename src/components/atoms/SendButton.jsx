@@ -6,7 +6,7 @@ import { Spinner } from "../../assets/svg"
 export default function SendButton({ text, loading, onClick, disabled, color = COLORS.blue, className = "" }) {
     return (
         <Container
-            className={loading && `loading}` || className}
+            className={`${loading ? 'loading' : ''} ${className}`}
             disabled={disabled}
             onClick={onClick}
             color={color}

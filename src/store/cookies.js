@@ -1,9 +1,11 @@
 /* eslint-disable class-methods-use-this */
 import Cookies from "js-cookie"
 import { makeAutoObservable } from "mobx"
-import CourseProgressStore from './courseProgress'
+import CourseProgressStore from "./courseProgress"
 import CourseTestStore from "./courseTest"
 import ModalStore from "./modal"
+
+// TODO переделать логику чтобы 30 дней сохранялось не с последнего захода, а с соглашения
 
 class CookiesStore {
     constructor() {
@@ -30,7 +32,9 @@ class CookiesStore {
             }
 
             if (userVisitedAnyChapter) {
-                CourseProgressStore.setUserVisitedAnyChapter(userVisitedAnyChapter)
+                CourseProgressStore.setUserVisitedAnyChapter(
+                    userVisitedAnyChapter
+                )
             }
         } else {
             ModalStore.showModal("cookie")
@@ -38,7 +42,7 @@ class CookiesStore {
     }
 
     setUserAcceptedCookies() {
-        Cookies.set('userAcceptedCookies', 'true', { expires: 30 })
+        Cookies.set("userAcceptedCookies", "true", { expires: 30 })
     }
 
     // перед перезагрузкой странице/уходе с нее
@@ -59,8 +63,15 @@ class CookiesStore {
 
             Cookies.set("courseTests", testsVal, { expires: 30 })
             Cookies.set("courseProgress", progressVal, { expires: 30 })
-            Cookies.set('userAcceptedCookies', 'true', { expires: 30 })
+            Cookies.set("userAcceptedCookies", "true", { expires: 30 })
         }
+    }
+
+    resetCookies() {
+        Cookies.remove("courseTests")
+        Cookies.remove("courseProgress")
+        Cookies.remove("userAcceptedCookies")
+        Cookies.remove("userVisitedAnyChapter")
     }
 }
 

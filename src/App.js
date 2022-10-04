@@ -12,17 +12,17 @@ import {
     Final,
 } from "./components/pages"
 import { InstructionModal, IntroModal } from "./components/atoms"
-import { CookiesStore } from "./store"
+import { CookiesStore, SoundStore } from "./store"
 
 function App() {
     return (
         <Routes>
             <Route path="/" element={<Home />}>
-                <Route path="instruction" element={<InstructionModal/>} />
+                <Route path="instruction" element={<InstructionModal />} />
             </Route>
             <Route path="course:id" element={<Course />}>
-                <Route path="instruction" element={<InstructionModal/>} />
-                <Route path="intro" element={<IntroModal/>} />
+                <Route path="instruction" element={<InstructionModal />} />
+                <Route path="intro" element={<IntroModal />} />
             </Route>
             <Route path="course:id/test" element={<CourseTestPage />} />
             <Route
@@ -45,6 +45,22 @@ function handleDocLoad() {
     CookiesStore.setDataFromCookies()
 }
 
+// выключение/включение музыки при уходе со страницы/возвращении на нее
+// let soundAutoPaused = false
+
+// function handleVisChange() {
+//     if (document.visibilityState === "visible") {
+//         if (soundAutoPaused) {
+//             SoundStore.setIsPlayingSound(true)
+//             soundAutoPaused = false
+//         }
+//     } else if (SoundStore.getIsPlaying()) {
+//         SoundStore.setIsPlayingSound(false)
+//         soundAutoPaused = true
+//     }
+// }
+
+// document.addEventListener("visibilitychange", handleVisChange)
 document.addEventListener("DOMContentLoaded", handleDocLoad)
 window.addEventListener("beforeunload", handleWindowUnload)
 

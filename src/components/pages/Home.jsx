@@ -9,7 +9,7 @@ import { MenuButton, FooterHome } from "../molecules"
 import { OOH } from "../../assets/svg/static"
 import { MainBG } from "../../assets/video"
 import { COLORS, DEVICE } from "../../constants"
-import { Layout, CookieModal } from "../atoms"
+import { Layout, CookieModal, CookiesInfoModal } from "../atoms"
 import { Click2, MainTitle, MainSupTitle } from "../../assets/audio"
 import { SoundStore, ModalStore } from "../../store"
 
@@ -150,6 +150,7 @@ function Home() {
             </Container>
             <Outlet />
             <CookieModal/>
+            <CookiesInfoModal/>
         </Layout>
     )
 }

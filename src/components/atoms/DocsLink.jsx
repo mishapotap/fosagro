@@ -13,7 +13,13 @@ export default function DocsLink({
     // Контакты
     // Отчет о деятельности компании
     return (
-        <Container href={url} target="_blank" rel="noopener noreferrer" className="docs-link">
+        <Container
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="docs-link"
+            data-ext-link
+        >
             <Wrapper>
                 <TextWrapper>
                     <Icon />
