@@ -81,7 +81,8 @@ function Home() {
     useEffect(() => {
         function playTitle() {
             // eslint-disable-next-line no-unused-expressions
-            !SoundStore.getPlayedTitleSound(`title`) && activeTitleSound();
+            !SoundStore.getPlayedTitleSound(`title`) && !ModalStore.isVisible.mail 
+            && !ModalStore.isVisible.instruction && activeTitleSound();
             SoundStore.setPlayedTitleSound('title', true)
             window.removeEventListener("click", playTitle)
         }

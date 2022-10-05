@@ -28,7 +28,7 @@ class ReviewModal {
         this.isLoading = true
         this.isError = false
 
-        makePostRequest("mail.php", {
+        makePostRequest("http://phosagro.avt.promo/sendmail.php", {
             message: this.message,
             rating: this.ratingVal,
         })
@@ -37,7 +37,7 @@ class ReviewModal {
             })
             .catch((err) => {
                 this.setErrorState()
-                console.error('error', err);
+                console.error("error", err)
             })
     }
 

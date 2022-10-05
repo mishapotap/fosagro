@@ -22,16 +22,16 @@ export function renderCustom(swiper, current, total) {
 
 export async function makePostRequest(url, data) {
     const settings = {
-        type: "POST",
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
     }
 
-    // const response = await fetch(url, settings)
+    const response = await fetch(url, settings)
 
-    // if (!response.ok) {
-    //     throw new Error(`Could not fetch ${url}, status: ${response.status}`)
-    // }
-    // return response.json()
+    if (!response.ok) {
+        throw new Error(`Could not fetch ${url}, status: ${response.status}`)
+    }
 
     // eslint-disable-next-line no-new
     return new Promise((resolve, reject) => {
