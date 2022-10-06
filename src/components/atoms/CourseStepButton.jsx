@@ -12,7 +12,7 @@ export default function CourseStepButton({
     handleMouseOut = () => {},
     handleMouseOver = () => {},
     isCompleted = false,
-    i, j
+    // i, j
 }) {
     const { title, bgColor, image, time, rotate } = data
 
@@ -30,11 +30,11 @@ export default function CourseStepButton({
             isActive={isActive}
             bgColor={bgColor}
             image={image}
-            i={i} j={j}
+            // i={i} j={j}
             onMouseOut={handleMouseOut}
             onMouseOver={handleMouseOver}
             onClick={() => handleClick()}
-            style={{transform: `translate(${i}px, ${j}px)`}}
+            // style={{transform: `translate(${i}px, ${j}px)`}}
         >
             <ContainerInner>
                 <Circle>

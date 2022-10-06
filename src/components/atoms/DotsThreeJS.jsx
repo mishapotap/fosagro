@@ -1,5 +1,5 @@
 import React, { useMemo, useRef } from 'react'
-import { useFrame } from '@react-three/fiber'
+import { useFrame, Html } from '@react-three/fiber'
 import { useScroll } from '@react-three/drei'
 import * as THREE from 'three'
 
@@ -8,8 +8,9 @@ export default function Dots({
         width, 
     // количество точек в ширину
         height,
-        data,
-        setData
+        transformArray,
+        dataLine, 
+        dataModal
     }) {
 
     const wavespeed = 0.2;
@@ -87,9 +88,20 @@ export default function Dots({
     })
 
     return (
-        <instancedMesh ref={ref} args={[null, null, positions.length]}>
-            <sphereGeometry args={[2,3,3]} attach="geometry" />
-            <meshBasicMaterial color="white" attach="material" />
-        </instancedMesh>
+        <>
+            <instancedMesh ref={ref} args={[null, null, positions.length]}>
+                <sphereGeometry args={[2,3,3]} attach="geometry" />
+                <meshBasicMaterial color="white" attach="material" />
+            </instancedMesh>
+            <Html>
+            {dataLine.map(section => (
+                <CourseStep key={ section.id } sectId={section.id} 
+                    intro={section.intro} test={section.test} button={section.button} 
+                    points={section.points} dataModal={dataModal}
+                    i={dataPoints[Object.keys(section.transform)].i}
+                    j={dataPoints[Object.keys(section.transform)].j}/>
+            ))}
+            </Html>
+        </>
     )
 }
