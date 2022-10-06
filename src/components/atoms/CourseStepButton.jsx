@@ -8,13 +8,13 @@ import { SoundStore } from "../../store"
 
 export default function CourseStepButton({
     data,
-    className,
     isActive,
     handleMouseOut = () => {},
     handleMouseOver = () => {},
     isCompleted = false,
+    i, j
 }) {
-    const { title, bgColor, image, time, rotate, top, left } = data
+    const { title, bgColor, image, time, rotate } = data
 
     const clickSound = new Audio(Click2)
 
@@ -25,16 +25,16 @@ export default function CourseStepButton({
 
     return (
         <Container
-            className={`${className} course-step-btn`}
+            className="course-step-btn"
             isCompleted={isCompleted}
             isActive={isActive}
             bgColor={bgColor}
             image={image}
-            top={top}
-            left={left}
+            i={i} j={j}
             onMouseOut={handleMouseOut}
             onMouseOver={handleMouseOver}
             onClick={() => handleClick()}
+            style={{transform: `translate(${i}px, ${j}px)`}}
         >
             <ContainerInner>
                 <Circle>
@@ -122,9 +122,6 @@ const Point = styled.div`
 `
 
 const Container = styled.div`
-    position: absolute;
-    top: ${(props) => props.top};
-    left: ${(props) => props.left};
     width: 150px;
     transition: all 0.3s;
 
@@ -142,7 +139,8 @@ const Container = styled.div`
         props.isActive === true &&
         css`
             z-index: 3;
-            transform: scale(1.75);
+            transform: scale(1.75) ;
+            
             ${AnimateCircle} {
                 background-color: ${props.bgColor};
                 opacity: 0.5;

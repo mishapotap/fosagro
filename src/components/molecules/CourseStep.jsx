@@ -16,6 +16,7 @@ function CourseStep({
     sectId,
     test,
     intro,
+    i, j
 }) {
     const soundButton = useRef(null)
     const wrapRef = useRef(null)
@@ -79,6 +80,8 @@ function CourseStep({
                     <Link to="intro">
                         <Button onClick={() => openIntroModal()}>
                             <CourseStepButton
+                                i={i}
+                                j={j}
                                 data={button.value}
                                 className={`${className}-button`}
                                 isActive={isActive}
@@ -101,6 +104,8 @@ function CourseStep({
                 // eslint-disable-next-line react/jsx-no-bind
                 <Link to={ CourseProgressStore.timelineBtnLink(sectId, test) } onClick={handleLinkClick}>
                     <CourseStepButton
+                        i={i}
+                        j={j}
                         data={button.value}
                         className={`${className}-button`}
                         isActive={isActive}

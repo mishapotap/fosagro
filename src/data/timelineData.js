@@ -117,6 +117,12 @@ const timelineData = {
             {
                 id: 0,
                 intro: true,
+                transform: {
+                    "2.100": {
+                        i: 2,
+                        j: 200,
+                    },
+                },
                 button: {
                     audio: Intro,
                     value: {
@@ -135,13 +141,17 @@ const timelineData = {
                         bgColor: COLORS.orange,
                         image: Line1IntroImage,
                         rotate: "-64",
-                        top: "calc(50% - 150px + 110px)",
-                        left: "40px",
                     },
                 },
             },
             {
                 id: 1,
+                transform: {
+                    "2.400": {
+                        i: 2,
+                        j: 400,
+                    },
+                },
                 button: {
                     link: "topic1/point1",
                     audio: Line1Topic1,
@@ -151,8 +161,6 @@ const timelineData = {
                         bgColor: COLORS.green_light,
                         image: Line1Topic1Image,
                         rotate: "-127",
-                        top: "calc(50% - 150px + 55px)",
-                        left: "240px",
                     },
                 },
                 points: [
@@ -200,6 +208,12 @@ const timelineData = {
             },
             {
                 id: 2,
+                transform: {
+                    "2.700": {
+                        i: 2,
+                        j: 700,
+                    },
+                },
                 button: {
                     link: "topic2/point1",
                     audio: Line1Topic2,
@@ -209,8 +223,6 @@ const timelineData = {
                         bgColor: COLORS.green_dark,
                         image: Line1Topic2Image,
                         rotate: "105",
-                        top: "calc(50% - 150px + 45px)",
-                        left: "715px",
                     },
                 },
                 points: [
@@ -228,6 +240,12 @@ const timelineData = {
             },
             {
                 id: 3,
+                transform: {
+                    "2.1000": {
+                        i: 2,
+                        j: 1000,
+                    },
+                },
                 button: {
                     link: "topic3/point1",
                     audio: Line1Topic3,
@@ -237,8 +255,6 @@ const timelineData = {
                         bgColor: COLORS.brown_light,
                         image: Line1Topic3Image,
                         rotate: "165",
-                        top: "calc(50% - 150px + 80px)",
-                        left: "1025px",
                     },
                 },
                 points: [
@@ -296,6 +312,12 @@ const timelineData = {
             },
             {
                 id: 4,
+                transform: {
+                    "2.1300": {
+                        i: 2,
+                        j: 1300,
+                    },
+                },
                 button: {
                     link: "topic4/point1",
                     audio: Line1Topic4,
@@ -305,8 +327,6 @@ const timelineData = {
                         bgColor: COLORS.brown,
                         image: Line1Topic4Image,
                         rotate: "76",
-                        top: "calc(50% - 150px + 25px)",
-                        left: "1670px",
                     },
                 },
                 points: [
@@ -334,6 +354,12 @@ const timelineData = {
             },
             {
                 id: 5,
+                transform: {
+                    "2.1800": {
+                        i: 2,
+                        j: 1800,
+                    },
+                },
                 test: true,
                 button: {
                     link: "test",
@@ -346,8 +372,6 @@ const timelineData = {
                         bgColor: COLORS.blue,
                         image: TestImage,
                         rotate: "-150",
-                        top: "calc(50% - 150px + 90px)",
-                        left: "2030px",
                     },
                 },
             },

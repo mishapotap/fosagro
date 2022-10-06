@@ -1,135 +1,40 @@
-import React, { useMemo, useRef, useState, useEffect } from 'react'
-import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import * as THREE from 'three'
+import React, { useState } from 'react'
+import { Canvas } from '@react-three/fiber'
+import { ScrollControls } from '@react-three/drei'
 import styled from 'styled-components'
-import testPoints from "../../data/testData"
+import DotsThreeJS from "./DotsThreeJS"
+import CourseStep from "../molecules/CourseStep"
 
-function Dots({count, data,
-     setData, lookAtZ
-    }) {
+export default function WavesThreeJS({dataLine, dataModal}) {
 
-    const wavespeed = 0.2;
-    const wavewidth = 200;
-    const waveheight = 100;
+    const transformArray = {};
 
-    const ref = useRef() 
-    const { camera } = useThree()
-    camera.lookAt(0, 0, 1200)
+    dataLine.forEach(item => {
+        const key = Object.keys(item.transform)
+        transformArray[key] = item.transform[key]
+    });
 
-    const { vec, transform, positions } = useMemo(() => {
+    const [dataPoints, setDataPoints] = useState(transformArray) 
 
-        // eslint-disable-next-line no-shadow
-        const vec = new THREE.Vector3()
-        // eslint-disable-next-line no-shadow
-        const transform = new THREE.Matrix4()
-
-        // eslint-disable-next-line no-shadow
-        const positions = [];
-
-        for ( let x = 0; x < 30; x+=2 ) {
-            for ( let y = 0; y < count; y+=0.5 ) { 
-                const position = new THREE.Vector3()   
-
-                position.x = x * 15;
-                position.y = 0;
-                position.z = y * 15;
-
-                positions.push(position); 
-            }
-        }
-        
-        // eslint-disable-next-line no-shadow
-        return { vec, transform, positions }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
-    useFrame(({clock}) => {
-
-        for(let i = 0; i < 15; i+=1) {
-            const t = clock.elapsedTime;
-            for(let j = 0; j < count * 2; j+=1) {
-                positions[i*count*2 + j].z += lookAtZ
-                positions[i*count*2 + j].y = Math.cos((t +
-                    (positions[i*count*2 + j].x / wavewidth) +
-                    (positions[i*count*2 + j].z / wavewidth) ) * wavespeed * 2) * waveheight *
-                    Math.cos(positions[i*count*2 + j].z / wavewidth) 
-
-                vec.copy(positions[i*count*2 + j])
-                transform.setPosition(vec)
-    
-                ref.current.setMatrixAt(i*count*2 + j, transform)
-                ref.current.instanceMatrix.needsUpdate = true
-            
-                vec.project(camera);
-
-                const x = (vec.x *  .5 + .5) * window.innerWidth - 10;
-                const y = (vec.y * -.5 + .5) * 450 - 10;
-    
-                const temp = `${i}.${j}`
-                const nextTemp = {}
-    
-                if(data[temp]) {
-                    nextTemp[temp] = {i: x.toFixed(4), j: y.toFixed(4)}
-                    setData((prevState) => ({ ...prevState, ...nextTemp}));
-                }
-            }
-        }
-    })
-
-    return (
-        <instancedMesh ref={ref} args={[null, null, positions.length]}>
-            <sphereGeometry args={[2,3,3]} attach="geometry" />
-            <meshBasicMaterial color="skyblue" attach="material" />
-        </instancedMesh>
-    )
-}
-
-// function Controls({setCamera}) {
-//     const { camera } = useThree()
-//     setCamera(camera)
-// }
-
-export default function WavesThreeJS() {
-
-    const array = Object.keys(testPoints.testPoints)
-
-    const [test, setTest] = useState(testPoints.testPoints)  
-
-    // const [camera, setCamera] = useState(null);
-    
-    const [lookAtZ, setLookAtZ] = useState(1200)
-    useEffect(() => {
-        // console.log(test)
-    }, [test])
-
-
-    function handleWheel(e) { 
-        // const vec = new THREE.Vector3()
-        // const tempDel = 0.01
-
-        // camera.lookAt(0, 0, lookAtZ+(e.deltaY*tempDel))
-        // camera.position.lerp(vec.set(-400, 300, lookAtZ+e.deltaY), 0.01 )
-        // camera.updateProjectionMatrix()
-
-        setLookAtZ(e.deltaY)
-    
-        
-    }
+    // console.log(dataPoints[Object.keys(dataLine[0].transform)])
 
     return (
         <Container>
             <Canvas style={{height: "450px"}}
-                camera={{ position: [-400, 300, 1200], fov: 75, far: 2500}}
-                onWheel={(e) => handleWheel(e)}>
-                <Dots count={600} data={test} setData={setTest} lookAtZ={lookAtZ}/>
-                {/* <Controls setCamera={setCamera}/> */}
+                camera={{ position: [-400, 300, 1200], fov: 75, far: 2500}}>
+                <ScrollControls horizontal pages={10} style={{top: "15px"}}>
+                    <DotsThreeJS width={600} height={30} data={dataPoints} setData={setDataPoints}/>
+                </ScrollControls>
             </Canvas>
             <PointContainer>
-                {
-                    array.map((item) =>(
-                        <TestPoint key={item} style={{ transform: `translate(${test[item].i}px, ${test[item].j}px)`}}/>
-                    ))
-                }
+                {dataLine.map(section => (
+                    // <div key={section.if} >yeye</div>
+                    <CourseStep key={ section.id } sectId={section.id} 
+                        intro={section.intro} test={section.test} button={section.button} 
+                        points={section.points} dataModal={dataModal}
+                        i={dataPoints[Object.keys(section.transform)].i}
+                        j={dataPoints[Object.keys(section.transform)].j}/>
+                ))}
             </PointContainer>
         </Container>
     )
@@ -144,16 +49,4 @@ const PointContainer = styled.div`
     position: absolute;
     top: 0;
     left: 0;
-`
-
-const TestPoint = styled.div`
-    position: absolute; 
-    left: 0;             
-    top: 0;
-
-    display: block; 
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: red;
 `
