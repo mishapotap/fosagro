@@ -23,7 +23,7 @@ function MailButton({ isTest, color, background }) {
     }
 
     return (
-        <Wrapper hide={isTest && CourseTestStore.showFinal} data-open-modal-btn>
+        <Wrapper hide={isTest && CourseTestStore.showFinal}>
             <AnimatedBlueButton
                 background={background}
                 color={color}
