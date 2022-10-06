@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 
 import Modal from "./Modal"
 import { ModalStore, CourseProgressStore } from "../../store"
-import MenuButtons from "../molecules/MenuButtons"
+import { MenuButtons } from "../molecules"
 import { COLORS, DEVICE } from "../../constants"
 import SendButton from "./SendButton"
 import { menuButtonData } from "../../data"

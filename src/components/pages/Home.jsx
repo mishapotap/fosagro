@@ -13,8 +13,8 @@ import {
     Layout,
     CookieModal,
     CookiesInfoModal,
-    WelcomeBackModal,
 } from "../atoms"
+import WelcomeBackModal from '../atoms/WelcomeBackModal'
 import { Click2, MainTitle, MainSupTitle } from "../../assets/audio"
 import { SoundStore, ModalStore } from "../../store"
 
