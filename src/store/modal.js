@@ -8,15 +8,24 @@ class Modal {
         intro: false,
         cookie: false,
         extLinks: false,
-        cookieInfo: false
+        cookiesInfo: false,
+        confirm: false,
+        welcomeBack: false,
     }
+
+    extModalLink = "#"
+
+    dontPlayOnClose = false
 
     constructor() {
         makeAutoObservable(this)
     }
 
     get someModalShown() {
-        return Object.values(this.isVisible).find(val => val === true)
+        return Object.entries(this.isVisible).find(
+            ([modalName, modalVal]) =>
+                modalName !== "cookie" && modalVal === true
+        )
     }
 
     showModal(value) {
@@ -25,6 +34,22 @@ class Modal {
 
     closeModal(value) {
         this.isVisible[value] = false
+    }
+
+    closeModals() {
+        Object.entries(this.isVisible).forEach(([name, value]) => {
+            if (value === true && name !== "cookie") {
+                this.closeModal(name)
+            }
+        })
+    }
+
+    setExtModalLink(url) {
+        this.extModalLink = url
+    }
+
+    setDontPlayOnClose(val) {
+        this.dontPlayOnClose = val
     }
 }
 

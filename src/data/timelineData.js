@@ -257,7 +257,7 @@ const timelineData = {
                         value: {
                             color: COLORS.brown_light,
                             position: "top",
-                            text: "Доступные технологии, снизили выбросы",
+                            text: "Доступные технологии",
                             top: "calc(50% - 150px + 95px)",
                             left: "1340px",
                         },
@@ -267,7 +267,7 @@ const timelineData = {
                         value: {
                             color: COLORS.brown_light,
                             position: "bottom",
-                            text: "Экология, снизили сброс сточных вод",
+                            text: "Экология",
                             top: "calc(50% - 150px + 110px)",
                             left: "1420px",
                         },
@@ -277,7 +277,7 @@ const timelineData = {
                         value: {
                             color: COLORS.brown_light,
                             position: "top",
-                            text: "Социальная среда, проекты",
+                            text: "Социальная среда",
                             top: "calc(50% - 150px + 120px)",
                             left: "1500px",
                         },
@@ -935,7 +935,7 @@ const timelineData = {
                     link: "topic2/point1",
                     audio: Line4Topic2,
                     value: {
-                        title: `Энергоэффек-тивность`,
+                        title: `Энергоэффективность`,
                         time: getMediaDurationSec(mediaDuration.course4[2]),
                         bgColor: COLORS.green_dark,
                         image: Line4Topic2Image,

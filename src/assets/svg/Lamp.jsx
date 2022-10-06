@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from "react"
 import styled, { css, keyframes } from "styled-components"
+import { COLORS } from "../../constants"
 import { showContent } from "../../constants/animations"
+import { CourseProgressStore } from "../../store"
 
-export default function Leave({ className, makeAnim = false }) {
+export default function Lamp({ className, makeAnim = false }) {
 
     const intervalId = useRef(null)
     const containerRef = useRef(null)
@@ -25,6 +27,7 @@ export default function Leave({ className, makeAnim = false }) {
             width="53"
             className={`${dontAnimate ? 'no-anim' : ""} ${className || ''}`}
             makeAnim={makeAnim}
+            color={CourseProgressStore.activeSectColor}
             ref={containerRef}
             key={key}
             viewBox="0 0 53 53"
@@ -45,37 +48,30 @@ export default function Leave({ className, makeAnim = false }) {
             />
             <Line
                 d="M50.4498 23.9502H44.4622C43.5037 23.9502 42.7266 24.7273 42.7266 25.6859C42.7266 26.6444 43.5037 27.4215 44.4622 27.4215H50.4498C51.4084 27.4215 52.1855 26.6444 52.1855 25.6859C52.1855 24.7273 51.4084 23.9502 50.4498 23.9502Z"
-                fill="#A8AD00"
                 className="line-6"
             />
             <Line
                 d="M10.2741 25.6859C10.2741 24.7273 9.49698 23.9502 8.53842 23.9502H2.55012C1.59157 23.9502 0.814453 24.7273 0.814453 25.6859C0.814453 26.6444 1.59157 27.4215 2.55012 27.4215H8.53842C9.49698 27.4215 10.2741 26.6444 10.2741 25.6859Z"
-                fill="#A8AD00"
                 className="line-2"
             />
             <Line
                 d="M26.5013 9.4608C27.4598 9.4608 28.237 8.68368 28.237 7.72513V1.73567C28.237 0.777118 27.4598 0 26.5013 0C25.5427 0 24.7656 0.777118 24.7656 1.73567V7.72513C24.7656 8.68368 25.5427 9.4608 26.5013 9.4608Z"
-                fill="#A8AD00"
                 className="line-4"
             />
             <Line
                 d="M40.428 37.1594C39.7502 36.4815 38.6514 36.4813 37.9733 37.1591C37.2955 37.837 37.2953 38.9358 37.9731 39.6138L42.2072 43.8491C42.5463 44.1881 42.9904 44.3576 43.4347 44.3576C43.8788 44.3576 44.3229 44.1881 44.6619 43.8493C45.3398 43.1715 45.34 42.0727 44.6622 41.3946L40.428 37.1594Z"
-                fill="#A8AD00"
                 className="line-7"
             />
             <Line
                 d="M12.5707 14.2114C12.9098 14.5504 13.3539 14.72 13.7982 14.72C14.2423 14.72 14.6864 14.5506 15.0252 14.2118C15.7033 13.534 15.7033 12.4352 15.0257 11.7574L10.7932 7.52326C10.1153 6.84519 9.01653 6.84519 8.33869 7.5228C7.66062 8.20063 7.66062 9.29943 8.33823 9.97727L12.5707 14.2114Z"
-                fill="#A8AD00"
                 className="line-3"
             />
             <Line
                 d="M12.5727 37.1593L8.33834 41.3946C7.6605 42.0724 7.66073 43.1714 8.33857 43.849C8.67737 44.1878 9.12171 44.3572 9.56581 44.3572C10.0099 44.3572 10.4542 44.1878 10.7933 43.8488L15.0276 39.6135C15.7055 38.9357 15.7052 37.8367 15.0274 37.1591C14.3495 36.4814 13.2505 36.4814 12.5727 37.1593Z"
-                fill="#A8AD00"
                 className="line-1"
             />
             <Line
                 d="M39.2023 14.7198C39.6464 14.7198 40.0907 14.5504 40.4298 14.2113L44.6629 9.97747C45.3408 9.29963 45.3406 8.2006 44.6627 7.523C43.9849 6.84516 42.8859 6.84516 42.2082 7.52323L37.9751 11.7571C37.2972 12.4349 37.2975 13.534 37.9753 14.2116C38.3139 14.5506 38.758 14.7198 39.2023 14.7198Z"
-                fill="#A8AD00"
                 className="line-5"
             />
         </Container>
@@ -145,4 +141,8 @@ const Container = styled.svg`
                 }
             }
         `}
+
+    ${Line} {
+        fill: ${({color}) => color || COLORS.green_light}
+    }
 `

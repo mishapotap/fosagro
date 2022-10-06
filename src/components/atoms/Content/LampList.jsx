@@ -26,7 +26,7 @@ const Container = styled.div``
 
 const ListItems = styled.div`
     & > * {
-        margin-bottom: 9px;
+        margin-bottom: 8px;
 
         &:last-child {
             margin-bottom: 0;

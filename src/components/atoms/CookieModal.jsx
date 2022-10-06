@@ -10,7 +10,6 @@ import { getFullCourseDuration } from "../../utils"
 import { ModalStore, CookiesStore } from "../../store"
 
 function CookieModal() {
-
     function handleClose() {
         ModalStore.closeModal("cookie")
     }
@@ -30,25 +29,33 @@ function CookieModal() {
             onClose={handleClose}
             className="modal-cookie"
             noCloseBtn
+            dontCloseOnEsc
+            dontCloseOnMaskClick
         >
             <ModalContent>
-                <Text>
-                    Данный курс использует файлы cookie для подсчета и
-                    формирования визуализации прогресса изучения курса. Cookie
-                    хранятся в течение 30 дней.
-                </Text>
-                <Text>
-                    Время изучения курса -{" "} {getFullCourseDuration()} минуты.
-                </Text>
-                <SendButton
-                    text="Начать изучение курса"
-                    onClick={withCookie}
-                    className="cookie"
-                />
-                <WithOutCookie onClick={withOutCookie}>
-                    Начать изучение курса без подсчета прогресса изучения
-                </WithOutCookie>
-                {/* <WithOutCookie onClick={() => ModalStore.showModal('cookieInfo')}>Подробнее о cookies</WithOutCookie> */}
+                <TextWrapper>
+                    <Text>
+                        Данный курс использует файлы cookie для подсчета и
+                        формирования визуализации прогресса изучения курса.
+                        Cookie хранятся в течение 30 дней.
+                    </Text>
+                    <Text>
+                        Время изучения курса - {getFullCourseDuration()} минуты.
+                    </Text>
+                </TextWrapper>
+                <Buttons>
+                    <SendButton
+                        text="Начать изучение курса"
+                        onClick={withCookie}
+                        className="cookie"
+                    />
+                    <Button onClick={withOutCookie}>
+                        Начать изучение курса без подсчета прогресса изучения
+                    </Button>
+                    <Button onClick={() => ModalStore.showModal("cookiesInfo")}>
+                        Подробнее о cookies
+                    </Button>
+                </Buttons>
             </ModalContent>
         </StyledModal>
     )
@@ -57,37 +64,33 @@ function CookieModal() {
 export default observer(CookieModal)
 
 const StyledModal = styled(Modal)`
-    &.modal-cookie {
-        top: calc(100vh - 21vw);
-        left: calc(50vw - 19vw);
+    .modal-cookie {
+        display: block;
+    }
+
+    .modal-window {
+        position: absolute;
+        bottom: 12%;
 
         width: 100%;
+        height: auto;
         max-width: 38vw;
-        height: 15.6vw;
-
         border-radius: 30px;
 
-        overflow: hidden;
-
-        @media ${DEVICE.laptopS} {
-            height: 18vw;
-            top: calc(100vh - 22vw);
+        @media ${DEVICE.laptopM} {
+            bottom: 13%;
         }
 
         @media ${DEVICE.tablet} {
-            top: calc(100vh - 26vw);
             left: calc(50vw - 25vw);
-
             max-width: 50vw;
-            height: 22vw;
+            bottom: 15%;
         }
 
         @media ${DEVICE.mobile} {
-            top: calc(100vh - 80vw);
             left: calc(50vw - 45vw);
-
             max-width: 90vw;
-            height: 50vw;
+            bottom: 20%;
         }
     }
 `
@@ -136,7 +139,7 @@ const Text = styled.div`
     }
 `
 
-const WithOutCookie = styled.div`
+const Button = styled.div`
     font-family: "CalibriRegular";
     font-weight: 300;
     font-size: 0.83vw;
@@ -164,5 +167,31 @@ const WithOutCookie = styled.div`
     @media ${DEVICE.mobile} {
         font-size: 3vw;
         line-height: 3.4vw;
+    }
+`
+
+const TextWrapper = styled.div`
+    margin-bottom: 23px;
+
+    ${Text} {
+        margin-bottom: 4px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+`
+
+const Buttons = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    & > * {
+        margin-bottom: 8px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
     }
 `

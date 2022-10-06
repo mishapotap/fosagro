@@ -5,7 +5,7 @@ import CourseProgressStore from "./courseProgress"
 import CourseTestStore from "./courseTest"
 import ModalStore from "./modal"
 
-// TODO переделать логику чтобы 30 дней сохранялось не с последнего захода, а с соглашения
+// TODO поправить показ инструкции
 
 class CookiesStore {
     constructor() {
@@ -36,6 +36,7 @@ class CookiesStore {
                     userVisitedAnyChapter
                 )
             }
+            ModalStore.showModal("welcomeBack")
         } else {
             ModalStore.showModal("cookie")
         }
@@ -61,9 +62,9 @@ class CookiesStore {
                 )
             }
 
-            Cookies.set("courseTests", testsVal, { expires: 30 })
-            Cookies.set("courseProgress", progressVal, { expires: 30 })
-            Cookies.set("userAcceptedCookies", "true", { expires: 30 })
+            Cookies.set("courseTests", testsVal)
+            Cookies.set("courseProgress", progressVal)
+            Cookies.set("userAcceptedCookies", "true")
         }
     }
 

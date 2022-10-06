@@ -17,6 +17,8 @@ export default function Modal({
     navigateBack = false,
     // если нужна модалка без кнопки закрытия
     noCloseBtn = false,
+    dontCloseOnMaskClick = false,
+    dontCloseOnEsc = false,
 }) {
     const modalRef = useRef(null)
     const navigate = useNavigate()
@@ -34,7 +36,7 @@ export default function Modal({
     }
 
     function handleKeyDown({ key }) {
-        if (key === "Escape") {
+        if (key === "Escape" && !dontCloseOnEsc) {
             handleClose()
         }
     }
@@ -63,6 +65,12 @@ export default function Modal({
     function handleCloseModal() {
         resetBodyChildrenInert(modalRef.current)
         document.body.classList.remove("lock")
+    }
+
+    function handleMaskClick() {
+        if (!dontCloseOnMaskClick) {
+            handleClose()
+        }
     }
 
     useEffect(() => {
@@ -100,7 +108,7 @@ export default function Modal({
                     )}
                     {children}
                 </ModalWindow>
-                <ModalMask className="modal-mask" onClick={handleClose} />
+                <ModalMask className="modal-mask" onClick={handleMaskClick} />
             </Container>
         </CSSTransition>,
         document.body

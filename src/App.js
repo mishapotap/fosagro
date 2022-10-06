@@ -11,29 +11,32 @@ import {
     CourseContentPage,
     Final,
 } from "./components/pages"
-import { InstructionModal, IntroModal } from "./components/atoms"
-import { CookiesStore, SoundStore } from "./store"
+import { ExtLinkModal, InstructionModal, IntroModal } from "./components/atoms"
+import { CookiesStore, SoundStore, ModalStore } from "./store"
 
 function App() {
     return (
-        <Routes>
-            <Route path="/" element={<Home />}>
-                <Route path="instruction" element={<InstructionModal />} />
-            </Route>
-            <Route path="course:id" element={<Course />}>
-                <Route path="instruction" element={<InstructionModal />} />
-                <Route path="intro" element={<IntroModal />} />
-            </Route>
-            <Route path="course:id/test" element={<CourseTestPage />} />
-            <Route
-                path="course:id/topic:sectId/point:pageId"
-                element={<CourseContentPage />}
-            />
-            <Route path="tutorial" element={<Tutorial />} />
-            <Route path="test" element={<Test />} />
-            <Route path="final" element={<Final />} />
-            <Route path="*" element={<Error404 />} />
-        </Routes>
+        <>
+            <Routes>
+                <Route path="/" element={<Home />}>
+                    <Route path="instruction" element={<InstructionModal />} />
+                </Route>
+                <Route path="course:id" element={<Course />}>
+                    <Route path="instruction" element={<InstructionModal />} />
+                    <Route path="intro" element={<IntroModal />} />
+                </Route>
+                <Route path="course:id/test" element={<CourseTestPage />} />
+                <Route
+                    path="course:id/topic:sectId/point:pageId"
+                    element={<CourseContentPage />}
+                />
+                <Route path="tutorial" element={<Tutorial />} />
+                <Route path="test" element={<Test />} />
+                <Route path="final" element={<Final />} />
+                <Route path="*" element={<Error404 />} />
+            </Routes>
+            <ExtLinkModal />
+        </>
     )
 }
 
@@ -45,23 +48,44 @@ function handleDocLoad() {
     CookiesStore.setDataFromCookies()
 }
 
+// открытие модалки ExtLinkModal, при клике на ссылку, ведущую на сторонний ресурс
+function handleDocClick(e) {
+    const { target } = e
+    const link = target.tagName === "A" ? target : target.closest("a")
+
+    if (link && link.hasAttribute("data-ext-link")) {
+        e.preventDefault()
+        const url = link.getAttribute("href")
+        ModalStore.showModal("extLinks")
+        ModalStore.setExtModalLink(url)
+    }
+}
+
 // выключение/включение музыки при уходе со страницы/возвращении на нее
-// let soundAutoPaused = false
+let autoPausedMediaEls = []
 
-// function handleVisChange() {
-//     if (document.visibilityState === "visible") {
-//         if (soundAutoPaused) {
-//             SoundStore.setIsPlayingSound(true)
-//             soundAutoPaused = false
-//         }
-//     } else if (SoundStore.getIsPlaying()) {
-//         SoundStore.setIsPlayingSound(false)
-//         soundAutoPaused = true
-//     }
-// }
+function handleVisChange() {
+    // ! а что насчет анимации? (проблема с инструкцией и слайдером)
+    const audioEls = document.querySelectorAll('audio')
+    const videoEls = document.querySelectorAll('video')
 
-// document.addEventListener("visibilitychange", handleVisChange)
+    const mediaEls = [...audioEls, ...videoEls]
+    if (document.visibilityState === "hidden") {
+        mediaEls.forEach(el => {
+            if (!el.paused) {
+                el.pause()
+                autoPausedMediaEls.push(el)
+            }
+        })
+    } else {
+        autoPausedMediaEls.forEach(el => el.play())
+        autoPausedMediaEls = []
+    }
+}
+
+document.addEventListener("visibilitychange", handleVisChange)
 document.addEventListener("DOMContentLoaded", handleDocLoad)
 window.addEventListener("beforeunload", handleWindowUnload)
+document.addEventListener("click", handleDocClick)
 
 export default App

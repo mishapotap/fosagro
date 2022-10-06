@@ -63,10 +63,10 @@ function CourseStep({
 
             const stepBtn = e.currentTarget.querySelector(".course-step-btn")
             if (stepBtn) {
-                const { left, top } = getElWindowPos(stepBtn)
+                const { leftCenter, top } = getElWindowPos(stepBtn)
                 CourseProgressStore.setNotifPos({
-                    left: `${left - 10}px`,
-                    top: `${top - 150}px`,
+                    left: `${leftCenter}px`,
+                    top: `${top - 20}px`,
                 })
             }
         }

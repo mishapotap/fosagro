@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-bind */
 import React, { useRef, useState, useEffect } from "react"
 import styled, { keyframes } from "styled-components"
 import { CSSTransition } from "react-transition-group"
@@ -13,6 +14,7 @@ function NewSectWindow({onExited}) {
 
     const sectBtnData = CourseProgressStore.activeSectBtnData
     const audioEl = useRef(null)
+    const reserveTmId = useRef(null)
 
     useEffect(() => {
         setTimeout(() => {
@@ -28,9 +30,14 @@ function NewSectWindow({onExited}) {
             }, 2300)
         }
 
-        setTimeout(() => {
+        reserveTmId.current = setTimeout(() => {
             setShowNewSectW(false)
         }, 3800)
+    }
+
+    function handleExited() {
+        onExited()
+        clearTimeout(reserveTmId.current)
     }
 
     function handleAudioEnded() {
@@ -61,9 +68,8 @@ function NewSectWindow({onExited}) {
             appear
             mountOnEnter
             unmountOnExit
-            // eslint-disable-next-line react/jsx-no-bind
             onEntered={handleEntered}
-            onExited={onExited}
+            onExited={handleExited}
         >
             <Container ref={newSectWindowRef} className="new-sect">
                 <CourseStepButton isActive data={sectBtnData.value} />

@@ -13,11 +13,9 @@ import TestBlock from "./TestBlock"
 import FinalBlock from "./FinalBlock"
 import StartBlock from "./StartBlock"
 
-// TODO сделать чтобы тест можно было снова пройти?
-
 function CourseTest() {
-    // если пользователь уходит в процессе решения теста, сбрасываем прогресс
 
+    // если пользователь уходит в процессе решения теста, сбрасываем прогресс
     useEffect(() => () => {
         if (!CourseTestStore.userPassedTest) {
             CourseTestStore.resetProgress()

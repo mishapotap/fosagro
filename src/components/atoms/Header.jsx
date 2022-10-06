@@ -41,6 +41,7 @@ function Header({
     }
 
     const handleClickLogo = () => {
+        ModalStore.closeModals()
         SoundStore.setIsPlayingSound(true)
         // eslint-disable-next-line no-unused-expressions
         SoundStore.getIsPlaying() && clickSound.play()
@@ -228,7 +229,7 @@ const Container = styled.div`
     left: 0;
     width: 100%;
 
-    padding: 2.6vh 2.3vw 0 4.3vw;
+    padding: 3vh 2.3vw 0 4.3vw;
     height: 92px;
     z-index: 100;
 

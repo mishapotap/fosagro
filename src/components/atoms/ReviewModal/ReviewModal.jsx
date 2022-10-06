@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/media-has-caption */
 /* eslint-disable react/jsx-no-bind */
 import React, { useRef, useState, useEffect } from "react"
 import styled from "styled-components"
@@ -19,20 +20,13 @@ function ReviewModal({ isOpen, onClose }) {
     const successElRef = useRef(null)
     const contentElRef = useRef(null)
     const makeSendSound = useRef(false)
-
     const feedBackAudioRef = useRef(null)
-    // eslint-disable-next-line no-unused-expressions
-
-    useEffect(() => {
-        if (!feedBackAudioRef.current) {
-            feedBackAudioRef.current = new Audio(FeedBack)
-        }
-    }, [])
+    const soundPlayed = useRef(false)
 
     useEffect(() => {
         if (isOpen) {
             setTimeout(() => {
-                if (feedBackAudioRef.current) {
+                if (feedBackAudioRef.current && !soundPlayed.current) {
                     feedBackAudioRef.current.play()
                 }
             }, 500)
@@ -68,18 +62,22 @@ function ReviewModal({ isOpen, onClose }) {
         []
     )
 
+    function handleAudioPlay() {
+        soundPlayed.current = true
+    }
+
     function closeModal() {
         if (!ReviewModalStore.isLoading) {
             onClose()
             if (feedBackAudioRef.current) {
                 feedBackAudioRef.current.pause()
-                feedBackAudioRef.current = null
             }
         }
     }
 
     return (
         <CurvedModal isOpen={isOpen} onClose={closeModal} type="review">
+            <audio src={FeedBack} ref={feedBackAudioRef} onPlay={handleAudioPlay} />
             <Container>
                 <ModalContent
                     className={`${ReviewModalStore.isError ? "error" : ""} ${

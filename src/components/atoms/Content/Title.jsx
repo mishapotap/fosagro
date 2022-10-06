@@ -15,12 +15,12 @@ export default function Title({ children, className, color = COLORS.orange }) {
 
 const Container = styled.div`
     font-family: "FocoBold";
-    font-size: 2.2vw;
+    font-size: 1.9vw;
     color: ${({ color }) => color || COLORS.orange};
-    line-height: 1.15;
+    line-height: 1.05;
 
     @media ${DEVICE.laptopM} {
-        font-size: 1.8vw;
+        font-size: 1.6vw;
     }
 
     @media ${DEVICE.laptop} {

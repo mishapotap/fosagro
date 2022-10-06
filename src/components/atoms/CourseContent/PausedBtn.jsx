@@ -4,10 +4,7 @@ import { CSSTransition } from "react-transition-group"
 import { Play } from "../../../assets/svg"
 import { COLORS, DEVICE } from "../../../constants"
 
-export default function PausedBtn({
-    onClick = () => {},
-    show = false,
-}) {
+export default function PausedBtn({ onClick = () => {}, show = false }) {
     const pausedBtnRef = useRef(null)
 
     return (
@@ -32,12 +29,36 @@ const Container = styled.div`
     position: fixed;
     top: 50%;
     left: 50%;
+
     transform: translate(-50%, -50%);
-    width: 4.3vw;
-    height: 4.3vw;
+    width: 6.8vw;
+    height: 6.8vw;
 
     transition: 0.3s;
     z-index: 50;
+    cursor: pointer;
+
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.7);
+
+    svg {
+        position: absolute;
+        top: 50%;
+        left: 54%;
+
+        transform: translate(-50%, -50%);
+        max-height: 100%;
+        width: 46%;
+
+        transition: 0.3s;
+        opacity: 0.7;
+    }
+
+    &:hover {
+        svg {
+            opacity: 1;
+        }
+    }
 
     &.paused-btn {
         display: none;
@@ -64,15 +85,5 @@ const Container = styled.div`
 
     @media ${DEVICE.laptopS} {
         display: none !important;
-    }
-
-    svg {
-        width: 100%;
-        opacity: 0.5;
-        transition: 0.3s;
-
-        &:hover {
-            opacity: 1;
-        }
     }
 `

@@ -20,12 +20,12 @@ const Container = styled.div`
 `
 
 const StyledLamp = styled(Lamp)`
-    width: 2.5vw;
+    width: 2vw;
     margin-right: 12px;
     flex-shrink: 0;
 
     @media ${DEVICE.laptopM} {
-        width: 2vw;
+        width: 1.8vw;
     }
 
     @media ${DEVICE.laptopS} {
@@ -34,7 +34,7 @@ const StyledLamp = styled(Lamp)`
 `
 
 const StyledText = styled(Text)`
-    line-height: 1.3;
+    line-height: 1.25;
     padding-top: 0.5vh;
 
     span {

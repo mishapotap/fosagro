@@ -49,6 +49,7 @@ export function getElWindowPos(el) {
     return {
         left: rect.left,
         top: rect.top,
+        leftCenter: rect.left + el.offsetWidth / 2,
         right: rect.left + el.offsetWidth,
     }
 }
