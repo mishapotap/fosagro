@@ -8,7 +8,7 @@ import { ModalStore, SoundStore, CourseProgressStore } from "../../store"
 import { Click1 } from "../../assets/audio"
 import { DEVICE } from "../../constants"
 
-export default function MenuButtons({ className }) {
+export default function MenuButtons({ className, data = menuButtonData }) {
     const clickSound = new Audio(Click1)
 
     const closeModal = () => {
@@ -19,9 +19,9 @@ export default function MenuButtons({ className }) {
     }
 
     return (
-        <MenuWrap className={className}>
-            {menuButtonData.map((item) => (
-                <MenuButtonContainer key={item.index}>
+        <MenuWrap className={`${className || ''} menu-buttons`}>
+            {data.map((item) => (
+                <MenuButtonContainer key={item.index} className="menu-button-cont">
                     <Link to={item.href} onClick={() => closeModal()}>
                         <MenuButton
                             index={item.index}
@@ -29,6 +29,7 @@ export default function MenuButtons({ className }) {
                             bgColor={item.bgColor}
                             bgAnimateColor={item.bgAnimateColor}
                             rotate={item.rotate}
+                            duration={item.duration}
                         />
                         <MenuProgressBarContainer className="progress-bar-cont">
                             <MenuProgressBar

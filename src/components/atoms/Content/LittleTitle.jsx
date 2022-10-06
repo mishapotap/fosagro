@@ -9,14 +9,14 @@ export default function LittleTitle({ text }) {
 const Container = styled.div`
     font-family: "FocoBold", sans-serif;
     color: ${COLORS.blue};
-    font-size: 1.3vw;
-    line-height: 1.2;
+    font-size: 1.25vw;
+    line-height: 1.15;
 
     margin-bottom: 2.1vh;
 
     @media ${DEVICE.laptopM} {
-        font-size: 1.25vw;
-        margin-bottom: 15px;
+        font-size: 1.12vw;
+        margin-bottom: 10px;
     }
 
     @media ${DEVICE.laptop} {

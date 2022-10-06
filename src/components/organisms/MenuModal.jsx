@@ -6,14 +6,15 @@ import { DEVICE } from "../../constants"
 import { MenuBackground } from "../../assets/images"
 import MenuButtons from "../molecules/MenuButtons"
 
-function MenuModal({isOpen, onClose}) {
-
+function MenuModal({ isOpen, onClose }) {
     return (
         <StyledModal isOpen={isOpen} onClose={onClose}>
             <StyledLayout page="menu">
-                <MenuContainer>
-                    <MenuButtons/>
-                </MenuContainer>
+                <Wrapper>
+                    <MenuContainer>
+                        <MenuButtons />
+                    </MenuContainer>
+                </Wrapper>
             </StyledLayout>
         </StyledModal>
     )
@@ -25,6 +26,12 @@ observer(MenuModal)
 
 const StyledLayout = styled(Layout)`
     height: 100%;
+`
+
+const Wrapper = styled.div`
+    height: 100%;
+    max-height: 100%;
+    overflow: auto;
 `
 
 const StyledModal = styled(Modal)`
@@ -46,10 +53,10 @@ const MenuContainer = styled.div`
     justify-content: center;
     align-items: center;
     height: 100%;
-    padding: 0 2vw;
-    overflow: auto;
+    padding: 2vw 2vw;
+    overflow: hidden;
     @media ${DEVICE.laptopS} {
-        padding: 0 5vw;
+        padding: 5vw;
     }
 
     @media ${DEVICE.mobile} {

@@ -18,12 +18,12 @@ export default function Note({ data, className }) {
 const Container = styled.div`
     display: flex;
     align-items: flex-start;
-    padding-top: 5px;
+    padding-top: 3px;
     padding-left: 5px;
 `
 
 const StyledLamp = styled(Lamp)`
-    width: 2.5vw;
+    width: 2vw;
     margin-right: 12px;
     flex-shrink: 0;
 
@@ -33,15 +33,15 @@ const StyledLamp = styled(Lamp)`
 `
 
 const Text = styled.p`
-    padding-top: 22px;
+    padding-top: 13px;
 
     font-family: "FocoBold", sans-serif;
-    font-size: 1.3vw;
+    font-size: 1.2vw;
     color: ${COLORS.blue};
-    line-height: 1.36;
+    line-height: 1.2;
 
     @media ${DEVICE.laptopM} {
-        font-size: 1.15vw;
+        font-size: 1.12vw;
     }
 
     @media ${DEVICE.laptop} {

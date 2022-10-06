@@ -8,13 +8,13 @@ import Modal from "./Modal"
 import SendButton from "./SendButton"
 import { ModalStore } from "../../store"
 
-function ExtLinkModal({ link = "#", onLeftSite = () => {} }) {
+function ExtLinkModal() {
     function onClose () {
         ModalStore.closeModal('extLinks')
     }
 
-    function handleGoClick () {
-        onLeftSite()
+    function handleGoClick() {
+        ModalStore.setDontPlayOnClose(true)
         onClose()
     }
     return (
@@ -27,7 +27,7 @@ function ExtLinkModal({ link = "#", onLeftSite = () => {} }) {
                     </Text>
                 </TextWrapper>
                 <Link
-                    href={link}
+                    href={ModalStore.extModalLink}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={handleGoClick}
@@ -70,7 +70,7 @@ const TextWrapper = styled.div`
 
 const Link = styled.a`
     margin-top: 4vh;
-    margin-bottom: 2vh;
+    margin-bottom: 1.8vh;
 `
 
 const Container = styled.div`

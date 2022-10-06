@@ -5,14 +5,18 @@ import { Helmet } from "react-helmet"
 import { useLocation, useNavigate, useParams } from "react-router"
 import { observer } from "mobx-react-lite"
 import timelineData from "../../data/timelineData"
-import { Layout } from "../atoms"
 import { COLORS, DEVICE } from "../../constants"
 import { MenuBackground } from "../../assets/images"
 import { Footer, CourseMenu } from "../organisms"
 import { introModalData } from "../../data"
 import Error404 from "./Error404"
-import { CourseProgressStore, ModalStore, SoundStore } from "../../store"
-import Notification from "../atoms/Notification"
+import {
+    CookiesStore,
+    CourseProgressStore,
+    ModalStore,
+    SoundStore,
+} from "../../store"
+import { CookiesInfoModal, Notification, Layout, ExtLinkModal } from "../atoms"
 
 function Course() {
     const { id } = useParams()
@@ -46,20 +50,21 @@ function Course() {
         if (id) {
             CourseProgressStore.setActiveChapterId(id)
 
-            if (
-                dataLine &&
-                dataModal &&
-                !CourseProgressStore.userVisitedAnyChapter
-            ) {
-                navigate("instruction")
-                CourseProgressStore.setUserVisitedAnyChapter(true)
-            }
+            // if (!CookiesStore.userAcceptedCookies) {
+                if (
+                    dataLine &&
+                    dataModal
+                    && !CourseProgressStore.userVisitedAnyChapter
+                ) {
+                    navigate("instruction")
+                    CourseProgressStore.setUserVisitedAnyChapter(true)
+                }
+            // }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id])
 
     function activeTitleSound() {
-
         setTimeout(() => {
             if (ModalStore.isVisible.instruction) {
                 playTitleOnInstrClose.current = true
@@ -101,9 +106,9 @@ function Course() {
             if (ModalStore.isVisible.instruction)
                 ModalStore.closeModal("instruction")
 
-        window.removeEventListener("click", titleSoundPlay)
+            window.removeEventListener("click", titleSoundPlay)
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
@@ -112,15 +117,18 @@ function Course() {
         } else {
             SoundStore.setIsPlayingSound(true)
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ModalStore.isVisible.instruction, ModalStore.isVisible.mail])
 
     useEffect(() => {
-        if (!ModalStore.isVisible.instruction && playTitleOnInstrClose.current) {
+        if (
+            !ModalStore.isVisible.instruction &&
+            playTitleOnInstrClose.current
+        ) {
             setTimeout(() => {
                 titleSoundPlay()
                 playTitleOnInstrClose.current = false
-            }, 200);
+            }, 200)
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -132,6 +140,7 @@ function Course() {
 
     return (
         <StyledLayout page="course">
+            <CookiesInfoModal />
             {dataLine.metaTitle && (
                 <Helmet>
                     <title data-rh="true">{dataLine.metaTitle}</title>
@@ -141,7 +150,10 @@ function Course() {
                     />
                 </Helmet>
             )}
-            <Notification />
+            <Notification
+                show={CourseProgressStore.showNotification}
+                position={CourseProgressStore.notifPos}
+            />
             <Background />
             <Container>
                 <Wrapper ref={wrapperRef}>
@@ -156,6 +168,7 @@ function Course() {
                 <Footer />
             </Container>
             <Audio src={dataLine.titleAudio} ref={titleAudio} />
+            {/* <ExtLinkModal/> */}
         </StyledLayout>
     )
 }
@@ -167,6 +180,10 @@ const StyledLayout = styled(Layout)`
         @media ${DEVICE.laptopM} {
             padding-bottom: 10px;
         }
+    }
+
+    .notif-container {
+        transform: translate(-28%, -100%);
     }
 `
 

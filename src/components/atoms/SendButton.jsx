@@ -7,7 +7,7 @@ export default function SendButton({ text, loading, onClick, disabled, color = C
     return (
         <Container
             className={`${loading ? 'loading' : ''} ${className}`}
-            disabled={disabled}
+            disabled={disabled || loading}
             onClick={onClick}
             color={color}
         >
@@ -24,7 +24,7 @@ const Container = styled.button`
     justify-content: center;
     align-items: center;
 
-    padding: 0.85em 3.1em;
+    padding: 0.7em 1.8em;
     border-radius: 2.7em;
     border: 1px solid ${({color}) => color};
     background-color: ${({color}) => color};
@@ -88,10 +88,6 @@ const Container = styled.button`
     }
 
     @media ${DEVICE.laptopM} {
-        font-size: 16px;
-    }
-
-    @media ${DEVICE.laptopS} {
         font-size: 15.5px;
     }
 `

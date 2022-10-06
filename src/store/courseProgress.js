@@ -1,8 +1,66 @@
 /* eslint-disable class-methods-use-this */
 import { makeAutoObservable } from "mobx"
-import { coursePagesData, timelineData } from "../data"
+import { coursePagesData, timelineData, menuButtonData } from "../data"
 import { COLORS } from "../constants"
 import { sectColors, sectsProgressTypes } from "../data/coursePagesData/general"
+
+const initialVisitedPages = {
+    1: {
+        intro: false,
+        1: [],
+        4: [],
+        3: [],
+        2: [],
+        test: false,
+    },
+    2: {
+        intro: false,
+        1: [],
+        2: [],
+        3: [],
+        test: false,
+    },
+    3: {
+        intro: false,
+        1: [],
+        2: [],
+        3: [],
+        4: [],
+        5: [],
+        6: [],
+        7: [],
+        8: [],
+        test: false,
+    },
+    4: {
+        intro: false,
+        1: [],
+        2: [],
+        3: [],
+        4: [],
+        5: [],
+        6: [],
+        7: [],
+        test: false,
+    },
+    5: {
+        intro: false,
+        1: [],
+        2: [],
+        3: [],
+        4: [],
+        5: [],
+        test: false,
+    },
+    6: {
+        intro: false,
+        1: [],
+        2: [],
+        3: [],
+        4: [],
+        test: false,
+    },
+}
 
 class CourseProgress {
     activeSectId = 1
@@ -17,8 +75,6 @@ class CourseProgress {
 
     userVisitedAnyChapter = false
 
-    dontShowInstructionExpires = 0
-
     notifPos = { left: 0, top: 0 }
 
     notifTimeoutId = null
@@ -27,63 +83,7 @@ class CourseProgress {
 
     isWrongPath = false
 
-    visitedPages = {
-        1: {
-            intro: false,
-            1: [],
-            4: [],
-            3: [],
-            2: [],
-            test: false,
-        },
-        2: {
-            intro: false,
-            1: [],
-            2: [],
-            3: [],
-            test: false,
-        },
-        3: {
-            intro: false,
-            1: [],
-            2: [],
-            3: [],
-            4: [],
-            5: [],
-            6: [],
-            7: [],
-            8: [],
-            test: false,
-        },
-        4: {
-            intro: false,
-            1: [],
-            2: [],
-            3: [],
-            4: [],
-            5: [],
-            6: [],
-            7: [],
-            test: false,
-        },
-        5: {
-            intro: false,
-            1: [],
-            2: [],
-            3: [],
-            4: [],
-            5: [],
-            test: false,
-        },
-        6: {
-            intro: false,
-            1: [],
-            2: [],
-            3: [],
-            4: [],
-            test: false,
-        },
-    }
+    visitedPages = initialVisitedPages
 
     constructor() {
         makeAutoObservable(this)
@@ -135,6 +135,7 @@ class CourseProgress {
         return this.isWrongPath ? COLORS.green : sectColors[this.activeSectId]
     }
 
+    // тип прогресса активной секции (для StepProgressBar)
     get progressType() {
         return this.isWrongPath
             ? "grass"
@@ -220,7 +221,9 @@ class CourseProgress {
     }
 
     get isTestAvailable() {
-        const chapterSects = Object.keys(this.visitedPages[this.activeChapterId])
+        const chapterSects = Object.keys(
+            this.visitedPages[this.activeChapterId]
+        )
         const okChapterSects = chapterSects.filter((sect) => sect !== "test")
         const notComplSect = okChapterSects.find(
             (sectId) => !this.isSectCompleted(sectId)
@@ -240,6 +243,28 @@ class CourseProgress {
         return this.nextPageLink.includes("test")
     }
 
+    // разделы, которые уже изучались (для WelcomeBackModal)
+    get startedLearnChapters() {
+        return Object.keys(this.visitedPages)
+            .filter((id) => this.chapterProgressPercent(id) !== 0)
+            .map((i) => +i)
+    }
+
+    // данные для разделов, которые уже изучались (для WelcomeBackModal)
+    get welcomeBtnsData() {
+        const data = menuButtonData.filter((i) =>
+            this.startedLearnChapters.includes(i.id)
+        )
+        return data
+    }
+
+    // начал ли пользователь изучение какого-либо из разделов
+    get userStartedLearnAnyChapter() {
+        return this.startedLearnChapters.length !== 0
+    }
+
+    // ссылка для кнопки секции в таймлайне
+    // (чтобы перенаправлять пользователя на актуальную страницу)
     timelineBtnLink(sectId, isTest) {
         if (isTest) return "test"
 
@@ -256,6 +281,7 @@ class CourseProgress {
         return `topic${sectId}/point1`
     }
 
+    // количество всех страниц в разделе
     chapterPagesCount(chapterId) {
         if (coursePagesData[chapterId]) {
             // потому что + тест и введение
@@ -278,11 +304,13 @@ class CourseProgress {
         return 0
     }
 
+    // количество страниц в секции
     sectPagesCount(chapterId, sectId) {
         const pages = Object.keys(coursePagesData[chapterId][sectId].pages)
         return pages.length
     }
 
+    // количество посещенных страниц в разделе
     chapterVisitedPagesCount(chapterId) {
         if (this.visitedPages[chapterId]) {
             let count = 0
@@ -305,6 +333,7 @@ class CourseProgress {
         return 0
     }
 
+    // прогресс прохождения раздела
     chapterProgressPercent(chapterId = 1) {
         const percent =
             (this.chapterVisitedPagesCount(chapterId) * 100) /
@@ -312,6 +341,7 @@ class CourseProgress {
         return Math.trunc(percent)
     }
 
+    // пройдена ли страница (для таймлайна)
     isPageCompleted(sectId, pageId) {
         const sectPagesArr = this.visitedPages[this.activeChapterId][sectId]
         if (sectPagesArr) {
@@ -321,6 +351,7 @@ class CourseProgress {
         return false
     }
 
+    // доступна ли секция (нет, если предыдущие не пройдены)
     isSectAvailable(sectId) {
         if (sectId === "intro") return true
 
@@ -344,6 +375,7 @@ class CourseProgress {
         return isSectAvailable
     }
 
+    // доступна ли страница (нет, если предыдущие секции и страницы до этой в данной секции не пройдены)
     isPageAvailable(chapterId, sectId, pageId) {
         const visitedSects = this.visitedPages[chapterId]
 
@@ -368,6 +400,7 @@ class CourseProgress {
         return pageAvailable
     }
 
+    // пройдена ли секция (для отображения в таймлайне)
     isSectCompleted(sectId) {
         if (sectId === "test") {
             return this.visitedPages[this.activeChapterId].test
@@ -390,18 +423,22 @@ class CourseProgress {
         return false
     }
 
+    // данные, которые надо сохранить в cookies
     get dataForCookies() {
         return {
             visitedPages: this.visitedPages,
         }
     }
 
+    resetProgress() {
+        this.visitedPages = initialVisitedPages
+        this.userVisitedAnyChapter = true
+    }
+
     setDataFromCookies(dataString) {
         const data = JSON.parse(dataString)
 
-        const {
-            visitedPages,
-        } = data
+        const { visitedPages } = data
 
         if (visitedPages) {
             this.visitedPages = visitedPages

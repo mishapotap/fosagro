@@ -21,7 +21,7 @@ const Content = styled.div``
 
 const Decor = styled.div`
     flex-shrink: 0;
-    width: 3.9vw;
+    width: 2.5vw;
     height: 2px;
     margin-top: 3px;
     margin-right: 20px;

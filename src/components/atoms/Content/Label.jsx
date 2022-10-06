@@ -11,9 +11,13 @@ export default function Label({ data }) {
 
 const Container = styled.div`
     font-family: "FocoBold", sans-serif;
-    font-size: 1.2vw;
+    font-size: 1.15vw;
     line-height: 1.3;
     max-width: 36vw;
+
+    @media ${DEVICE.laptopM} {
+        font-size: 1.13vw;
+    }
 
     @media ${DEVICE.laptopS} {
         font-size: 17px;

@@ -152,9 +152,23 @@ const Container = styled.div`
                 background-repeat: no-repeat;
                 background-size: contain;
                 background-color: unset;
+
+                &:after {
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 50%;
+                    background-color: black;
+                    opacity: 0.3;
+                }
             }
             ${CircleContent} {
                 position: absolute;
+                z-index: 10;
                 margin-top: 20px;
                 width: 160%;
                 transform: scale(0.6);
@@ -183,7 +197,7 @@ const Container = styled.div`
 `
 
 const Text = styled.span`
-    max-width: 89.6%;
+    max-width: 88.7%;
     text-align: center;
     /* text */
     font-family: "FocoBold";
@@ -191,9 +205,11 @@ const Text = styled.span`
     font-size: 16px;
     line-height: 1.25;
     text-align: center;
+    word-break: break-word;
 
     @media ${DEVICE.laptopM} {
         font-size: 14px;
+        max-width: 86.2%;
     }
 `
 

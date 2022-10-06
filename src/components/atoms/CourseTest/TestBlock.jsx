@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-no-bind */
-import React, { useRef } from "react"
+import React, { useRef, useState, useEffect } from "react"
 import styled from "styled-components"
 import { observer } from "mobx-react-lite"
 import { CSSTransition } from "react-transition-group"
@@ -21,33 +22,85 @@ import { Click1 } from "../../../assets/audio"
 function TestBlock() {
     const testRef = useRef(null)
     const clickBtnSound = new Audio(Click1)
+    const [radioAnswId, setRadioAnswId] = useState(null)
+    const [chbAnswIds, setChbAnswIds] = useState([])
 
-    function handleInputChange(qId, aId) {
-        CourseTestStore.setUserAnswers(qId, aId)
+    const [activeQId, setActiveQId] = useState(1)
+
+    const [nextBtnDisabled, setNextBtnDisabled] = useState(true)
+
+    useEffect(() => {
+        if (CourseTestStore.activeQInputType === "checkbox") {
+            if (chbAnswIds.length > 0) {
+                setNextBtnDisabled(false)
+            } else {
+                setNextBtnDisabled(true)
+            }
+        }
+
+        if (CourseTestStore.activeQInputType === "radio") {
+            if (radioAnswId) {
+                setNextBtnDisabled(false)
+            } else {
+                setNextBtnDisabled(true)
+            }
+        }
+    }, [chbAnswIds, radioAnswId])
+
+    // можно переключиться, даже если не отмечено ничего
+    // надо по-другому проверять
+    function handleInputChange({target}, qId, aId) {
+        const { type } = target
+
+        if (type === "radio") {
+            setRadioAnswId(aId)
+        } else {
+            // eslint-disable-next-line no-lonely-if
+            if (target.checked) {
+                setChbAnswIds((prevAnswIds) => ([...prevAnswIds, aId]))
+            } else {
+                setChbAnswIds((prevAnswIds) => prevAnswIds.filter(i => i !== aId))
+            }
+        }
     }
 
     function handleSlideChange(swiper) {
         const { activeIndex } = swiper
 
         const actQId = CourseTestStore.testQsData[activeIndex].id
-        CourseTestStore.setActiveQId(actQId)
+        setActiveQId(actQId)
     }
 
     function handleNextClick() {
         clickBtnSound.play()
 
+        if (CourseTestStore.activeQInputType === "checkbox") {
+            CourseTestStore.setUserAnswers(CourseTestStore.activeQId, chbAnswIds)
+            setChbAnswIds([])
+        } else {
+            CourseTestStore.setUserAnswers(CourseTestStore.activeQId, radioAnswId)
+            setRadioAnswId(null)
+        }
+
+        CourseTestStore.setActiveQId(activeQId)
+
+        // если последний слайд, прячем тест и устанавливаем его пройденным
         if (CourseTestStore.isLastSlide) {
             CourseTestStore.setShowTest(false)
+
             setTimeout(() => {
                 CourseTestStore.setUserPassedTest(true)
                 CourseProgressStore.setTestPassed()
-            }, 500);
+            }, 500)
         }
+
+        // обновляем состояние дерева
         CourseTestStore.setTreeRightAnswCount()
     }
 
     function handleReachEnd() {
         CourseTestStore.setShowEndTestBtn(true)
+
         setTimeout(() => {
             CourseTestStore.setIsLastSlide(true)
         }, 500)
@@ -81,31 +134,55 @@ function TestBlock() {
                         fadeEffect={{ crossFade: true }}
                         speed={400}
                     >
-                        {CourseTestStore.testQsData.map(({ id: qId, title, items }) => (
-                            <SwiperSlide key={qId}>
-                                <SlideContent>
-                                    <Question>{title}</Question>
-                                    <Answers>
-                                        {items.map(({ id: itemId, text }) => (
-                                            <AnswerLabel key={itemId}>
-                                                <Input
-                                                    type="radio"
-                                                    name={`q-${qId}`}
-                                                    onChange={() =>
-                                                        handleInputChange(
-                                                            qId,
-                                                            itemId
-                                                        )
-                                                    }
-                                                />
-                                                <RadioBox />
-                                                <AnswerText>{text}</AnswerText>
-                                            </AnswerLabel>
-                                        ))}
-                                    </Answers>
-                                </SlideContent>
-                            </SwiperSlide>
-                        ))}
+                        {CourseTestStore.testQsData.map(
+                            ({ id: qId, title, items, correct }) => (
+                                <SwiperSlide key={qId}>
+                                    <SlideContent>
+                                        <Question>{title}</Question>
+                                        <Answers>
+                                            {items.map(
+                                                ({ id: itemId, text }) => (
+                                                    <AnswerLabel key={itemId}>
+                                                        {typeof correct ===
+                                                        "object" ? (
+                                                            <Input
+                                                                type="checkbox"
+                                                                name={`q-${qId}`}
+                                                                onChange={(e) =>
+                                                                    handleInputChange(
+                                                                        e,
+                                                                        qId,
+                                                                        itemId
+                                                                    )
+                                                                }
+                                                            />
+                                                        ) : (
+                                                            <Input
+                                                                type="radio"
+                                                                name={`q-${qId}`}
+                                                                value={itemId}
+                                                                onChange={(e) =>
+                                                                    handleInputChange(
+                                                                        e,
+                                                                        qId,
+                                                                        itemId
+                                                                    )
+                                                                }
+                                                            />
+                                                        )}
+
+                                                        <RadioBox />
+                                                        <AnswerText>
+                                                            {text}
+                                                        </AnswerText>
+                                                    </AnswerLabel>
+                                                )
+                                            )}
+                                        </Answers>
+                                    </SlideContent>
+                                </SwiperSlide>
+                            )
+                        )}
 
                         <TestNav>
                             <NextButton
@@ -114,7 +191,8 @@ function TestBlock() {
                                         ? "Завершить"
                                         : "Следующий вопрос"
                                 }
-                                inert={CourseTestStore.nextBtnDisabled}
+                                // inert={CourseTestStore.nextBtnDisabled}
+                                inert={nextBtnDisabled}
                                 className="button-next"
                                 onClick={handleNextClick}
                             />
@@ -207,7 +285,7 @@ const TestSlider = styled.div`
 const SlideContent = styled.div``
 
 const Question = styled(Label)`
-    line-height: 1.28;
+    line-height: 1.18;
     margin-bottom: 3.7vh;
     max-width: 33vw;
 

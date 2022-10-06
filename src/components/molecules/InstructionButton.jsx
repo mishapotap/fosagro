@@ -24,7 +24,7 @@ import { Click1 } from "../../assets/audio"
     }
 
     return (
-        <Wrapper>
+        <Wrapper data-open-modal-btn>
             <Link to="instruction">
                 <AnimatedBlueButton
                     background={background}

@@ -9,7 +9,12 @@ import { MenuButton, FooterHome } from "../molecules"
 import { OOH } from "../../assets/svg/static"
 import { MainBG } from "../../assets/video"
 import { COLORS, DEVICE } from "../../constants"
-import { Layout, CookieModal, CookiesInfoModal } from "../atoms"
+import {
+    Layout,
+    CookieModal,
+    CookiesInfoModal,
+    WelcomeBackModal,
+} from "../atoms"
 import { Click2, MainTitle, MainSupTitle } from "../../assets/audio"
 import { SoundStore, ModalStore } from "../../store"
 
@@ -34,44 +39,50 @@ function Home() {
     }, [location])
 
     useEffect(() => {
-        // eslint-disable-next-line no-unused-expressions, no-use-before-define
-        (!SoundStore.getIsPlaying() || ModalStore.isVisible.mail || ModalStore.isVisible.instruction) && removeActiveTitleSound()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [SoundStore.getIsPlaying(), ModalStore.isVisible.mail, ModalStore.isVisible.instruction])
+        // eslint-disable-next-line no-unused-expressions
+        ;(!SoundStore.getIsPlaying() ||
+            ModalStore.isVisible.mail ||
+            ModalStore.isVisible.instruction) &&
+            // eslint-disable-next-line no-use-before-define
+            removeActiveTitleSound()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [
+        SoundStore.getIsPlaying(),
+        ModalStore.isVisible.mail,
+        ModalStore.isVisible.instruction,
+    ])
 
     function removeActiveTitleSound() {
-        if(isTitlePlaying) {
+        if (isTitlePlaying) {
             titleSoundRef.current.pause()
-            titleRef.current.classList.remove('active')
+            titleRef.current.classList.remove("active")
             setIsTitlePlaying(false)
         }
-        if(isSupTitlePlaying) {
+        if (isSupTitlePlaying) {
             supTitleSoundRef.current.pause()
-            supTitleRef.current.classList.remove('active')
+            supTitleRef.current.classList.remove("active")
             setIsSupTitlePlaying(false)
         }
     }
 
     function activeTitleSound() {
         setTimeout(() => {
-
             titleSoundRef.current.play()
             setIsTitlePlaying(true)
-            titleRef.current.classList.add('active')
+            titleRef.current.classList.add("active")
 
-            titleSoundRef.current.addEventListener('ended', () => {
+            titleSoundRef.current.addEventListener("ended", () => {
                 setIsTitlePlaying(false)
-                titleRef.current.classList.remove('active')
+                titleRef.current.classList.remove("active")
 
                 setTimeout(() => {
-
                     supTitleSoundRef.current.play()
                     setIsSupTitlePlaying(true)
-                    supTitleRef.current.classList.add('active')
+                    supTitleRef.current.classList.add("active")
 
-                    supTitleSoundRef.current.addEventListener('ended', () => {
+                    supTitleSoundRef.current.addEventListener("ended", () => {
                         setIsSupTitlePlaying(false)
-                        supTitleRef.current.classList.remove('active')
+                        supTitleRef.current.classList.remove("active")
                     })
                 }, 500)
             })
@@ -80,13 +91,20 @@ function Home() {
 
     useEffect(() => {
         function playTitle() {
+
+            if (
+                ModalStore.isVisible.cookie ||
+                ModalStore.isVisible.welcomeBack
+            ) {
+                return
+            }
             // eslint-disable-next-line no-unused-expressions
-            !SoundStore.getPlayedTitleSound(`title`) && !ModalStore.isVisible.mail 
+            !SoundStore.getPlayedTitleSound(`title`) && !ModalStore.isVisible.mail
             && !ModalStore.isVisible.instruction && activeTitleSound();
             SoundStore.setPlayedTitleSound('title', true)
             window.removeEventListener("click", playTitle)
         }
-        window.addEventListener("click", playTitle, { ones: true})
+        window.addEventListener("click", playTitle, { ones: true })
     }, [])
 
     return (
@@ -110,7 +128,9 @@ function Home() {
                 <ContentWrapper>
                     <Content>
                         <TextContainer>
-                            <Title ref={titleRef}>Курс “Устойчивое развитие”</Title>
+                            <Title ref={titleRef}>
+                                Курс “Устойчивое развитие”
+                            </Title>
                             <Suptitle ref={supTitleRef}>
                                 <div>
                                     Компания ФосАгро напрямую способствует
@@ -145,13 +165,14 @@ function Home() {
                         </MenuContainer>
                     </Content>
                 </ContentWrapper>
-                <FooterHome/>
-                <AudioTitle src={ MainTitle } ref={titleSoundRef}/>
-                <AudioTitle src={ MainSupTitle } ref={supTitleSoundRef}/>
+                <FooterHome />
+                <AudioTitle src={MainTitle} ref={titleSoundRef} />
+                <AudioTitle src={MainSupTitle} ref={supTitleSoundRef} />
             </Container>
             <Outlet />
-            <CookieModal/>
-            <CookiesInfoModal/>
+            <CookieModal />
+            <CookiesInfoModal />
+            <WelcomeBackModal />
         </Layout>
     )
 }
@@ -207,8 +228,8 @@ const Background = styled.div`
             ),
             linear-gradient(
                 104.45deg,
-                rgba(0, 0, 0, 0.09) -17.88%,
-                rgba(0, 0, 0, 0.074287) 43.09%,
+                rgba(0, 0, 0, 0.25) -17.88%,
+                rgba(0, 0, 0, 0.206353) 43.09%,
                 rgba(0, 0, 0, 0) 98.09%
             ),
             linear-gradient(

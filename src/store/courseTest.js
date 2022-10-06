@@ -109,15 +109,19 @@ class CourseTest {
         makeAutoObservable(this)
     }
 
+    get activeTestData() {
+        return this.tests[this.activeChapterId]
+    }
+
     get learnSectsData() {
         const courseData = coursePagesData[this.activeChapterId]
         const sectsData = this.learnSectsIds.map((id) => {
-            if (id === 'intro') {
+            if (id === "intro") {
                 return {
                     id,
-                    title: 'Введение',
+                    title: "Введение",
                     link: `/course${this.activeChapterId}/intro`,
-                    color: sectColors.intro
+                    color: sectColors.intro,
                 }
             }
             const { sectTitle } = courseData[id]
@@ -141,71 +145,81 @@ class CourseTest {
     }
 
     get showStart() {
-        return this.tests[this.activeChapterId].showStart
+        return this.activeTestData.showStart
     }
 
     get showTest() {
-        return this.tests[this.activeChapterId].showTest
+        return this.activeTestData.showTest
     }
 
     get showFinal() {
-        return this.tests[this.activeChapterId].showFinal
+        return this.activeTestData.showFinal
     }
 
     get showTreeInit() {
-        return this.tests[this.activeChapterId].showTreeInit
+        return this.activeTestData.showTreeInit
     }
 
     get showTreeStart() {
-        return this.tests[this.activeChapterId].showTreeStart
+        return this.activeTestData.showTreeStart
     }
 
     get showTreeWait() {
-        return this.tests[this.activeChapterId].showTreeWait
+        return this.activeTestData.showTreeWait
     }
 
     get showTreeEnd() {
-        return this.tests[this.activeChapterId].showTreeEnd
+        return this.activeTestData.showTreeEnd
     }
 
     get showEndTestBtn() {
-        return this.tests[this.activeChapterId].showEndTestBtn
+        return this.activeTestData.showEndTestBtn
     }
 
     get userPassedTest() {
-        return this.tests[this.activeChapterId].userPassedTest
+        return this.activeTestData.userPassedTest
     }
 
     get treeRightAnswCount() {
-        return this.tests[this.activeChapterId].treeRightAnswCount
+        return this.activeTestData.treeRightAnswCount
     }
 
     get nextCourseLink() {
         if (coursePagesData[+this.activeChapterId + 1]) {
             return `/course${+this.activeChapterId + 1}`
         }
-        return '/'
+        return "/"
+    }
+
+    // eslint-disable-next-line class-methods-use-this
+    isQAnswerCorrect(correct, answer) {
+        if (typeof correct === "object") {
+            const wrongAnsw = answer.find((id) => !correct.includes(id))
+            const correctAnswer = answer.find((id) => correct.includes(id))
+            if (!wrongAnsw && correctAnswer) {
+                return true
+            }
+            // eslint-disable-next-line eqeqeq
+        } else if (answer == correct) return true
+
+        return false
     }
 
     get learnSectsIds() {
         const wrongSectIds = []
 
-        Object.entries(this.userAnswers).forEach(([qId, answId]) => {
+        Object.entries(this.userAnswers).forEach(([qId, answer]) => {
             // eslint-disable-next-line eqeqeq
             const qData = this.testQsData.find(({ id }) => id == qId)
 
             const { correct, wrongAnswerSectId } = qData
 
-            if (qData) {
-                if (!wrongSectIds.includes(wrongAnswerSectId)) {
-                    if (typeof correct === "object") {
-
-                        if (!correct.includes(answId))
-                            wrongSectIds.push(wrongAnswerSectId)
-
-                    } else if (answId !== correct)
-                        wrongSectIds.push(wrongAnswerSectId)
-                }
+            if (
+                qData &&
+                !wrongSectIds.includes(wrongAnswerSectId) &&
+                !this.isQAnswerCorrect(correct, answer)
+            ) {
+                wrongSectIds.push(wrongAnswerSectId)
             }
         })
 
@@ -224,19 +238,35 @@ class CourseTest {
     }
 
     get userAnswers() {
-        return this.tests[this.activeChapterId].userAnswers
+        return this.activeTestData.userAnswers
     }
 
     get activeQId() {
-        return this.tests[this.activeChapterId].activeQId
+        return this.activeTestData.activeQId
+    }
+
+    get activeQInputType() {
+        return this.qInputType(this.activeQId)
+    }
+
+    qInputType(qid) {
+        // eslint-disable-next-line eqeqeq
+        const activeQData = this.testQsData.find((i) => i.id == qid)
+        if (activeQData) {
+            if (typeof activeQData.correct === "object") {
+                return "checkbox"
+            }
+            return "radio"
+        }
+        return "radio"
     }
 
     get isLastSlide() {
-        return this.tests[this.activeChapterId].isLastSlide
+        return this.activeTestData.isLastSlide
     }
 
     get nextBtnDisabled() {
-        if (!this.tests[this.activeChapterId].userAnswers[this.activeQId]) {
+        if (!this.activeTestData.userAnswers[this.activeQId]) {
             return true
         }
         return false
@@ -245,17 +275,13 @@ class CourseTest {
     get rightAnswersCount() {
         let count = 0
 
-        Object.entries(this.userAnswers).forEach(([qId, answId]) => {
+        Object.entries(this.userAnswers).forEach(([qId, answer]) => {
             // eslint-disable-next-line eqeqeq
             const qData = this.testQsData.find(({ id }) => id == qId)
-
             const { correct } = qData
 
             if (qData) {
-                // eslint-disable-next-line eqeqeq
-                if (typeof correct === 'object') {
-                    if (correct.includes(answId)) count += 1
-                } else if (answId === correct) count += 1
+                if (this.isQAnswerCorrect(correct, answer)) count += 1
             }
         })
         return count

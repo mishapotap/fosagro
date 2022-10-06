@@ -59,9 +59,7 @@ function CourseContent({ setIds, onDisappear }) {
     const [leftSlide, setLeftSlide] = useState(false)
     const [rightSlide, setRightSlide] = useState(false)
 
-    const [dontPlayMedia, setDontPlayMedia] = useState(false)
-
-    const [extModalLink, setExtModalLink] = useState("")
+    // const [dontPlayMedia, setDontPlayMedia] = useState(false)
 
     const [isAudioPaused, _setIsAudioPaused] = useState(true)
     const isAudioPausedRef = useRef(false)
@@ -268,7 +266,6 @@ function CourseContent({ setIds, onDisappear }) {
         if (isVideoRef.current) setVideoPlaying(false)
         if (isAnimationRef.current) setPauseAnim(true)
         if (isAudioRef.current) {
-            // console.log('makePause setAudioPlaying(false)');
             setAudioPlaying(false)
         }
     }
@@ -294,18 +291,17 @@ function CourseContent({ setIds, onDisappear }) {
     }
 
     // остановка/воспроизведение медиа при открытии модальных окон
-    // ! нет если extlink
     useEffect(() => {
         if (ModalStore.someModalShown) {
             makePause()
             // воспроизвести только если аудио/видео было остановлено автоматически,
             // а не самим пользователем
         } else if (autoPausedRef.current) {
-            if (!dontPlayMedia) {
+            if (!ModalStore.dontPlayOnClose) {
                 makePlay()
                 autoPausedRef.current = false
             }
-            setDontPlayMedia(false)
+            ModalStore.setDontPlayOnClose(false)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ModalStore.someModalShown])
@@ -318,39 +314,11 @@ function CourseContent({ setIds, onDisappear }) {
         }, 200)
     }
 
-    // остановка/включение медиа при уходе/возвращении на страницу
-    function handleVisibilityChange() {
-        if (document.visibilityState === "hidden") {
-            makePause()
-        }
-
-        // включаем только если было остановлено автоматически, а не сам пользователь остановил
-        if (document.visibilityState === "visible") {
-            if (autoPausedRef.current && !ModalStore.someModalShown) {
-                autoPausedRef.current = false
-                makePlay()
-            }
-        }
-    }
-
     // сбрасывание таймаутов
     function clearTimeouts() {
         if (audioTmId.current) clearTimeout(audioTmId.current)
         if (videoTmId.current) clearTimeout(videoTmId.current)
         if (animTmId.current) clearTimeout(animTmId.current)
-    }
-
-    // открытие модалки ExtLinkModal, при клике на ссылку, ведущую на сторонний ресурс
-    function handleDocClick(e) {
-        const { target } = e
-        const link = target.tagName === "A" ? target : target.closest("a")
-
-        if (link && link.hasAttribute("data-ext-link")) {
-            e.preventDefault()
-            const url = link.getAttribute("href")
-            setExtModalLink(url)
-            ModalStore.showModal("extLinks")
-        }
     }
 
     useEffect(() => {
@@ -359,17 +327,10 @@ function CourseContent({ setIds, onDisappear }) {
         SoundStore.setIsPlayingSound(false)
 
         const medColRef = mediaColRef.current
-        document.addEventListener("visibilitychange", handleVisibilityChange)
-        document.addEventListener("click", handleDocClick)
 
         return () => {
             clearTimeouts()
             unObserve(medColRef)
-            document.removeEventListener(
-                "visibilitychange",
-                handleVisibilityChange
-            )
-            document.addEventListener("click", handleDocClick)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
@@ -582,7 +543,7 @@ function CourseContent({ setIds, onDisappear }) {
                 onClick={makePlay}
             />
             {/* временно? */}
-            <ExtLinkModal link={extModalLink} onLeftSite={() => setDontPlayMedia(true)} />
+            {/* <ExtLinkModal onLeftSite={() => setDontPlayMedia(true)} /> */}
         </Columns>
     )
 }
@@ -613,7 +574,6 @@ const ContentColumn = styled.div`
     padding-right: 5px;
     overflow: hidden;
     height: 100%;
-    padding-bottom: 20px;
 
     .bubble-container {
         display: flex;
@@ -720,11 +680,11 @@ const slideRightExit = keyframes`
 
 const Columns = styled.div`
     display: grid;
-    grid-template: 22vh auto 105px / 7% 40% 53%;
+    grid-template: 18vh auto 105px / 7% 40% 53%;
     height: 100%;
 
     @media ${DEVICE.laptopM} {
-        grid-template: 18vh auto 105px / 7% 40% 53%;
+        grid-template: 16.6vh auto 105px / 7% 40% 53%;
     }
 
     @media ${DEVICE.laptopS} {
@@ -823,7 +783,7 @@ const Columns = styled.div`
         }
 
         @media ${DEVICE.laptop} {
-            max-width: 370px;
+            max-width: 410px;
         }
 
         @media ${DEVICE.laptopS} {

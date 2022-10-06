@@ -64,6 +64,7 @@ const ContentWrapper = styled.div`
 
 const StyledContent = styled.div`
     overflow: hidden;
+    height: 100%;
 
     @media ${DEVICE.laptopS} {
         overflow: visible;
@@ -72,16 +73,21 @@ const StyledContent = styled.div`
 
 const StyledContentBlock = styled(ContentBlock)`
     max-height: 100%;
+    height: 100%;
 
     .block-content {
         overflow: auto;
         padding-right: 10px;
 
         & > * {
-            margin-bottom: 2vh;
+            margin-bottom: 13px;
 
             &:last-child {
                 margin-bottom: 0;
+            }
+
+            @media ${DEVICE.laptopS} {
+                margin-bottom: 7px;
             }
 
             @media ${DEVICE.laptopS} {

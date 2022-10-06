@@ -30,7 +30,7 @@ const Container = styled.div``
 const ListItems = styled.ul``
 
 const StyledLeave = styled(Leave)`
-    width: 1.2vw;
+    width: 1.1vw;
     flex-shrink: 0;
     margin-right: 10px;
     margin-top: 2px;
@@ -49,16 +49,20 @@ const ListItem = styled.li`
         margin-bottom: 0;
     }
 
+    @media ${DEVICE.laptopM} {
+        margin-bottom: 5px;
+    }
+
     @media ${DEVICE.laptop} {
-        margin-bottom: 15px;
+        margin-bottom: 13px;
     }
 `
 
 const ListText = styled.div`
     font-family: "CalibriLight", sans-serif;
-    font-size: 1.3vw;
+    font-size: 1.2vw;
     color: ${COLORS.black};
-    line-height: 1.5;
+    line-height: 1.15;
 
     @media ${DEVICE.laptopM} {
         font-size: 1.2vw;

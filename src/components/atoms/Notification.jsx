@@ -1,18 +1,18 @@
 import React, { useRef } from "react"
 import styled from "styled-components"
 import { CSSTransition } from "react-transition-group"
-import { observer } from "mobx-react-lite"
 import { DEVICE, COLORS } from "../../constants"
-import { CourseProgressStore } from "../../store"
 
-function Notification({
+export default function Notification({
     text = "Эта тема станет доступной после изучения предыдущих",
+    show = false,
+    position = {},
 }) {
     const notifRef = useRef(null)
 
     return (
         <CSSTransition
-            in={CourseProgressStore.showNotification}
+            in={show}
             nodeRef={notifRef}
             timeout={300}
             mountOnEnter
@@ -21,22 +21,24 @@ function Notification({
             classNames="notif"
         >
             <Container
-                ref={notifRef}
-                className="notif"
-                style={CourseProgressStore.notifPos}
+                style={position}
+                className="notif-container"
             >
-                {text}
+                <StyledNotification className="notif" ref={notifRef}>
+                    {text}
+                </StyledNotification>
             </Container>
         </CSSTransition>
     )
 }
 
-export default observer(Notification)
-
-const Container = styled.div`
-    position: fixed;
-    max-width: 16.7vw;
+const StyledNotification = styled.div`
+    width: 16.7vw;
+    height: 100%;
     padding: 20px;
+
+    border-radius: 1.15em;
+    background-color: rgba(255, 255, 255, 0.85);
 
     font-family: CalibriLight, sans-serif;
     font-size: 0.95vw;
@@ -44,32 +46,33 @@ const Container = styled.div`
     text-align: center;
     line-height: 1.38;
 
-    background-color: rgba(255, 255, 255, 0.85);
-    border-radius: 1.15em;
-
-    transform: translate(-50%);
-    z-index: 150;
-
-    @media ${DEVICE.laptopM} {
-        max-width: 230px;
-    }
-
     @media ${DEVICE.laptop} {
         font-size: 14px;
     }
+`
 
-    &.notif {
+const Container = styled.div`
+    position: fixed;
+    transform: translate(-50%, -100%);
+    z-index: 150;
+    cursor: auto;
+
+    @media ${DEVICE.laptopM} {
+        width: 230px;
+    }
+
+    .notif {
         transition: 0.3s;
         opacity: 0;
         transform: scale(0.95);
     }
 
-    &.notif-enter-done {
+    .notif-enter-done {
         opacity: 1;
         transform: scale(1);
     }
 
-    &.notif-exit {
+    .notif-exit {
         opacity: 0;
         transform: scale(0.95);
     }

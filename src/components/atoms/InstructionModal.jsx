@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 /* eslint-disable react/jsx-no-bind */
 import "wicg-inert"
-import React, { useState } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import styled, { css, keyframes } from "styled-components"
 import { observer } from "mobx-react-lite"
 import { Link } from "react-router-dom"
@@ -58,6 +58,11 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
     const [pauseAnims, setPauseAnims] = useState({ 0: false, 1: false })
     const [playAudio, setPlayAudio] = useState({ 0: false, 1: false })
 
+    const activeSlideIdxRef = useRef(0)
+    const autoPausedRef = useRef(false)
+
+    const isAudioPlayingRef = useRef({0: false, 1: false})
+
     const closeInstructionModal = () => {
         ModalStore.closeModal("instruction")
         // eslint-disable-next-line no-unused-expressions
@@ -72,6 +77,9 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
 
     function handleSlideChange(swiper) {
         const { activeIndex } = swiper
+        activeSlideIdxRef.current = activeIndex
+        // console.log('поставить activeSlideIdxRef.current', activeIndex);
+
         if (activeIndex === 0) {
             if (makeAnim) {
                 setPauseAnims({ 0: false, 1: true })
@@ -100,11 +108,21 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
     }
 
     function handleAudioPlay(index) {
+        isAudioPlayingRef.current = {...isAudioPlayingRef.current, [index]: true}
         setPauseAnims((pauseAnimsVal) => ({ ...pauseAnimsVal, [index]: false }))
+        // setPauseAnims((pauseAnimsVal) => ({ ...pauseAnimsVal, [index]: true }))
+        // setTimeout(() => {
+        //     setPauseAnims((pauseAnimsVal) => ({ ...pauseAnimsVal, [index]: false }))
+        // }, 50);
     }
 
     function handleAudioPause(index) {
+        isAudioPlayingRef.current = {...isAudioPlayingRef.current, [index]: false}
         setPauseAnims((pauseAnimsVal) => ({ ...pauseAnimsVal, [index]: true }))
+        // setPauseAnims((pauseAnimsVal) => ({ ...pauseAnimsVal, [index]: false }))
+        // setTimeout(() => {
+        //     setPauseAnims((pauseAnimsVal) => ({ ...pauseAnimsVal, [index]: true }))
+        // }, 50);
     }
 
     const isVisible = (ele, container) => {
@@ -116,12 +134,57 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
             : bottom - containerRect.bottom <= height
     }
 
+    // проскроллить элемент, который анимируется, в область видимости (для моб)
     function handleContainerAnimStart(e) {
         const container = e.target.closest(".slide-inner")
         if (container && !isVisible(e.target, container)) {
             e.target.scrollIntoView({ behavior: "smooth" })
         }
     }
+
+    // надо врубать звук заново при закрытии
+    function onCookiesInfoClick() {
+        ModalStore.showModal("cookiesInfo")
+    }
+
+    useEffect(() => {
+        // проверить не будет ли багов
+        // выключить звук при открытии модалки с информацией о куки
+        if (ModalStore.isVisible.cookiesInfo) {
+            if (isAudioPlayingRef.current[activeSlideIdxRef.current]) {
+                setPlayAudio((prevPlayAudio) => ({
+                    ...prevPlayAudio,
+                    [activeSlideIdxRef.current]: true,
+                }))
+
+                setTimeout(() => {
+                    setPlayAudio((prevPlayAudio) => ({
+                        ...prevPlayAudio,
+                        [activeSlideIdxRef.current]: false,
+                    }))
+                }, 100)
+
+                autoPausedRef.current = true
+            }
+            // включить звук при закрытии модалки с информацией о куки
+            // (если он был остановлен автоматически, а не самим пользователем)
+        } else if (autoPausedRef.current) {
+            setPlayAudio((prevPlayAudio) => ({
+                ...prevPlayAudio,
+                [activeSlideIdxRef.current]: false,
+            }))
+
+            setTimeout(() => {
+                setPlayAudio((prevPlayAudio) => ({
+                    ...prevPlayAudio,
+                    [activeSlideIdxRef.current]: true,
+                }))
+            }, 100)
+
+            autoPausedRef.current = false
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ModalStore.isVisible.cookiesInfo])
 
     return (
         <StyledModal
@@ -310,11 +373,11 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                             </SlideColsInner>
                                         </Slide1Cols>
                                     </SlideContentWrapper>
-                                    {/* <CookiesInfoLink
-                                        onClick={() => ModalStore.showModal('cookiesInfo')}
+                                    <CookiesInfoLink
+                                        onClick={() => onCookiesInfoClick(0)}
                                     >
                                         Информация о cookies
-                                    </CookiesInfoLink> */}
+                                    </CookiesInfoLink>
                                     <StyledAudioPlayer
                                         src={Instruction1}
                                         isPlaying={playAudio[0]}
@@ -323,7 +386,6 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                         onEnded={() => handleAudioEnded(0)}
                                     />
                                 </SlideInner>
-
                             </SwiperSlide>
                             <SwiperSlide>
                                 <SlideInner className="slide-inner">
@@ -412,7 +474,11 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                                             />
                                                         </ElIcon>
                                                         <Text className="text-sound-btn">
-                                                        Элемент включения/отключения фонового голосового и музыкального сопровождения курса.
+                                                            Элемент
+                                                            включения/отключения
+                                                            фонового голосового
+                                                            и музыкального
+                                                            сопровождения курса.
                                                         </Text>
                                                     </IconRow>
                                                     <IconRow>
@@ -465,11 +531,11 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                             </Link>
                                         </StartLearn>
                                     </SlideContentWrapper>
-                                    {/* <CookiesInfoLink
-                                        onClick={() => ModalStore.showModal('cookiesInfo')}
+                                    <CookiesInfoLink
+                                        onClick={() => onCookiesInfoClick(1)}
                                     >
                                         Информация о cookies
-                                    </CookiesInfoLink> */}
+                                    </CookiesInfoLink>
                                     <StyledAudioPlayer
                                         src={Instruction2}
                                         isPlaying={playAudio[1]}
@@ -478,7 +544,6 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                         onEnded={() => handleAudioEnded(1)}
                                     />
                                 </SlideInner>
-
                             </SwiperSlide>
                             <CircleBtn className="button-prev">
                                 <ArrowLeft color={COLORS.blue} />
@@ -504,7 +569,7 @@ const CookiesInfoLink = styled.button`
     transform: translate(-50%);
     z-index: 50;
 
-    font-size: 1.2vw;
+    font-size: 1.16vw;
     color: ${COLORS.blue};
     border-bottom: 1px solid ${COLORS.blue};
 
@@ -710,7 +775,6 @@ const SlideColsInner = styled.div`
 `
 
 const SlideContentWrapper = styled.div`
-
     display: flex;
     align-items: center;
     justify-content: center;

@@ -10,12 +10,12 @@ export default function Text({ data: { text }, className }) {
 
 const Container = styled.p`
     font-family: "CalibriLight", sans-serif;
-    font-size: 1.24vw;
-    line-height: 1.56;
+    font-size: 1.2vw;
+    line-height: 1.25;
     color: ${COLORS.black};
 
     @media ${DEVICE.laptopM} {
-        font-size: 1.2vw;
+        font-size: 1.1vw;
     }
 
     @media ${DEVICE.laptop} {
