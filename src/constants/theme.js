@@ -16,7 +16,7 @@ export const COLORS = {
     grey: "#D9D9D9",
     grey_light: "#707372",
     turquoise: "#00859B",
-    coral: "#C14C27",
+    green_bright: '#43B02A',
     copy_right: "#bec4c7",
 }
 

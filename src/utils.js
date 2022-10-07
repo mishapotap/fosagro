@@ -33,14 +33,7 @@ export async function makePostRequest(url, data) {
         throw new Error(`Could not fetch ${url}, status: ${response.status}`)
     }
 
-    // eslint-disable-next-line no-new
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            // eslint-disable-next-line no-new
-            // reject(new Error("Test error"))
-            resolve("success")
-        }, 3000)
-    })
+    return response
 }
 
 // получение положения элемента относительно окна

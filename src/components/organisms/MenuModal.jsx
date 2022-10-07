@@ -57,6 +57,8 @@ const MenuContainer = styled.div`
     overflow: hidden;
     @media ${DEVICE.laptopS} {
         padding: 5vw;
+        height: auto;
+        overflow: auto;
     }
 
     @media ${DEVICE.mobile} {

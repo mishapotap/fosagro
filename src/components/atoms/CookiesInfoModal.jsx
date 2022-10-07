@@ -25,8 +25,8 @@ function CookiesInfoModal() {
         if (CookiesStore.userAcceptedCookies) {
             ModalStore.showModal("confirm")
         } else {
-            const {top, leftCenter} = getElWindowPos(target)
-            const notificPos = {top: `${top - 20}px`, left: `${leftCenter}px`}
+            const { top, leftCenter } = getElWindowPos(target)
+            const notificPos = { top: `${top - 20}px`, left: `${leftCenter}px` }
 
             setNotifPos(notificPos)
             setShowNotif(true)
@@ -55,6 +55,10 @@ function CookiesInfoModal() {
                             <Column2>
                                 <TextWrapper>
                                     <Text>
+                                        Данный учебный курс реализован в виде
+                                        веб-сайта/приложения.
+                                    </Text>
+                                    <Text>
                                         Файл «cookies» — небольшой фрагмент
                                         данных, отправленный веб-сервером и
                                         хранимый на компьютере пользователя.
@@ -69,7 +73,8 @@ function CookiesInfoModal() {
                                         Файл применяется для сохранения
                                         следующих данных на стороне
                                         пользователя: - отслеживания состояния
-                                        сеанса работы пользователя в проекте.
+                                        сеанса работы пользователя в учебном
+                                        курсе (веб-сайт/приложение).
                                     </Text>
                                     <Text>
                                         Также для сбора статистических сведений
@@ -80,28 +85,33 @@ function CookiesInfoModal() {
                                         Проект не собирает и не передает
                                         персональные данные пользователя.
                                     </Text>
+                                    <Text>
+                                        Файл «cookies» автоматически удаляется
+                                        через 30 дней, после согласия
+                                        пользователя использовать файл.
+                                    </Text>
                                 </TextWrapper>
                             </Column2>
 
                             <Column3>
                                 <TextWrapper>
                                     <Text>
-                                        Файл «cookies» автоматически удаляется
-                                        через 30 дней, после согласия
-                                        пользователя использовать файл.
+                                        Учебный курс (веб-сайт/приложение)
+                                        использует файл «cookies» в целях
+                                        повышения удобства изучения и
+                                        отслеживания прогресса изучения
+                                        пользователем курса.{" "}
                                     </Text>
                                     <Text>
-                                        Образовательный проект
-                                        (веб-сайт/приложение) использует файл
-                                        «cookies» в целях повышения удобства
-                                        изучения проекта и отслеживания
-                                        прогресса изучения пользователем
-                                        проекта.
-                                    </Text>
-                                    <Text>
-                                        Продолжая работу с проектом, вы даете
+                                        Принимая файл «cookies» и продолжая
+                                        работу с данным учебным курсом, вы даете
                                         свое согласие ПАО «ФосАгро» на обработку
-                                        указанных выше данных.
+                                        указанных выше данных.{" "}
+                                    </Text>
+                                    <Text>
+                                        Если вы не хотите использовать файл
+                                        «cookies», воспользуйтесь вариантом
+                                        курса без использования «cookies».{" "}
                                     </Text>
                                 </TextWrapper>
                                 <StyledTitle color={COLORS.blue}>
@@ -122,7 +132,12 @@ function CookiesInfoModal() {
                                         text="Удалить cookies"
                                         onClick={checkCookies}
                                     />
-                                    <Link to="instruction" onClick={() => ModalStore.closeModal("cookiesInfo")} >
+                                    <Link
+                                        to="instruction"
+                                        onClick={() =>
+                                            ModalStore.closeModal("cookiesInfo")
+                                        }
+                                    >
                                         <GoToInstrBtn>
                                             Перейти в инструкцию
                                         </GoToInstrBtn>
@@ -188,11 +203,12 @@ const Column = styled.div``
 
 const Columns = styled.div`
     display: grid;
-    grid-template: 11vh auto / repeat(2, 48%);
+    grid-template: 9vh auto / repeat(2, 48%);
     justify-content: space-between;
 
     max-height: 100%;
     overflow: auto;
+    padding-bottom: 4vh;
 
     &::-webkit-scrollbar {
         width: 0;
@@ -201,6 +217,7 @@ const Columns = styled.div`
     @media ${DEVICE.laptopS} {
         grid-template: repeat(3, auto) / 1fr;
         padding-right: 10px;
+        padding-bottom: 5px;
     }
 
     max-width: 82vw;
@@ -221,8 +238,8 @@ const Columns = styled.div`
 
 const Text = styled.p`
     font-family: "CalibriLight", sans-serif;
-    line-height: 1.33;
-    font-size: 1.3vw;
+    line-height: 1.25;
+    font-size: 1.25vw;
     color: ${COLORS.black};
 
     @media ${DEVICE.laptopM} {

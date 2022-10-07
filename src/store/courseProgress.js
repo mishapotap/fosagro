@@ -250,7 +250,7 @@ class CourseProgress {
             .map((i) => +i)
     }
 
-    // данные для разделов, которые уже изучались (для WelcomeBackModal)
+    // данные кнопок для разделов, которые уже изучались (для WelcomeBackModal)
     get welcomeBtnsData() {
         const data = menuButtonData.filter((i) =>
             this.startedLearnChapters.includes(i.id)
@@ -432,7 +432,7 @@ class CourseProgress {
 
     resetProgress() {
         this.visitedPages = initialVisitedPages
-        this.userVisitedAnyChapter = true
+        this.userVisitedAnyChapter = false
     }
 
     setDataFromCookies(dataString) {

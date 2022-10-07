@@ -52,11 +52,13 @@ function Media({ pauseAnim, videoPlaying, restartAnim, sliderDelay, makeSliderAu
 
     if (video) mediaProps = {...mediaProps, isPlaying: videoPlaying}
     if (circleSlider) mediaProps = {...mediaProps, delayTime: sliderDelay, makeAutoplay: makeSliderAutoplay}
+    // if (circleSlider) mediaProps = {...mediaProps, delayTime: sliderDelay, makeAutoplay: makeSliderAutoplay && !pauseAnim}
 
     return (
         <Container
             className={`${
                 animation && pauseAnim ? "anim-paused" : ""
+                // (animation || circleSlider) && pauseAnim ? "anim-paused" : ""
             } media-test`}
             video={video}
             circleSlider={circleSlider}
