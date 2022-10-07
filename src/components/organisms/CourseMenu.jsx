@@ -4,6 +4,8 @@ import styled from "styled-components"
 import { CourseStep } from "../molecules"
 import { Waves, Prev, Next } from "../../assets/svg"
 import { COLORS, DEVICE } from "../../constants"
+import { Click2} from "../../assets/audio"
+import { SoundStore } from "../../store"
 
 function CourseMenu({ dataLine, dataModal }) {
     const ref = useRef(null);
@@ -14,8 +16,11 @@ function CourseMenu({ dataLine, dataModal }) {
     const [startX, setstartX] = useState(0);
     const [scrollLeft, setscrollLeft] = useState(0);
 
+    const clickSound = new Audio(Click2)
+
     const handleMouseDown = (e) => {
-        if(e.target.parentNode === line.current) {
+        // console.log(e.target)
+        if(e.target === line.current) {
             setIsDown(true);
             ref.current.classList.add('active');
             setstartX(e.pageX - ref.current.offsetLeft);
@@ -70,6 +75,8 @@ function CourseMenu({ dataLine, dataModal }) {
 
     function handleNext() {
         setIsFinish(true)
+        // eslint-disable-next-line no-unused-expressions
+        SoundStore.getIsPlaying() && clickSound.play()
 
         buttonTime = 0
 
@@ -88,6 +95,8 @@ function CourseMenu({ dataLine, dataModal }) {
 
     function handlePrew() {
         setIsStart(true)
+        // eslint-disable-next-line no-unused-expressions
+        SoundStore.getIsPlaying() && clickSound.play()
 
         buttonTime = 0
 
@@ -115,7 +124,7 @@ function CourseMenu({ dataLine, dataModal }) {
                 onScroll={() => handleScroll()}
                 >
                 <Line width={dataLine.width} ref={line}>
-                    <Waves color={COLORS.white}/>
+                    <Waves color={COLORS.white} className="waves"/>
                 </Line>
                 {dataLine.timeline.map((section) => (
                     <CourseStep key={ section.id } sectId={section.id} intro={section.intro} test={section.test} button={section.button} points={section.points} dataModal={dataModal} className="active"/>
@@ -172,10 +181,16 @@ const MenuContainer = styled.div`
 const Line = styled.div`
     z-index: -1;
     position: absolute;
-    top: calc(50% - 110px);
     left: -377px;
+
     max-width: ${(props) => props.width}px;
+    height: 70%;
     overflow: hidden;
+
+    .waves {
+        position: relative;
+        top: calc(50% - 110px);
+    }
 `
 
 const Button = styled.div`

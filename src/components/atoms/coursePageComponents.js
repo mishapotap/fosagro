@@ -10,7 +10,7 @@ import { Ecology } from "../../assets/Course1/Topic2"
 import { AnimateChart } from "../../assets/Course2/Topic1/Point1"
 import { AnimateGlobalContract } from "../../assets/Course2/Topic1/Point2"
 import { AnimateDegrees } from "../../assets/Course5/Topic1"
-import { AnimateIPCC } from "../../assets/Course5/Topic2/Point3"
+import { AnimateHumanEffect } from "../../assets/Course5/Topic2/Point3"
 import { AnimateGas } from "../../assets/Course5/Topic2/Point4"
 
 export default {
@@ -31,5 +31,5 @@ export default {
     Bubble,
     AnimateDegrees,
     AnimateGas,
-    AnimateIPCC,
+    AnimateHumanEffect,
 }
