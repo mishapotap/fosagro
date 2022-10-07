@@ -34,11 +34,11 @@ import {
     Waves
 } from "../../assets/svg"
 import { AnimateDegrees } from "../../assets/Course5/Topic1"
-import { AnimateIPCC } from "../../assets/Course5/Topic2/Point3"
 import { AnimateGas } from "../../assets/Course5/Topic2/Point4"
 import { COLORS, FONTS } from "../../constants"
 import { HeadphonesIcon } from "../../assets/svg/static"
 import { introModalData } from "../../data"
+import AnimateHumanEffect from "../../assets/Course5/Topic2/Point3/AnimateHumanEffect"
 
 export default function Test() {
     const [isInstrOpened, setIsInstrOpened] = useState(false)
@@ -49,11 +49,11 @@ export default function Test() {
 
     return (
         <Layout page="section">
+            <AnimateDegrees/>
+            <AnimateHumanEffect/>
             <AnimateLine color={COLORS.red}/>
             <Waves color={COLORS.red}/>
             <AnimateGas/>
-            <AnimateIPCC/>
-            <AnimateDegrees/>
             <Text>СТРАНИЦА НЕ НАЙДЕНА! ЭТО 404 ОШИБКА</Text>
             <Title>Hello World!</Title>
             <Subtitle>Start</Subtitle>

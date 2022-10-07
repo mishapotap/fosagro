@@ -50,6 +50,7 @@ function Home() {
             removeActiveTitleSound()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         SoundStore.getIsPlaying(),
         ModalStore.isVisible.mail,
         ModalStore.isVisible.instruction,

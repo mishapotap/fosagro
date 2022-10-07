@@ -208,7 +208,7 @@ const chapter5Data = {
                 ],
                 media: {
                     type: "animation",
-                    component: "AnimateIPCC",
+                    component: "AnimateHumanEffect",
                 },
                 links: [
                     {
