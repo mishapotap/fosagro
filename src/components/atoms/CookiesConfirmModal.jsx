@@ -3,9 +3,10 @@ import React, { useState, useRef } from "react"
 import styled from "styled-components"
 import { observer } from "mobx-react-lite"
 import { CSSTransition } from "react-transition-group"
+import { Link } from "react-router-dom"
 
 import Modal from "./Modal"
-import { CookiesStore, ModalStore, CourseProgressStore } from "../../store"
+import { CookiesStore, ModalStore, CourseProgressStore, CourseTestStore } from "../../store"
 import SendButton from "./SendButton"
 import { COLORS, DEVICE } from "../../constants"
 import { SuccessIcon } from "../../assets/svg/static"
@@ -24,9 +25,17 @@ function CookiesConfirmModal() {
         ModalStore.closeModal("confirm")
     }
 
+    function handleSuccessClose() {
+        onClose()
+        ModalStore.closeModal("cookiesInfo")
+        ModalStore.closeModal("instruction")
+        ModalStore.showModal("cookie")
+    }
+
     function resetProgress() {
         CookiesStore.resetCookies()
         CourseProgressStore.resetProgress()
+        CourseTestStore.resetProgress()
     }
 
     function handleConfirm() {
@@ -95,7 +104,9 @@ function CookiesConfirmModal() {
                 <SuccessContent ref={successElRef} className="success">
                     <Icon src={SuccessIcon} alt="успех" />
                     <Text>Ваши cookies успешно удалены.</Text>
-                    <SendButton text="Закрыть" onClick={onClose} />
+                    <Link to="/">
+                        <SendButton text="Закрыть" onClick={handleSuccessClose} />
+                    </Link>
                 </SuccessContent>
             </CSSTransition>
             <CSSTransition

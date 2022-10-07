@@ -213,7 +213,7 @@ const TestNav = styled.div`
     display: flex;
     justify-content: flex-end;
     position: absolute;
-    bottom: 10px;
+    bottom: 25px;
     right: 10px;
     z-index: 50;
 `

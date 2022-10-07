@@ -18,7 +18,7 @@ function CourseTest() {
     // если пользователь уходит в процессе решения теста, сбрасываем прогресс
     useEffect(() => () => {
         if (!CourseTestStore.userPassedTest) {
-            CourseTestStore.resetProgress()
+            CourseTestStore.resetActiveTestProgress()
         }
     }, [])
 

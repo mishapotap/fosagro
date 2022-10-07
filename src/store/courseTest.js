@@ -2,6 +2,25 @@ import { makeAutoObservable } from "mobx"
 import { coursePagesData, courseTestsData } from "../data"
 import { sectColors } from "../data/coursePagesData/general"
 
+function getInitTestCondition(id) {
+    return {
+        learnSectsIds: [],
+        userAnswers: {},
+        activeQId: courseTestsData.testsQsData[id][0].id,
+        showStart: true,
+        showFinal: false,
+        showTest: false,
+        showEndTestBtn: false,
+        isLastSlide: false,
+        treeRightAnswCount: 0,
+        userPassedTest: false,
+        showTreeInit: true,
+        showTreeStart: false,
+        showTreeWait: false,
+        showTreeEnd: false,
+    }
+}
+
 class CourseTest {
     activeChapterId = 1
 
@@ -291,23 +310,16 @@ class CourseTest {
         return this.tests
     }
 
+    resetActiveTestProgress() {
+        this.tests[this.activeChapterId] = getInitTestCondition(
+            this.activeChapterId
+        )
+    }
+
     resetProgress() {
-        this.tests[this.activeChapterId] = {
-            learnSectsIds: [],
-            userAnswers: {},
-            activeQId: courseTestsData.testsQsData[this.activeChapterId][0].id,
-            showStart: true,
-            showFinal: false,
-            showTest: false,
-            showEndTestBtn: false,
-            isLastSlide: false,
-            treeRightAnswCount: 0,
-            userPassedTest: false,
-            showTreeInit: true,
-            showTreeStart: false,
-            showTreeWait: false,
-            showTreeEnd: false,
-        }
+        Object.keys(this.tests).forEach((id) => {
+            this.tests[id] = getInitTestCondition(id)
+        })
     }
 
     setDataFromCookies(dataString) {

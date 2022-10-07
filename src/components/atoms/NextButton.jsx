@@ -1,5 +1,5 @@
 import React from "react"
-import styled from "styled-components"
+import styled, { keyframes } from "styled-components"
 import { COLORS, DEVICE } from "../../constants"
 import { Next } from "../../assets/svg"
 
@@ -8,10 +8,11 @@ export default function NextButton({
     text = "Следующий вопрос",
     onClick,
     inert,
+    active = false,
 }) {
     return (
         <Container
-            className={className}
+            className={`${className || ''} ${active ? 'active' : ''}`}
             onClick={onClick}
             inert={inert ? "" : undefined}
         >
@@ -20,6 +21,12 @@ export default function NextButton({
         </Container>
     )
 }
+
+const animBtn = keyframes`
+    50% {
+        transform: scale(1.15);
+    }
+`
 
 const Container = styled.div`
     box-sizing: border-box;
@@ -50,11 +57,20 @@ const Container = styled.div`
             width: 60px;
         }
     }
+
     &:hover svg {
         transform: scale(1.15);
 
         @media ${DEVICE.laptopS} {
             transform: none;
+        }
+    }
+
+    &.active svg {
+        animation: ${animBtn} 0.8s;
+
+        @media ${DEVICE.laptopS} {
+            animation: none;
         }
     }
 `
