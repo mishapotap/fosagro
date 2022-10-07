@@ -9,7 +9,7 @@ class Modal {
         cookie: false,
         extLinks: false,
         cookiesInfo: false,
-        confirm: false,
+        cookiesConfirm: false,
         welcomeBack: false,
     }
 

@@ -15,19 +15,22 @@ import {
     CookiesInfoModal,
 } from "../atoms"
 import WelcomeBackModal from '../atoms/WelcomeBackModal'
-import { Click2, MainTitle, MainSupTitle } from "../../assets/audio"
+import { Click2, MainTitle, MainSupTitle, MainSupTitle2 } from "../../assets/audio"
 import { SoundStore, ModalStore } from "../../store"
 
 function Home() {
     const [isTitlePlaying, setIsTitlePlaying] = useState(false)
     const [isSupTitlePlaying, setIsSupTitlePlaying] = useState(false)
+    const [isSupTitle2Playing, setIsSupTitle2Playing] = useState(false)
 
     const clickSound = new Audio(Click2)
 
     const titleSoundRef = useRef(null)
     const supTitleSoundRef = useRef(null)
+    const supTitle2SoundRef = useRef(null)
     const titleRef = useRef(null)
     const supTitleRef = useRef(null)
+    const supTitle2Ref = useRef(null)
     const location = useLocation()
 
     useEffect(() => {
@@ -63,6 +66,11 @@ function Home() {
             supTitleRef.current.classList.remove("active")
             setIsSupTitlePlaying(false)
         }
+        if (isSupTitle2Playing) {
+            supTitle2SoundRef.current.pause()
+            supTitle2Ref.current.classList.remove("active")
+            setIsSupTitle2Playing(false)
+        }
     }
 
     function activeTitleSound() {
@@ -83,6 +91,15 @@ function Home() {
                     supTitleSoundRef.current.addEventListener("ended", () => {
                         setIsSupTitlePlaying(false)
                         supTitleRef.current.classList.remove("active")
+
+                        setTimeout(() => {
+                            supTitle2Ref.current.classList.add("active")
+                            supTitle2SoundRef.current.play()
+
+                            supTitle2SoundRef.current.addEventListener("ended", () => {
+                                supTitle2Ref.current.classList.remove("active")
+                            })
+                        }, 500);
                     })
                 }, 500)
             })
@@ -141,6 +158,9 @@ function Home() {
                                     <img src={OOH} alt="OOH" />
                                 </div>
                             </Suptitle>
+                            <Suptitle ref={supTitle2Ref} className="second">
+                                Предлагаем выбрать любую из предложенных тем и погрузиться в изучение курса устойчивого развития
+                            </Suptitle>
                         </TextContainer>
                         <MenuContainer>
                             {menuButtonData.map((item) => (
@@ -168,6 +188,7 @@ function Home() {
                 <FooterHome />
                 <AudioTitle src={MainTitle} ref={titleSoundRef} />
                 <AudioTitle src={MainSupTitle} ref={supTitleSoundRef} />
+                <AudioTitle src={MainSupTitle2} ref={supTitle2SoundRef} />
             </Container>
             <Outlet />
             <CookieModal />
@@ -334,6 +355,17 @@ const Suptitle = styled.div`
     &.active {
         transform: scale(1.1);
     }
+
+    &.second {
+        max-width: 41vw;
+        margin-top: 25px;
+        line-height: 1.5;
+
+        @media ${DEVICE.laptopS} {
+            max-width: none;
+        }
+    }
+
     @media ${DEVICE.laptopS} {
         margin-top: 30px;
         font-size: 3vw;

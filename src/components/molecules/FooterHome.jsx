@@ -69,6 +69,7 @@ const LinkAVT = styled.a`
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    justify-self: flex-end;
 
     font-family: "CalibriRegular";
     font-weight: 400;
@@ -95,5 +96,6 @@ const LinkAVT = styled.a`
 
     @media ${DEVICE.tablet} {
         justify-content: flex-start;
+        justify-self: auto;
     }
 `

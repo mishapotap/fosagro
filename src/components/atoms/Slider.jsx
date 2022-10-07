@@ -68,8 +68,10 @@ export default function Slider({
                     <Swiper
                         modules={[Pagination, EffectFade, Autoplay]}
                         effect="fade"
+                        fadeEffect={{crossFade: true}}
                         loop="true"
                         onInit={onInit}
+                        allowTouchMove={false}
                         autoplay={{
                             delay: delayTime,
                             disableOnInteraction: false,
