@@ -62,9 +62,13 @@ class CookiesStore {
                 )
             }
 
-            Cookies.set("courseTests", testsVal)
-            Cookies.set("courseProgress", progressVal)
-            Cookies.set("userAcceptedCookies", "true")
+            if (!Cookies.get("courseTests")) {
+                Cookies.set("courseTests", testsVal, { expires: 30 })
+            }
+
+            if (!Cookies.get("courseProgress")) {
+                Cookies.set("courseProgress", progressVal, { expires: 30 })
+            }
         }
     }
 

@@ -8,7 +8,7 @@ const sectsProgressTypes = {
     5: "rocks",
     6: "planeWaves",
     7: "wave",
-    8: "mountains",
+    8: "flowers",
 }
 
 const sectColors = {
@@ -20,7 +20,7 @@ const sectColors = {
     5: COLORS.grey_light,
     6: COLORS.blue_light,
     7: COLORS.turquoise,
-    8: COLORS.coral,
+    8: COLORS.green_bright,
     test: COLORS.blue
 }
 

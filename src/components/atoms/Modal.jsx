@@ -31,8 +31,7 @@ export default function Modal({
 
     function handleClose() {
         if (navigateBack) navigate(".")
-        // if (isOpenRef.current) onClose()
-        onClose()
+        if (isOpenRef.current) onClose()
     }
 
     function handleKeyDown({ key }) {

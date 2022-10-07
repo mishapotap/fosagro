@@ -15,7 +15,8 @@ const Container = styled.p`
     color: ${COLORS.black};
 
     @media ${DEVICE.laptopM} {
-        font-size: 1.1vw;
+        font-size: 1.18vw;
+        line-height: 1.2;
     }
 
     @media ${DEVICE.laptop} {

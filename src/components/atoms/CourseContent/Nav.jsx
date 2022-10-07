@@ -8,7 +8,9 @@ import NextButton from "../NextButton";
 import { StepProgressBar } from "../../molecules";
 import { DEVICE } from "../../../constants";
 
-function Nav({onNextClick, onBackClick}) {
+// eslint-disable-next-line no-unused-vars
+function Nav({onNextClick, onBackClick, animateNextBtn}) {
+
     return (
         <StyledNav>
             <Link
@@ -24,7 +26,7 @@ function Nav({onNextClick, onBackClick}) {
                 className="next-btn"
                 onClick={onNextClick}
             >
-                <NextButton text="Вперед" />
+                <NextButton text="Вперед" active={animateNextBtn} />
             </Link>
         </StyledNav>
     )

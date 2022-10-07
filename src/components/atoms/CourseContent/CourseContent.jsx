@@ -20,8 +20,6 @@ import Media from "./Media"
 import NewSectWindow from "./NewSectWindow"
 import PausedBtn from "./PausedBtn"
 
-import ExtLinkModal from "../ExtLinkModal"
-
 // TODO сделать плавное переключение получше?
 
 // TODO сделать чтобы анимация включалась и без аудио?
@@ -58,8 +56,7 @@ function CourseContent({ setIds, onDisappear }) {
     const [showSlide, setShowSlide] = useState(true)
     const [leftSlide, setLeftSlide] = useState(false)
     const [rightSlide, setRightSlide] = useState(false)
-
-    // const [dontPlayMedia, setDontPlayMedia] = useState(false)
+    const [animateNextBtn, setAnimateNextBtn] = useState(false)
 
     const [isAudioPaused, _setIsAudioPaused] = useState(true)
     const isAudioPausedRef = useRef(false)
@@ -370,6 +367,7 @@ function CourseContent({ setIds, onDisappear }) {
         }
 
         makePause()
+        setAnimateNextBtn(false)
 
         sectChanged.current = false
         clearTimeouts()
@@ -435,6 +433,8 @@ function CourseContent({ setIds, onDisappear }) {
         if (didAudioEnded.current) {
             // запустить анимацию заново
             if (isAnimationRef.current) setRestartAnim(true)
+            setShowPausedBtn(true)
+            didAudioEnded.current = false
         }
         setIsAudioPaused(false)
     }
@@ -449,6 +449,8 @@ function CourseContent({ setIds, onDisappear }) {
     function onAudioEnded() {
         didAudioEnded.current = true
         setPauseAnim(false)
+        setShowPausedBtn(false)
+        setAnimateNextBtn(true)
     }
 
     return (
@@ -515,6 +517,7 @@ function CourseContent({ setIds, onDisappear }) {
                     <Nav
                         onNextClick={handleNextClick}
                         onBackClick={handleBackClick}
+                        animateNextBtn={animateNextBtn}
                     />
                 </NavColumn>
             </CSSTransition>
@@ -542,8 +545,6 @@ function CourseContent({ setIds, onDisappear }) {
                 show={audioSrc && isAudioPaused && showPausedBtn}
                 onClick={makePlay}
             />
-            {/* временно? */}
-            {/* <ExtLinkModal onLeftSite={() => setDontPlayMedia(true)} /> */}
         </Columns>
     )
 }

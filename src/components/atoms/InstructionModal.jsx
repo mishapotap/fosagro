@@ -61,7 +61,7 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
     const activeSlideIdxRef = useRef(0)
     const autoPausedRef = useRef(false)
 
-    const isAudioPlayingRef = useRef({0: false, 1: false})
+    const isAudioPlayingRef = useRef({ 0: false, 1: false })
 
     const closeInstructionModal = () => {
         ModalStore.closeModal("instruction")
@@ -78,7 +78,6 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
     function handleSlideChange(swiper) {
         const { activeIndex } = swiper
         activeSlideIdxRef.current = activeIndex
-        // console.log('поставить activeSlideIdxRef.current', activeIndex);
 
         if (activeIndex === 0) {
             if (makeAnim) {
@@ -108,21 +107,19 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
     }
 
     function handleAudioPlay(index) {
-        isAudioPlayingRef.current = {...isAudioPlayingRef.current, [index]: true}
+        isAudioPlayingRef.current = {
+            ...isAudioPlayingRef.current,
+            [index]: true,
+        }
         setPauseAnims((pauseAnimsVal) => ({ ...pauseAnimsVal, [index]: false }))
-        // setPauseAnims((pauseAnimsVal) => ({ ...pauseAnimsVal, [index]: true }))
-        // setTimeout(() => {
-        //     setPauseAnims((pauseAnimsVal) => ({ ...pauseAnimsVal, [index]: false }))
-        // }, 50);
     }
 
     function handleAudioPause(index) {
-        isAudioPlayingRef.current = {...isAudioPlayingRef.current, [index]: false}
+        isAudioPlayingRef.current = {
+            ...isAudioPlayingRef.current,
+            [index]: false,
+        }
         setPauseAnims((pauseAnimsVal) => ({ ...pauseAnimsVal, [index]: true }))
-        // setPauseAnims((pauseAnimsVal) => ({ ...pauseAnimsVal, [index]: false }))
-        // setTimeout(() => {
-        //     setPauseAnims((pauseAnimsVal) => ({ ...pauseAnimsVal, [index]: true }))
-        // }, 50);
     }
 
     const isVisible = (ele, container) => {
@@ -179,11 +176,11 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                     ...prevPlayAudio,
                     [activeSlideIdxRef.current]: true,
                 }))
-            }, 100)
+            }, 800)
 
             autoPausedRef.current = false
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ModalStore.isVisible.cookiesInfo])
 
     return (
@@ -551,6 +548,21 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                             <CircleBtn className="button-next">
                                 <ArrowRight color={COLORS.blue} />
                             </CircleBtn>
+                            {/* {activeSlideIdx === 1 && (
+                                <StartLearn>
+                                    <Link
+                                        to={
+                                            CourseProgressStore.instructionModalLink
+                                        }
+                                        onClick={() => closeInstructionModal()}
+                                    >
+                                        <SendButton
+                                            text="Начать обучение"
+                                            size="m"
+                                        />
+                                    </Link>
+                                </StartLearn>
+                            )} */}
                         </Swiper>
                     </SliderContainer>
                 </Container>
@@ -563,7 +575,7 @@ export default observer(InstructionModal)
 
 const CookiesInfoLink = styled.button`
     position: absolute;
-    bottom: 4vh;
+    bottom: 5vh;
     left: 50%;
 
     transform: translate(-50%);
@@ -572,6 +584,11 @@ const CookiesInfoLink = styled.button`
     font-size: 1.16vw;
     color: ${COLORS.blue};
     border-bottom: 1px solid ${COLORS.blue};
+
+
+    @media ${DEVICE.laptopM} {
+        bottom: 4.6vh;
+    }
 
     @media ${DEVICE.laptop} {
         font-size: 17px;
@@ -824,11 +841,17 @@ const CourseImage = styled.div`
 
 const StartLearn = styled.div`
     position: absolute;
-    right: 3.5%;
-    bottom: 38px;
+    right: 9%;
+    bottom: 5vh;
+    z-index: 50;
+
+    @media ${DEVICE.laptopM} {
+        bottom: 4.6vh;
+    }
 
     @media ${DEVICE.laptopS} {
-        bottom: 33px;
+        right: 20px;
+        bottom: 10px;
     }
 `
 
@@ -1366,7 +1389,7 @@ const SliderContainer = styled.div`
                 }
 
                 .icon-attention {
-                    animation-delay: 26s;
+                    animation-delay: 24s;
                     animation-name: ${appearScale};
                 }
 
