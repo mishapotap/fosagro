@@ -22,7 +22,7 @@ function CookiesConfirmModal() {
     const startContentElRef = useRef(null)
 
     function onClose() {
-        ModalStore.closeModal("confirm")
+        ModalStore.closeModal("cookiesConfirm")
     }
 
     function handleSuccessClose() {
@@ -58,7 +58,7 @@ function CookiesConfirmModal() {
 
     return (
         <StyledModal
-            isOpen={ModalStore.isVisible.confirm}
+            isOpen={ModalStore.isVisible.cookiesConfirm}
             onClose={onClose}
             noCloseBtn
             dontCloseOnMaskClick

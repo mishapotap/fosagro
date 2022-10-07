@@ -1,6 +1,7 @@
+/* eslint-disable jsx-a11y/media-has-caption */
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/button-has-type */
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 import { observer } from "mobx-react-lite"
 import { Link } from "react-router-dom"
@@ -16,14 +17,40 @@ import Layout from "./Layout"
 import CookiesConfirmModal from "./CookiesConfirmModal"
 import Notification from "./Notification"
 import { getElWindowPos } from "../../utils"
+import { CookiesAudio } from "../../assets/audio"
+import AudioPlayer from "./AudioPlayer"
+import { showContent } from "../../constants/animations"
 
 function CookiesInfoModal() {
     const [showNotif, setShowNotif] = useState(false)
     const [notifPos, setNotifPos] = useState(false)
+    const [isPlaying, setIsPlaying] = useState(false)
+
+    useEffect(() => {
+        if (ModalStore.isVisible.cookiesInfo) {
+            setTimeout(() => {
+                setIsPlaying(true)
+            }, 1000)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ModalStore.isVisible.cookiesInfo])
+
+    useEffect(() => {
+        if (ModalStore.isVisible.cookiesConfirm) {
+            setIsPlaying(false)
+        } else {
+            setTimeout(() => {
+                if (ModalStore.isVisible.cookiesInfo) {
+                    setIsPlaying(true)
+                }
+            }, 600)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ModalStore.isVisible.cookiesConfirm])
 
     function checkCookies({ target }) {
         if (CookiesStore.userAcceptedCookies) {
-            ModalStore.showModal("confirm")
+            ModalStore.showModal("cookiesConfirm")
         } else {
             const { top, leftCenter } = getElWindowPos(target)
             const notificPos = { top: `${top - 20}px`, left: `${leftCenter}px` }
@@ -37,11 +64,16 @@ function CookiesInfoModal() {
         }
     }
 
+    function onClose() {
+        ModalStore.closeModal("cookiesInfo")
+        setIsPlaying(false)
+    }
+
     return (
         <>
             <StyledModal
                 isOpen={ModalStore.isVisible.cookiesInfo}
-                onClose={() => ModalStore.closeModal("cookiesInfo")}
+                onClose={onClose}
             >
                 <StyledLayout page="instruction">
                     <Content>
@@ -55,7 +87,7 @@ function CookiesInfoModal() {
                             <Column2>
                                 <TextWrapper>
                                     <Text>
-                                        Данный учебный курс реализован в виде
+                                        Данный учебный курс реализован в формате
                                         веб-сайта/приложения.
                                     </Text>
                                     <Text>
@@ -94,7 +126,7 @@ function CookiesInfoModal() {
                             </Column2>
 
                             <Column3>
-                                <TextWrapper>
+                                <TextWrapper className="text-wrapper info">
                                     <Text>
                                         Учебный курс (веб-сайт/приложение)
                                         использует файл «cookies» в целях
@@ -118,7 +150,7 @@ function CookiesInfoModal() {
                                     Как удалить{" "}
                                     <TitleAccent>«cookies»</TitleAccent>
                                 </StyledTitle>
-                                <TextWrapper>
+                                <TextWrapper className="text-wrapper remove">
                                     <Text>
                                         Чтобы удалить файлы «cookies»,
                                         воспользуйтесь кнопкой ниже. Обращаем
@@ -132,19 +164,19 @@ function CookiesInfoModal() {
                                         text="Удалить cookies"
                                         onClick={checkCookies}
                                     />
-                                    <Link
-                                        to="instruction"
-                                        onClick={() =>
-                                            ModalStore.closeModal("cookiesInfo")
-                                        }
-                                    >
+                                    <Link to="instruction" onClick={onClose}>
                                         <GoToInstrBtn>
                                             Перейти в инструкцию
                                         </GoToInstrBtn>
                                     </Link>
                                 </Buttons>
                             </Column3>
+                            <StyledAudioPlayer
+                            src={CookiesAudio}
+                            isPlaying={isPlaying}
+                        />
                         </Columns>
+
                     </Content>
                 </StyledLayout>
                 <Notification
@@ -161,6 +193,17 @@ function CookiesInfoModal() {
 export default observer(CookiesInfoModal)
 
 const StyledLayout = styled(Layout)``
+
+const StyledAudioPlayer = styled(AudioPlayer)`
+    position: absolute;
+    left: 10px;
+    top: 20%;
+
+    @media ${DEVICE.laptopS} {
+        position: relative;
+        margin-bottom: 300px;
+    }
+`
 
 const StyledSendButton = styled(SendButton)`
     margin-right: 20px;
@@ -200,41 +243,6 @@ const GoToInstrBtn = styled.button`
 `
 
 const Column = styled.div``
-
-const Columns = styled.div`
-    display: grid;
-    grid-template: 9vh auto / repeat(2, 48%);
-    justify-content: space-between;
-
-    max-height: 100%;
-    overflow: auto;
-    padding-bottom: 4vh;
-
-    &::-webkit-scrollbar {
-        width: 0;
-    }
-
-    @media ${DEVICE.laptopS} {
-        grid-template: repeat(3, auto) / 1fr;
-        padding-right: 10px;
-        padding-bottom: 5px;
-    }
-
-    max-width: 82vw;
-    margin: 0 auto;
-
-    @media ${DEVICE.laptopM} {
-        max-width: 85%;
-    }
-
-    @media ${DEVICE.mobile} {
-        max-width: 100%;
-    }
-
-    > ${Column} {
-        flex: 0 1 48%;
-    }
-`
 
 const Text = styled.p`
     font-family: "CalibriLight", sans-serif;
@@ -285,6 +293,59 @@ const Column3 = styled(Column)`
     }
 `
 
+const Columns = styled.div`
+    display: grid;
+    grid-template: 9vh auto / repeat(2, 48%);
+    justify-content: space-between;
+
+    max-height: 100%;
+    overflow: auto;
+    padding-bottom: 4vh;
+
+    &::-webkit-scrollbar {
+        width: 0;
+    }
+
+    @media ${DEVICE.laptopS} {
+        grid-template: repeat(3, auto) / 1fr;
+        padding-right: 10px;
+        padding-bottom: 5px;
+    }
+
+    max-width: 82vw;
+    margin: 0 auto;
+
+    @media ${DEVICE.laptopM} {
+        max-width: 85%;
+    }
+
+    @media ${DEVICE.mobile} {
+        max-width: 100%;
+    }
+
+    > ${Column} {
+        flex: 0 1 48%;
+    }
+
+    ${Column1},
+    ${Column2},
+    ${Column3} {
+        animation: ${showContent} 1.8s both;
+    }
+
+    ${Column1} {
+        animation-delay: 1s;
+    }
+
+    ${Column2} {
+        animation-delay: 2.7s;
+    }
+
+    ${Column3} {
+        animation-delay: 4s;
+    }
+`
+
 const Content = styled.div`
     display: flex;
     justify-content: center;
@@ -292,6 +353,10 @@ const Content = styled.div`
 
     height: 100%;
     width: 100%;
+
+    @media ${DEVICE.laptopS} {
+        display: block;
+    }
 `
 
 const StyledModal = styled(Modal)`
