@@ -1,20 +1,24 @@
 /* eslint-disable no-unused-vars */
 import { observer } from "mobx-react-lite"
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef } from "react"
 import styled, { css } from "styled-components"
 import coursePageComponents from "../coursePageComponents"
 import ExtLinks from "../ExtLinks"
 import { DEVICE } from "../../../constants"
 import { CourseProgressStore } from "../../../store"
 
-function Media({ pauseAnim, videoPlaying, restartAnim, sliderDelay, makeSliderAutoplay }) {
+function Media({
+    pauseAnim,
+    videoPlaying,
+    restartAnim,
+    sliderDelay,
+}) {
     const pageData = CourseProgressStore.activePageData
 
     const { component, data: mData, type: mediaType } = pageData.media
     const MediaComponent = coursePageComponents[component]
     const mediaData = mData || {}
 
-    const [mediaKey, setMediaKey] = useState(1)
     const { links } = pageData
 
     const video = mediaType === "video"
@@ -34,32 +38,28 @@ function Media({ pauseAnim, videoPlaying, restartAnim, sliderDelay, makeSliderAu
         }, 400)
     }
 
-    // чтобы слайдер корректно работал
-    useEffect(() => {
-        if (circleSlider) {
-            setMediaKey(mediaKey + 1)
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [sliderDelay])
-
     useEffect(() => {
         if (restartAnim && !resetSettId.current) {
             resetAnimation(mediaContRef.current)
         }
     }, [restartAnim])
 
-    let mediaProps = {data: mediaData};
+    let mediaProps = { data: mediaData }
 
-    if (video) mediaProps = {...mediaProps, isPlaying: videoPlaying}
-    if (circleSlider) mediaProps = {...mediaProps, delayTime: sliderDelay, makeAutoplay: makeSliderAutoplay}
-    // if (circleSlider) mediaProps = {...mediaProps, delayTime: sliderDelay, makeAutoplay: makeSliderAutoplay && !pauseAnim}
+    if (video) mediaProps = { ...mediaProps, isPlaying: videoPlaying }
+    if (circleSlider)
+        mediaProps = {
+            ...mediaProps,
+            delayTime: sliderDelay,
+            restartAnim,
+            pauseAnim,
+        }
 
     return (
         <Container
             className={`${
-                animation && pauseAnim ? "anim-paused" : ""
-                // (animation || circleSlider) && pauseAnim ? "anim-paused" : ""
-            } media-test`}
+                (animation || circleSlider) && pauseAnim ? "anim-paused" : ""
+            }`}
             video={video}
             circleSlider={circleSlider}
             animation={animation}
@@ -67,7 +67,7 @@ function Media({ pauseAnim, videoPlaying, restartAnim, sliderDelay, makeSliderAu
             ref={mediaContRef}
         >
             <MediaColInner>
-                <StyledMedia key={mediaKey}>
+                <StyledMedia>
                     {MediaComponent && (
                         <MediaComponent
                             // eslint-disable-next-line react/jsx-props-no-spreading
@@ -125,14 +125,6 @@ const Container = styled.div`
 
         * {
             animation: none !important;
-        }
-    }
-
-    &.anim-paused {
-        animation-play-state: paused!important;
-
-        * {
-            animation-play-state: paused!important;
         }
     }
 
@@ -300,7 +292,7 @@ const Container = styled.div`
         width: 82%;
 
         @media ${DEVICE.laptopM} {
-            width: 80%;
+            width: 77%;
         }
 
         @media ${DEVICE.laptopS} {

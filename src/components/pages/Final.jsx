@@ -20,6 +20,7 @@ function Final() {
 
     useEffect(() => {
         if (audioRef.current && audioRef.current.paused) audioRef.current.play()
+        CourseProgressStore.setUserVisitedFinalPage()
     }, [])
 
     useEffect(() => {

@@ -28,9 +28,11 @@ function Home() {
     const titleSoundRef = useRef(null)
     const supTitleSoundRef = useRef(null)
     const supTitle2SoundRef = useRef(null)
+
     const titleRef = useRef(null)
     const supTitleRef = useRef(null)
     const supTitle2Ref = useRef(null)
+
     const location = useLocation()
 
     useEffect(() => {
@@ -55,6 +57,15 @@ function Home() {
         ModalStore.isVisible.mail,
         ModalStore.isVisible.instruction,
     ])
+
+    useEffect(() => {
+        if (ModalStore.isVisible.instruction || ModalStore.isVisible.mail) {
+            SoundStore.setIsPlayingSound(false)
+        } else {
+            SoundStore.setIsPlayingSound(true)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ModalStore.isVisible.instruction, ModalStore.isVisible.mail])
 
     function removeActiveTitleSound() {
         if (isTitlePlaying) {
@@ -274,7 +285,7 @@ const Content = styled.div`
     display: flex;
     align-items: center;
     overflow: hidden;
-    padding: 20px 0;
+    padding: 20px 0 4vh;
 
     @media ${DEVICE.laptopS} {
         flex-direction: column;

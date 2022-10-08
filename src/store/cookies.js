@@ -5,9 +5,9 @@ import CourseProgressStore from "./courseProgress"
 import CourseTestStore from "./courseTest"
 import ModalStore from "./modal"
 
-// TODO поправить показ инструкции
-
 class CookiesStore {
+    userAcceptedCookiesNow = false
+
     constructor() {
         makeAutoObservable(this)
     }
@@ -22,6 +22,7 @@ class CookiesStore {
             const progressData = Cookies.get("courseProgress")
             const testsData = Cookies.get("courseTests")
             const userVisitedAnyChapter = Cookies.get("userVisitedAnyChapter")
+            const userVisitedFinalPage = Cookies.get("userVisitedFinalPage")
 
             if (progressData) {
                 CourseProgressStore.setDataFromCookies(progressData)
@@ -36,6 +37,10 @@ class CookiesStore {
                     userVisitedAnyChapter
                 )
             }
+
+            if (userVisitedFinalPage) {
+                CourseProgressStore.setUserVisitedFinalPage()
+            }
             ModalStore.showModal("welcomeBack")
         } else {
             ModalStore.showModal("cookie")
@@ -43,7 +48,12 @@ class CookiesStore {
     }
 
     setUserAcceptedCookies() {
-        Cookies.set("userAcceptedCookies", "true", { expires: 30 })
+        const hasCookies = Cookies.get("userAcceptedCookies")
+
+        if (!hasCookies) {
+            Cookies.set("userAcceptedCookies", "true", { expires: 30 })
+            this.userAcceptedCookiesNow = true
+        }
     }
 
     // перед перезагрузкой странице/уходе с нее
@@ -60,6 +70,10 @@ class CookiesStore {
                     CourseProgressStore.userVisitedAnyChapter,
                     { expires: 2 }
                 )
+            }
+
+            if (CourseProgressStore.userVisitedFinalPage) {
+                Cookies.set("userVisitedFinalPage", "true", { expires: 30 })
             }
 
             Cookies.set("courseTests", testsVal, { expires: 30 })

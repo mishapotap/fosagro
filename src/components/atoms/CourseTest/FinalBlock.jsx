@@ -88,7 +88,13 @@ function FinalBlock() {
                     {CourseTestStore.allAnswersRight && (
                         // eslint-disable-next-line react/jsx-no-useless-fragment
                         <>
-                            {CourseProgressStore.userPassedFullCourse ? (
+                            {/* показываем кнопку завершить обучение, только если пользователь прошел курс, и либо
+                            не видел еще финальную страницу
+                            либо находится на шестом разделе */}
+                            {((CourseProgressStore.userPassedFullCourse &&
+                                !CourseProgressStore.userVisitedFinalPage) ||
+                            (CourseProgressStore.userPassedFullCourse &&
+                                CourseProgressStore.activeChapterId === 6)) ? (
                                 <Link
                                     to="/final"
                                     className="next-chapter"
@@ -151,7 +157,10 @@ function FinalBlock() {
                     {!CourseTestStore.allAnswersRight && (
                         // eslint-disable-next-line react/jsx-no-useless-fragment
                         <>
-                            {CourseProgressStore.userPassedFullCourse ? (
+                            {((CourseProgressStore.userPassedFullCourse &&
+                                !CourseProgressStore.userVisitedFinalPage) ||
+                            (CourseProgressStore.userPassedFullCourse &&
+                                CourseProgressStore.activeChapterId === 6)) ? (
                                 <Link to="/final" className="continue-learn">
                                     <NextButton text="Завершить обучение" />
                                 </Link>

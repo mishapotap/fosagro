@@ -20,10 +20,6 @@ import Media from "./Media"
 import NewSectWindow from "./NewSectWindow"
 import PausedBtn from "./PausedBtn"
 
-// TODO сделать плавное переключение получше?
-
-// TODO сделать чтобы анимация включалась и без аудио?
-
 function CourseContent({ setIds, onDisappear }) {
     const pageData = CourseProgressStore.activePageData
     const location = useLocation()
@@ -31,7 +27,6 @@ function CourseContent({ setIds, onDisappear }) {
     const [key, setKey] = useState(1)
     const [audioPlaying, setAudioPlaying] = useState(false)
     const [videoPlaying, setVideoPlaying] = useState(false)
-    const [makeSliderAutoplay, setMakeSliderAutoplay] = useState(false)
 
     const autoPausedRef = useRef(false)
 
@@ -119,7 +114,6 @@ function CourseContent({ setIds, onDisappear }) {
 
             if (isCircleSliderRef.current) {
                 setTimeout(() => {
-                    setMakeSliderAutoplay(true)
                     sectChanged.current = false
                 }, 1000)
             }
@@ -135,7 +129,7 @@ function CourseContent({ setIds, onDisappear }) {
                 }, 1000)
             }
 
-            if (isAnimationRef.current) {
+            if (isAnimationRef.current || isCircleSliderRef.current) {
                 animTmId.current = setTimeout(() => {
                     if (isVisibleRef.current) {
                         setPauseAnim(false)
@@ -158,12 +152,8 @@ function CourseContent({ setIds, onDisappear }) {
         }
 
         if (isVisibleRef.current) {
-            if (isAnimationRef.current) {
+            if (isAnimationRef.current || isCircleSliderRef.current) {
                 setPauseAnim(false)
-            }
-
-            if (isCircleSliderRef.current) {
-                setMakeSliderAutoplay(true)
             }
 
             if (isVideoRef.current) {
@@ -250,7 +240,8 @@ function CourseContent({ setIds, onDisappear }) {
                     video.play()
                 }
 
-                if (isAnimationRef.current && pauseAnim) {
+                // !
+                if ((isAnimationRef.current || isCircleSliderRef.current) && pauseAnim) {
                     setPauseAnim(false)
                 }
             }
@@ -261,7 +252,7 @@ function CourseContent({ setIds, onDisappear }) {
     function makePause() {
         checkAutoPaused()
         if (isVideoRef.current) setVideoPlaying(false)
-        if (isAnimationRef.current) setPauseAnim(true)
+        if (isAnimationRef.current || isCircleSliderRef.current) setPauseAnim(true)
         if (isAudioRef.current) {
             setAudioPlaying(false)
         }
@@ -269,7 +260,7 @@ function CourseContent({ setIds, onDisappear }) {
 
     function makePlay() {
         if (isVideoRef.current) setVideoPlaying(true)
-        if (isAnimationRef.current) setPauseAnim(false)
+        if (isAnimationRef.current || isCircleSliderRef.current) setPauseAnim(false)
         if (isAudioRef.current) {
             setAudioPlaying(false)
             setTimeout(() => {
@@ -424,7 +415,7 @@ function CourseContent({ setIds, onDisappear }) {
     }
 
     function onAudioPlay() {
-        if (isVisibleRef.current) setPauseAnim(false)
+        if (isVisibleRef.current || isCircleSliderRef.current) setPauseAnim(false)
         if (!wasFirstPlay.current) {
             wasFirstPlay.current = true
             setShowPausedBtn(true)
@@ -432,7 +423,7 @@ function CourseContent({ setIds, onDisappear }) {
 
         if (didAudioEnded.current) {
             // запустить анимацию заново
-            if (isAnimationRef.current) setRestartAnim(true)
+            if (isAnimationRef.current || isCircleSliderRef.current) setRestartAnim(true)
             setShowPausedBtn(true)
             didAudioEnded.current = false
         }
@@ -532,7 +523,6 @@ function CourseContent({ setIds, onDisappear }) {
                     <Media
                         pauseAnim={pauseAnim}
                         videoPlaying={videoPlaying}
-                        makeSliderAutoplay={makeSliderAutoplay}
                         key={key}
                         restartAnim={restartAnim}
                         sliderDelay={sliderDelay}
@@ -611,9 +601,10 @@ const NavColumn = styled.div`
 const MediaColumn = styled.div`
     grid-area: 1 / 3 / 4 / 4;
     overflow: hidden;
-    padding-top: 20px;
+    padding-top: 2.5vh;
 
     @media ${DEVICE.laptopS} {
+        padding-top: 20px;
         grid-area: 3 / 1 / 4 / 2;
         overflow: visible;
         margin-bottom: 35px;

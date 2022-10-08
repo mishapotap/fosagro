@@ -4,7 +4,8 @@ import { Swiper, SwiperSlide } from "swiper/react"
 import { Navigation } from "swiper"
 import { objectSliderData } from "../../data"
 import { COLORS, DEVICE } from "../../constants"
-import { ArrowSlider, SliderIcons, LinkIcon } from "../../assets/svg"
+// import { ArrowSlider, SliderIcons, LinkIcon } from "../../assets/svg"
+import { ArrowSlider, SliderIcons } from "../../assets/svg"
 
 // eslint-disable-next-line
 import "swiper/css"
@@ -51,7 +52,7 @@ export default function ObjectSlider({
                                             src={dataItem.source}
                                             alt={dataItem.alt}
                                         />
-                                        <LinkIcon className="link-object"/>
+                                        {/* <LinkIcon className="link-object"/> */}
                                     </CustomLink>
                                 ))}
                             </Slide>
@@ -84,7 +85,7 @@ export default function ObjectSlider({
                                                 {dataItem.description}
                                             </Description>
                                         </LinkContant>
-                                        <LinkIcon className="link-object"/>
+                                        {/* <LinkIcon className="link-object"/> */}
                                     </CustomLink>
                                 ))}
                             </Slide>
@@ -195,13 +196,13 @@ const CustomLink = styled.a`
         }
     }
 
-    .link-object {
+    /* .link-object {
         position: absolute;
         bottom: 5px;
         right: 5px;
 
         width: 1.5vw;
-    }
+    } */
 `
 
 const SliderButton = styled.button`
