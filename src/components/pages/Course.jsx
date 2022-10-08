@@ -50,7 +50,7 @@ function Course() {
         if (id) {
             CourseProgressStore.setActiveChapterId(id)
 
-            // if (!CookiesStore.userAcceptedCookies) {
+            if (!CookiesStore.userAcceptedCookies || CookiesStore.userAcceptedCookiesNow) {
                 if (
                     dataLine &&
                     dataModal
@@ -59,7 +59,7 @@ function Course() {
                     navigate("instruction")
                     CourseProgressStore.setUserVisitedAnyChapter(true)
                 }
-            // }
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id])
@@ -107,6 +107,7 @@ function Course() {
                 ModalStore.closeModal("instruction")
 
             window.removeEventListener("click", titleSoundPlay)
+            CourseProgressStore.setIsTimelinePageActive(false)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
@@ -168,7 +169,6 @@ function Course() {
                 <Footer />
             </Container>
             <Audio src={dataLine.titleAudio} ref={titleAudio} />
-            {/* <ExtLinkModal/> */}
         </StyledLayout>
     )
 }

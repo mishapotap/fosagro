@@ -65,7 +65,6 @@ function handleDocClick(e) {
 let autoPausedMediaEls = []
 
 function handleVisChange() {
-    // ! а что насчет анимации? (проблема с инструкцией и слайдером)
     const audioEls = document.querySelectorAll('audio')
     const videoEls = document.querySelectorAll('video')
 

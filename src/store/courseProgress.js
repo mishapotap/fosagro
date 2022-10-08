@@ -71,6 +71,8 @@ class CourseProgress {
 
     showNotification = false
 
+    userVisitedFinalPage = false
+
     isTestActive = false
 
     userVisitedAnyChapter = false
@@ -443,6 +445,10 @@ class CourseProgress {
         if (visitedPages) {
             this.visitedPages = visitedPages
         }
+    }
+
+    setUserVisitedFinalPage() {
+        this.userVisitedFinalPage = true
     }
 
     setIsTestActive(val) {

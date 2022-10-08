@@ -1,14 +1,13 @@
 import React from "react"
 import styled from "styled-components"
 import { observer } from "mobx-react-lite"
-import { ModalStore, SoundStore } from "../../store"
+import { CourseProgressStore, ModalStore, SoundStore } from "../../store"
 import { COLORS, DEVICE } from "../../constants"
 import { BurgerIcon } from "../../assets/svg"
 import { MenuModal } from "../organisms"
 import { Click1 } from "../../assets/audio"
 
-function CourseMenuButton({colored}) {
-
+function CourseMenuButton({ colored }) {
     const clickSound = new Audio(Click1)
 
     const openMenu = () => {
@@ -22,7 +21,10 @@ function CourseMenuButton({colored}) {
         ModalStore.closeModal("menu")
         // eslint-disable-next-line no-unused-expressions
         SoundStore.getIsPlaying() && clickSound.play()
-        SoundStore.setIsPlayingSound(false)
+
+        if (!CourseProgressStore.isTimelinePageActive) {
+            SoundStore.setIsPlayingSound(false)
+        }
     }
 
     return (
@@ -33,7 +35,8 @@ function CourseMenuButton({colored}) {
                 </CourseLinkText>
                 <BurgerIcon colored={colored} />
             </CourseLink>
-            <MenuModal isOpen={ModalStore.isVisible.menu}
+            <MenuModal
+                isOpen={ModalStore.isVisible.menu}
                 onClose={() => closeMenu()}
             />
         </Wrapper>
@@ -46,7 +49,6 @@ const Wrapper = styled.div`
     cursor: pointer;
     flex-shrink: 0;
 `
-
 
 const CourseLink = styled.div`
     flex-shrink: 0;

@@ -1303,17 +1303,6 @@ const SliderContainer = styled.div`
     height: 100%;
     max-width: 100%;
 
-    ${Slide1Cols},
-    ${Slide2Cols} {
-        &.anim-paused {
-            animation-play-state: paused !important;
-
-            * {
-                animation-play-state: paused !important;
-            }
-        }
-    }
-
     ${({ makeAnim }) =>
         makeAnim &&
         css`

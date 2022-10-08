@@ -25,9 +25,12 @@ export default function IntroModal({ isOpen, onClose, items }) {
         `
     }
 
-    const [slidersAutoplay, setSlidersAutoplay] = useState({})
+    const [slidesPauseAnim, setSlidesPauseAnim] = useState({})
     const [slidersAudio, setSlidersAudio] = useState({})
     const [slidersDelay, _setSlidersDelay] = useState({})
+    const [audiosEnded, setAudiosEnded] = useState({})
+    const [restartSliderAnim, setRestartSliderAnim] = useState({})
+
     const modalContent = useRef(null)
     const swiperRef = useRef(null)
     const slidersDelayRef = useRef(null)
@@ -38,19 +41,22 @@ export default function IntroModal({ isOpen, onClose, items }) {
     }
 
     function setInitialState() {
-        const initSliderAutoplState = {}
+        const initSlidesPauseAnim = {}
         const initAudiosState = {}
         const initDelayState = {}
+        const initAudioEndedState = {}
 
         items.forEach((i, index) => {
-            initSliderAutoplState[index] = false
+            initSlidesPauseAnim[index] = true
             initAudiosState[index] = false
+            initAudioEndedState[index] = false
             initDelayState[index] = 5000
         })
 
         setSlidersAudio(initAudiosState)
-        setSlidersAutoplay(initSliderAutoplState)
+        setSlidesPauseAnim(initSlidesPauseAnim)
         setSlidersDelay(initDelayState)
+        setAudiosEnded(initAudioEndedState)
     }
 
     useEffect(() => {
@@ -67,8 +73,8 @@ export default function IntroModal({ isOpen, onClose, items }) {
 
     function handleOpenAnimEnd() {
         setTimeout(() => {
-            setSlidersAutoplay(() => ({...slidersAutoplay, 0: true}))
-            setSlidersAudio(() => ({...slidersAudio, 0: true}))
+            setSlidesPauseAnim(() => ({ ...slidesPauseAnim, 0: false }))
+            setSlidersAudio(() => ({ ...slidersAudio, 0: true }))
         }, 1000)
     }
 
@@ -76,12 +82,12 @@ export default function IntroModal({ isOpen, onClose, items }) {
     function handleSlideChange(swiper) {
         const { activeIndex, previousIndex } = swiper
 
-        setSlidersAutoplay((prevState) => ({
+        setSlidesPauseAnim((prevState) => ({
             ...prevState,
             // ставим новому круглому слайдеру автоплэй
-            [activeIndex]: true,
+            [activeIndex]: false,
             // убираем у старого круглого слайдера автоплэй
-            [previousIndex]: false,
+            [previousIndex]: true,
         }))
 
         setSlidersAudio((prevState) => ({
@@ -102,15 +108,32 @@ export default function IntroModal({ isOpen, onClose, items }) {
         if (index === 0 && swiperRef.current) {
             swiperRef.current.slideNext()
         }
+        setAudiosEnded((prev) => ({ ...prev, [index]: true }))
+        setSlidesPauseAnim((prev) => ({ ...prev, [index]: false }))
     }
 
     function handleInit(swiper) {
         swiperRef.current = swiper
     }
 
-    function handleAudioLoaded({target}, index) {
+    function handleAudioLoaded({ target }, index) {
         const delayTime = (target.duration * 1000) / 3
-        setSlidersDelay({...slidersDelayRef.current, [index]: delayTime})
+        setSlidersDelay({ ...slidersDelayRef.current, [index]: delayTime })
+    }
+
+    function handleAudioPause(index) {
+        setSlidesPauseAnim((prevVal) => ({ ...prevVal, [index]: true }))
+    }
+
+    function handleAudioPlay(index) {
+        if (audiosEnded[index]) {
+            setRestartSliderAnim((prev) => ({ ...prev, [index]: true }))
+            setTimeout(() => {
+                setRestartSliderAnim((prev) => ({ ...prev, [index]: false }))
+            }, 100)
+            setAudiosEnded((prev) => ({ ...prev, [index]: false }))
+        }
+        setSlidesPauseAnim((prevVal) => ({ ...prevVal, [index]: false }))
     }
 
     return (
@@ -169,8 +192,27 @@ export default function IntroModal({ isOpen, onClose, items }) {
                                                         isPlaying={
                                                             slidersAudio[index]
                                                         }
-                                                        onEnded={() => handleAudioEnded(index)}
-                                                        onLoaded={(e) => handleAudioLoaded(e, index)}
+                                                        onEnded={() =>
+                                                            handleAudioEnded(
+                                                                index
+                                                            )
+                                                        }
+                                                        onLoaded={(e) =>
+                                                            handleAudioLoaded(
+                                                                e,
+                                                                index
+                                                            )
+                                                        }
+                                                        onPause={() =>
+                                                            handleAudioPause(
+                                                                index
+                                                            )
+                                                        }
+                                                        onPlay={() =>
+                                                            handleAudioPlay(
+                                                                index
+                                                            )
+                                                        }
                                                     />
                                                 )}
                                             </SlideCol>
@@ -222,10 +264,15 @@ export default function IntroModal({ isOpen, onClose, items }) {
                                                     size="s"
                                                     sliderColor={COLORS.orange}
                                                     data={images}
-                                                    makeAutoplay={
-                                                        slidersAutoplay[index]
+                                                    pauseAnim={
+                                                        slidesPauseAnim[index]
                                                     }
-                                                    delayTime={slidersDelay[index]}
+                                                    delayTime={
+                                                        slidersDelay[index]
+                                                    }
+                                                    restartAnim={
+                                                        restartSliderAnim[index]
+                                                    }
                                                     index={index}
                                                 />
                                                 {links && links.length > 0 && (

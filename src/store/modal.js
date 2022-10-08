@@ -22,7 +22,7 @@ class Modal {
     }
 
     get someModalShown() {
-        return Object.entries(this.isVisible).find(
+        return !!Object.entries(this.isVisible).find(
             ([modalName, modalVal]) =>
                 modalName !== "cookie" && modalVal === true
         )
