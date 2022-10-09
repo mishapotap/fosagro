@@ -26,12 +26,22 @@ observer(MenuModal)
 
 const StyledLayout = styled(Layout)`
     height: 100%;
+
+    .menu-button {
+        @media ${DEVICE.mobile} {
+            width: 34vw;
+        }
+    }
 `
 
 const Wrapper = styled.div`
     height: 100%;
     max-height: 100%;
     overflow: auto;
+
+    &::-webkit-scrollbar {
+        width: 0;
+    }
 `
 
 const StyledModal = styled(Modal)`
@@ -44,6 +54,10 @@ const StyledModal = styled(Modal)`
 
     .content {
         padding-top: 0;
+
+        @media ${DEVICE.laptopS} {
+            padding: 0 20px;
+        }
     }
 `
 
@@ -58,7 +72,6 @@ const MenuContainer = styled.div`
     @media ${DEVICE.laptopS} {
         padding: 5vw;
         height: auto;
-        overflow: auto;
     }
 
     @media ${DEVICE.mobile} {

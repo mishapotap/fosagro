@@ -48,6 +48,8 @@ h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: 400;}
 /* TODO удалить это! для проверки как на моб */
 #root {
 	overflow-x: hidden;
+	width: 100%;
+	height: 100%;
 }
 
 a {

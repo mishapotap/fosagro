@@ -25,6 +25,7 @@ function Header({
     // ссылка "вернуться на главную"
     goBackToMain = false,
     fosagroSite = false,
+    makeMobShadow = false,
 }) {
     // сделать норм
     const rusSiteLink = "https://esg-course.phosagro.ru"
@@ -48,7 +49,7 @@ function Header({
     }
 
     return (
-        <Container>
+        <Container makeMobShadow={makeMobShadow}>
             <HeaderInner language={language}>
                 <Logo>
                     <Link to={routes.HOME} onClick={() => handleClickLogo()}>
@@ -165,14 +166,14 @@ const BackToMain = styled.div`
 const HeaderSectTitle = styled.div`
     position: absolute;
     bottom: 0;
-    transform: translateY(calc(100% + 2.5vh));
+    transform: translateY(calc(100% + 3vh));
 
     @media ${DEVICE.laptopM} {
-        transform: translateY(calc(100% + 2vh));
+        transform: translateY(calc(100% + 2.3vh));
     }
 
     @media ${DEVICE.laptopS} {
-        transform: translateY(calc(100% + 4px));
+        transform: translateY(calc(100% + 8px));
     }
 `
 
@@ -239,7 +240,9 @@ const Container = styled.div`
     }
 
     @media ${DEVICE.laptopS} {
-        padding: 5px 23px;
+        padding: 13px 23px 3px;
+
+        box-shadow: ${({makeMobShadow}) => makeMobShadow ? '0px 4px 11px 0px rgba(34, 60, 80, 0.2)' : 'none'};
     }
 `
 
@@ -249,7 +252,7 @@ const LinkToFosagro = styled.div`
     @media ${DEVICE.laptopS} {
         position: absolute;
         bottom: 0;
-        transform: translateY(100%);
+        transform: translateY(calc(100% + 11px));
     }
 
     a {
@@ -275,8 +278,8 @@ const LinkToFosagro = styled.div`
         }
 
         @media ${DEVICE.mobile} {
-            width: 25px;
-            height: 25px;
+            width: 14px;
+            height: 14px;
         }
     }
 

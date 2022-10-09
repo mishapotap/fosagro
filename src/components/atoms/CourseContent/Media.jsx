@@ -144,6 +144,7 @@ const Container = styled.div`
                 @media ${DEVICE.laptopS} {
                     max-width: 820px;
                     margin: 0 auto;
+                    overflow: visible;
                 }
             }
 

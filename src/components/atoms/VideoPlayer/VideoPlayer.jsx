@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-use-before-define */
 /* eslint-disable react/jsx-no-bind */
 import React, { useState, useEffect, useRef } from "react"
@@ -5,11 +6,7 @@ import styled from "styled-components"
 import { COLORS, DEVICE } from "../../../constants"
 import VideoControls from "./VideoControls"
 import Loader from "../Loader"
-import { formatTime, getElWindowPos } from "../../../utils"
-
-// TODO сделать автоматический выход из полноэкранного режима при окончании видео?
-// TODO показать состояние фокуса?
-// TODO проверить работу установки паузы/плэй снаружи
+import { formatTime, fullscreen, getElWindowPos } from "../../../utils"
 
 export default function VideoPlayer({
     data: { src },
@@ -54,6 +51,8 @@ export default function VideoPlayer({
     const progressTimeRef = useRef(false)
     const fullTimeRef = useRef(0)
     const isMutedRef = useRef(false)
+
+    const enteredMobFullscr = useRef(false)
 
     const errorText = "Произошла ошибка при загрузке видео"
 
@@ -136,7 +135,7 @@ export default function VideoPlayer({
     }, [])
 
     function setValIsMob() {
-        if (document.documentElement.clientWidth < 767) {
+        if (document.documentElement.clientWidth < 1024) {
             setIsMob(true)
         } else {
             setIsMob(false)
@@ -384,15 +383,19 @@ export default function VideoPlayer({
 
     // смена полноэкранного режима для мобилок
     function toggleFullscreenMob() {
-        if (isFullscreen) {
-            document.exitFullscreen()
+        function goFullFunc() {
+            setIsFullscreen(true)
+            enteredMobFullscr.current = true
+            window.screen.orientation.lock("landscape-primary")
+        }
+
+        function exitFullFunc() {
+            enteredMobFullscr.current = false
             window.screen.orientation.unlock()
             setIsFullscreen(false)
-        } else {
-            videoPlayerContRef.current.requestFullscreen()
-            window.screen.orientation.lock("landscape-primary")
-            setIsFullscreen(true)
         }
+
+        fullscreen(videoPlayerContRef.current, goFullFunc, exitFullFunc)
     }
 
     // смена полноэкранного режима для пк
@@ -411,7 +414,7 @@ export default function VideoPlayer({
 
     // смена полноэкранного режима
     function toggleFullscreen() {
-        if (isMob) {
+        if (isMob || enteredMobFullscr.current) {
             toggleFullscreenMob()
         } else {
             toggleFullscreenDesktop()

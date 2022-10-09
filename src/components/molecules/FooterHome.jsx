@@ -22,9 +22,9 @@ export default function FooterHome() {
 }
 
 const FooterContainer = styled.div`
-    position: absolute;
+    /* position: absolute;
     left: 0;
-    bottom: 17px;
+    bottom: 17px; */
 
     display: grid;
     grid-template-columns: 1fr auto 1fr;

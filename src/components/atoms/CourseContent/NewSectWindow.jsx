@@ -24,6 +24,8 @@ function NewSectWindow({onExited}) {
     }, [CourseProgressStore.activeSectId])
 
     function handleEntered() {
+        document.body.classList.add('lock')
+
         if (!audioEl.current) {
             setTimeout(() => {
                 setShowNewSectW(false)
@@ -32,12 +34,14 @@ function NewSectWindow({onExited}) {
 
         reserveTmId.current = setTimeout(() => {
             setShowNewSectW(false)
+            document.body.classList.remove('lock')
         }, 3800)
     }
 
     function handleExited() {
         onExited()
         clearTimeout(reserveTmId.current)
+        document.body.classList.remove('lock')
     }
 
     function handleAudioEnded() {

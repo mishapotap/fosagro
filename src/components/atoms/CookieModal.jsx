@@ -90,7 +90,7 @@ const StyledModal = styled(Modal)`
         @media ${DEVICE.mobile} {
             left: calc(50vw - 45vw);
             max-width: 90vw;
-            bottom: 20%;
+            bottom: 10%;
         }
     }
 `

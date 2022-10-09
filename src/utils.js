@@ -106,3 +106,53 @@ export function getFullCourseDuration() {
 
     return secs ? h * 60 + (mins * 1 + 1) : h * 60 + mins * 1
 }
+
+export function fullscreen(el, goFull = () => {}, exitFull = () => {}) {
+    const isInFullScreen =
+        document.fullscreenElement ||
+        document.webkitFullscreenElement ||
+        document.mozFullScreenElement
+
+    if (isInFullScreen) {
+        if (document.exitFullscreen) {
+            document.exitFullscreen().then(() => {
+                exitFull()
+            })
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen().then(() => {
+                exitFull()
+            })
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen().then(() => {
+                exitFull()
+            })
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen().then(() => {
+                exitFull()
+            })
+        }
+    } else {
+        // eslint-disable-next-line no-lonely-if
+        if (el.requestFullscreen) {
+            el.requestFullscreen().then(() => goFull())
+        } else if (el.mozRequestFullScreen) {
+            el.mozRequestFullScreen().then(() => goFull())
+        } else if (el.webkitRequestFullScreen) {
+            el.webkitRequestFullScreen().then(() => goFull())
+        } else if (el.msRequestFullscreen) {
+            el.msRequestFullscreen().then(() => goFull())
+        }
+    }
+}
+
+export function pauseMedia() {
+    const audioEls = document.querySelectorAll("audio")
+    const videoEls = document.querySelectorAll("video")
+    const mediaEls = [...audioEls, ...videoEls]
+
+    mediaEls.forEach((el) => {
+        if (!el.paused) {
+            el.pause()
+        }
+    })
+}

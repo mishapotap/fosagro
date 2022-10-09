@@ -44,7 +44,7 @@ const Container = styled(Modal)`
 
         @media ${DEVICE.laptop} {
             width: 100vw;
-            height: 100vh;
+            height: 100%;
             max-width: none;
             background: ${COLORS.white};
         }

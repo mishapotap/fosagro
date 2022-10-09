@@ -137,7 +137,7 @@ function Home() {
     }, [])
 
     return (
-        <Layout>
+        <StyledLayout>
             <Helmet>
                 <title data-rh="true">
                     Учебный курс &laquo;Устойчивое развитие&raquo; компании
@@ -206,21 +206,34 @@ function Home() {
             <CookieModal />
             <CookiesInfoModal />
             <WelcomeBackModal />
-        </Layout>
+        </StyledLayout>
     )
 }
+
+const StyledLayout = styled(Layout)`
+    .content {
+        padding-bottom: 10px;
+
+        @media ${DEVICE.laptop} {
+            padding-top: 25px;
+        }
+    }
+`
 
 const Container = styled.div`
     max-height: 100%;
     height: 100%;
     overflow: hidden;
-    padding-bottom: 45px;
-    padding-top: 4vh;
 
     display: flex;
-    align-items: center;
+    flex-direction: column;
+
+    &::-webkit-scrollbar {
+        width: 0;
+    }
 
     @media ${DEVICE.laptopS} {
+        overflow: auto;
         padding-top: 0;
     }
 
@@ -230,11 +243,14 @@ const Container = styled.div`
 `
 
 const ContentWrapper = styled.div`
-    max-height: 100%;
-    overflow: auto;
+    flex: 0 1 100%;
 
-    &::-webkit-scrollbar {
-        width: 0;
+    display: flex;
+    padding-top: 5vh;
+    align-items: center;
+
+    @media ${DEVICE.laptopS} {
+        padding-top: 0;
     }
 `
 
@@ -285,7 +301,11 @@ const Content = styled.div`
     display: flex;
     align-items: center;
     overflow: hidden;
-    padding: 20px 0 4vh;
+    padding: 3vh 0 4vh;
+
+    @media ${DEVICE.laptopS} {
+        padding: 0;
+    }
 
     @media ${DEVICE.laptopS} {
         flex-direction: column;

@@ -77,7 +77,7 @@ const StyledLayout = styled(CourseSlideLayout)`
     .slide-content {
         @media ${DEVICE.laptopS} {
             overflow: auto;
-            padding: 0 15px;
+            padding: 10px 15px 0;
         }
     }
 

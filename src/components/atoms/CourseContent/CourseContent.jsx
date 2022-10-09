@@ -551,8 +551,7 @@ const StyledAudioPlayer = styled(AudioPlayer)`
     }
 
     @media ${DEVICE.laptopS} {
-        margin-top: -300px;
-        margin-bottom: 300px;
+        margin-top: 0;
     }
 `
 
@@ -594,7 +593,7 @@ const NavColumn = styled.div`
     @media ${DEVICE.laptopS} {
         grid-area: 4 / 1 / 5 / 2;
         padding-left: 0;
-        padding-bottom: 20px;
+        padding-bottom: 30px;
     }
 `
 
@@ -617,7 +616,10 @@ const AudioColumn = styled.div`
     @media ${DEVICE.laptopS} {
         grid-area: 5 / 1 / 6 / 2;
         margin-left: -15px;
-        margin-bottom: 300px;
+
+        .audio-player {
+            margin-bottom: 300px;
+        }
     }
 `
 

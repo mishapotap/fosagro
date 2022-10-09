@@ -131,6 +131,8 @@ const SecondColumn = styled.div`
         order: 1;
         margin-bottom: 20px;
         justify-content: center;
+        height: auto;
+        flex: 0 1 100%;
 
         &.hide {
             display: none;

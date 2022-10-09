@@ -193,11 +193,15 @@ const LinksContainer = styled.div`
 
     @media ${DEVICE.laptopS} {
         position: static;
-        width: 88vw;
+        width: 70vw;
         margin-top: 35px;
         transform: none;
 
         display: block!important;
         opacity: 1!important;
+
+        @media ${DEVICE.mobile} {
+            width: 88vw;
+        }
     }
 `
