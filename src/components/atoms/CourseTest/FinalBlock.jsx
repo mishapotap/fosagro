@@ -300,6 +300,12 @@ const SectButton = styled.div`
 
 const FinalContent = styled.div`
     margin-bottom: 3vh;
+    max-height: 100%;
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+        width: 0;
+    }
 
     @media ${DEVICE.laptop} {
         margin-bottom: 35px;
@@ -313,14 +319,21 @@ const FinalContent = styled.div`
 `
 
 const FinBottom = styled.div`
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-bottom: 30px;
+    padding-bottom: 10px;
 
     @media ${DEVICE.laptop} {
         flex-direction: column;
-        width: 100%;
+    }
+
+    @media ${DEVICE.laptopS} {
+        position: relative;
     }
 `
 
@@ -355,12 +368,13 @@ const FeedbackText = styled.p`
 `
 
 const FinalStyledBlock = styled(Block)`
+    position: relative;
     height: 100%;
 
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding-bottom: 20px;
+    padding-bottom: 8vh;
 
     &.visible {
         opacity: 1 !important;
@@ -368,6 +382,8 @@ const FinalStyledBlock = styled(Block)`
 
     @media ${DEVICE.laptopS} {
         align-items: center;
+        padding-bottom: 0;
+        height: auto;
     }
 `
 

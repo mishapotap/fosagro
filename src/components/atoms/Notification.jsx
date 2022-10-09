@@ -46,6 +46,10 @@ const StyledNotification = styled.div`
     text-align: center;
     line-height: 1.38;
 
+     @media ${DEVICE.laptopM} {
+        width: 230px;
+    }
+
     @media ${DEVICE.laptop} {
         font-size: 14px;
     }
@@ -57,9 +61,9 @@ const Container = styled.div`
     z-index: 150;
     cursor: auto;
 
-    @media ${DEVICE.laptopM} {
+    /* @media ${DEVICE.laptopM} {
         width: 230px;
-    }
+    } */
 
     .notif {
         transition: 0.3s;

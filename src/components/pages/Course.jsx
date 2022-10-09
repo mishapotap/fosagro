@@ -50,11 +50,14 @@ function Course() {
         if (id) {
             CourseProgressStore.setActiveChapterId(id)
 
-            if (!CookiesStore.userAcceptedCookies || CookiesStore.userAcceptedCookiesNow) {
+            if (
+                !CookiesStore.userAcceptedCookies ||
+                CookiesStore.userAcceptedCookiesNow
+            ) {
                 if (
                     dataLine &&
-                    dataModal
-                    && !CourseProgressStore.userVisitedAnyChapter
+                    dataModal &&
+                    !CourseProgressStore.userVisitedAnyChapter
                 ) {
                     navigate("instruction")
                     CourseProgressStore.setUserVisitedAnyChapter(true)
@@ -180,6 +183,10 @@ const StyledLayout = styled(Layout)`
         @media ${DEVICE.laptopM} {
             padding-bottom: 10px;
         }
+
+        @media ${DEVICE.mobile} {
+            padding-top: 5px;
+        }
     }
 
     .notif-container {
@@ -213,6 +220,10 @@ const Wrapper = styled.div`
     transition: all 0.3s;
     &.active {
         transform: scale(1.2);
+
+        @media ${DEVICE.laptopS} {
+            transform: scale(1.08);
+        }
     }
 
     @media ${DEVICE.laptopM} {
@@ -262,7 +273,7 @@ const CourseTitle = styled.div`
 
     @media ${DEVICE.laptopS} {
         max-width: 100%;
-        font-size: 22px;
+        font-size: 20px;
     }
 `
 
@@ -280,6 +291,7 @@ const CourseSupTitle = styled.div`
         font-size: 1.2vw;
     }
     @media ${DEVICE.laptopS} {
+        max-width: none;
         font-size: 16px;
     }
 `

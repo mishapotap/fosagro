@@ -754,7 +754,7 @@ const Container = styled.div`
         padding: 2vh 0;
 
         @media ${DEVICE.laptopS} {
-            padding-bottom: 13vh;
+            padding-bottom: 80px;
             padding-top: 8px;
         }
     }
@@ -767,6 +767,7 @@ const Container = styled.div`
 
         @media ${DEVICE.laptopS} {
             right: 0;
+            bottom: 0;
         }
     }
 
@@ -775,6 +776,10 @@ const Container = styled.div`
         bottom: 2px;
         left: 10%;
         z-index: 20;
+
+        @media ${DEVICE.laptopS} {
+            bottom: 0;
+        }
     }
 
     a {
@@ -851,7 +856,8 @@ const StartLearn = styled.div`
 
     @media ${DEVICE.laptopS} {
         right: 20px;
-        bottom: 10px;
+        bottom: 35px;
+        /* bottom: 15px; */
     }
 `
 

@@ -390,7 +390,6 @@ const Controls = styled.div`
 
     @media ${DEVICE.laptopS} {
         bottom: 0;
-        transform: translateY(-60%);
         left: auto;
         padding: 7px;
         right: 0;

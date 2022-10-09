@@ -14,14 +14,17 @@ export default function Layout({ page = "start", children, className }) {
             {page === "start" && <Header language fosagroSite />}
             {/* страница раздела с плавающими кружочками */}
             {page === "course" && <Header course />}
+            {/* страница теста */}
+            {page === "test" && <Header colored course />}
             {/* страница ошибки */}
-            {page === "error" || page === "test" && <Header colored course />}
+            {page === "error" && <Header colored course />}
             {/* внутри темы раздела - где слайды с текстом, картинками, анимацией и пр */}
             {page === "section" && (
                 <Header
                     colored
                     course
                     sectTitle
+                    makeMobShadow
                 />
             )}
             {page === "final" && <Header goBackToMain fosagroSite />}
@@ -33,7 +36,7 @@ export default function Layout({ page = "start", children, className }) {
 const Container = styled.div`
     position: relative;
     width: 100%;
-    height: 100vh;
+    height: 100%;
 
     /* отступ на высоту хэдэра */
     padding-top: 92px;

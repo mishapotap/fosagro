@@ -63,11 +63,25 @@ function CourseStep({
 
             const stepBtn = e.currentTarget.querySelector(".course-step-btn")
             if (stepBtn) {
-                const { leftCenter, top } = getElWindowPos(stepBtn)
-                CourseProgressStore.setNotifPos({
-                    left: `${leftCenter}px`,
-                    top: `${top - 20}px`,
-                })
+                const { leftCenter, top, right, left } = getElWindowPos(stepBtn)
+                if (left < 0) {
+                    CourseProgressStore.setNotifPos({
+                        left: `0`,
+                        top: `${top - 20}px`,
+                        transform: 'translateY(-100%)'
+                    })
+                } else if (right > document.documentElement.clientWidth - 115) {
+                    CourseProgressStore.setNotifPos({
+                        right: `0`,
+                        top: `${top - 20}px`,
+                        transform: 'translateY(-100%)'
+                    })
+                } else {
+                    CourseProgressStore.setNotifPos({
+                        left: `${leftCenter}px`,
+                        top: `${top - 20}px`,
+                    })
+                }
             }
         }
     }

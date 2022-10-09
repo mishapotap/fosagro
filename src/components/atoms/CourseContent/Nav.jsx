@@ -35,16 +35,24 @@ function Nav({onNextClick, onBackClick, animateNextBtn}) {
 export default observer(Nav)
 
 const StyledNav = styled.div`
-    display: flex;
+    display: grid;
+    grid-template: auto / repeat(3, auto);
     align-items: center;
+
+    @media ${DEVICE.laptopS} {
+        grid-template: repeat(2, auto) / repeat(2, auto);
+        justify-content: center;
+    }
 
     .step-progress-bar {
         width: 33vw;
 
         @media ${DEVICE.laptopS} {
-            width: 94%;
+            grid-area: 1 / 1 / 2 / 3;
+
+            width: 88vw;
             max-width: 600px;
-            margin: 0 auto;
+            margin-bottom: 15px;
         }
     }
 
@@ -53,8 +61,9 @@ const StyledNav = styled.div`
         z-index: 50;
 
         @media ${DEVICE.laptopS} {
-            order: 2;
-            margin: 200px 90px 15px 0;
+            grid-area: 2 / 1 / 3 / 2;
+            justify-self: flex-start;
+            margin-right: 30px;
         }
     }
 
@@ -63,12 +72,8 @@ const StyledNav = styled.div`
         z-index: 50;
 
         @media ${DEVICE.laptopS} {
-            order: 3;
+            grid-area: 2 / 2 / 3 / 3;
+            justify-self: flex-end;
         }
-    }
-
-    @media ${DEVICE.laptopS} {
-        flex-direction: column;
-        align-items: flex-end;
     }
 `
