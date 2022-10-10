@@ -95,11 +95,8 @@ export default function VideoPlayer({
 
     useEffect(() => {
         if (isLoaded) {
-            if (isPlaying) {
-                play()
-            } else {
-                pause()
-            }
+            // eslint-disable-next-line no-unused-expressions
+            isPlaying ? play() : pause()
         }
     }, [isPlaying, isLoaded])
 
@@ -493,7 +490,8 @@ export default function VideoPlayer({
                             playsInline
                             onPause={handleVideoPause}
                             onPlay={handleVideoPlay}
-                            onLoadedData={handleVideoLoad}
+                            preload="metadata"
+                            onLoadedMetadata={handleVideoLoad}
                             onEnded={handleVideoEnd}
                             onError={handleVideoError}
                             ref={videoRef}
