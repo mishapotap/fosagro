@@ -113,6 +113,13 @@ function CourseMenu({ dataLine, dataModal }) {
             ? setIsFinish(false) : setIsFinish(true)
     }
 
+    function handleWheel(e) {
+        // eslint-disable-next-line no-unused-expressions
+        e.cancelable && e.preventDefault()
+        ref.current.scrollLeft += e.deltaY;
+    }
+
+
     return(
         <>
             <MenuContainer
@@ -122,6 +129,7 @@ function CourseMenu({ dataLine, dataModal }) {
                 onMouseUp={() => handleMouseUp()}
                 onMouseMove={(e) => handleMouseMove(e)}
                 onScroll={() => handleScroll()}
+                onWheel={(e) => handleWheel(e)}
                 >
                 <Line width={dataLine.width} ref={line}>
                     <Waves color={COLORS.white} className="waves"/>
@@ -143,7 +151,7 @@ function CourseMenu({ dataLine, dataModal }) {
                     onClick={() => handleNext()}>
                     <Next/>
                 </Button>}
-    </>
+        </>
     )
 }
 
