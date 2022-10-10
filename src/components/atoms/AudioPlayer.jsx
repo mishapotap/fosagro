@@ -286,8 +286,8 @@ export default function AudioPlayer({
                                 onPause={handlePause}
                                 onError={handleError}
                                 onEnded={handleEnd}
-                                onLoadedData={handleLoaded}
-                                controls
+                                preload="metadata"
+                                onLoadedMetadata={handleLoaded}
                             />
                             <Circle ref={controlsCircleRef}>
                                 <Controls>
@@ -483,9 +483,7 @@ const Error = styled.div`
     background: ${COLORS.white};
 `
 
-const Audio = styled.audio`
-    display: none;
-`
+const Audio = styled.audio``
 
 const PlayerCircle = styled.svg`
     position: absolute;
