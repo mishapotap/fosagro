@@ -24,6 +24,7 @@ function Home() {
     const [isSupTitle2Playing, setIsSupTitle2Playing] = useState(false)
 
     const clickSound = new Audio(Click2)
+    const playerRef = useRef(null)
 
     const titleSoundRef = useRef(null)
     const supTitleSoundRef = useRef(null)
@@ -127,6 +128,9 @@ function Home() {
             ) {
                 return
             }
+            if (playerRef.current) {
+                playerRef.current.play()
+            }
             // eslint-disable-next-line no-unused-expressions
             !SoundStore.getPlayedTitleSound(`title`) && !ModalStore.isVisible.mail
             && !ModalStore.isVisible.instruction && activeTitleSound();
@@ -151,7 +155,7 @@ function Home() {
                 />
             </Helmet>
             <Background>
-                <Video src={MainBG} loop muted autoPlay playsInline />
+                <Video src={MainBG} ref={playerRef} loop muted autoPlay playsInline/>
             </Background>
             <Container>
                 <ContentWrapper>
@@ -216,6 +220,9 @@ const StyledLayout = styled(Layout)`
 
         @media ${DEVICE.laptop} {
             padding-top: 25px;
+        }
+        @media ${DEVICE.mobile} {
+            padding-bottom: 0;
         }
     }
 `
@@ -288,6 +295,7 @@ const Background = styled.div`
                 rgba(0, 0, 0, 0) 100%
             );
     }
+    
 `
 
 const Video = styled.video`
@@ -396,6 +404,10 @@ const Suptitle = styled.div`
         @media ${DEVICE.laptopS} {
             max-width: none;
         }
+
+        @media ${DEVICE.mobile} {
+            margin-top: 16px;
+        }
     }
 
     @media ${DEVICE.laptopS} {
@@ -404,6 +416,7 @@ const Suptitle = styled.div`
     }
 
     @media ${DEVICE.mobile} {
+        margin-top: 16px;
         font-size: 3.5vw;
     }
 
