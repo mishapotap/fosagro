@@ -45,8 +45,8 @@ function StartBlock() {
 
     useEffect(() => {
         if (ModalStore.someModalShown) {
-            if (audioTextRef.current) audioTextRef.current.pause()
-            if (audioTitleRef.current) audioTitleRef.current.pause()
+            audioTextRef.current.pause()
+            audioTitleRef.current.pause()
         } else if (audioTextRef.current && textAudioPlayed && !textAudioEnded) {
             setTimeout(() => {
                 audioTextRef.current.play()
@@ -58,10 +58,12 @@ function StartBlock() {
 
     useEffect(() => {
         if (CourseTestStore.showStart) {
-            if (audioTitleRef.current) audioTitleRef.current.play()
+            setTimeout(() => {
+                audioTitleRef.current.play()
+            }, 200);
         } else {
-            if (audioTitleRef.current) audioTitleRef.current.pause()
-            if (audioTextRef.current) audioTextRef.current.pause()
+            audioTitleRef.current.pause()
+            audioTextRef.current.pause()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [CourseTestStore.showStart])

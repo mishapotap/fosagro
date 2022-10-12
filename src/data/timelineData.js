@@ -567,7 +567,7 @@ const timelineData = {
         titleAudio: Course3,
         title: "Инновационная деятельность ФосАгро",
         supTitle:
-            "Продукция компании, цикл производства и почему мы разрабатываем новые марки и виды продукции?",
+            "Продукция компании, цикл производства и почему мы разрабатываем новые марки и виды продукции",
         width: "3450",
         metaTitle: "Инновационная деятельность ФосАгро",
         metaDescription:
@@ -929,7 +929,7 @@ const timelineData = {
                     link: "topic2/point1",
                     audio: Line4Topic2,
                     value: {
-                        title: `Энергоэффективность`,
+                        title: `Программа энергоэффективности`,
                         time: getMediaDurationSec(mediaDuration.course4[2]),
                         bgColor: COLORS.green_dark,
                         image: Line4Topic2Image,

@@ -195,6 +195,8 @@ const LinksContainer = styled.div`
         position: static;
         width: 70vw;
         margin-top: 35px;
+        margin-left: auto;
+        margin-right: auto;
         transform: none;
 
         display: block!important;

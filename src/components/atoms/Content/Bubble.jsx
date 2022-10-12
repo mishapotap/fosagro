@@ -34,9 +34,22 @@ const StyledBubble = styled.div`
     opacity: 0;
     transition: 0.3s;
 
+    @media ${DEVICE.laptopS} {
+        transform: translate(5px, calc(-100% - 10px)) scale(1);
+    }
+
     &.shown {
         opacity: 1;
         transform: translate(5px, calc(-60%)) scale(1);
+
+        @media ${DEVICE.laptopS} {
+            transform: translate(5px, calc(-100% - 10px)) scale(1);
+        }
+    }
+
+    @media ${DEVICE.laptopS} {
+        width: 226px;
+        height: 226px;
     }
 `
 
@@ -48,7 +61,8 @@ const BubbleTitle = styled.div`
     color: ${COLORS.blue};
 
     @media ${DEVICE.laptopS} {
-        font-size: 18px;
+        font-size: 16px;
+        margin-bottom: 5px;
     }
 `
 
@@ -60,7 +74,7 @@ const BubbleText = styled.div`
     text-align: center;
 
     @media ${DEVICE.laptopS} {
-        font-size: 16px;
+        font-size: 15px;
     }
 `
 
@@ -68,6 +82,10 @@ const BubbleContent = styled.div`
     max-width: 78%;
     margin: 0 auto;
     padding-top: 9vh;
+
+    @media ${DEVICE.laptopS} {
+        padding-top: 38px;
+    }
 `
 
 const Question = styled.div`
@@ -92,5 +110,7 @@ const Question = styled.div`
 
     @media ${DEVICE.laptopS} {
         font-size: 30px;
+        width: 46px;
+        height: 46px;
     }
 `

@@ -64,8 +64,18 @@ export default function BubbleContainer({ children, makeBubbles = false }) {
     function setBubblePos($trigger, $bubble) {
         const { right, top } = getElWindowPos($trigger)
 
-        $bubble.style.top = `${top}px`
-        $bubble.style.left = `${right}px`
+        const okTop = top < 0 ? 0 : top
+
+        if (right + 140 > document.documentElement.clientWidth) {
+            $bubble.style.top = `${okTop}px`
+            $bubble.style.right = `0`
+        } else if (right - 140 < 0) {
+            $bubble.style.top = `${okTop}px`
+            $bubble.style.left = `0`
+        } else {
+            $bubble.style.top = `${okTop}px`
+            $bubble.style.left = `${right}px`
+        }
     }
 
     function initBubbles() {

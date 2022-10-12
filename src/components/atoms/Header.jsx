@@ -241,6 +241,7 @@ const Container = styled.div`
 
     @media ${DEVICE.laptopS} {
         padding: 13px 23px 3px;
+        height: 90px;
 
         box-shadow: ${({makeMobShadow}) => makeMobShadow ? '0px 4px 11px 0px rgba(34, 60, 80, 0.2)' : 'none'};
     }
