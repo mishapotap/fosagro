@@ -197,7 +197,7 @@ const Container = styled.div`
 `
 
 const Text = styled.span`
-    max-width: 88.7%;
+    max-width: 87%;
     text-align: center;
     /* text */
     font-family: "FocoBold";
@@ -209,7 +209,7 @@ const Text = styled.span`
 
     @media ${DEVICE.laptopM} {
         font-size: 14px;
-        max-width: 86.2%;
+        max-width: 84.7%;
     }
 `
 

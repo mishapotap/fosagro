@@ -27,4 +27,8 @@ const Container = styled.p`
         font-family: "FocoBold", sans-serif;
         color: ${COLORS.blue};
     }
+
+    sub {
+        font-size: 0.7em;
+    }
 `

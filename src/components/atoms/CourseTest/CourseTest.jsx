@@ -129,10 +129,13 @@ const SecondColumn = styled.div`
 
     @media ${DEVICE.laptopS} {
         order: 1;
-        margin-bottom: 20px;
         justify-content: center;
-        height: auto;
+        min-height: 470px;
+
         flex: 0 1 100%;
+        height: auto;
+        max-height: none;
+        margin-bottom: 20px;
 
         &.hide {
             display: none;

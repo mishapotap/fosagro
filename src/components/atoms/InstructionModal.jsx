@@ -46,8 +46,6 @@ import "swiper/css"
 // eslint-disable-next-line
 import "swiper/css/effect-fade"
 
-// TODO постараться разделить код?
-
 function InstructionModal({ isOpen, onClose, makeAnim = true }) {
     // const baseUrl = "http://localhost:3000/course01/"
     // const instructionUrl = new URL("instruction", baseUrl)
@@ -249,7 +247,7 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                                                             Chapter1BtnImg
                                                                         }
                                                                         className="chapter1-img"
-                                                                        alt="кнопка, ведущая на курс 1"
+                                                                        alt="кнопка, ведущая на раздел 1"
                                                                     />
                                                                 </ChapterImgWrapper>
                                                                 <ChapterImgWrapper>
@@ -258,7 +256,7 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                                                             Chapter2BtnImg
                                                                         }
                                                                         className="chapter2-img"
-                                                                        alt="кнопка, ведущая на курс 1"
+                                                                        alt="кнопка, ведущая на раздел 2"
                                                                     />
                                                                 </ChapterImgWrapper>
                                                                 <ChapterImgWrapper>
@@ -267,7 +265,7 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                                                             Chapter3BtnImg
                                                                         }
                                                                         className="chapter3-img"
-                                                                        alt="кнопка, ведущая на курс 1"
+                                                                        alt="кнопка, ведущая на раздел 3"
                                                                     />
                                                                 </ChapterImgWrapper>
                                                                 <ChapterImgWrapper>
@@ -276,7 +274,7 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                                                             Chapter4BtnImg
                                                                         }
                                                                         className="chapter4-img"
-                                                                        alt="кнопка, ведущая на курс 1"
+                                                                        alt="кнопка, ведущая на раздел 4"
                                                                     />
                                                                 </ChapterImgWrapper>
                                                                 <ChapterImgWrapper>
@@ -285,7 +283,7 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                                                             Chapter5BtnImg
                                                                         }
                                                                         className="chapter5-img"
-                                                                        alt="кнопка, ведущая на курс 1"
+                                                                        alt="кнопка, ведущая на раздел 5"
                                                                     />
                                                                 </ChapterImgWrapper>
                                                                 <ChapterImgWrapper>
@@ -294,7 +292,7 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                                                             Chapter6BtnImg
                                                                         }
                                                                         className="chapter6-img"
-                                                                        alt="кнопка, ведущая на курс 1"
+                                                                        alt="кнопка, ведущая на раздел 6"
                                                                     />
                                                                 </ChapterImgWrapper>
                                                             </ChaptersImagesInner>
@@ -306,10 +304,17 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                                             выполнено в виде
                                                             таймлайна,
                                                             переключаться по
-                                                            нему можно
-                                                            прокруткой мыши
-                                                            и/или стрелками
-                                                            внизу.
+                                                            разделам можно с
+                                                            помощью компьютерной
+                                                            мыши, предварительно
+                                                            необходимо
+                                                            зафиксировать левую
+                                                            кнопку мыши в
+                                                            области таймлайна и
+                                                            перемещать мышь по
+                                                            горизонтали или с
+                                                            помощью стрелок,
+                                                            расположенных внизу.
                                                         </Text>
 
                                                         <TimelineImgWrapper>
@@ -585,7 +590,6 @@ const CookiesInfoLink = styled.button`
     color: ${COLORS.blue};
     border-bottom: 1px solid ${COLORS.blue};
 
-
     @media ${DEVICE.laptopM} {
         bottom: 4.6vh;
     }
@@ -606,6 +610,7 @@ const StyledLayout = styled(Layout)`
 
     .content {
         padding-left: 5px;
+        padding-bottom: 0;
 
         @media ${DEVICE.laptopS} {
             padding-left: 20px;
@@ -788,12 +793,6 @@ const Container = styled.div`
 `
 
 const SlideColsInner = styled.div`
-    overflow: auto;
-    max-height: 100%;
-
-    &::-webkit-scrollbar {
-        width: 0;
-    }
 `
 
 const SlideContentWrapper = styled.div`
@@ -857,7 +856,6 @@ const StartLearn = styled.div`
     @media ${DEVICE.laptopS} {
         right: 20px;
         bottom: 35px;
-        /* bottom: 15px; */
     }
 `
 
@@ -865,8 +863,8 @@ const Text = styled.p`
     width: 100%;
 
     font-family: "CalibriLight", sans-serif;
-    line-height: 1.33;
-    font-size: 1.3vw;
+    line-height: 1.2;
+    font-size: 1.25vw;
     color: ${COLORS.black};
 
     @media ${DEVICE.laptopM} {
@@ -948,6 +946,10 @@ const Slide1Cols = styled(SlideCols)`
     ${Column} {
         &.col-title {
             margin-bottom: 3vh;
+
+            @media ${DEVICE.laptopM} {
+                margin-bottom: 8px;
+            }
         }
 
         &:nth-child(2) {
@@ -1088,9 +1090,12 @@ const TimelineImgWrapper = styled.div`
     position: relative;
     padding-bottom: 20px;
 
-    @media ${DEVICE.laptopM} {
-        margin: 0 auto;
-        max-width: 90%;
+    margin: 0 auto;
+    max-width: 90%;
+    overflow: hidden;
+
+    @media ${DEVICE.laptopS} {
+        max-width: 100%;
     }
 
     .timeline-img {
@@ -1108,7 +1113,6 @@ const TimelineImgWrapper = styled.div`
         padding-bottom: 30px;
         height: 240px;
         max-width: 100%;
-        overflow: auto;
     }
 
     .tl-prev-btn,
@@ -1147,7 +1151,7 @@ const Slide1Center = styled.div`
     display: grid;
     grid-template: repeat(2, auto) / 43% 50%;
     justify-content: space-between;
-    row-gap: 25px;
+    row-gap: 10px;
 
     @media ${DEVICE.laptopS} {
         grid-template: repeat(3, auto) / 1fr;
@@ -1375,25 +1379,25 @@ const SliderContainer = styled.div`
 
                 .tl-prev-btn {
                     animation-name: ${fadeInRight};
-                    animation-delay: 22s;
+                    animation-delay: 30s;
                 }
 
                 .tl-next-btn {
                     animation-name: ${fadeInLeft};
-                    animation-delay: 23s;
+                    animation-delay: 31s;
                 }
 
                 .icon-attention {
-                    animation-delay: 24s;
+                    animation-delay: 33s;
                     animation-name: ${appearScale};
                 }
 
                 .text-attention {
-                    animation-delay: 25s;
+                    animation-delay: 34s;
                 }
 
                 .text-test {
-                    animation-delay: 32.5s;
+                    animation-delay: 42s;
                     animation-name: ${appear};
                 }
             }

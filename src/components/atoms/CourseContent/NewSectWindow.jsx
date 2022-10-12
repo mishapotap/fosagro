@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/media-has-caption */
 /* eslint-disable react/jsx-no-bind */
 import React, { useRef, useState, useEffect } from "react"
 import styled, { keyframes } from "styled-components"
@@ -8,13 +9,14 @@ import { CourseProgressStore } from "../../../store"
 import { showContent } from "../../../constants/animations"
 import { DEVICE } from "../../../constants"
 
-function NewSectWindow({onExited}) {
+function NewSectWindow({ onExited }) {
     const newSectWindowRef = useRef(null)
     const [showNewSectW, setShowNewSectW] = useState(false)
 
     const sectBtnData = CourseProgressStore.activeSectBtnData
-    const audioEl = useRef(null)
+    const audioRef = useRef(null)
     const reserveTmId = useRef(null)
+    const noAudioTmId = useRef(null)
 
     useEffect(() => {
         setTimeout(() => {
@@ -24,24 +26,28 @@ function NewSectWindow({onExited}) {
     }, [CourseProgressStore.activeSectId])
 
     function handleEntered() {
-        document.body.classList.add('lock')
+        document.body.classList.add("lock")
+        setTimeout(() => {
+            audioRef.current.play()
+        }, 200)
 
-        if (!audioEl.current) {
-            setTimeout(() => {
+        if (!sectBtnData.audio) {
+            noAudioTmId.current = setTimeout(() => {
                 setShowNewSectW(false)
             }, 2300)
         }
 
         reserveTmId.current = setTimeout(() => {
             setShowNewSectW(false)
-            document.body.classList.remove('lock')
+            document.body.classList.remove("lock")
         }, 3800)
     }
 
     function handleExited() {
         onExited()
         clearTimeout(reserveTmId.current)
-        document.body.classList.remove('lock')
+        if (noAudioTmId.current) clearTimeout(noAudioTmId.current)
+        document.body.classList.remove("lock")
     }
 
     function handleAudioEnded() {
@@ -49,19 +55,6 @@ function NewSectWindow({onExited}) {
             setShowNewSectW(false)
         }, 300)
     }
-
-    useEffect(() => {
-        if (showNewSectW && sectBtnData.audio) {
-            audioEl.current = new Audio(sectBtnData.audio)
-            audioEl.current.play()
-            audioEl.current.addEventListener("ended", handleAudioEnded)
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [showNewSectW])
-
-    useEffect(() => () => {
-            if (audioEl.current) audioEl.current.pause()
-        }, [])
 
     return (
         <CSSTransition
@@ -76,6 +69,13 @@ function NewSectWindow({onExited}) {
             onExited={handleExited}
         >
             <Container ref={newSectWindowRef} className="new-sect">
+                {sectBtnData.audio && (
+                    <audio
+                        ref={audioRef}
+                        src={sectBtnData.audio}
+                        onEnded={handleAudioEnded}
+                    />
+                )}
                 <CourseStepButton isActive data={sectBtnData.value} />
             </Container>
         </CSSTransition>

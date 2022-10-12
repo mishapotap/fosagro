@@ -74,6 +74,10 @@ const Container = styled.div`
     @media ${DEVICE.laptopM} {
         padding-top: 80px;
     }
+
+    @media ${DEVICE.laptopS} {
+        padding-top: 90px;
+    }
 `
 
 const Content = styled.div`

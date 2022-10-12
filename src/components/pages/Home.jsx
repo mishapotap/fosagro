@@ -32,7 +32,6 @@ function Home() {
 
     const titleRef = useRef(null)
     const supTitleRef = useRef(null)
-    const supTitle2Ref = useRef(null)
 
     const location = useLocation()
 
@@ -81,7 +80,6 @@ function Home() {
         }
         if (isSupTitle2Playing) {
             supTitle2SoundRef.current.pause()
-            supTitle2Ref.current.classList.remove("active")
             setIsSupTitle2Playing(false)
         }
     }
@@ -106,11 +104,9 @@ function Home() {
                         supTitleRef.current.classList.remove("active")
 
                         setTimeout(() => {
-                            supTitle2Ref.current.classList.add("active")
                             supTitle2SoundRef.current.play()
 
                             supTitle2SoundRef.current.addEventListener("ended", () => {
-                                supTitle2Ref.current.classList.remove("active")
                             })
                         }, 500);
                     })
@@ -166,16 +162,13 @@ function Home() {
                             </Title>
                             <Suptitle ref={supTitleRef}>
                                 <div>
-                                    Компания ФосАгро напрямую способствует
+                                    ФосАгро напрямую способствует достижению
                                 </div>
                                 <div>
-                                    достижению <span> 11 целей</span>{" "}
+                                     <span> 11 целей</span>{" "}
                                     устойчивого развития ООН
                                     <img src={OOH} alt="OOH" />
                                 </div>
-                            </Suptitle>
-                            <Suptitle ref={supTitle2Ref} className="second">
-                                Предлагаем выбрать любую из предложенных тем и погрузиться в изучение курса устойчивого развития
                             </Suptitle>
                         </TextContainer>
                         <MenuContainer>
@@ -295,7 +288,7 @@ const Background = styled.div`
                 rgba(0, 0, 0, 0) 100%
             );
     }
-    
+
 `
 
 const Video = styled.video`
@@ -417,7 +410,7 @@ const Suptitle = styled.div`
 
     @media ${DEVICE.mobile} {
         margin-top: 16px;
-        font-size: 3.5vw;
+        font-size: 4vw;
     }
 
     div:nth-child(2) {
