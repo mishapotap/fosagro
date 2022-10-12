@@ -81,11 +81,13 @@ function StartBlock() {
                 <audio
                     src={TestTitle}
                     ref={audioTitleRef}
+                    preload="metadata"
                     onEnded={onTitleEnded}
                 />
                 <audio
                     src={TestText}
                     ref={audioTextRef}
+                    preload="metadata"
                     onPlay={() => setTextAudioPlayed(true)}
                     onEnded={() => setTextAudioEnded(true)}
                 />
