@@ -40,7 +40,7 @@ function NewSectWindow({ onExited }) {
         reserveTmId.current = setTimeout(() => {
             setShowNewSectW(false)
             document.body.classList.remove("lock")
-        }, 3800)
+        }, 4300)
     }
 
     function handleExited() {
@@ -74,6 +74,7 @@ function NewSectWindow({ onExited }) {
                         ref={audioRef}
                         src={sectBtnData.audio}
                         onEnded={handleAudioEnded}
+                        preload="metadata"
                     />
                 )}
                 <CourseStepButton isActive data={sectBtnData.value} />
