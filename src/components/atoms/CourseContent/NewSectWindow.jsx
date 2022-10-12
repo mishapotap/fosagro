@@ -28,7 +28,7 @@ function NewSectWindow({ onExited }) {
     function handleEntered() {
         document.body.classList.add("lock")
         setTimeout(() => {
-            audioRef.current.play()
+            if (audioRef.current) audioRef.current.play()
         }, 200)
 
         if (!sectBtnData.audio) {

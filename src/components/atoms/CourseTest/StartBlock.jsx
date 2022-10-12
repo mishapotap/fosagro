@@ -39,17 +39,17 @@ function StartBlock() {
 
     function onTitleEnded() {
         setTimeout(() => {
-            audioTextRef.current.play()
+            if (audioTextRef.current) audioTextRef.current.play()
         }, 300)
     }
 
     useEffect(() => {
         if (ModalStore.someModalShown) {
-            audioTextRef.current.pause()
-            audioTitleRef.current.pause()
+            if (audioTextRef.current) audioTextRef.current.pause()
+            if (audioTitleRef.current) audioTitleRef.current.pause()
         } else if (audioTextRef.current && textAudioPlayed && !textAudioEnded) {
             setTimeout(() => {
-                audioTextRef.current.play()
+                if (audioTextRef.current) audioTextRef.current.play()
             }, 100);
         }
 
@@ -59,11 +59,11 @@ function StartBlock() {
     useEffect(() => {
         if (CourseTestStore.showStart) {
             setTimeout(() => {
-                audioTitleRef.current.play()
+                if (audioTextRef.current) audioTitleRef.current.play()
             }, 200);
         } else {
-            audioTitleRef.current.pause()
-            audioTextRef.current.pause()
+            if (audioTitleRef.current) audioTitleRef.current.pause()
+            if (audioTextRef.current) audioTextRef.current.pause()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [CourseTestStore.showStart])

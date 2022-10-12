@@ -29,6 +29,7 @@ function CookiesConfirmModal() {
         onClose()
         ModalStore.closeModal("cookiesInfo")
         ModalStore.closeModal("instruction")
+        ModalStore.closeModal("welcomeBack")
         ModalStore.showModal("cookie")
     }
 

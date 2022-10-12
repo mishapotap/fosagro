@@ -30,7 +30,7 @@ function FinalBlock() {
     useEffect(() => {
         if (CourseTestStore.showFinal) {
             setTimeout(() => {
-                audioTextRef.current.play()
+                if (audioTextRef.current) audioTextRef.current.play()
             }, 200)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -41,7 +41,7 @@ function FinalBlock() {
             if (audioTextRef.current) audioTextRef.current.pause()
         } else if (audioTextRef.current && !audioTextEnded)
             setTimeout(() => {
-                audioTextRef.current.play()
+                if (audioTextRef.current) audioTextRef.current.play()
             }, 200)
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
