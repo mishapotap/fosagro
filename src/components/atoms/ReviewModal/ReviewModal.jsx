@@ -129,7 +129,7 @@ function ReviewModal({ isOpen, onClose }) {
                                 Оцените, пожалуйста, ваш опыт взаимодействия с
                                 нашим проектом.
                             </Text>
-                            <Rating />
+                            <StyledRating />
                             <Text>
                                 Устойчивое развитие похоже на спорт: сегодня это
                                 было хорошо, а что можно сделать еще лучше? Нам
@@ -144,6 +144,14 @@ function ReviewModal({ isOpen, onClose }) {
         </CurvedModal>
     )
 }
+
+const StyledRating = styled(Rating)`
+    margin-bottom: 2.3vh;
+
+    @media ${DEVICE.laptop} {
+        margin-bottom: 16px;
+    }
+`
 
 const Container = styled.div`
     display: flex;
@@ -181,14 +189,14 @@ const StyledFlower = styled(Flower)``
 const Title = styled.div`
     font-family: "FocoBold";
     color: ${COLORS.blue};
-    font-size: 2.24vw;
+    font-size: 2vw;
     line-height: 1.3;
     text-align: center;
 
-    margin-bottom: 3.7vh;
+    margin-bottom: 2vh;
 
     @media ${DEVICE.laptopM} {
-        font-size: 1.9vw;
+        font-size: 1.7vw;
     }
 
     @media ${DEVICE.laptop} {
@@ -222,9 +230,10 @@ const Text = styled.p`
     line-height: 1.3;
     text-align: center;
 
-    margin-bottom: 30px;
+    margin-bottom: 3vh;
 
     @media ${DEVICE.laptop} {
+        margin-bottom: 18px;
         font-size: 16px;
     }
 `
@@ -271,7 +280,7 @@ const ModalContent = styled.div`
     flex-direction: column;
     align-items: center;
 
-    max-width: 70%;
+    max-width: 74%;
     max-height: 100%;
     margin: 0 auto;
     padding-top: 25px;

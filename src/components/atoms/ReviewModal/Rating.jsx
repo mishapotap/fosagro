@@ -1,18 +1,18 @@
-import React from "react";
-import styled from "styled-components";
-import { observer } from "mobx-react-lite";
-import { ReviewModalStore } from "../../../store";
+import React from "react"
+import styled from "styled-components"
+import { observer } from "mobx-react-lite"
+import { ReviewModalStore } from "../../../store"
 import { Flower } from "../../../assets/svg"
-import { DEVICE } from "../../../constants";
+import { DEVICE } from "../../../constants"
 
-function Rating() {
+function Rating({ className }) {
     return (
         <StyledRating
-        onMouseLeave={() => ReviewModalStore.setRatingHoverVal(0)}
-        inert={ReviewModalStore.isLoading ? "" : undefined}
-    >
-        {Array.from({ length: 5 }, (_, i) => i + 1).map(
-            (i) => (
+            onMouseLeave={() => ReviewModalStore.setRatingHoverVal(0)}
+            inert={ReviewModalStore.isLoading ? "" : undefined}
+            className={className}
+        >
+            {Array.from({ length: 5 }, (_, i) => i + 1).map((i) => (
                 <RatingItem
                     key={i}
                     value={i}
@@ -28,16 +28,13 @@ function Rating() {
                         }
                     />
                 </RatingItem>
-            )
-        )}
-    </StyledRating>
+            ))}
+        </StyledRating>
     )
 }
 
-
 const StyledRating = styled.div`
     display: flex;
-    margin-bottom: 3.7vh;
 `
 
 const RatingItem = styled.div`

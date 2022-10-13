@@ -12,6 +12,8 @@ class ReviewModal {
 
     message = ""
 
+    email = ""
+
     ratingHoverVal = 0
 
     constructor() {
@@ -31,6 +33,7 @@ class ReviewModal {
         makePostRequest("sendmail.php", {
             message: this.message,
             rating: this.ratingVal,
+            email: this.email,
         })
             .then(() => {
                 this.setSuccessState()
@@ -51,6 +54,10 @@ class ReviewModal {
 
     setMessage(val) {
         this.message = val
+    }
+
+    setEmailVal(val) {
+        this.email = val
     }
 
     setErrorState() {

@@ -17,6 +17,8 @@ class Modal {
 
     dontPlayOnClose = false
 
+    userGoExtLink = false
+
     constructor() {
         makeAutoObservable(this)
     }
@@ -46,6 +48,10 @@ class Modal {
 
     setExtModalLink(url) {
         this.extModalLink = url
+    }
+
+    setUserGoExtLink(val) {
+        this.userGoExtLink = val
     }
 
     setDontPlayOnClose(val) {

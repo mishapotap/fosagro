@@ -24,6 +24,8 @@ export default function AudioPlayer({
     onPause = () => {},
     onEnded = () => {},
     onLoaded = () => {},
+    onPauseByUser = () => {},
+    onPlayByUser = () => {},
 }) {
     const audioRef = useRef(null)
     const [isPlayingLocal, setIsPlayingLocal] = useState(false)
@@ -179,8 +181,10 @@ export default function AudioPlayer({
     function togglePlay() {
         if (isPlayingLocal && !audioRef.current.paused) {
             pause()
+            onPauseByUser()
         } else {
             play()
+            onPlayByUser()
         }
     }
 

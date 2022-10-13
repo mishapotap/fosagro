@@ -15,6 +15,7 @@ function ExtLinkModal() {
 
     function handleGoClick() {
         ModalStore.setDontPlayOnClose(true)
+        ModalStore.setUserGoExtLink(true)
         onClose()
     }
     return (
