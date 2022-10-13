@@ -241,7 +241,10 @@ function CourseContent({ setIds, onDisappear }) {
                 }
 
                 // !
-                if ((isAnimationRef.current || isCircleSliderRef.current) && pauseAnim) {
+                if (
+                    (isAnimationRef.current || isCircleSliderRef.current) &&
+                    pauseAnim
+                ) {
                     setPauseAnim(false)
                 }
             }
@@ -252,7 +255,8 @@ function CourseContent({ setIds, onDisappear }) {
     function makePause() {
         checkAutoPaused()
         if (isVideoRef.current) setVideoPlaying(false)
-        if (isAnimationRef.current || isCircleSliderRef.current) setPauseAnim(true)
+        if (isAnimationRef.current || isCircleSliderRef.current)
+            setPauseAnim(true)
         if (isAudioRef.current) {
             setAudioPlaying(false)
         }
@@ -260,7 +264,8 @@ function CourseContent({ setIds, onDisappear }) {
 
     function makePlay() {
         if (isVideoRef.current) setVideoPlaying(true)
-        if (isAnimationRef.current || isCircleSliderRef.current) setPauseAnim(false)
+        if (isAnimationRef.current || isCircleSliderRef.current)
+            setPauseAnim(false)
         if (isAudioRef.current) {
             setAudioPlaying(false)
             setTimeout(() => {
@@ -278,12 +283,25 @@ function CourseContent({ setIds, onDisappear }) {
         }
     }
 
+    // // остановка/воспроизведение медиа при открытии модальных окон
+    // useEffect(() => {
+    //     if (ModalStore.someModalShown) {
+    //         makePause()
+    //         // воспроизвести только если аудио/видео было остановлено автоматически,
+    //         // а не самим пользователем
+    //     } else if (autoPausedRef.current) {
+    //         if (!ModalStore.dontPlayOnClose) {
+    //             makePlay()
+    //             autoPausedRef.current = false
+    //         }
+    //         ModalStore.setDontPlayOnClose(false)
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [ModalStore.someModalShown])
     // остановка/воспроизведение медиа при открытии модальных окон
     useEffect(() => {
-        if (ModalStore.someModalShown) {
+        if (ModalStore.isVisible.mail || ModalStore.isVisible.menu) {
             makePause()
-            // воспроизвести только если аудио/видео было остановлено автоматически,
-            // а не самим пользователем
         } else if (autoPausedRef.current) {
             if (!ModalStore.dontPlayOnClose) {
                 makePlay()
@@ -292,7 +310,7 @@ function CourseContent({ setIds, onDisappear }) {
             ModalStore.setDontPlayOnClose(false)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ModalStore.someModalShown])
+    }, [ModalStore.isVisible.menu, ModalStore.isVisible.mail])
 
     function setRestartAnim() {
         _setRestartAnim(true)
@@ -415,7 +433,8 @@ function CourseContent({ setIds, onDisappear }) {
     }
 
     function onAudioPlay() {
-        if (isVisibleRef.current || isCircleSliderRef.current) setPauseAnim(false)
+        if (isVisibleRef.current || isCircleSliderRef.current)
+            setPauseAnim(false)
         if (!wasFirstPlay.current) {
             wasFirstPlay.current = true
             setShowPausedBtn(true)
@@ -423,7 +442,8 @@ function CourseContent({ setIds, onDisappear }) {
 
         if (didAudioEnded.current) {
             // запустить анимацию заново
-            if (isAnimationRef.current || isCircleSliderRef.current) setRestartAnim(true)
+            if (isAnimationRef.current || isCircleSliderRef.current)
+                setRestartAnim(true)
             setShowPausedBtn(true)
             didAudioEnded.current = false
         }

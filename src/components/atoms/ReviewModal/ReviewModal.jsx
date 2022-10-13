@@ -14,22 +14,33 @@ import SendButton from "../SendButton"
 import { ReviewModalStore, SoundStore } from "../../../store"
 import Rating from "./Rating"
 import Form from "./Form"
-import { FeedBack, Click2 } from "../../../assets/audio"
+import { FeedBack, Click2, FormSuccess } from "../../../assets/audio"
 
 function ReviewModal({ isOpen, onClose }) {
     const successElRef = useRef(null)
     const contentElRef = useRef(null)
-    const makeSendSound = useRef(false)
     const feedBackAudioRef = useRef(null)
     const soundPlayed = useRef(false)
+    const successAudioRef = useRef(false)
+
+    // думаю это состояние должно быть локальным, чтобы когда компонент будет создан заново,
+    // нам не показывалось сообщение об успехе напр, а можно было снова отправить отзыв
+    const [showSuccess, setShowSuccess] = useState(false)
+    const [sucIsVisible, setSucIsVisible] = useState(false)
 
     useEffect(() => {
         if (isOpen) {
             setTimeout(() => {
-                if (feedBackAudioRef.current && !soundPlayed.current) {
+                if (feedBackAudioRef.current) {
                     feedBackAudioRef.current.play()
                 }
             }, 500)
+        } else {
+            setTimeout(() => {
+                setShowSuccess(false)
+                setSucIsVisible(false)
+                ReviewModalStore.resetState()
+            }, 500);
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isOpen])
@@ -37,7 +48,6 @@ function ReviewModal({ isOpen, onClose }) {
     useEffect(() => {
         if (ReviewModalStore.isLoading) {
             if (feedBackAudioRef.current) feedBackAudioRef.current.pause()
-            makeSendSound.current = true
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ReviewModalStore.isLoading])
@@ -46,14 +56,12 @@ function ReviewModal({ isOpen, onClose }) {
         if (ReviewModalStore.isSuccess) {
             const audio = new Audio(Click2)
             audio.play()
+            setTimeout(() => {
+                if (successAudioRef.current) successAudioRef.current.play()
+            }, 200);
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ReviewModalStore.isSuccess])
-
-    // думаю это состояние должно быть локальным, чтобы когда компонент будет создан заново,
-    // нам не показывалось сообщение об успехе напр, а можно было снова отправить отзыв
-    const [showSuccess, setShowSuccess] = useState(false)
-    const [sucIsVisible, setSucIsVisible] = useState(false)
 
     useEffect(
         () => () => {
@@ -78,6 +86,7 @@ function ReviewModal({ isOpen, onClose }) {
     return (
         <CurvedModal isOpen={isOpen} onClose={closeModal} type="review">
             <audio src={FeedBack} ref={feedBackAudioRef} onPlay={handleAudioPlay} />
+            <audio src={FormSuccess} ref={successAudioRef} />
             <Container>
                 <ModalContent
                     className={`${ReviewModalStore.isError ? "error" : ""} ${

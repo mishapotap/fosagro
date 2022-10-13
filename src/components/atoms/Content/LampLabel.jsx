@@ -17,6 +17,12 @@ export default function LampLabel({ text = "" }) {
 const Container = styled.div`
     display: flex;
     align-items: flex-start;
+
+    a {
+        color: inherit;
+        text-decoration: underline;
+        display: inline-block;
+    }
 `
 
 const StyledLamp = styled(Lamp)`
