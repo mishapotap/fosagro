@@ -96,7 +96,7 @@ const chapter4Data = {
                     {
                         id: 1,
                         text: "TCFD отчет ФосАгро 2020",
-                        url: "https://cdn.phosagro.ru/upload/iblock/35c/35c2ee0bc879eb911cb2aa1a4dddf722.pdfchrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://cdn.phosagro.ru/upload/iblock/35c/35c2ee0bc879eb911cb2aa1a4dddf722.pdf",
+                        url: "https://cdn.phosagro.ru/upload/iblock/35c/35c2ee0bc879eb911cb2aa1a4dddf722.pdf",
                     },
                     {
                         id: 2,
@@ -161,8 +161,8 @@ const chapter4Data = {
                 links: [
                     {
                         id: 1,
-                        text: "Программа энергоэффективности на 2020-2023 гг.",
-                        url: "https://www.phosagro.ru/upload/docs/Energy_efficiency_program_ru.pdf ",
+                        text: "Программа энергоэффективности",
+                        url: "https://www.phosagro.ru/upload/docs/Energy_efficiency_program_ru.pdf",
                     },
                 ],
             },

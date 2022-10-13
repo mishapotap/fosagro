@@ -218,6 +218,7 @@ function CourseContent({ setIds, onDisappear }) {
             setShowPausedBtn(true)
             ModalStore.setUserGoExtLink(false)
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ModalStore.userGoExtLink])
 
     // установить задержку для круглого слайдера, чтобы она соответствовала длине аудио
@@ -564,7 +565,8 @@ function CourseContent({ setIds, onDisappear }) {
             <NewSectWindow onExited={() => setSectWindowExited(true)} />
             <PausedBtn
                 // show={audioSrc && isAudioPaused && showPausedBtn}
-                show={showPausedBtn}
+                show={audioSrc && showPausedBtn}
+                // show={showPausedBtn}
                 onClick={handlePausedBtnClick}
             />
         </Columns>

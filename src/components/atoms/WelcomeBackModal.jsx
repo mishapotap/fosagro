@@ -11,7 +11,6 @@ import SendButton from "./SendButton"
 import { menuButtonData } from "../../data"
 
 function WelcomeBackModal() {
-
     return (
         <StyledModal
             isOpen={ModalStore.isVisible.welcomeBack}
@@ -25,28 +24,60 @@ function WelcomeBackModal() {
                 }
             >
                 <Content>
-                    {CourseProgressStore.userStartedLearnAnyChapter ? (
+                    {CourseProgressStore.userPassedFullCourse ? (
                         <>
-                            <Title>Вы вернулись!</Title>
-                            <Text>Ранее вы изучали:</Text>
+                            <Title>Вы изучили курс «Устойчивое развитие»</Title>
                             <MenuButtonsContainer>
                                 <MenuButtons
                                     data={CourseProgressStore.welcomeBtnsData}
                                 />
                             </MenuButtonsContainer>
+
+                            <Text>
+                                Если вам необходимо пройти курс повторно, с
+                                самого начала и с полным прогрессом изучения,
+                                рекомендуем удалить файл «cookies», все данные
+                                удалятся.
+                            </Text>
+                            <SendButton
+                                text="Удалить cookies"
+                                onClick={() =>
+                                    ModalStore.showModal("cookiesConfirm")
+                                }
+                            />
                         </>
                     ) : (
+                        // eslint-disable-next-line react/jsx-no-useless-fragment
                         <>
-                            <Title>Вы пока ничего не изучали!</Title>
-                            <Text>Начать изучение курса:</Text>
-                            <MenuButtonsContainer>
-                                <MenuButtons data={menuButtonData} />
-                            </MenuButtonsContainer>
+                            {CourseProgressStore.userStartedLearnAnyChapter ? (
+                                <>
+                                    <Title>Вы вернулись!</Title>
+                                    <Text>Ранее вы изучали:</Text>
+                                    <MenuButtonsContainer>
+                                        <MenuButtons
+                                            data={
+                                                CourseProgressStore.welcomeBtnsData
+                                            }
+                                        />
+                                    </MenuButtonsContainer>
+                                    <Link to="instruction">
+                                        <SendButton text="Инструкция по работе с курсом" />
+                                    </Link>
+                                </>
+                            ) : (
+                                <>
+                                    <Title>Вы пока ничего не изучали!</Title>
+                                    <Text>Начать изучение курса:</Text>
+                                    <MenuButtonsContainer>
+                                        <MenuButtons data={menuButtonData} />
+                                    </MenuButtonsContainer>
+                                    <Link to="instruction">
+                                        <SendButton text="Инструкция по работе с курсом" />
+                                    </Link>
+                                </>
+                            )}
                         </>
                     )}
-                    <Link to="instruction">
-                        <SendButton text="Инструкция по работе с курсом" />
-                    </Link>
                 </Content>
             </Container>
         </StyledModal>
@@ -74,7 +105,7 @@ const Title = styled.div`
     font-family: FocoBold, sans-serif;
     font-size: 1.3vw;
     color: rgba(0, 82, 155, 0.84);
-    margin-bottom: 2vh;
+    margin-bottom: 2.5vh;
 
     @media ${DEVICE.laptop} {
         margin-bottom: 15px;
@@ -87,6 +118,7 @@ const Text = styled.div`
     font-size: 1.12vw;
     color: ${COLORS.black};
     margin-bottom: 4vh;
+    text-align: center;
 
     @media ${DEVICE.laptop} {
         font-size: 15px;

@@ -41,10 +41,12 @@ function CookiesConfirmModal() {
 
     function handleConfirm() {
         setIsLoading(true)
-        resetProgress()
+        if (ModalStore.isVisible.welcomeBack) ModalStore.closeModal("welcomeBack")
+
         setTimeout(() => {
+            resetProgress()
             setShowStartContent(false)
-        }, 1000)
+        }, 500);
     }
 
     function handleStartElExited() {

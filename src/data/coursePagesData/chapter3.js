@@ -280,7 +280,7 @@ const chapter3Data = {
                     {
                         id: 1,
                         text: "Годовой отчет за 2021 год",
-                        url: "https://cdn.phosagro.ru/upload/iblock/dc9/dc9ee42f1af7716f4ce9cebfde271755.pdfchrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://cdn.phosagro.ru/upload/iblock/dc9/dc9ee42f1af7716f4ce9cebfde271755.pdf",
+                        url: "https://cdn.phosagro.ru/upload/iblock/dc9/dc9ee42f1af7716f4ce9cebfde271755.pdf",
                     },
                     {
                         id: 2,

@@ -196,7 +196,7 @@ const introModalData = {
                 {
                     id: 1,
                     text: "Политика в области охраны окружающей среды ПАО «ФосАгро»",
-                    url: "https://cdn.phosagro.ru/upload/docs/environmental_protection.pdf chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://cdn.phosagro.ru/upload/docs/environmental_protection.pdf",
+                    url: "https://cdn.phosagro.ru/upload/docs/environmental_protection.pdf",
                 },
             ],
         },
