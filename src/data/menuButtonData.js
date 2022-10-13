@@ -6,7 +6,7 @@ const menuButtonData = [
     {
         id: 1,
         index: "01",
-        text: "введение и личный вклад в устойчивое развитие",
+        text: "Введение и личный вклад в устойчивое развитие",
         bgColor: "rgba(218, 170, 0, 0.8)",
         bgAnimateColor: "rgba(218, 170, 0, 0.5)",
         rotate: "9",
@@ -26,7 +26,7 @@ const menuButtonData = [
     {
         id: 3,
         index: "03",
-        text: "потребители и управление продукцией",
+        text: "Потребители и управление продукцией",
         bgColor: "rgba(112, 115, 114, 0.8)",
         bgAnimateColor: "rgba(112, 115, 114, 0.5)",
         rotate: "26",
@@ -37,7 +37,7 @@ const menuButtonData = [
     {
         id: 4,
         index: "04",
-        text: "экология",
+        text: "Экология",
         bgColor: "rgba(182, 186, 41, 0.8)",
         bgAnimateColor: "rgba(182, 186, 41, 0.5)",
         rotate: "26",
@@ -47,7 +47,7 @@ const menuButtonData = [
     {
         id: 5,
         index: "05",
-        text: "климат и энергоэффективность",
+        text: "Климат и энергоэффективность",
         bgColor: "rgba(103, 130, 58, 0.8)",
         bgAnimateColor: "rgba(103, 130, 58, 0.5)",
         rotate: "-65",
@@ -57,7 +57,7 @@ const menuButtonData = [
     {
         id: 6,
         index: "06",
-        text: "социальная среда и права человека",
+        text: "Социальная среда и права человека",
         bgColor: "rgba(113, 178, 201, 0.8)",
         bgAnimateColor: "rgba(113, 178, 201, 0.5)",
         rotate: "55",

@@ -1,13 +1,16 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-no-bind */
-import React, { useRef } from "react"
+import React, { useRef, useState } from "react"
 import styled from "styled-components"
 import { observer } from "mobx-react-lite"
+// import isEmail from "validator/lib/isEmail"
 import SendReviewBtn from "./SendReviewBtn"
 import { ReviewModalStore } from "../../../store"
 import { COLORS, DEVICE } from "../../../constants"
 
 function Form() {
     const textareaRef = useRef(null)
+    // const [showErrMess, setShowErrMess] = useState(false)
 
     function handleTextareaChange({ target: { value } }) {
         const val = value.trim()
@@ -34,15 +37,25 @@ function Form() {
         ReviewModalStore.setEmailVal(value.trim())
     }
 
+    // function checkIsEmailCorrect({ target: { value } }) {
+    //     if (!isEmail(value)) {
+    //         setShowErrMess(true)
+    //     } else {
+    //         setShowErrMess(false)
+    //     }
+    // }
+
     return (
         <FormWrapper>
             <StyledForm onSubmit={handleSubmit}>
                 <MailInputWrapper>
                     <MailInput
-                        type="text"
+                        type="email"
                         placeholder="Введите ваш Email"
                         onChange={handleEmailInpChange}
+                        // onBlur={(e) => checkIsEmailCorrect(e)}
                     />
+                    {/* <InpError className={showErrMess && "show"}>Введите корректный email</InpError> */}
                 </MailInputWrapper>
                 <TextareaWrapper className="textarea-wrapper">
                     <Textarea
@@ -59,12 +72,35 @@ function Form() {
 }
 
 const MailInputWrapper = styled.div`
+    position: relative;
     margin-bottom: 25px;
     width: 23vw;
 
     @media ${DEVICE.laptopS} {
         width: 100%;
         max-width: 400px;
+    }
+`
+
+const InpError = styled.div`
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, calc(100% + 8px));
+
+    font-family: CalibriRegular, sans-serif;
+    font-size: 1.3vw;
+    color: ${COLORS.red};
+
+    opacity: 0;
+    transition: 0.2s;
+
+    &.show {
+        opacity: 1;
+    }
+
+    @media ${DEVICE.laptop} {
+        font-size: 16px;
     }
 `
 

@@ -86,7 +86,7 @@ const chapter5Data = {
                     {
                         id: 1,
                         text: "Визуализация климатической спирали",
-                        url: "https://www.youtube.com/watch?v=jWoCXLuTIkI&ab_channel=NASAClimateChange",
+                        url: "https://www.youtube.com/watch?v=jWoCXLuTIkI",
                     },
                     {
                         id: 2,
@@ -96,7 +96,7 @@ const chapter5Data = {
                     {
                         id: 3,
                         text: "Письма о геофизических исследованиях",
-                        url: "https://agupubs.onlinelibrary.wiley.com/doi/10.1029/1999GL900070 ",
+                        url: "https://agupubs.onlinelibrary.wiley.com/doi/10.1029/1999GL900070",
                     },
                 ],
             },

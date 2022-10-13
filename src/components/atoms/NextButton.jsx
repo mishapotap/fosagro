@@ -12,20 +12,38 @@ export default function NextButton({
 }) {
     return (
         <Container
-            className={`${className || ''} ${active ? 'active' : ''}`}
+            className={`${className || ""} ${active ? "active" : ""}`}
             onClick={onClick}
             inert={inert ? "" : undefined}
         >
             <Text>{text}</Text>
-            <Next />
+            <Icon>
+                <Next />
+            </Icon>
         </Container>
     )
 }
 
 const animBtn = keyframes`
-    50% {
-        transform: scale(1.15);
+    0% {
+        transform: scale(1);
     }
+
+    10% {
+        transform: scale(1);
+    }
+
+    20% {
+        transform: scale(1.12);
+    }
+
+    30% {
+        transform: scale(1);
+    }
+`
+
+const Icon = styled.div`
+    display: inline-block;
 `
 
 const Container = styled.div`
@@ -58,19 +76,27 @@ const Container = styled.div`
         }
     }
 
-    &:hover svg {
-        transform: scale(1.15);
+    &.active {
+        ${Icon} {
+            animation: ${animBtn} 5s infinite;
 
-        @media ${DEVICE.laptopS} {
-            transform: none;
+            @media ${DEVICE.laptopS} {
+                animation: none;
+            }
         }
     }
 
-    &.active svg {
-        animation: ${animBtn} 0.8s;
+    &:hover {
+        ${Icon} {
+            animation: none !important;
+        }
 
-        @media ${DEVICE.laptopS} {
-            animation: none;
+        svg {
+            transform: scale(1.15);
+
+            @media ${DEVICE.laptopS} {
+                transform: none;
+            }
         }
     }
 `

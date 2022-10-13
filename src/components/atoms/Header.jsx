@@ -26,13 +26,14 @@ function Header({
     goBackToMain = false,
     fosagroSite = false,
     makeMobShadow = false,
+    chapterTitle = false,
 }) {
     // сделать норм
     const rusSiteLink = "https://esg-course.phosagro.ru"
     const engSiteLink = "https://esg-course.phosagro.com"
     const isRus = false
 
-    const { activeSectColor, activeSectTitle } = CourseProgressStore
+    const { activeSectColor, activeSectTitle, activeChapterTitle } = CourseProgressStore
 
     const clickSound = new Audio(Click2)
 
@@ -99,6 +100,16 @@ function Header({
                             <SectTitleDecor />
                             <SectTitleText color={activeSectColor}>
                                 {activeSectTitle}
+                            </SectTitleText>
+                        </SectTitle>
+                    </HeaderSectTitle>
+                )}
+                {chapterTitle && (
+                    <HeaderSectTitle>
+                        <SectTitle>
+                            <SectTitleDecor />
+                            <SectTitleText color={COLORS.blue}>
+                                {activeChapterTitle}
                             </SectTitleText>
                         </SectTitle>
                     </HeaderSectTitle>

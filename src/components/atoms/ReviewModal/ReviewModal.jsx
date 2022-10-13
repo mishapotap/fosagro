@@ -219,7 +219,7 @@ const ErrorMessage = styled.p`
     color: ${COLORS.red};
 
     @media ${DEVICE.laptop} {
-        font-size: 18px;
+        font-size: 16px;
     }
 `
 

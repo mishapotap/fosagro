@@ -91,7 +91,6 @@ class CourseProgress {
         makeAutoObservable(this)
     }
 
-    // TODO надо проверить, правильно ли это работает
     get userPassedFullCourse() {
         const chaptersIds = Object.keys(coursePagesData)
         const notPassedChapter = chaptersIds.find(
@@ -99,6 +98,8 @@ class CourseProgress {
         )
 
         return !notPassedChapter
+        // для проверки
+        // return true
     }
 
     get activeChapterData() {
@@ -250,6 +251,14 @@ class CourseProgress {
         return Object.keys(this.visitedPages)
             .filter((id) => this.chapterProgressPercent(id) !== 0)
             .map((i) => +i)
+    }
+
+    // заголовок активного раздела
+    get activeChapterTitle() {
+        const data = menuButtonData.find(i => i.id === this.activeChapterId)
+        // надо с индексом
+        if (data) return `${data.index} ${data.text}`
+        return 'Тест'
     }
 
     // данные кнопок для разделов, которые уже изучались (для WelcomeBackModal)
