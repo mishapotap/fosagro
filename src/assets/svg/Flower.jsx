@@ -66,6 +66,6 @@ const Wrapper = styled.svg`
     width: 60px;
 
     @media ${DEVICE.laptopM} {
-        width: 40px;
+        width: 38px;
     }
 `

@@ -17,7 +17,6 @@ function Form() {
         } else {
             ReviewModalStore.setMessage("")
         }
-        
     }
 
     function handleSubmit(e) {
@@ -31,14 +30,26 @@ function Form() {
         ReviewModalStore.handleSend(e)
     }
 
+    function handleEmailInpChange({ target: { value } }) {
+        ReviewModalStore.setEmailVal(value.trim())
+    }
+
     return (
         <FormWrapper>
             <StyledForm onSubmit={handleSubmit}>
+                <MailInputWrapper>
+                    <MailInput
+                        type="text"
+                        placeholder="Введите ваш Email"
+                        onChange={handleEmailInpChange}
+                    />
+                </MailInputWrapper>
                 <TextareaWrapper className="textarea-wrapper">
                     <Textarea
                         ref={textareaRef}
                         onChange={handleTextareaChange}
                         disabled={ReviewModalStore.isLoading}
+                        placeholder="Введите ваше сообщение"
                     />
                 </TextareaWrapper>
                 <SendReviewBtn />
@@ -47,18 +58,39 @@ function Form() {
     )
 }
 
-const FormWrapper = styled.div`
+const MailInputWrapper = styled.div`
+    margin-bottom: 25px;
+    width: 23vw;
+
+    @media ${DEVICE.laptopS} {
+        width: 100%;
+        max-width: 400px;
+    }
+`
+
+const MailInput = styled.input`
     width: 100%;
+    padding: 5px;
+    border-bottom: 1px solid ${COLORS.blue};
+
+    font-family: CalibriLight, sens-serif;
+    font-size: 1.2vw;
+    text-align: center;
+    color: ${COLORS.black};
+
+    @media ${DEVICE.laptop} {
+        font-size: 16px;
+    }
 `
 
 // чтобы скрыть полосу скролла, которая выходит за пределы textarea
 const TextareaWrapper = styled.div`
     position: relative;
     width: 100%;
-    min-height: 24.5vh;
+    min-height: 21vh;
     overflow: hidden;
 
-    margin-bottom: 3.7vh;
+    margin-bottom: 2.5vh;
     border: 1px solid ${COLORS.blue};
     border-radius: 30px;
 
@@ -69,8 +101,8 @@ const TextareaWrapper = styled.div`
 
     @media ${DEVICE.laptopS} {
         min-height: auto;
-        max-width: 600px;
-        height: 250px;
+        max-width: 480px;
+        height: 200px;
     }
 
     @media ${DEVICE.mobile} {
@@ -118,11 +150,28 @@ const StyledForm = styled.form`
     flex-direction: column;
     align-items: center;
 
-    max-width: 89.6%;
+    max-width: 73%;
     margin: 0 auto;
 
     @media ${DEVICE.mobile} {
         max-width: none;
+    }
+`
+
+const FormWrapper = styled.div`
+    width: 100%;
+
+    ${Textarea},
+    ${MailInput} {
+        &::placeholder {
+            font-family: CalibriLight, sans-serif;
+            font-size: 1.2vw;
+            color: #a3a3a3;
+
+            @media ${DEVICE.laptop} {
+                font-size: 16px;
+            }
+        }
     }
 `
 
