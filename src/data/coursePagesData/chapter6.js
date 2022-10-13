@@ -192,7 +192,7 @@ const chapter6Data = {
                                 },
                                 {
                                     id: 2,
-                                    text: "<span>на электронный почтовый ящик:</span> help@phosagro.ru;",
+                                    text: "<span>на электронный почтовый ящик:</span> <a href=\"mailto:help@phosagro.ru\">help@phosagro.ru</a>;",
                                 },
                                 {
                                     id: 3,

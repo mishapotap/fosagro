@@ -4,6 +4,7 @@
 import React, { useEffect, useState, useRef } from "react"
 import styled from "styled-components"
 import { Pagination, Navigation, EffectFade } from "swiper"
+import { observer } from "mobx-react-lite"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Link } from "react-router-dom"
 import CurvedModal from "./CurvedModal"
@@ -13,10 +14,10 @@ import { COLORS, DEVICE } from "../../constants"
 import { ContentBlock, Title, Text, Note } from "./Content"
 import AudioPlayer from "./AudioPlayer"
 import ExtLinks from "./ExtLinks"
-import { CourseProgressStore } from "../../store"
+import { CourseProgressStore, ModalStore } from "../../store"
 import SendButton from "./SendButton"
 
-export default function IntroModal({ isOpen, onClose, items }) {
+function IntroModal({ isOpen, onClose, items }) {
     function renderCustom(swiper, current, total) {
         return /* html */ `
             <span class="cur-slide-number">${current}</span>
@@ -135,6 +136,16 @@ export default function IntroModal({ isOpen, onClose, items }) {
         }
         setSlidesPauseAnim((prevVal) => ({ ...prevVal, [index]: false }))
     }
+
+    // временно?
+    useEffect(() => {
+        if (ModalStore.isVisible.extLinks) {
+            if (modalContent.current) {
+                const audios = modalContent.current.querySelectorAll('audio')
+                audios.forEach(a => a.pause())
+            }
+        }
+    }, [ModalStore.isVisible.extLinks])
 
     return (
         <StyledModal
@@ -308,6 +319,8 @@ export default function IntroModal({ isOpen, onClose, items }) {
         </StyledModal>
     )
 }
+
+export default observer(IntroModal)
 
 const StyledModal = styled(CurvedModal)`
     .modal-content {

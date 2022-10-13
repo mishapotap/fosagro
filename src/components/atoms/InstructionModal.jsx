@@ -300,23 +300,8 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                                     </ChaptersRow>
                                                     <Slide1Center>
                                                         <Text className="text-timeline">
-                                                            Меню разделов
-                                                            выполнено в виде
-                                                            таймлайна,
-                                                            переключаться по
-                                                            разделам можно с
-                                                            помощью компьютерной
-                                                            мыши, предварительно
-                                                            необходимо
-                                                            зафиксировать левую
-                                                            кнопку мыши в
-                                                            области таймлайна и
-                                                            перемещать мышь по
-                                                            горизонтали или с
-                                                            помощью стрелок,
-                                                            расположенных внизу.
+                                                            Меню разделов выполнено в виде таймлайна, переключаться по разделам можно с помощью стрелок, расположенных внизу или с помощью компьютерной мыши, предварительно необходимо зафиксировать левую кнопку мыши в области таймлайна и перемещать мышь по горизонтали.
                                                         </Text>
-
                                                         <TimelineImgWrapper>
                                                             <img
                                                                 src={
@@ -553,21 +538,6 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                             <CircleBtn className="button-next">
                                 <ArrowRight color={COLORS.blue} />
                             </CircleBtn>
-                            {/* {activeSlideIdx === 1 && (
-                                <StartLearn>
-                                    <Link
-                                        to={
-                                            CourseProgressStore.instructionModalLink
-                                        }
-                                        onClick={() => closeInstructionModal()}
-                                    >
-                                        <SendButton
-                                            text="Начать обучение"
-                                            size="m"
-                                        />
-                                    </Link>
-                                </StartLearn>
-                            )} */}
                         </Swiper>
                     </SliderContainer>
                 </Container>
@@ -620,7 +590,7 @@ const StyledLayout = styled(Layout)`
 
 const StyledAudioPlayer = styled(AudioPlayer)`
     position: absolute;
-    left: 0;
+    left: 6px;
     top: 0;
 
     @media ${DEVICE.laptopS} {
@@ -1379,12 +1349,12 @@ const SliderContainer = styled.div`
 
                 .tl-prev-btn {
                     animation-name: ${fadeInRight};
-                    animation-delay: 30s;
+                    animation-delay: 21s;
                 }
 
                 .tl-next-btn {
                     animation-name: ${fadeInLeft};
-                    animation-delay: 31s;
+                    animation-delay: 22s;
                 }
 
                 .icon-attention {

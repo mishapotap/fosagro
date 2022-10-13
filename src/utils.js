@@ -34,6 +34,12 @@ export async function makePostRequest(url, data) {
     }
 
     return response
+
+    // return new Promise((resolve, reject) => {
+    //     setTimeout(() => {
+    //         resolve()
+    //     }, 3000);
+    // })
 }
 
 // получение положения элемента относительно окна

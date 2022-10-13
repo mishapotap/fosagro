@@ -478,7 +478,7 @@ const testsQsData = {
             items: [
                 {
                     id: 1,
-                    text: "3,6, 9,12,13,15,17",
+                    text: "3,6,9,12,13,15,17",
                 },
                 {
                     id: 2,

@@ -212,7 +212,7 @@ class CourseTest {
 
     // eslint-disable-next-line class-methods-use-this
     isQAnswerCorrect(correct, answer) {
-        if (typeof correct === "object") {
+        if (typeof correct === "object" && typeof answer === "object") {
             const wrongAnsw = answer.find((id) => !correct.includes(id))
             const correctAnswer = answer.find((id) => correct.includes(id))
             if (!wrongAnsw && correctAnswer) {

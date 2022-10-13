@@ -185,13 +185,12 @@ function TestBlock() {
                         )}
 
                         <TestNav>
-                            <NextButton
+                            <StyledNextButton
                                 text={
                                     CourseTestStore.showEndTestBtn
                                         ? "Завершить"
                                         : "Следующий вопрос"
                                 }
-                                // inert={CourseTestStore.nextBtnDisabled}
                                 inert={nextBtnDisabled}
                                 className="button-next"
                                 onClick={handleNextClick}
@@ -203,6 +202,14 @@ function TestBlock() {
         </CSSTransition>
     )
 }
+
+const StyledNextButton = styled(NextButton)`
+    transition: 0.2s;
+
+    &[inert] {
+        opacity: 0.5;
+    }
+`
 
 const Test = styled.div`
     max-height: 100%;

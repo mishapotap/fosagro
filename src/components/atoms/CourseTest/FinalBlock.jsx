@@ -36,8 +36,19 @@ function FinalBlock() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [CourseTestStore.showFinal])
 
+    // useEffect(() => {
+    //     if (ModalStore.someModalShown) {
+    //         if (audioTextRef.current) audioTextRef.current.pause()
+    //     } else if (audioTextRef.current && !audioTextEnded)
+    //         setTimeout(() => {
+    //             if (audioTextRef.current) audioTextRef.current.play()
+    //         }, 200)
+
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [ModalStore.someModalShown])
+
     useEffect(() => {
-        if (ModalStore.someModalShown) {
+        if (ModalStore.isVisible.menu || ModalStore.isVisible.mail) {
             if (audioTextRef.current) audioTextRef.current.pause()
         } else if (audioTextRef.current && !audioTextEnded)
             setTimeout(() => {
@@ -45,7 +56,7 @@ function FinalBlock() {
             }, 200)
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ModalStore.someModalShown])
+    }, [ModalStore.isVisible.menu, ModalStore.isVisible.mail])
 
     function handleExited() {
         finalRef.current.style.opacity = 1
