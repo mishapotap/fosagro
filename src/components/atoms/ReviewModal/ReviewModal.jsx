@@ -305,6 +305,10 @@ const ModalContent = styled.div`
         .textarea-wrapper {
             border-color: ${COLORS.red};
         }
+
+        .email-input {
+            border-color: ${COLORS.red};
+        }
     }
 `
 

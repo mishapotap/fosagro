@@ -1,13 +1,14 @@
 import React, { useRef } from "react"
 import styled from "styled-components"
 import { CSSTransition } from "react-transition-group"
+import { createPortal } from "react-dom"
 import { Play } from "../../../assets/svg"
 import { COLORS, DEVICE } from "../../../constants"
 
 export default function PausedBtn({ onClick = () => {}, show = false }) {
     const pausedBtnRef = useRef(null)
 
-    return (
+    return createPortal(
         <CSSTransition
             in={show}
             timeout={300}
@@ -18,10 +19,12 @@ export default function PausedBtn({ onClick = () => {}, show = false }) {
                 ref={pausedBtnRef}
                 onClick={onClick}
                 className="paused-btn"
+                data-paused-btn
             >
                 <Play color={COLORS.blue} />
             </Container>
-        </CSSTransition>
+        </CSSTransition>,
+        document.body
     )
 }
 
@@ -31,11 +34,11 @@ const Container = styled.div`
     left: 50%;
 
     transform: translate(-50%, -50%);
-    width: 6.8vw;
-    height: 6.8vw;
+    width: 6.4vw;
+    height: 6.4vw;
 
     transition: 0.3s;
-    z-index: 50;
+    z-index: 200;
     cursor: pointer;
 
     border-radius: 50%;

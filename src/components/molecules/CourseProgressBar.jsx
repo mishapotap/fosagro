@@ -25,7 +25,12 @@ const Container = styled.div`
     position: relative;
     height: 100%;
     padding-left: 40px;
-    margin-right: 40px;
+    margin-right: 3.5vw;
+
+    @media ${DEVICE.laptopS} {
+        margin-right: 50px;
+    }
+
     progress {
         min-width: 100%;
         color: ${props => props.color};
@@ -69,7 +74,7 @@ const Button = styled(AnimatedBlueButton)`
 const Progress = styled.progress`
     position: relative;
     top: 50%;
-    @media ${DEVICE.tablet} {
+    @media ${DEVICE.mobile} {
         display: none;
     }
 `

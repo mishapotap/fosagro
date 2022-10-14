@@ -10,7 +10,8 @@ function SendReviewBtn() {
             loading={ReviewModalStore.isLoading}
             disabled={
                 ReviewModalStore.isLoading ||
-                (!ReviewModalStore.message && !ReviewModalStore.ratingVal)
+                (!ReviewModalStore.message && !ReviewModalStore.ratingVal) ||
+                (ReviewModalStore.email && !ReviewModalStore.isEmailCorrect)
             }
         />
     )

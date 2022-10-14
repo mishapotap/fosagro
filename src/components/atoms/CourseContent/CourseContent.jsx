@@ -18,7 +18,6 @@ import Nav from "./Nav"
 import Content from "./Content"
 import Media from "./Media"
 import NewSectWindow from "./NewSectWindow"
-import PausedBtn from "./PausedBtn"
 
 function CourseContent({ setIds, onDisappear }) {
     const pageData = CourseProgressStore.activePageData
@@ -218,7 +217,7 @@ function CourseContent({ setIds, onDisappear }) {
             setShowPausedBtn(true)
             ModalStore.setUserGoExtLink(false)
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ModalStore.userGoExtLink])
 
     // установить задержку для круглого слайдера, чтобы она соответствовала длине аудио
@@ -308,7 +307,11 @@ function CourseContent({ setIds, onDisappear }) {
     // }, [ModalStore.someModalShown])
     // остановка/воспроизведение медиа при открытии модальных окон
     useEffect(() => {
-        if (ModalStore.isVisible.mail || ModalStore.isVisible.menu || ModalStore.isVisible.extLinks) {
+        if (
+            ModalStore.isVisible.mail ||
+            ModalStore.isVisible.menu ||
+            ModalStore.isVisible.extLinks
+        ) {
             makePause()
         } else if (autoPausedRef.current) {
             if (!ModalStore.dontPlayOnClose) {
@@ -318,7 +321,11 @@ function CourseContent({ setIds, onDisappear }) {
             ModalStore.setDontPlayOnClose(false)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ModalStore.isVisible.menu, ModalStore.isVisible.mail, ModalStore.isVisible.extLinks])
+    }, [
+        ModalStore.isVisible.menu,
+        ModalStore.isVisible.mail,
+        ModalStore.isVisible.extLinks,
+    ])
 
     function setRestartAnim() {
         _setRestartAnim(true)
@@ -399,6 +406,14 @@ function CourseContent({ setIds, onDisappear }) {
         if (video) video.pause()
     }
 
+    const hidePausedBtn = () => {
+        setShowPausedBtn(true)
+
+        setTimeout(() => {
+            setShowPausedBtn(false)
+        }, 50)
+    }
+
     function handleBackClick() {
         setLeftSlide(true)
         setRightSlide(false)
@@ -406,7 +421,7 @@ function CourseContent({ setIds, onDisappear }) {
 
         stopMedia()
         clickSound.play()
-        setShowPausedBtn(false)
+        hidePausedBtn()
     }
 
     function handleNextClick(e) {
@@ -420,7 +435,7 @@ function CourseContent({ setIds, onDisappear }) {
             clickSound.play()
         }
         stopMedia()
-        setShowPausedBtn(false)
+        hidePausedBtn()
     }
 
     function handleExited() {
@@ -469,11 +484,6 @@ function CourseContent({ setIds, onDisappear }) {
         setAnimateNextBtn(true)
     }
 
-    function handlePausedBtnClick() {
-        makePlay()
-        setShowPausedBtn(false)
-    }
-
     return (
         <Columns
             className={`${leftSlide && "left-slide"} ${
@@ -497,8 +507,9 @@ function CourseContent({ setIds, onDisappear }) {
                             onPause={onAudioPause}
                             onEnded={onAudioEnded}
                             onLoaded={handleAudioLoaded}
-                            onPauseByUser={() => setShowPausedBtn(true)}
-                            onPlayByUser={() => setShowPausedBtn(false)}
+                            showPausedBtn={showPausedBtn}
+                            makePausedBtn
+                            onPausedBtnClick={() => makePlay()}
                         />
                     )}
                 </AudioColumn>
@@ -563,12 +574,6 @@ function CourseContent({ setIds, onDisappear }) {
             </CSSTransition>
 
             <NewSectWindow onExited={() => setSectWindowExited(true)} />
-            <PausedBtn
-                // show={audioSrc && isAudioPaused && showPausedBtn}
-                show={audioSrc && showPausedBtn}
-                // show={showPausedBtn}
-                onClick={handlePausedBtnClick}
-            />
         </Columns>
     )
 }

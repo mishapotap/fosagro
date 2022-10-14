@@ -28,9 +28,7 @@ export default function CourseSlideLayout({ className, type, children }) {
                         <BackToChapterIcon>
                             <ArrowUp />
                         </BackToChapterIcon>
-                        <BackToChapterText>
-                            Вернуться в раздел
-                        </BackToChapterText>
+                        <BackToChapterText>Вернуться в раздел</BackToChapterText>
                     </BackToChapter>
                 </Link>
                 {children}
@@ -79,6 +77,7 @@ const BackToChapterText = styled.div`
     font-family: "FocoRegular", sans-serif;
     font-size: 18px;
     color: ${COLORS.blue};
+    text-align: center;
 
     @media ${DEVICE.laptopM} {
         font-size: 15px;
@@ -102,7 +101,7 @@ const StyledLayout = styled(Layout)`
 
     .back-to-chapter {
         position: fixed;
-        top: 20px;
+        top: 5px;
         left: 50%;
         transform: translateX(-50%);
         z-index: 100;

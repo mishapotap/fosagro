@@ -13,6 +13,7 @@ import {
 } from "./components/pages"
 import { ExtLinkModal, InstructionModal, IntroModal } from "./components/atoms"
 import { CookiesStore, SoundStore, ModalStore } from "./store"
+import PausedBtn from "./components/atoms/CourseContent/PausedBtn"
 
 function App() {
     return (
@@ -36,6 +37,7 @@ function App() {
                 <Route path="*" element={<Error404 />} />
             </Routes>
             <ExtLinkModal />
+            <PausedBtn/>
         </>
     )
 }

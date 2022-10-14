@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-no-bind */
 import React, { useRef, useState } from "react"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { COLORS, DEVICE } from "../../../constants"
 import {
     Play,
@@ -125,13 +125,13 @@ export default function VideoControls({
                             {tooltipTime}
                         </Tooltip>
                     </TimeLineWrapper>
-                    {isFullscreen && (
-                        <Time>
+                    {/* {isFullscreen && ( */}
+                        <Time isFullscreen={isFullscreen}>
                             <ProgressTime>{progressTime}</ProgressTime>
                             <span />
                             <FullTime>{fullTime}</FullTime>
                         </Time>
-                    )}
+                    {/* )} */}
                 </PlayerProgress>
 
                 <FullscreenBtn
@@ -365,6 +365,27 @@ const PlayerProgress = styled.div`
     height: 58px;
 `
 
+const ProgressTime = styled.div`
+    font-family: "FocoBold";
+    font-size: 18px;
+    font-weight: bold;
+    color: ${COLORS.white};
+
+    @media ${DEVICE.laptopS} {
+        font-size: 16px;
+    }
+`
+
+const FullTime = styled.div`
+    font-family: "FocoLight";
+    font-size: 18px;
+    color: ${COLORS.white};
+
+    @media ${DEVICE.laptopS} {
+        font-size: 16px;
+    }
+`
+
 const Time = styled.div`
     position: absolute;
     right: 0;
@@ -386,27 +407,27 @@ const Time = styled.div`
         border-radius: 5px;
         background-color: ${COLORS.white};
     }
-`
 
-const ProgressTime = styled.div`
-    font-family: "FocoBold";
-    font-size: 18px;
-    font-weight: bold;
-    color: ${COLORS.white};
+    ${({isFullscreen}) => !isFullscreen && css`
+        bottom: 8px;
 
-    @media ${DEVICE.laptopS} {
-        font-size: 16px;
-    }
-`
+        @media ${DEVICE.mobile} {
+            bottom: 13px;
+        }
 
-const FullTime = styled.div`
-    font-family: "FocoLight";
-    font-size: 18px;
-    color: ${COLORS.white};
+        ${ProgressTime},
+        ${FullTime} {
+            font-size: 16px;
 
-    @media ${DEVICE.laptopS} {
-        font-size: 16px;
-    }
+            @media ${DEVICE.laptopM} {
+                font-size: 14px;
+            }
+
+            @media ${DEVICE.mobile} {
+                font-size: 12px;
+            }
+        }
+    `}
 `
 
 const TimeLineWrapper = styled.div`

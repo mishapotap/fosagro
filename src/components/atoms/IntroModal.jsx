@@ -32,9 +32,16 @@ function IntroModal({ isOpen, onClose, items }) {
     const [audiosEnded, setAudiosEnded] = useState({})
     const [restartSliderAnim, setRestartSliderAnim] = useState({})
 
+    const [makePausedBtn, setMakePausedBtn] = useState(true)
+    const [showPausedBtn, setShowPausedBtn] = useState(false)
+
+    const activeSlideIdx = useRef(0)
+
     const modalContent = useRef(null)
     const swiperRef = useRef(null)
     const slidersDelayRef = useRef(null)
+
+    const autoPausedAudio = useRef([])
 
     function setSlidersDelay(val) {
         slidersDelayRef.current = val
@@ -46,18 +53,21 @@ function IntroModal({ isOpen, onClose, items }) {
         const initAudiosState = {}
         const initDelayState = {}
         const initAudioEndedState = {}
+        // const initPausedBtnState = {}
 
         items.forEach((i, index) => {
             initSlidesPauseAnim[index] = true
             initAudiosState[index] = false
             initAudioEndedState[index] = false
             initDelayState[index] = 5000
+            // initPausedBtnState[index] = false
         })
 
         setSlidersAudio(initAudiosState)
         setSlidesPauseAnim(initSlidesPauseAnim)
         setSlidersDelay(initDelayState)
         setAudiosEnded(initAudioEndedState)
+        // setShowPausedBtn(initAudioEndedState)
     }
 
     useEffect(() => {
@@ -68,9 +78,22 @@ function IntroModal({ isOpen, onClose, items }) {
     useEffect(() => {
         if (isOpen) {
             setInitialState()
+            setMakePausedBtn(true)
+        } else {
+            setMakePausedBtn(false)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isOpen])
+
+    useEffect(() => {
+        if (ModalStore.userGoExtLink ) {
+            // показать на активном
+            // setShowPausedBtn(true)
+            // setShowPausedBtn((prevState) => ({...prevState, [activeSlideIdx.current]: true}))
+            ModalStore.setUserGoExtLink(false)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ModalStore.userGoExtLink])
 
     function handleOpenAnimEnd() {
         setTimeout(() => {
@@ -82,6 +105,15 @@ function IntroModal({ isOpen, onClose, items }) {
     // при смене слайда
     function handleSlideChange(swiper) {
         const { activeIndex, previousIndex } = swiper
+
+        activeSlideIdx.current = activeIndex
+
+        // setShowPausedBtn((prevState) => ({...prevState, [previousIndex]: true, [activeIndex]: true}))
+            setShowPausedBtn(true)
+        setTimeout(() => {
+            setShowPausedBtn(false)
+            // setShowPausedBtn((prevState) => ({...prevState, [previousIndex]: false, [activeIndex]: false}))
+        }, 50);
 
         setSlidesPauseAnim((prevState) => ({
             ...prevState,
@@ -137,14 +169,24 @@ function IntroModal({ isOpen, onClose, items }) {
         setSlidesPauseAnim((prevVal) => ({ ...prevVal, [index]: false }))
     }
 
-    // временно?
     useEffect(() => {
         if (ModalStore.isVisible.extLinks) {
             if (modalContent.current) {
                 const audios = modalContent.current.querySelectorAll('audio')
-                audios.forEach(a => a.pause())
+                audios.forEach(a => {
+                    if (!a.paused) {
+                        a.pause()
+                        autoPausedAudio.current.push(a)
+                    }
+                })
             }
         }
+        // } else if (autoPausedAudio) {
+        //     autoPausedAudio.current.forEach(a => {
+        //         a.play()
+        //     })
+        //     autoPausedAudio.current = []
+        // }
     }, [ModalStore.isVisible.extLinks])
 
     return (
@@ -224,6 +266,9 @@ function IntroModal({ isOpen, onClose, items }) {
                                                                 index
                                                             )
                                                         }
+                                                        makePausedBtn={makePausedBtn}
+                                                        // showPausedBtn={showPausedBtn[index]}
+                                                        showPausedBtn={showPausedBtn}
                                                     />
                                                 )}
                                             </SlideCol>

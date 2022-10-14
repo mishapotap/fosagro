@@ -19,6 +19,7 @@ export default function Modal({
     noCloseBtn = false,
     dontCloseOnMaskClick = false,
     dontCloseOnEsc = false,
+    onStartClose = () => {},
 }) {
     const modalRef = useRef(null)
     const navigate = useNavigate()
@@ -27,6 +28,7 @@ export default function Modal({
 
     useEffect(() => {
         isOpenRef.current = isOpen
+        if (!isOpen) onStartClose()
     }, [isOpen])
 
     function handleClose() {
@@ -42,7 +44,7 @@ export default function Modal({
 
     function makeBodyChildrenInert(el) {
         Array.from(document.body.children).forEach((child) => {
-            if (child !== el) {
+            if (child !== el && !child.hasAttribute('data-paused-btn')) {
                 // eslint-disable-next-line no-param-reassign
                 child.inert = true
             }

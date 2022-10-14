@@ -5,14 +5,15 @@ import { Layout, Modal } from "../atoms"
 import { DEVICE } from "../../constants"
 import { MenuBackground } from "../../assets/images"
 import MenuButtons from "../molecules/MenuButtons"
+import { CourseProgressStore } from "../../store"
 
 function MenuModal({ isOpen, onClose }) {
     return (
         <StyledModal isOpen={isOpen} onClose={onClose}>
             <StyledLayout page="menu">
                 <Wrapper>
-                    <MenuContainer>
-                        <MenuButtons />
+                    <MenuContainer markActiveChapter={!CourseProgressStore.isErrorPage}>
+                        <MenuButtons markActiveChapter={!CourseProgressStore.isErrorPage} />
                     </MenuContainer>
                 </Wrapper>
             </StyledLayout>
@@ -68,7 +69,9 @@ const MenuContainer = styled.div`
     align-items: center;
     height: 100%;
     padding: 2vw 2vw;
+    padding-bottom: ${({markActiveChapter}) => markActiveChapter ? '5vw' : '2vw'};
     overflow: hidden;
+
     @media ${DEVICE.laptopS} {
         padding: 5vw;
         height: auto;

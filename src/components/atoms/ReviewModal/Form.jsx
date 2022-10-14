@@ -3,14 +3,14 @@
 import React, { useRef, useState } from "react"
 import styled from "styled-components"
 import { observer } from "mobx-react-lite"
-// import isEmail from "validator/lib/isEmail"
+import isEmail from "validator/lib/isEmail"
 import SendReviewBtn from "./SendReviewBtn"
 import { ReviewModalStore } from "../../../store"
 import { COLORS, DEVICE } from "../../../constants"
 
 function Form() {
     const textareaRef = useRef(null)
-    // const [showErrMess, setShowErrMess] = useState(false)
+    const [showErrMess, setShowErrMess] = useState(false)
 
     function handleTextareaChange({ target: { value } }) {
         const val = value.trim()
@@ -33,17 +33,36 @@ function Form() {
         ReviewModalStore.handleSend(e)
     }
 
-    function handleEmailInpChange({ target: { value } }) {
-        ReviewModalStore.setEmailVal(value.trim())
+    function handleEmailBlur({ target: { value } }) {
+        const okVal = value.trim()
+
+        if (okVal) {
+            const emailCorrect = isEmail(value)
+
+            if (!emailCorrect) {
+                setShowErrMess(true)
+            } else {
+                setShowErrMess(false)
+            }
+        } else {
+            setShowErrMess(false)
+        }
     }
 
-    // function checkIsEmailCorrect({ target: { value } }) {
-    //     if (!isEmail(value)) {
-    //         setShowErrMess(true)
-    //     } else {
-    //         setShowErrMess(false)
-    //     }
-    // }
+    function handleEmailInpChange({ target: { value } }) {
+        const okVal = value.trim()
+        ReviewModalStore.setEmailVal(okVal)
+
+        if (!okVal) {
+            setShowErrMess(false)
+        }
+
+        const emailCorrect = isEmail(value)
+        if (emailCorrect) {
+            setShowErrMess(false)
+        }
+        ReviewModalStore.setIsEmailCorrect(emailCorrect)
+    }
 
     return (
         <FormWrapper>
@@ -53,9 +72,10 @@ function Form() {
                         type="email"
                         placeholder="Введите ваш Email"
                         onChange={handleEmailInpChange}
-                        // onBlur={(e) => checkIsEmailCorrect(e)}
+                        onBlur={(e) => handleEmailBlur(e)}
+                        className="email-input"
                     />
-                    {/* <InpError className={showErrMess && "show"}>Введите корректный email</InpError> */}
+                    <InpError className={showErrMess && "show"}>Введите корректный email</InpError>
                 </MailInputWrapper>
                 <TextareaWrapper className="textarea-wrapper">
                     <Textarea
@@ -73,11 +93,12 @@ function Form() {
 
 const MailInputWrapper = styled.div`
     position: relative;
-    margin-bottom: 25px;
+    margin-bottom: 2.3vw;
     width: 23vw;
 
     @media ${DEVICE.laptopS} {
         width: 100%;
+        margin-bottom: 28px;
         max-width: 400px;
     }
 `
@@ -86,11 +107,13 @@ const InpError = styled.div`
     position: absolute;
     bottom: 0;
     left: 50%;
-    transform: translate(-50%, calc(100% + 8px));
+    width: 100%;
+    transform: translate(-50%, calc(100% + 5px));
 
     font-family: CalibriRegular, sans-serif;
-    font-size: 1.3vw;
+    font-size: 1.2vw;
     color: ${COLORS.red};
+    text-align: center;
 
     opacity: 0;
     transition: 0.2s;

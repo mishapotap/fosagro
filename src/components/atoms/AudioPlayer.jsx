@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-use-before-define */
 /* eslint-disable react/jsx-no-bind */
 import React, { useEffect, useRef, useState } from "react"
@@ -14,6 +15,7 @@ import {
 import { COLORS, DEVICE } from "../../constants"
 import { AudioPlayerBg } from "../../assets/svg/static"
 import { formatTime } from "../../utils"
+import PausedBtn from "./CourseContent/PausedBtn"
 
 export default function AudioPlayer({
     isPlaying = true,
@@ -26,6 +28,9 @@ export default function AudioPlayer({
     onLoaded = () => {},
     onPauseByUser = () => {},
     onPlayByUser = () => {},
+    makePausedBtn = false,
+    showPausedBtn = false,
+    onPausedBtnClick = () => {},
 }) {
     const audioRef = useRef(null)
     const [isPlayingLocal, setIsPlayingLocal] = useState(false)
@@ -54,6 +59,8 @@ export default function AudioPlayer({
     const playerContRef = useRef(null)
     const controlsCircleRef = useRef(null)
 
+    const [showPausedBtnLocal, setShowPausedBtnLocal] = useState(false)
+
     useEffect(() => {
         setIsPlayingLocal(isPlaying)
     }, [isPlaying])
@@ -71,6 +78,10 @@ export default function AudioPlayer({
             }
         }
     }, [isPlaying, isLoaded])
+
+    useEffect(() => {
+        setShowPausedBtnLocal(showPausedBtn)
+    }, [showPausedBtn])
 
     function handleTimeChange() {
         if (audioRef.current) {
@@ -182,9 +193,11 @@ export default function AudioPlayer({
         if (isPlayingLocal && !audioRef.current.paused) {
             pause()
             onPauseByUser()
+            setShowPausedBtnLocal(true)
         } else {
             play()
             onPlayByUser()
+            setShowPausedBtnLocal(false)
         }
     }
 
@@ -256,6 +269,12 @@ export default function AudioPlayer({
         // переключаем аудио на это время
         audioRef.current.currentTime = newTime
         setProgressTime(newTime)
+    }
+
+    function handlePausedBtnClick() {
+        setShowPausedBtnLocal(false)
+        togglePlay()
+        onPausedBtnClick()
     }
 
     return (
@@ -407,6 +426,7 @@ export default function AudioPlayer({
                     </Player>
                 </PlayerContainer>
             </CSSTransition>
+            {makePausedBtn && <PausedBtn show={showPausedBtnLocal} onClick={handlePausedBtnClick} />}
         </Container>
     )
 }

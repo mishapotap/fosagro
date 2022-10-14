@@ -1,12 +1,21 @@
-import React from "react"
+import React, { useEffect } from "react"
 import styled from "styled-components"
 import { Link } from "react-router-dom"
 import { COLORS, DEVICE } from "../../constants"
 import { Layout, SendButton } from "../atoms"
 import * as routes from "../../constants/routes"
 import { InteractiveCircle, AnimateLine } from "../../assets/svg"
+import { CourseProgressStore } from "../../store"
 
 export default function Error404() {
+    useEffect(() => {
+        CourseProgressStore.setIsErrorPage(true)
+
+        return () => {
+            CourseProgressStore.setIsErrorPage(false)
+        }
+    }, [])
+
     return (
         <StyledLayout page="error">
             <Container>
@@ -29,7 +38,7 @@ export default function Error404() {
                     </Content>
                 </Inner>
                 <WavesBlock>
-                    <AnimateLine color={COLORS.blue}/>
+                    <AnimateLine color={COLORS.blue} />
                 </WavesBlock>
             </Container>
         </StyledLayout>
