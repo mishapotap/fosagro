@@ -120,7 +120,8 @@ function Home() {
 
             if (
                 ModalStore.isVisible.cookie ||
-                ModalStore.isVisible.welcomeBack
+                ModalStore.isVisible.welcomeBack ||
+                ModalStore.isVisible.cookiesConfirm
             ) {
                 return
             }
@@ -411,6 +412,10 @@ const Suptitle = styled.div`
     @media ${DEVICE.mobile} {
         margin-top: 16px;
         font-size: 4vw;
+    }
+
+    div:nth-child(1) {
+        margin-bottom: 13px;
     }
 
     div:nth-child(2) {

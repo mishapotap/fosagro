@@ -186,7 +186,7 @@ const Container = styled.div`
         }
     }
 
-    .menu-button {
+    .menu-button-wrapper {
         width: 7.5vw;
 
         @media ${DEVICE.laptop} {

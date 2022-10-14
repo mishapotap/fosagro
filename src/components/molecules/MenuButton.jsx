@@ -1,7 +1,8 @@
 import React from "react"
-import styled from "styled-components"
+import styled, { keyframes } from "styled-components"
 import { COLORS, DEVICE } from "../../constants"
 import { borderAnimationM } from "../../constants/animations"
+import { ArrowDown } from "../../assets/svg/static"
 
 export default function MenuButton({
     rotate = 0,
@@ -10,27 +11,113 @@ export default function MenuButton({
     index,
     text,
     duration = "",
+    activeChapter = false,
+    className = "",
 }) {
     return (
-        <Container className="menu-button">
-            <Inner>
-                <Circle bgColor={bgColor}>
-                    <CircleContetnt style={{ color: COLORS.white }} className="menu-btn-content">
-                        <IndexContainer>
-                            <Index className="menu-btn-index">{index}</Index>
-                            <Duration className="menu-btn-duration">{duration}</Duration>
-                        </IndexContainer>
-                        <Text className="menu-btn-text">{text}</Text>
-                    </CircleContetnt>
-                </Circle>
-                <AnimateCircle
-                    rotate={rotate}
-                    bgAnimateColor={bgAnimateColor}
-                />
-            </Inner>
-        </Container>
+        <Wrapper className={`${className} ${activeChapter ? "active" : ""} menu-button-wrapper`}>
+            <Container className="menu-button">
+                <Inner>
+                    <Circle bgColor={bgColor}>
+                        <CircleContetnt
+                            style={{ color: COLORS.white }}
+                            className="menu-btn-content"
+                        >
+                            <IndexContainer>
+                                <Index className="menu-btn-index">
+                                    {index}
+                                </Index>
+                                <Duration className="menu-btn-duration">
+                                    {duration}
+                                </Duration>
+                            </IndexContainer>
+                            <Text className="menu-btn-text">{text}</Text>
+                        </CircleContetnt>
+                    </Circle>
+                    <AnimateCircle
+                        rotate={rotate}
+                        bgAnimateColor={bgAnimateColor}
+                    />
+                </Inner>
+            </Container>
+            {activeChapter && (
+                <ActiveChapter>
+                    <ActiveChapterMessage>
+                        Вы сейчас изучаете
+                    </ActiveChapterMessage>
+                    <ActiveChapterIcon src={ArrowDown} alt="стрелка вниз" />
+                </ActiveChapter>
+            )}
+        </Wrapper>
     )
 }
+
+const Wrapper = styled.div`
+    position: relative;
+
+    width: 13.4vw;
+
+    @media ${DEVICE.laptopS} {
+        width: 21vw;
+    }
+    @media ${DEVICE.mobile} {
+        width: 34vw;
+    }
+
+    &.with-active-chapter {
+        &.active {
+            padding-top: 100px;
+
+            @media ${DEVICE.laptopM} {
+                padding-top: 78px;
+            }
+        }
+    }
+`
+
+const ActiveChapter = styled.div`
+    position: absolute;
+    top: 0;
+    transform: translate(-50%);
+    left: 50%;
+
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`
+
+const ActiveChapterMessage = styled.div`
+    margin-bottom: 17px;
+
+    font-family: FocoBold, sans-serif;
+    font-size: 1.1vw;
+    color: ${COLORS.white};
+    text-align: center;
+
+    @media ${DEVICE.laptopS} {
+        font-size: 16px;
+    }
+`
+
+const arrowAnim = keyframes`
+    30% {
+        transform: translateY(6px);
+    }
+
+    55% {
+        transform: none;
+    }
+`
+
+const ActiveChapterIcon = styled.img`
+    width: 1.7vw;
+    animation: ${arrowAnim} 3s both infinite;
+
+    @media ${DEVICE.laptopS} {
+        width: 20px;
+    }
+`
 
 const AnimateCircle = styled.div`
     z-index: 1;
@@ -89,12 +176,10 @@ const Duration = styled.div`
 
     @media ${DEVICE.laptopS} {
         font-size: 1.8vw;
-        /* line-height: 7vw; */
     }
 
     @media ${DEVICE.mobile} {
         font-size: 2.5vw;
-        /* line-height: 9.1vw; */
     }
 `
 
@@ -105,12 +190,10 @@ const Index = styled.div`
 
     @media ${DEVICE.laptopS} {
         font-size: 6vw;
-        /* line-height: 7vw; */
     }
 
     @media ${DEVICE.mobile} {
         font-size: 8.1vw;
-        /* line-height: 9.1vw; */
     }
 `
 
@@ -124,12 +207,10 @@ const Text = styled.div`
 
     @media ${DEVICE.laptopS} {
         font-size: 1.42vw;
-        /* line-height: 1.95vw; */
     }
 
     @media ${DEVICE.mobile} {
         font-size: 2.4vw;
-        /* line-height: 2.9vw; */
     }
 `
 
@@ -144,15 +225,8 @@ const Inner = styled.div`
 
 const Container = styled.div`
     position: relative;
-    width: 13.4vw;
     transition: all 0.3s;
-
-    @media ${DEVICE.laptopS} {
-        width: 21vw;
-    }
-    @media ${DEVICE.mobile} {
-        width: 34vw;
-    }
+    width: 100%;
 
     &:after {
         display: block;

@@ -1,6 +1,8 @@
 import React from "react"
 import styled from "styled-components"
 import { Link } from "react-router-dom"
+import { observer } from "mobx-react-lite"
+
 import { menuButtonData } from "../../data"
 import MenuButton from "./MenuButton"
 import { MenuProgressBar } from "../atoms"
@@ -8,7 +10,7 @@ import { ModalStore, SoundStore, CourseProgressStore } from "../../store"
 import { Click1 } from "../../assets/audio"
 import { DEVICE } from "../../constants"
 
-export default function MenuButtons({ className, data = menuButtonData }) {
+function MenuButtons({ className, data = menuButtonData, markActiveChapter = false }) {
     const clickSound = new Audio(Click1)
 
     const closeModal = () => {
@@ -21,7 +23,7 @@ export default function MenuButtons({ className, data = menuButtonData }) {
     return (
         <MenuWrap className={`${className || ''} menu-buttons`}>
             {data.map((item) => (
-                <MenuButtonContainer key={item.index} className="menu-button-cont">
+                <MenuButtonContainer key={item.index} className={`menu-button-cont ${markActiveChapter ? 'with-active-chapter' : ''}`}>
                     <Link to={item.href} onClick={() => closeModal()}>
                         <MenuButton
                             index={item.index}
@@ -30,6 +32,8 @@ export default function MenuButtons({ className, data = menuButtonData }) {
                             bgAnimateColor={item.bgAnimateColor}
                             rotate={item.rotate}
                             duration={item.duration}
+                            activeChapter={markActiveChapter && CourseProgressStore.activeChapterId === item.id}
+                            className={markActiveChapter && 'with-active-chapter'}
                         />
                         <MenuProgressBarContainer className="progress-bar-cont">
                             <MenuProgressBar
@@ -47,17 +51,23 @@ export default function MenuButtons({ className, data = menuButtonData }) {
     )
 }
 
+export default observer(MenuButtons)
+
 const MenuWrap = styled.div`
     display: flex;
     flex: 1;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
     flex-wrap: wrap;
 `
 
 const MenuButtonContainer = styled.div`
     @media ${DEVICE.laptopS} {
         margin-bottom: 5vw;
+    }
+
+    &.with-active-chapter {
+
     }
 `
 

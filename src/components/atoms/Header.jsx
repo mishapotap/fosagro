@@ -10,8 +10,6 @@ import { CourseMenuButton } from "../molecules"
 import { ModalStore, CourseProgressStore, SoundStore } from "../../store"
 import { Click2 } from "../../assets/audio"
 
-// TODO сделать ссылки RU EN рабочими
-
 function Header({
     // цветной ли (если нет, то все будет белое)
     colored = false,
@@ -28,12 +26,11 @@ function Header({
     makeMobShadow = false,
     chapterTitle = false,
 }) {
-    // сделать норм
     const rusSiteLink = "https://esg-course.phosagro.ru"
     const engSiteLink = "https://esg-course.phosagro.com"
     const isRus = false
 
-    const { activeSectColor, activeSectTitle, activeChapterTitle } = CourseProgressStore
+    const { activeSectColor, activeSectTitle, activeChapterTitle, activeChapterIndex } = CourseProgressStore
 
     const clickSound = new Audio(Click2)
 
@@ -97,6 +94,7 @@ function Header({
                 {sectTitle && (
                     <HeaderSectTitle>
                         <SectTitle>
+                            <ChapterIndex>{activeChapterIndex}</ChapterIndex>
                             <SectTitleDecor />
                             <SectTitleText color={activeSectColor}>
                                 {activeSectTitle}
@@ -107,7 +105,6 @@ function Header({
                 {chapterTitle && (
                     <HeaderSectTitle>
                         <SectTitle>
-                            <SectTitleDecor />
                             <SectTitleText color={COLORS.blue}>
                                 {activeChapterTitle}
                             </SectTitleText>
@@ -127,6 +124,21 @@ function Header({
 }
 
 export default observer(Header)
+
+const ChapterIndex = styled.div`
+    display: inline-block;
+    margin-right: 7px;
+    margin-left: 3px;
+
+    font-family: FocoBold, sans-serif;
+    font-size: 1vw;
+    color: ${COLORS.blue};
+    text-transform: uppercase;
+
+    @media ${DEVICE.laptop} {
+        font-size: 13px;
+    }
+`
 
 const Logo = styled.div`
     svg {
@@ -194,7 +206,7 @@ const SectTitle = styled.div`
 `
 
 const SectTitleDecor = styled.div`
-    width: 3.9vw;
+    width: 3.2vw;
     height: 2px;
     margin-right: 10px;
     margin-bottom: 4px;

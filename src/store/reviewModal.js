@@ -16,6 +16,8 @@ class ReviewModal {
 
     ratingHoverVal = 0
 
+    isEmailCorrect = false
+
     constructor() {
         makeAutoObservable(this)
     }
@@ -42,6 +44,10 @@ class ReviewModal {
                 this.setErrorState()
                 console.error("error", err)
             })
+    }
+
+    setIsEmailCorrect(val) {
+        this.isEmailCorrect = val
     }
 
     setRatingHoverVal(val) {

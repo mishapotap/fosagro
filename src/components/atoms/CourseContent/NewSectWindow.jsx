@@ -19,27 +19,18 @@ function NewSectWindow({ onExited }) {
     const noAudioTmId = useRef(null)
 
     useEffect(() => {
-        setTimeout(() => {
-            setShowNewSectW(true)
-        }, 100)
+        setShowNewSectW(true)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [CourseProgressStore.activeSectId])
 
     function handleEntered() {
-        document.body.classList.add("lock")
-        setTimeout(() => {
-            if (audioRef.current) audioRef.current.play()
-        }, 200)
-
-        if (!sectBtnData.audio) {
-            noAudioTmId.current = setTimeout(() => {
-                setShowNewSectW(false)
-            }, 2300)
+        if (audioRef.current) {
+            audioRef.current.src = sectBtnData.audio
+            audioRef.current.autoplay = true
         }
 
         reserveTmId.current = setTimeout(() => {
             setShowNewSectW(false)
-            document.body.classList.remove("lock")
         }, 4300)
     }
 
@@ -47,13 +38,10 @@ function NewSectWindow({ onExited }) {
         onExited()
         clearTimeout(reserveTmId.current)
         if (noAudioTmId.current) clearTimeout(noAudioTmId.current)
-        document.body.classList.remove("lock")
     }
 
     function handleAudioEnded() {
-        setTimeout(() => {
-            setShowNewSectW(false)
-        }, 300)
+        setShowNewSectW(false)
     }
 
     return (
@@ -73,6 +61,8 @@ function NewSectWindow({ onExited }) {
                     <audio
                         ref={audioRef}
                         src={sectBtnData.audio}
+                        // onCanPlay={() => alert('canplay')}
+                        // onLoadedMetadata={() => alert('loadedmetadata')}
                         onEnded={handleAudioEnded}
                         preload="metadata"
                     />

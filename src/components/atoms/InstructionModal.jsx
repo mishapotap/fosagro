@@ -56,6 +56,9 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
     const [pauseAnims, setPauseAnims] = useState({ 0: false, 1: false })
     const [playAudio, setPlayAudio] = useState({ 0: false, 1: false })
 
+    const [showPausedBtn, setShowPausedBtn] = useState(false)
+    const [makePausedBtn, setMakePausedBtn] = useState(true)
+
     const activeSlideIdxRef = useRef(0)
     const autoPausedRef = useRef(false)
 
@@ -67,15 +70,31 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
         SoundStore.getIsPlaying() && clickSound.play()
     }
 
+    useEffect(() => {
+        if (isOpen) {
+            setMakePausedBtn(true)
+        } else {
+            setMakePausedBtn(false)
+        }
+    }, [isOpen])
+
     function handleModalAnimEnd() {
         setTimeout(() => {
             setPlayAudio({ 0: true, 1: false })
         }, 1000)
     }
 
+    const hidePausedBtn = () => {
+        setShowPausedBtn(true)
+        setTimeout(() => {
+            setShowPausedBtn(false)
+        }, 50);
+    }
+
     function handleSlideChange(swiper) {
         const { activeIndex } = swiper
         activeSlideIdxRef.current = activeIndex
+        hidePausedBtn()
 
         if (activeIndex === 0) {
             if (makeAnim) {
@@ -93,6 +112,8 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
     function handleClose() {
         setPlayAudio({ 0: false, 1: false })
         setPauseAnims({ 0: true, 1: true })
+        // setShowPausedBtn(false)
+        setMakePausedBtn(false)
         onClose()
     }
 
@@ -185,6 +206,7 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
         <StyledModal
             isOpen={isOpen}
             onClose={handleClose}
+            onStartClose={() => setShowPausedBtn(false)}
             navigateBack
             onOpenAnimEnd={handleModalAnimEnd}
         >
@@ -371,6 +393,8 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                         onPause={() => handleAudioPause(0)}
                                         onPlay={() => handleAudioPlay(0)}
                                         onEnded={() => handleAudioEnded(0)}
+                                        showPausedBtn={showPausedBtn}
+                                        makePausedBtn={makePausedBtn}
                                     />
                                 </SlideInner>
                             </SwiperSlide>
@@ -529,6 +553,8 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                         onPause={() => handleAudioPause(1)}
                                         onPlay={() => handleAudioPlay(1)}
                                         onEnded={() => handleAudioEnded(1)}
+                                        showPausedBtn={showPausedBtn}
+                                        makePausedBtn={makePausedBtn}
                                     />
                                 </SlideInner>
                             </SwiperSlide>

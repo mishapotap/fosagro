@@ -26,6 +26,7 @@ function FinalBlock() {
     const finalRef = useRef(null)
     const audioTextRef = useRef(null)
     const [audioTextEnded, setAudioTextEnded] = useState(false)
+    const restartTest = useRef(false)
 
     useEffect(() => {
         if (CourseTestStore.showFinal) {
@@ -58,16 +59,26 @@ function FinalBlock() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ModalStore.isVisible.menu, ModalStore.isVisible.mail])
 
-    function handleExited() {
-        finalRef.current.style.opacity = 1
-    }
-
     const clickSound = new Audio(Click1)
 
     const openMailModal = () => {
         ModalStore.showModal("mail")
         // eslint-disable-next-line no-unused-expressions
         SoundStore.getIsPlaying() && clickSound.play()
+    }
+
+    const handleRestartTest = () => {
+        restartTest.current = true
+        CourseTestStore.setShowFinal(false)
+    }
+
+    const handleExited = () => {
+        if (restartTest.current) {
+            restartTest.current = false
+            CourseTestStore.resetActiveTestProgress()
+            CourseProgressStore.resetActiveTestProgress()
+            CourseTestStore.setUserPassedTest(false)
+        }
     }
 
     return (
@@ -78,6 +89,7 @@ function FinalBlock() {
             classNames="final"
             onExited={handleExited}
             mountOnEnter
+            unmountOnExit
         >
             <FinalStyledBlock
                 ref={finalRef}
@@ -149,6 +161,7 @@ function FinalBlock() {
                             )}
                         </SectButtons>
                     )}
+                    <SendButton text="Пройти тест заново" onClick={handleRestartTest} />
                 </FinalContent>
                 <FinBottom>
                     <Feedback>

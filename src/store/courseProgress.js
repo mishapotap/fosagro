@@ -87,6 +87,8 @@ class CourseProgress {
 
     visitedPages = initialVisitedPages
 
+    isErrorPage = false
+
     constructor() {
         makeAutoObservable(this)
     }
@@ -98,8 +100,6 @@ class CourseProgress {
         )
 
         return !notPassedChapter
-        // для проверки
-        // return true
     }
 
     get activeChapterData() {
@@ -122,6 +122,10 @@ class CourseProgress {
             return null
         }
         return null
+    }
+
+    get activeChapterIndex() {
+        return `0${this.activeChapterId}`
     }
 
     get activeSectTitle() {
@@ -444,6 +448,14 @@ class CourseProgress {
     resetProgress() {
         this.visitedPages = initialVisitedPages
         this.userVisitedAnyChapter = false
+    }
+
+    resetActiveTestProgress() {
+        this.visitedPages[this.activeChapterId].test = false
+    }
+
+    setIsErrorPage(bool) {
+        this.isErrorPage = bool
     }
 
     setDataFromCookies(dataString) {
