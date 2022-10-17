@@ -101,10 +101,14 @@ const StyledLayout = styled(Layout)`
 
     .back-to-chapter {
         position: fixed;
-        top: 5px;
+        top: 17px;
         left: 50%;
         transform: translateX(-50%);
         z-index: 100;
+
+        @media ${DEVICE.laptopM} {
+            top: 8px;
+        }
 
         @media ${DEVICE.laptopS} {
             position: static;

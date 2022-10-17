@@ -23,6 +23,12 @@ function CookiesConfirmModal() {
 
     function onClose() {
         ModalStore.closeModal("cookiesConfirm")
+
+        setTimeout(() => {
+            setShowSuccess(false)
+            setShowError(false)
+            setShowStartContent(true)
+        }, 100);
     }
 
     function handleSuccessClose() {

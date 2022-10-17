@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/media-has-caption */
 /* eslint-disable react/jsx-no-bind */
 import React, { useRef, useEffect, useState } from "react"
@@ -24,40 +25,53 @@ import { Click1 } from "../../../assets/audio"
 
 function FinalBlock() {
     const finalRef = useRef(null)
-    const audioTextRef = useRef(null)
-    const [audioTextEnded, setAudioTextEnded] = useState(false)
     const restartTest = useRef(false)
+    const [ autoPausedAudio, setAutoPausedAudio] = useState(false)
 
     useEffect(() => {
         if (CourseTestStore.showFinal) {
+            SoundStore.setTestFinalAudio()
+
             setTimeout(() => {
-                if (audioTextRef.current) audioTextRef.current.play()
-            }, 200)
-        }
+                if (SoundStore.testFinalAudio) {
+                    SoundStore.testFinalAudio.currentTime = 0
+                    SoundStore.testFinalAudio.play()
+                } else {
+                    const audio = new Audio(CourseTestStore.finalContent.audio)
+                    audio.autoplay = true
+                }
+            }, 50)
+        } else if (SoundStore.testFinalAudio) {
+                SoundStore.testFinalAudio.pause()
+                SoundStore.testFinalAudio.currentTime = 0
+            }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [CourseTestStore.showFinal])
 
-    // useEffect(() => {
-    //     if (ModalStore.someModalShown) {
-    //         if (audioTextRef.current) audioTextRef.current.pause()
-    //     } else if (audioTextRef.current && !audioTextEnded)
-    //         setTimeout(() => {
-    //             if (audioTextRef.current) audioTextRef.current.play()
-    //         }, 200)
+    useEffect(() => {
+        SoundStore.setTestFinalAudio()
 
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [ModalStore.someModalShown])
+        return () => {
+            if (SoundStore.testFinalAudio) SoundStore.testFinalAudio.pause()
+        }
+    }, [])
 
     useEffect(() => {
         if (ModalStore.isVisible.menu || ModalStore.isVisible.mail) {
-            if (audioTextRef.current) audioTextRef.current.pause()
-        } else if (audioTextRef.current && !audioTextEnded)
-            setTimeout(() => {
-                if (audioTextRef.current) audioTextRef.current.play()
-            }, 200)
+            if (
+                SoundStore.testFinalAudio &&
+                !SoundStore.testFinalAudio.paused
+            ) {
+                setAutoPausedAudio(true)
+                SoundStore.testFinalAudio.pause()
+            }
+        } else if (autoPausedAudio) {
+            SoundStore.testFinalAudio.play()
+            setAutoPausedAudio(false)
+        }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ModalStore.isVisible.menu, ModalStore.isVisible.mail])
+    }, [ModalStore.isVisible.menu || ModalStore.isVisible.mail])
 
     const clickSound = new Audio(Click1)
 
@@ -67,18 +81,26 @@ function FinalBlock() {
         SoundStore.getIsPlaying() && clickSound.play()
     }
 
-    const handleRestartTest = () => {
-        restartTest.current = true
-        CourseTestStore.setShowFinal(false)
-    }
-
-    const handleExited = () => {
+    const reset = () => {
         if (restartTest.current) {
             restartTest.current = false
             CourseTestStore.resetActiveTestProgress()
             CourseProgressStore.resetActiveTestProgress()
             CourseTestStore.setUserPassedTest(false)
         }
+    }
+
+    const handleRestartTest = () => {
+        restartTest.current = true
+        CourseTestStore.setShowFinal(false)
+
+        setTimeout(() => {
+            reset()
+        }, 500)
+    }
+
+    const handleExited = () => {
+        reset()
     }
 
     return (
@@ -103,21 +125,16 @@ function FinalBlock() {
                     </StyledTitle>
                     <Label>{CourseTestStore.finalContent.label}</Label>
                     <Text>{CourseTestStore.finalContent.text}</Text>
-                    <audio
-                        src={CourseTestStore.finalContent.audio}
-                        ref={audioTextRef}
-                        onEnded={() => setAudioTextEnded(true)}
-                    />
                     {CourseTestStore.allAnswersRight && (
                         // eslint-disable-next-line react/jsx-no-useless-fragment
                         <>
                             {/* показываем кнопку завершить обучение, только если пользователь прошел курс, и либо
                             не видел еще финальную страницу
                             либо находится на шестом разделе */}
-                            {((CourseProgressStore.userPassedFullCourse &&
+                            {(CourseProgressStore.userPassedFullCourse &&
                                 !CourseProgressStore.userVisitedFinalPage) ||
                             (CourseProgressStore.userPassedFullCourse &&
-                                CourseProgressStore.activeChapterId === 6)) ? (
+                                CourseProgressStore.activeChapterId === 6) ? (
                                 <Link
                                     to="/final"
                                     className="next-chapter"
@@ -161,7 +178,10 @@ function FinalBlock() {
                             )}
                         </SectButtons>
                     )}
-                    <SendButton text="Пройти тест заново" onClick={handleRestartTest} />
+                    <SendButton
+                        text="Пройти тест снова"
+                        onClick={handleRestartTest}
+                    />
                 </FinalContent>
                 <FinBottom>
                     <Feedback>
@@ -181,10 +201,10 @@ function FinalBlock() {
                     {!CourseTestStore.allAnswersRight && (
                         // eslint-disable-next-line react/jsx-no-useless-fragment
                         <>
-                            {((CourseProgressStore.userPassedFullCourse &&
+                            {(CourseProgressStore.userPassedFullCourse &&
                                 !CourseProgressStore.userVisitedFinalPage) ||
                             (CourseProgressStore.userPassedFullCourse &&
-                                CourseProgressStore.activeChapterId === 6)) ? (
+                                CourseProgressStore.activeChapterId === 6) ? (
                                 <Link to="/final" className="continue-learn">
                                     <NextButton text="Завершить обучение" />
                                 </Link>

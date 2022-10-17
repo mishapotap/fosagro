@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-no-bind */
-import React, { useRef, useEffect, useState } from "react"
+import React, { useRef, useEffect } from "react"
 import styled from "styled-components"
 import { CSSTransition } from "react-transition-group"
 import { observer } from "mobx-react-lite"
@@ -18,15 +18,10 @@ import { Text, Label, Block, StyledTitle } from "./styledAtoms"
 import { COLORS, DEVICE } from "../../../constants"
 import { Click2 } from "../../../assets/audio"
 import PrevButton from "../PrevButton"
-import { TestTitle, TestText } from "../../../assets/audio/test"
 
 function StartBlock() {
     const startRef = useRef(null)
-    const audioTitleRef = useRef(null)
-    const audioTextRef = useRef(null)
-    const [textAudioPlayed, setTextAudioPlayed] = useState(false)
-    const [textAudioEnded, setTextAudioEnded] = useState(false)
-
+    const autoPausedAudio = useRef(null)
     const clickSound = new Audio(Click2)
 
     function handleStartClick() {
@@ -37,20 +32,27 @@ function StartBlock() {
         SoundStore.getIsPlaying() && clickSound.play()
     }
 
-    function onTitleEnded() {
-        setTimeout(() => {
-            if (audioTextRef.current) audioTextRef.current.play()
-        }, 300)
-    }
+    useEffect(
+        () => () => {
+            if (SoundStore.testStartAudio) {
+                SoundStore.testStartAudio.pause()
+            }
+        },
+        []
+    )
 
     useEffect(() => {
         if (ModalStore.isVisible.menu || ModalStore.isVisible.mail) {
-            if (audioTextRef.current) audioTextRef.current.pause()
-            if (audioTitleRef.current) audioTitleRef.current.pause()
-        } else if (audioTextRef.current && textAudioPlayed && !textAudioEnded) {
-            setTimeout(() => {
-                if (audioTextRef.current) audioTextRef.current.play()
-            }, 100);
+            if (
+                SoundStore.testStartAudio &&
+                !SoundStore.testStartAudio.paused
+            ) {
+                autoPausedAudio.current = SoundStore.testStartAudio
+                SoundStore.testStartAudio.pause()
+            }
+        } else if (autoPausedAudio.current) {
+            autoPausedAudio.current.play()
+            autoPausedAudio.current = null
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -59,11 +61,16 @@ function StartBlock() {
     useEffect(() => {
         if (CourseTestStore.showStart) {
             setTimeout(() => {
-                if (audioTitleRef.current) audioTitleRef.current.play()
-            }, 200);
+                if (SoundStore.testStartAudio) {
+                    SoundStore.testStartAudio.currentTime = 0
+                    SoundStore.testStartAudio.play()
+                }
+            }, 200)
         } else {
-            if (audioTitleRef.current) audioTitleRef.current.pause()
-            if (audioTextRef.current) audioTextRef.current.pause()
+            // eslint-disable-next-line no-lonely-if
+            if (SoundStore.testStartAudio) {
+                SoundStore.testStartAudio.pause()
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [CourseTestStore.showStart])
@@ -78,19 +85,6 @@ function StartBlock() {
             onExited={() => CourseTestStore.setShowTest(true)}
         >
             <StartStyledBlock ref={startRef} className="start">
-                <audio
-                    src={TestTitle}
-                    ref={audioTitleRef}
-                    preload="metadata"
-                    onEnded={onTitleEnded}
-                />
-                <audio
-                    src={TestText}
-                    ref={audioTextRef}
-                    preload="metadata"
-                    onPlay={() => setTextAudioPlayed(true)}
-                    onEnded={() => setTextAudioEnded(true)}
-                />
                 <StyledTitle color={COLORS.blue}>Тест</StyledTitle>
                 <Label>
                     Мы подготовили для Вас небольшой тест на знание пройденного

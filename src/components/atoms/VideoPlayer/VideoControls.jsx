@@ -62,7 +62,7 @@ export default function VideoControls({
         <Container
             className={`${!isControlsShown ? "hide" : ""} ${
                 isLoaded ? "loaded" : ""
-            } ${isStart ? 'start' : ""}`}
+            } ${isStart ? "start" : ""}`}
         >
             <BigPlayBtn
                 isFullscreen={isFullscreen}
@@ -126,11 +126,11 @@ export default function VideoControls({
                         </Tooltip>
                     </TimeLineWrapper>
                     {/* {isFullscreen && ( */}
-                        <Time isFullscreen={isFullscreen}>
-                            <ProgressTime>{progressTime}</ProgressTime>
-                            <span />
-                            <FullTime>{fullTime}</FullTime>
-                        </Time>
+                    <Time isFullscreen={isFullscreen}>
+                        <ProgressTime>{progressTime}</ProgressTime>
+                        <span />
+                        <FullTime>{fullTime}</FullTime>
+                    </Time>
                     {/* )} */}
                 </PlayerProgress>
 
@@ -177,7 +177,6 @@ const FullscreenBtn = styled(VideoPlayerBtn)`
     @media ${DEVICE.laptopM} {
         width: ${({ isFullscreen }) => (isFullscreen ? "37px" : "38px")};
     }
-
 
     @media ${DEVICE.laptopS} {
         width: 45px;
@@ -368,7 +367,6 @@ const PlayerProgress = styled.div`
 const ProgressTime = styled.div`
     font-family: "FocoBold";
     font-size: 18px;
-    font-weight: bold;
     color: ${COLORS.white};
 
     @media ${DEVICE.laptopS} {
@@ -408,26 +406,36 @@ const Time = styled.div`
         background-color: ${COLORS.white};
     }
 
-    ${({isFullscreen}) => !isFullscreen && css`
-        bottom: 8px;
-
-        @media ${DEVICE.mobile} {
-            bottom: 13px;
-        }
-
-        ${ProgressTime},
-        ${FullTime} {
-            font-size: 16px;
-
-            @media ${DEVICE.laptopM} {
-                font-size: 14px;
-            }
+    ${({ isFullscreen }) =>
+        !isFullscreen &&
+        css`
+            bottom: 8px;
 
             @media ${DEVICE.mobile} {
-                font-size: 12px;
+                bottom: 13px;
             }
-        }
-    `}
+
+            ${ProgressTime} {
+                font-family: FocoLight, sans-serif !important;
+            }
+
+            span {
+                height: 2px !important;
+            }
+
+            ${ProgressTime},
+            ${FullTime} {
+                font-size: 15px;
+
+                @media ${DEVICE.laptopM} {
+                    font-size: 13px;
+                }
+
+                @media ${DEVICE.mobile} {
+                    font-size: 12px;
+                }
+            }
+        `}
 `
 
 const TimeLineWrapper = styled.div`

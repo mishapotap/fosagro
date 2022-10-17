@@ -14,8 +14,9 @@ import { COLORS, DEVICE } from "../../constants"
 import { ContentBlock, Title, Text, Note } from "./Content"
 import AudioPlayer from "./AudioPlayer"
 import ExtLinks from "./ExtLinks"
-import { CourseProgressStore, ModalStore } from "../../store"
+import { CourseProgressStore, ModalStore, SoundStore } from "../../store"
 import SendButton from "./SendButton"
+import { timelineData } from "../../data"
 
 function IntroModal({ isOpen, onClose, items }) {
     function renderCustom(swiper, current, total) {
@@ -86,7 +87,7 @@ function IntroModal({ isOpen, onClose, items }) {
     }, [isOpen])
 
     useEffect(() => {
-        if (ModalStore.userGoExtLink ) {
+        if (ModalStore.userGoExtLink) {
             // показать на активном
             // setShowPausedBtn(true)
             // setShowPausedBtn((prevState) => ({...prevState, [activeSlideIdx.current]: true}))
@@ -109,11 +110,11 @@ function IntroModal({ isOpen, onClose, items }) {
         activeSlideIdx.current = activeIndex
 
         // setShowPausedBtn((prevState) => ({...prevState, [previousIndex]: true, [activeIndex]: true}))
-            setShowPausedBtn(true)
+        setShowPausedBtn(true)
         setTimeout(() => {
             setShowPausedBtn(false)
             // setShowPausedBtn((prevState) => ({...prevState, [previousIndex]: false, [activeIndex]: false}))
-        }, 50);
+        }, 50)
 
         setSlidesPauseAnim((prevState) => ({
             ...prevState,
@@ -169,11 +170,35 @@ function IntroModal({ isOpen, onClose, items }) {
         setSlidesPauseAnim((prevVal) => ({ ...prevVal, [index]: false }))
     }
 
+    function handleStartClick() {
+        //
+        // const tlData = timelineData[`course${this.activeChapterId}`].timeline
+        // const sectItem = tlData.find((i) => i.id === sectId)
+
+        // if (sectItem && sectItem.button.audio) {
+        //     const audioEl = new Audio(sectItem.button.audio)
+        //     SoundStore.newSectAudio = audioEl
+        // }
+        // // const audioSrc =
+        // const audioEl = new Audio(audioSrc)
+        // SoundStore.setNewSectAudio(audioEl)
+
+        const tlData = timelineData[`course${CourseProgressStore.activeChapterId}`].timeline
+        const sectItem = tlData.find((i) => i.id === 1)
+
+        if (sectItem && sectItem.button.audio) {
+            // SoundStore.newSectAudio = new Audio(sectItem.button.audio)
+            const audioEl = new Audio(sectItem.button.audio)
+            // SoundStore.setNewSectAudio(audio)
+            SoundStore.newSectAudio = audioEl
+        }
+    }
+
     useEffect(() => {
         if (ModalStore.isVisible.extLinks) {
             if (modalContent.current) {
-                const audios = modalContent.current.querySelectorAll('audio')
-                audios.forEach(a => {
+                const audios = modalContent.current.querySelectorAll("audio")
+                audios.forEach((a) => {
                     if (!a.paused) {
                         a.pause()
                         autoPausedAudio.current.push(a)
@@ -266,9 +291,13 @@ function IntroModal({ isOpen, onClose, items }) {
                                                                 index
                                                             )
                                                         }
-                                                        makePausedBtn={makePausedBtn}
+                                                        makePausedBtn={
+                                                            makePausedBtn
+                                                        }
                                                         // showPausedBtn={showPausedBtn[index]}
-                                                        showPausedBtn={showPausedBtn}
+                                                        showPausedBtn={
+                                                            showPausedBtn
+                                                        }
                                                     />
                                                 )}
                                             </SlideCol>
@@ -309,6 +338,9 @@ function IntroModal({ isOpen, onClose, items }) {
                                                             text="Начать изучение курса"
                                                             color={
                                                                 COLORS.orange
+                                                            }
+                                                            onClick={
+                                                                handleStartClick
                                                             }
                                                         />
                                                     </Link>
