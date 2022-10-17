@@ -52,9 +52,11 @@ function CourseContent({ setIds, onDisappear }) {
     const [rightSlide, setRightSlide] = useState(false)
     const [animateNextBtn, setAnimateNextBtn] = useState(false)
 
-    const [isAudioPaused, _setIsAudioPaused] = useState(true)
-    const isAudioPausedRef = useRef(false)
+    // const [isAudioPaused, setIsAudioPaused] = useState(true)
+    // const isAudioPausedRef = useRef(false)
     const [showPausedBtn, setShowPausedBtn] = useState(false)
+
+    const [isBtnsDisabled, setIsBtnsDisabled] = useState(false)
 
     const [pauseAnim, setPauseAnim] = useState(true)
     const [restartAnim, _setRestartAnim] = useState(false)
@@ -68,17 +70,17 @@ function CourseContent({ setIds, onDisappear }) {
 
     const clickSound = new Audio(Click2)
 
-    function setIsAudioPaused(val) {
-        _setIsAudioPaused(val)
-        isAudioPausedRef.current = val
-    }
+    // function setIsAudioPaused(val) {
+    //     _setIsAudioPaused(val)
+    //     isAudioPausedRef.current = val
+    // }
 
     function setIsVisible(val) {
         _setIsVisible(val)
         isVisibleRef.current = val
     }
 
-    function makeObserve(el, rootMargin = "-50%") {
+    function makeObserve(el, rootMargin = "-30%") {
         if (el) {
             intObserver.current = new IntersectionObserver(
                 ([entry]) => {
@@ -99,6 +101,13 @@ function CourseContent({ setIds, onDisappear }) {
         }
     }
 
+    // const setAudioPlayingTrue = () => {
+    //     setAudioPlaying(false)
+    //     setTimeout(() => {
+    //         setAudioPlaying(true)
+    //     }, 50)
+    // }
+
     // проигрывание медиа после задержки (тогда, когда не происходит смены секции)
     function setMediaDelay() {
         clearTimeouts()
@@ -106,7 +115,8 @@ function CourseContent({ setIds, onDisappear }) {
         if (!sectChanged.current) {
             if (isAudioRef.current) {
                 audioTmId.current = setTimeout(() => {
-                    setAudioPlaying(true)
+                    // setAudioPlayingTrue()
+                    setTrue("audio")
                     sectChanged.current = false
                 }, 1000)
             }
@@ -120,7 +130,7 @@ function CourseContent({ setIds, onDisappear }) {
             if (isVideoRef.current) {
                 videoTmId.current = setTimeout(() => {
                     if (isVisibleRef.current) {
-                        setVideoPlaying(true)
+                        setTrue("video")
                     } else {
                         showWhenVisible.current = true
                     }
@@ -147,7 +157,8 @@ function CourseContent({ setIds, onDisappear }) {
         sectChanged.current = false
 
         if (isAudioRef.current) {
-            setAudioPlaying(true)
+            // setAudioPlayingTrue()
+            setTrue("audio")
         }
 
         if (isVisibleRef.current) {
@@ -156,7 +167,7 @@ function CourseContent({ setIds, onDisappear }) {
             }
 
             if (isVideoRef.current) {
-                setVideoPlaying(true)
+                setTrue("video")
             }
         } else {
             showWhenVisible.current = true
@@ -259,31 +270,67 @@ function CourseContent({ setIds, onDisappear }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isVisible])
 
+    const setFalse = (type) => {
+        if (type === "audio") {
+            setAudioPlaying(true)
+
+            setTimeout(() => {
+                setAudioPlaying(false)
+            }, 10)
+        } else if (type === "video") {
+            setVideoPlaying(true)
+
+            setTimeout(() => {
+                setVideoPlaying(false)
+            }, 10)
+        }
+    }
+
+    const setTrue = (type) => {
+        if (type === "audio") {
+            setAudioPlaying(false)
+
+            setTimeout(() => {
+                setAudioPlaying(true)
+            }, 50)
+        } else if (type === "video") {
+            setVideoPlaying(false)
+
+            setTimeout(() => {
+                setVideoPlaying(true)
+            }, 50)
+        }
+    }
+
     function makePause() {
         checkAutoPaused()
-        if (isVideoRef.current) setVideoPlaying(false)
+        if (isVideoRef.current) setFalse("video")
         if (isAnimationRef.current || isCircleSliderRef.current)
             setPauseAnim(true)
         if (isAudioRef.current) {
-            setAudioPlaying(false)
+            // setAudioPlaying(false)
+            setFalse("audio")
         }
     }
 
     function makePlay() {
-        if (isVideoRef.current) setVideoPlaying(true)
+        if (isVideoRef.current) setTrue("video")
         if (isAnimationRef.current || isCircleSliderRef.current)
             setPauseAnim(false)
         if (isAudioRef.current) {
-            setAudioPlaying(false)
-            setTimeout(() => {
-                setAudioPlaying(true)
-            }, 100)
+            // setAudioPlaying(false)
+            // setFalse("audio")
+            // setTimeout(() => {
+            //     setAudioPlayingTrue()
+            // }, 100)
+            setTrue("audio")
         }
     }
 
     function checkAutoPaused() {
-        if (isAudioRef.current && !isAudioPausedRef.current) {
-            autoPausedRef.current = true
+        const audio = document.querySelector(".audio-player audio")
+        if (isAudioRef.current) {
+            if (!audio.paused) autoPausedRef.current = true
         } else if (isVideoRef.current) {
             const video = document.querySelector(".video-player video")
             if (video && !video.paused) autoPausedRef.current = true
@@ -318,6 +365,7 @@ function CourseContent({ setIds, onDisappear }) {
                 makePlay()
                 autoPausedRef.current = false
             }
+            autoPausedRef.current = false
             ModalStore.setDontPlayOnClose(false)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -422,9 +470,15 @@ function CourseContent({ setIds, onDisappear }) {
         stopMedia()
         clickSound.play()
         hidePausedBtn()
+
+        setIsBtnsDisabled(true)
+
+        // CourseProgressStore.setNewSectAudioFromContent('back')
     }
 
     function handleNextClick(e) {
+        // CourseProgressStore.setNewSectAudioFromContent('next')
+
         if (CourseProgressStore.isSlideBeforeTest) {
             e.preventDefault()
             onDisappear()
@@ -436,6 +490,8 @@ function CourseContent({ setIds, onDisappear }) {
         }
         stopMedia()
         hidePausedBtn()
+
+        setIsBtnsDisabled(true)
     }
 
     function handleExited() {
@@ -453,9 +509,12 @@ function CourseContent({ setIds, onDisappear }) {
     function handleEntered() {
         setLeftSlide(false)
         setRightSlide(false)
+        setIsBtnsDisabled(false)
     }
 
     function onAudioPlay() {
+        setShowPausedBtn(false)
+
         if (isVisibleRef.current || isCircleSliderRef.current)
             setPauseAnim(false)
         if (!wasFirstPlay.current) {
@@ -468,14 +527,14 @@ function CourseContent({ setIds, onDisappear }) {
                 setRestartAnim(true)
             didAudioEnded.current = false
         }
-        setIsAudioPaused(false)
+        // setIsAudioPaused(false)
     }
 
     function onAudioPause() {
         if (wasFirstPlay.current && !leftSlide && !rightSlide) {
             setPauseAnim(true)
         }
-        setIsAudioPaused(true)
+        // setIsAudioPaused(true)
     }
 
     function onAudioEnded() {
@@ -552,6 +611,7 @@ function CourseContent({ setIds, onDisappear }) {
                         onNextClick={handleNextClick}
                         onBackClick={handleBackClick}
                         animateNextBtn={animateNextBtn}
+                        isBtnsDisabled={isBtnsDisabled}
                     />
                 </NavColumn>
             </CSSTransition>

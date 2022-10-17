@@ -612,6 +612,10 @@ const StyledLayout = styled(Layout)`
             padding-left: 20px;
         }
     }
+/*
+    .paused-btn {
+        top: 40%;
+    } */
 `
 
 const StyledAudioPlayer = styled(AudioPlayer)`
@@ -626,7 +630,12 @@ const StyledAudioPlayer = styled(AudioPlayer)`
 
 const SlideInner = styled.div`
     height: 100%;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    &::-webkit-scrollbar {
+        width: 0;
+    }
 `
 
 const NavBtnsImgsRow = styled.div`

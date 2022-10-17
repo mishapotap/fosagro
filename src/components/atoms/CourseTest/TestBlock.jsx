@@ -15,7 +15,7 @@ import "swiper/css/effect-fade"
 import { Label, Text } from "./styledAtoms"
 import NextButton from "../NextButton"
 import { DEVICE, COLORS } from "../../../constants"
-import { CourseProgressStore, CourseTestStore } from "../../../store"
+import { CourseProgressStore, CourseTestStore, SoundStore } from "../../../store"
 import { renderCustom } from "../../../utils"
 import { Click1 } from "../../../assets/audio"
 
@@ -73,6 +73,9 @@ function TestBlock() {
 
     function handleNextClick() {
         clickBtnSound.play()
+
+        // console.log('CourseTestStore.finalContent.audio', CourseTestStore.finalContent.audio);
+        // SoundStore.setTestFinalAudio()
 
         if (CourseTestStore.activeQInputType === "checkbox") {
             CourseTestStore.setUserAnswers(CourseTestStore.activeQId, chbAnswIds)

@@ -3,6 +3,7 @@ import { makeAutoObservable } from "mobx"
 import { coursePagesData, timelineData, menuButtonData } from "../data"
 import { COLORS } from "../constants"
 import { sectColors, sectsProgressTypes } from "../data/coursePagesData/general"
+// import SoundStore from "./sound"
 
 const initialVisitedPages = {
     1: {
@@ -259,10 +260,10 @@ class CourseProgress {
 
     // заголовок активного раздела
     get activeChapterTitle() {
-        const data = menuButtonData.find(i => i.id === this.activeChapterId)
+        const data = menuButtonData.find((i) => i.id === this.activeChapterId)
         // надо с индексом
         if (data) return `${data.index} ${data.text}`
-        return 'Тест'
+        return "Тест"
     }
 
     // данные кнопок для разделов, которые уже изучались (для WelcomeBackModal)
@@ -457,6 +458,37 @@ class CourseProgress {
     setIsErrorPage(bool) {
         this.isErrorPage = bool
     }
+
+    // setNewSectAudioFromIntro() {
+    //     const tlData = timelineData[`course${this.activeChapterId}`].timeline
+    //     const sectItem = tlData.find((i) => i.id === 1)
+    //     if (sectItem && sectItem.button.audio) {
+    //         SoundStore.newSectAudio = new Audio(sectItem.button.audio)
+    //     }
+    // }
+
+    setNewSectAudioFromContent() {
+        // // ! если тест следующий?
+        // const tlData = timelineData[`course${this.activeChapterId}`].timeline
+        // const sectItem = tlData.find((i) => {
+        //     if (type === 'back') {
+        //         return i.id === this.activeChapterId
+        //     }
+        // })
+        // if (sectItem && sectItem.button.audio) {
+        //     SoundStore.newSectAudio = new Audio(sectItem.button.audio)
+        // }
+    }
+
+    // setNewSectAudio(sectId) {
+    //     const tlData = timelineData[`course${this.activeChapterId}`].timeline
+    //     const sectItem = tlData.find((i) => i.id === sectId)
+
+    //     if (sectItem && sectItem.button.audio) {
+    //         const audioEl = new Audio(sectItem.button.audio)
+    //         SoundStore.newSectAudio = audioEl
+    //     }
+    // }
 
     setDataFromCookies(dataString) {
         const data = JSON.parse(dataString)

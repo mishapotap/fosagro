@@ -138,6 +138,10 @@ const ChapterIndex = styled.div`
     @media ${DEVICE.laptop} {
         font-size: 13px;
     }
+
+    @media ${DEVICE.laptopS} {
+        margin-right: 10px;
+    }
 `
 
 const Logo = styled.div`
@@ -202,7 +206,7 @@ const HeaderSectTitle = styled.div`
 
 const SectTitle = styled.div`
     display: flex;
-    align-items: flex-end;
+    align-items: center;
 `
 
 const SectTitleDecor = styled.div`
@@ -210,6 +214,7 @@ const SectTitleDecor = styled.div`
     height: 2px;
     margin-right: 10px;
     margin-bottom: 4px;
+    align-self: flex-end;
 
     background-color: ${COLORS.blue};
 

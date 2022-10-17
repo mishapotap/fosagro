@@ -83,6 +83,18 @@ function CourseStep({
                     })
                 }
             }
+        } else {
+            // CourseProgressStore.setNewSectAudio()
+            // const tlData = timelineData[`course${this.activeChapterId}`].timeline
+            // const sectItem = tlData.find((i) => i.id === sectId)
+
+            // if (sectItem && sectItem.button.audio) {
+            //     const audioEl = new Audio(sectItem.button.audio)
+            //     SoundStore.newSectAudio = audioEl
+            // }
+
+            const audioEl = new Audio(button.audio)
+            SoundStore.newSectAudio = audioEl
         }
     }
 
@@ -139,7 +151,7 @@ function CourseStep({
                         isActiveParent={isActive}
                     />
                 ))}
-            <Audio src={button.audio} ref={soundButton} />
+            <AudioEl src={button.audio} ref={soundButton} />
             <Wrap ref={wrapRef}/>
         </Container>
     )
@@ -151,7 +163,7 @@ const Container = styled.div``
 
 const Button = styled.button``
 
-const Audio = styled.audio`
+const AudioEl = styled.audio`
     display: none;
 `
 

@@ -26,6 +26,23 @@ export default function PausedBtn({ onClick = () => {}, show = false }) {
         </CSSTransition>,
         document.body
     )
+    // return (
+    //     <CSSTransition
+    //         in={show}
+    //         timeout={300}
+    //         classNames="paused-btn"
+    //         nodeRef={pausedBtnRef}
+    //     >
+    //         <Container
+    //             ref={pausedBtnRef}
+    //             onClick={onClick}
+    //             className="paused-btn"
+    //             data-paused-btn
+    //         >
+    //             <Play color={COLORS.blue} />
+    //         </Container>
+    //     </CSSTransition>
+    // )
 }
 
 const Container = styled.div`

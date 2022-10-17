@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/button-has-type */
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import styled from "styled-components"
 import { observer } from "mobx-react-lite"
 import { Link } from "react-router-dom"
@@ -25,23 +25,56 @@ function CookiesInfoModal() {
     const [showNotif, setShowNotif] = useState(false)
     const [notifPos, setNotifPos] = useState(false)
     const [isPlaying, setIsPlaying] = useState(false)
+    const [makePausedBtn, setMakePausedBtn] = useState(true)
+    const contentRef = useRef(null)
+    const autoPausedAudio = useRef(null)
 
     useEffect(() => {
         if (ModalStore.isVisible.cookiesInfo) {
             setTimeout(() => {
                 setIsPlaying(true)
             }, 1000)
+            setMakePausedBtn(true)
+        } else {
+            setMakePausedBtn(false)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ModalStore.isVisible.cookiesInfo])
 
+    const setIsPlayingFalse = () => {
+        setIsPlaying(true)
+
+        setTimeout(() => {
+            setIsPlaying(false)
+        }, 50)
+    }
+
+    const setIsPlayingTrue = () => {
+        setIsPlaying(false)
+
+        setTimeout(() => {
+            setIsPlaying(true)
+        }, 50)
+    }
+
     useEffect(() => {
         if (ModalStore.isVisible.cookiesConfirm) {
-            setIsPlaying(false)
+            setIsPlayingFalse()
+            if (contentRef.current) {
+                const audio = contentRef.current.querySelector("audio")
+
+                if (audio && !audio.paused) {
+                    autoPausedAudio.current = audio
+                }
+            }
         } else {
             setTimeout(() => {
-                if (ModalStore.isVisible.cookiesInfo) {
-                    setIsPlaying(true)
+                if (
+                    ModalStore.isVisible.cookiesInfo &&
+                    autoPausedAudio.current
+                ) {
+                    setIsPlayingTrue()
+                    autoPausedAudio.current = null
                 }
             }, 600)
         }
@@ -76,7 +109,7 @@ function CookiesInfoModal() {
                 onClose={onClose}
             >
                 <StyledLayout page="instruction">
-                    <Content>
+                    <Content ref={contentRef}>
                         <Columns>
                             <Column1>
                                 <StyledTitle color={COLORS.blue}>
@@ -128,9 +161,8 @@ function CookiesInfoModal() {
                             <Column3>
                                 <TextWrapper className="text-wrapper info">
                                     <Text>
-                                        Учебный курс
-                                        использует файл «cookies» в целях
-                                        повышения удобства изучения и
+                                        Учебный курс использует файл «cookies» в
+                                        целях повышения удобства изучения и
                                         отслеживания прогресса изучения
                                         пользователем курса.{" "}
                                     </Text>
@@ -172,11 +204,11 @@ function CookiesInfoModal() {
                                 </Buttons>
                             </Column3>
                             <StyledAudioPlayer
-                            src={CookiesAudio}
-                            isPlaying={isPlaying}
-                        />
+                                src={CookiesAudio}
+                                isPlaying={isPlaying}
+                                makePausedBtn={makePausedBtn}
+                            />
                         </Columns>
-
                     </Content>
                 </StyledLayout>
                 <Notification

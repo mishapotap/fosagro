@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React from "react"
+import React, { useEffect } from "react"
 import { Routes, Route } from "react-router-dom"
 import Home from "./components/pages/Home"
 import {
@@ -16,6 +16,16 @@ import { CookiesStore, SoundStore, ModalStore } from "./store"
 import PausedBtn from "./components/atoms/CourseContent/PausedBtn"
 
 function App() {
+
+    function handleDocClick2() {
+        SoundStore.setTestStartAudio()
+        SoundStore.setTestFinalsAudio()
+    }
+
+    useEffect(() => {
+        document.addEventListener('click', handleDocClick2, true)
+    }, [])
+
     return (
         <>
             <Routes>
