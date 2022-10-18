@@ -49,6 +49,12 @@ function CourseStep({
         stepButtonParam = sectId
     }
 
+    const onIntroLinkClick = () => {
+        if (intro) {
+            CourseProgressStore.setIntroAudioEls()
+        }
+    }
+
     function handleLinkClick(e) {
 
         if (!CourseProgressStore.isSectAvailable(stepButtonParam)) {
@@ -83,18 +89,8 @@ function CourseStep({
                     })
                 }
             }
-        } else {
-            // CourseProgressStore.setNewSectAudio()
-            // const tlData = timelineData[`course${this.activeChapterId}`].timeline
-            // const sectItem = tlData.find((i) => i.id === sectId)
-
-            // if (sectItem && sectItem.button.audio) {
-            //     const audioEl = new Audio(sectItem.button.audio)
-            //     SoundStore.newSectAudio = audioEl
-            // }
-
-            const audioEl = new Audio(button.audio)
-            SoundStore.newSectAudio = audioEl
+        } else if (!test) {
+            CourseProgressStore.setNewSectAudio(sectId)
         }
     }
 
@@ -102,7 +98,7 @@ function CourseStep({
         <Container>
             {button.value.modal ? (
                 <>
-                    <Link to="intro">
+                    <Link to="intro" onClick={onIntroLinkClick}>
                         <Button onClick={() => openIntroModal()}>
                             <CourseStepButton
                                 data={button.value}

@@ -5,7 +5,7 @@ import styled, { keyframes } from "styled-components"
 import { CSSTransition } from "react-transition-group"
 import { observer } from "mobx-react-lite"
 import CourseStepButton from "../CourseStepButton"
-import { CourseProgressStore } from "../../../store"
+import { CourseProgressStore, SoundStore } from "../../../store"
 import { showContent } from "../../../constants/animations"
 import { DEVICE } from "../../../constants"
 
@@ -23,8 +23,17 @@ function NewSectWindow({ onExited }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [CourseProgressStore.activeSectId])
 
+    function handleAudioEnded(e) {
+        e.target.addEventListener("ended", handleAudioEnded)
+        setShowNewSectW(false)
+        SoundStore.resetNewSectAudio()
+    }
+
     function handleEntered() {
-        if (audioRef.current) {
+        if (SoundStore.newSectAudio) {
+            SoundStore.newSectAudio.play()
+            SoundStore.newSectAudio.addEventListener("ended", handleAudioEnded)
+        } else if (audioRef.current) {
             audioRef.current.src = sectBtnData.audio
             audioRef.current.autoplay = true
         }
@@ -38,10 +47,6 @@ function NewSectWindow({ onExited }) {
         onExited()
         clearTimeout(reserveTmId.current)
         if (noAudioTmId.current) clearTimeout(noAudioTmId.current)
-    }
-
-    function handleAudioEnded() {
-        setShowNewSectW(false)
     }
 
     return (

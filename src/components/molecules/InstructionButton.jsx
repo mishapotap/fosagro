@@ -12,6 +12,7 @@ import { Click1 } from "../../assets/audio"
     const clickSound = new Audio(Click1)
 
     const openInstruction = () => {
+        SoundStore.setInstructionAudioEls()
         ModalStore.showModal("instruction");
         // eslint-disable-next-line no-unused-expressions
         SoundStore.getIsPlaying() && clickSound.play();

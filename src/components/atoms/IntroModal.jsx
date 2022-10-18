@@ -73,6 +73,10 @@ function IntroModal({ isOpen, onClose, items }) {
 
     useEffect(() => {
         setInitialState()
+
+        return () => {
+            SoundStore.resetIntroAudios()
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -133,9 +137,14 @@ function IntroModal({ isOpen, onClose, items }) {
         }))
     }
 
+    function handleStartClick() {
+        CourseProgressStore.setNewSectAudioFromIntro()
+    }
+
     function handleClose() {
         CourseProgressStore.setIntroPassed()
         onClose()
+        handleStartClick()
     }
 
     function handleAudioEnded(index) {
@@ -168,30 +177,6 @@ function IntroModal({ isOpen, onClose, items }) {
             setAudiosEnded((prev) => ({ ...prev, [index]: false }))
         }
         setSlidesPauseAnim((prevVal) => ({ ...prevVal, [index]: false }))
-    }
-
-    function handleStartClick() {
-        //
-        // const tlData = timelineData[`course${this.activeChapterId}`].timeline
-        // const sectItem = tlData.find((i) => i.id === sectId)
-
-        // if (sectItem && sectItem.button.audio) {
-        //     const audioEl = new Audio(sectItem.button.audio)
-        //     SoundStore.newSectAudio = audioEl
-        // }
-        // // const audioSrc =
-        // const audioEl = new Audio(audioSrc)
-        // SoundStore.setNewSectAudio(audioEl)
-
-        const tlData = timelineData[`course${CourseProgressStore.activeChapterId}`].timeline
-        const sectItem = tlData.find((i) => i.id === 1)
-
-        if (sectItem && sectItem.button.audio) {
-            // SoundStore.newSectAudio = new Audio(sectItem.button.audio)
-            const audioEl = new Audio(sectItem.button.audio)
-            // SoundStore.setNewSectAudio(audio)
-            SoundStore.newSectAudio = audioEl
-        }
     }
 
     useEffect(() => {
@@ -298,6 +283,18 @@ function IntroModal({ isOpen, onClose, items }) {
                                                         showPausedBtn={
                                                             showPausedBtn
                                                         }
+                                                        makeAudioEl
+                                                        audioEl={
+                                                            SoundStore
+                                                                .introAudioEls
+                                                                .length >=
+                                                            index + 1
+                                                                ? SoundStore
+                                                                      .introAudioEls[
+                                                                      index
+                                                                  ]
+                                                                : null
+                                                        }
                                                     />
                                                 )}
                                             </SlideCol>
@@ -338,9 +335,6 @@ function IntroModal({ isOpen, onClose, items }) {
                                                             text="Начать изучение курса"
                                                             color={
                                                                 COLORS.orange
-                                                            }
-                                                            onClick={
-                                                                handleStartClick
                                                             }
                                                         />
                                                     </Link>

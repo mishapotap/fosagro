@@ -16,6 +16,7 @@ import { COLORS, DEVICE } from "../../constants"
 import { AudioPlayerBg } from "../../assets/svg/static"
 import { formatTime } from "../../utils"
 import PausedBtn from "./CourseContent/PausedBtn"
+import { SoundStore } from "../../store"
 
 export default function AudioPlayer({
     isPlaying = true,
@@ -31,13 +32,18 @@ export default function AudioPlayer({
     makePausedBtn = false,
     showPausedBtn = false,
     onPausedBtnClick = () => {},
+    makeAudioEl = false,
+    audioEl = null,
 }) {
     const audioRef = useRef(null)
-    const [isPlayingLocal, setIsPlayingLocal] = useState(false)
+    const [isPlayingLocal, _setIsPlayingLocal] = useState(false)
     const [isMuted, setIsMuted] = useState(false)
 
-    const [progressTime, setProgressTime] = useState(false)
-    const [fullTime, setFullTime] = useState(false)
+    const isPlayingLocalRef = useRef(isPlayingLocal)
+
+    const [progressTime, setProgressTime] = useState(0)
+    const [fullTime, _setFullTime] = useState(0)
+    const fullTimeRef = useRef(0)
 
     const [togglerDeg, setTogglerDeg] = useState(0)
 
@@ -58,6 +64,52 @@ export default function AudioPlayer({
     const progrContRef = useRef(null)
     const playerContRef = useRef(null)
     const controlsCircleRef = useRef(null)
+
+    const audioPlayerRef = useRef(null)
+
+    const setFullTime = (value) => {
+        fullTimeRef.current = value
+        _setFullTime(value)
+    }
+
+    const setIsPlayingLocal = (value) => {
+        isPlayingLocalRef.current = value
+        _setIsPlayingLocal(value)
+    }
+
+    function addListeners() {
+        if (audioRef.current) {
+            // console.log("добавили слушателей")
+            audioRef.current.addEventListener("play", handlePlay)
+            audioRef.current.addEventListener("pause", handlePause)
+            audioRef.current.addEventListener("error", handleError)
+            audioRef.current.addEventListener("ended", handleEnd)
+            audioRef.current.addEventListener("loadedmetadata", handleLoaded)
+
+            if (audioRef.current.readyState !== 0) {
+                handleLoaded({ target: audioRef.current })
+            }
+        }
+    }
+
+    function removeListeners(el) {
+        if (el) {
+            // console.log("удалили слушателей")
+            el.removeEventListener("play", handlePlay)
+            el.removeEventListener("pause", handlePause)
+            el.removeEventListener("error", handleError)
+            el.removeEventListener("ended", handleEnd)
+            el.removeEventListener("loadedmetadata", handleLoaded)
+        }
+    }
+
+    useEffect(() => {
+        if (makeAudioEl) {
+            // console.log("initAudioEl", audioEl)
+            initAudioEl()
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [makeAudioEl])
 
     const [showPausedBtnLocal, setShowPausedBtnLocal] = useState(false)
 
@@ -92,6 +144,25 @@ export default function AudioPlayer({
         }
     }
 
+    function initAudioEl() {
+        if (audioEl) {
+            audioRef.current = audioEl
+            addListeners()
+
+            if (audioPlayerRef.current) {
+                audioPlayerRef.current.append(audioRef.current)
+            }
+        }
+    }
+
+    function clearAudioEl(resetEl) {
+        removeListeners(resetEl)
+        if (resetEl) {
+            resetEl.pause()
+            resetEl.remove()
+        }
+    }
+
     useEffect(() => {
         if (fullTime) {
             const formatted = formatTime(fullTime)
@@ -111,11 +182,16 @@ export default function AudioPlayer({
         const length = baseCircleRef.current.getTotalLength()
         setStrokeLength(length)
 
+        const resetEl = audioRef.current
+
         return () => {
             handlePause()
             window.removeEventListener("resize", setStrokeL)
+            clearAudioEl(resetEl)
+            // if (makeAudio) clearAudioEl(resetEl)
+            // console.log("=============================destroy")
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
@@ -160,7 +236,7 @@ export default function AudioPlayer({
     }
 
     function handleEnd() {
-        setProgressTime(fullTime)
+        setProgressTime(fullTimeRef.current)
         onEnded()
     }
 
@@ -174,12 +250,14 @@ export default function AudioPlayer({
 
     function handleLoaded(e) {
         const fullAudioTime = audioRef.current.duration
-        if (fullAudioTime) setFullTime(fullAudioTime)
+        if (fullAudioTime) {
+            setFullTime(fullAudioTime)
+        }
 
         setIsLoaded(true)
         setIsLoading(false)
         setIsError(false)
-        if (isPlayingLocal) play()
+        if (isPlayingLocalRef.current) play()
         onLoaded(e)
     }
 
@@ -202,7 +280,7 @@ export default function AudioPlayer({
     }
 
     function toggleMuted() {
-        if (isMuted) {
+        if (audioRef.current.muted) {
             audioRef.current.muted = false
             setIsMuted(false)
         } else {
@@ -282,6 +360,7 @@ export default function AudioPlayer({
             className={`${isError ? "error" : ""} ${
                 className || ""
             } audio-player`}
+            ref={audioPlayerRef}
         >
             <OpenPlayerBtn onClick={toggleOpened} isError={isError}>
                 <Headphones />
@@ -301,17 +380,19 @@ export default function AudioPlayer({
                 >
                     <Player>
                         <PlayerInner>
-                            <Audio
-                                src={src}
-                                ref={audioRef}
-                                muted={isMuted}
-                                onPlay={handlePlay}
-                                onPause={handlePause}
-                                onError={handleError}
-                                onEnded={handleEnd}
-                                preload="metadata"
-                                onLoadedMetadata={handleLoaded}
-                            />
+                            {(!makeAudioEl || !audioEl) && (
+                                <AudioEl
+                                    src={src}
+                                    ref={audioRef}
+                                    muted={isMuted}
+                                    onPlay={handlePlay}
+                                    onPause={handlePause}
+                                    onError={handleError}
+                                    onEnded={handleEnd}
+                                    preload="metadata"
+                                    onLoadedMetadata={handleLoaded}
+                                />
+                            )}
                             <Circle ref={controlsCircleRef}>
                                 <Controls>
                                     <ProgressContainer ref={progrContRef}>
@@ -395,7 +476,9 @@ export default function AudioPlayer({
                                                     <TogglePlayBtn
                                                         onClick={togglePlay}
                                                     >
-                                                        {isPlayingLocal && !audioRef.current.paused ? (
+                                                        {isPlayingLocal &&
+                                                        !audioRef.current
+                                                            .paused ? (
                                                             <Pause
                                                                 color={
                                                                     COLORS.blue
@@ -426,7 +509,12 @@ export default function AudioPlayer({
                     </Player>
                 </PlayerContainer>
             </CSSTransition>
-            {makePausedBtn && <PausedBtn show={showPausedBtnLocal} onClick={handlePausedBtnClick} />}
+            {makePausedBtn && (
+                <PausedBtn
+                    show={showPausedBtnLocal}
+                    onClick={handlePausedBtnClick}
+                />
+            )}
         </Container>
     )
 }
@@ -507,7 +595,7 @@ const Error = styled.div`
     background: ${COLORS.white};
 `
 
-const Audio = styled.audio``
+const AudioEl = styled.audio``
 
 const PlayerCircle = styled.svg`
     position: absolute;

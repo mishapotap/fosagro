@@ -7,6 +7,7 @@ import {
     Test5Right,
 } from "../assets/audio/test"
 import CourseTestStore from "./courseTest"
+import { Instruction1, Instruction2 } from "../assets/audio"
 
 class Sound {
     play = {
@@ -32,6 +33,12 @@ class Sound {
 
     finalTestAudios = {}
 
+    introAudioEls = []
+
+    instructionAudioEls = []
+
+    contentAudioEl = null
+
     constructor() {
         makeAutoObservable(this)
     }
@@ -42,6 +49,10 @@ class Sound {
 
     setIsPlayingUser(value) {
         this.play.isPlayingUser = value
+    }
+
+    setContentAudioEl(val) {
+        this.contentAudioEl = val
     }
 
     setIsPlayingSound(value) {
@@ -60,8 +71,20 @@ class Sound {
         this.newSectAudio = value
     }
 
+    setIntroAudioEls(els) {
+        this.introAudioEls = els
+    }
+
     resetNewSectAudio() {
         this.newSectAudio = null
+    }
+
+    resetContentAudioEl() {
+        this.contentAudioEl = null
+    }
+
+    resetIntroAudios() {
+        this.introAudioEls = []
     }
 
     setTestStartAudio() {
@@ -71,7 +94,8 @@ class Sound {
     }
 
     setTestFinalAudio() {
-        this.testFinalAudio = this.finalTestAudios[CourseTestStore.rightAnswersCount]
+        this.testFinalAudio =
+            this.finalTestAudios[CourseTestStore.rightAnswersCount]
     }
 
     setTestFinalsAudio() {
@@ -88,6 +112,25 @@ class Sound {
             4: audio34,
             5: audio5,
         }
+    }
+
+    resetInstructionEls() {
+        this.instructionAudioEls = []
+    }
+
+    restartInstructionEls() {
+        if (this.instructionAudioEls) {
+            this.instructionAudioEls.forEach(el => {
+                // eslint-disable-next-line no-param-reassign
+                el.currentTime = 0
+            })
+        }
+    }
+
+    setInstructionAudioEls() {
+        // if (this.instructionAudioEls.length === 0) {
+            this.instructionAudioEls = [new Audio(Instruction1), new Audio(Instruction2)]
+        // }
     }
 }
 
