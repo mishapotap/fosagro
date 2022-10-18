@@ -20,6 +20,7 @@ function App() {
     function handleDocClick2() {
         SoundStore.setTestStartAudio()
         SoundStore.setTestFinalsAudio()
+        SoundStore.setInstructionAudioEls()
     }
 
     useEffect(() => {
