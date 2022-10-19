@@ -17,6 +17,14 @@ export default function CourseContentPage() {
     const location = useLocation()
 
     useEffect(() => {
+        CourseProgressStore.setIsContentPage(true)
+
+        return () => {
+            CourseProgressStore.setIsContentPage(false)
+        }
+    }, [])
+
+    useEffect(() => {
         if (!CourseProgressStore.isWrongPath) {
             const pageAvailable = CourseProgressStore.isPageAvailable(
                 courseId,

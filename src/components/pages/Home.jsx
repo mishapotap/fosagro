@@ -9,13 +9,14 @@ import { MenuButton, FooterHome } from "../molecules"
 import { OOH } from "../../assets/svg/static"
 import { MainBG } from "../../assets/video"
 import { COLORS, DEVICE } from "../../constants"
+import { Layout, CookieModal, CookiesInfoModal } from "../atoms"
+import WelcomeBackModal from "../atoms/WelcomeBackModal"
 import {
-    Layout,
-    CookieModal,
-    CookiesInfoModal,
-} from "../atoms"
-import WelcomeBackModal from '../atoms/WelcomeBackModal'
-import { Click2, MainTitle, MainSupTitle, MainSupTitle2 } from "../../assets/audio"
+    Click2,
+    MainTitle,
+    MainSupTitle,
+    MainSupTitle2,
+} from "../../assets/audio"
 import { SoundStore, ModalStore } from "../../store"
 
 function Home() {
@@ -86,38 +87,44 @@ function Home() {
 
     function activeTitleSound() {
         setTimeout(() => {
-            titleSoundRef.current.play()
-            setIsTitlePlaying(true)
-            titleRef.current.classList.add("active")
+            // if (titleSoundRef.current && titleRef.current) {
+                titleSoundRef.current.play()
+                setIsTitlePlaying(true)
+                titleRef.current.classList.add("active")
 
-            titleSoundRef.current.addEventListener("ended", () => {
-                setIsTitlePlaying(false)
-                titleRef.current.classList.remove("active")
+                titleSoundRef.current.addEventListener("ended", () => {
+                    setIsTitlePlaying(false)
+                    titleRef.current.classList.remove("active")
 
-                setTimeout(() => {
-                    supTitleSoundRef.current.play()
-                    setIsSupTitlePlaying(true)
-                    supTitleRef.current.classList.add("active")
+                    setTimeout(() => {
+                        supTitleSoundRef.current.play()
+                        setIsSupTitlePlaying(true)
+                        supTitleRef.current.classList.add("active")
 
-                    supTitleSoundRef.current.addEventListener("ended", () => {
-                        setIsSupTitlePlaying(false)
-                        supTitleRef.current.classList.remove("active")
+                        supTitleSoundRef.current.addEventListener(
+                            "ended",
+                            () => {
+                                setIsSupTitlePlaying(false)
+                                supTitleRef.current.classList.remove("active")
 
-                        setTimeout(() => {
-                            supTitle2SoundRef.current.play()
+                                setTimeout(() => {
+                                    supTitle2SoundRef.current.play()
 
-                            supTitle2SoundRef.current.addEventListener("ended", () => {
-                            })
-                        }, 500);
-                    })
-                }, 500)
-            })
+                                    supTitle2SoundRef.current.addEventListener(
+                                        "ended",
+                                        () => {}
+                                    )
+                                }, 500)
+                            }
+                        )
+                    }, 500)
+                })
+            // }
         }, 500)
     }
 
     useEffect(() => {
         function playTitle() {
-
             if (
                 ModalStore.isVisible.cookie ||
                 ModalStore.isVisible.welcomeBack ||
@@ -129,9 +136,11 @@ function Home() {
                 playerRef.current.play()
             }
             // eslint-disable-next-line no-unused-expressions
-            !SoundStore.getPlayedTitleSound(`title`) && !ModalStore.isVisible.mail
-            && !ModalStore.isVisible.instruction && activeTitleSound();
-            SoundStore.setPlayedTitleSound('title', true)
+            !SoundStore.getPlayedTitleSound(`title`) &&
+                !ModalStore.isVisible.mail &&
+                !ModalStore.isVisible.instruction &&
+                activeTitleSound()
+            SoundStore.setPlayedTitleSound("title", true)
             window.removeEventListener("click", playTitle)
         }
         window.addEventListener("click", playTitle, { ones: true })
@@ -152,7 +161,14 @@ function Home() {
                 />
             </Helmet>
             <Background>
-                <Video src={MainBG} ref={playerRef} loop muted autoPlay playsInline/>
+                <Video
+                    src={MainBG}
+                    ref={playerRef}
+                    loop
+                    muted
+                    autoPlay
+                    playsInline
+                />
             </Background>
             <Container>
                 <ContentWrapper>
@@ -166,8 +182,8 @@ function Home() {
                                     ФосАгро напрямую способствует достижению
                                 </div>
                                 <div>
-                                     <span> 11 целей</span>{" "}
-                                    устойчивого развития ООН
+                                    <span> 11 целей</span> устойчивого развития
+                                    ООН
                                     <img src={OOH} alt="OOH" />
                                 </div>
                             </Suptitle>
@@ -289,7 +305,6 @@ const Background = styled.div`
                 rgba(0, 0, 0, 0) 100%
             );
     }
-
 `
 
 const Video = styled.video`

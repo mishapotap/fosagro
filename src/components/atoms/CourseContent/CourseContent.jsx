@@ -69,7 +69,10 @@ function CourseContent({ setIds, onDisappear }) {
     const [makeAudioEl, setMakeAudioEl] = useState(false)
     const [makePlayerAudioEl, setMakePlayerAudioEl] = useState(false)
 
-    const audioEl = useRef(null)
+    const [makeVideoEl, setMakeVideoEl] = useState(false)
+    const [makePlayerVideoEl, setMakePlayerVideoEl] = useState(false)
+
+    const outsideAudioEl = useRef(null)
 
     const clickSound = new Audio(Click2)
 
@@ -218,7 +221,8 @@ function CourseContent({ setIds, onDisappear }) {
 
     useEffect(() => {
         if (ModalStore.userGoExtLink) {
-            setShowPausedBtn(true)
+            // setShowPausedBtn(true)
+            setTrue("paused-btn")
             ModalStore.setUserGoExtLink(false)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -276,6 +280,12 @@ function CourseContent({ setIds, onDisappear }) {
             setTimeout(() => {
                 setVideoPlaying(false)
             }, 10)
+        } else if (type === "paused-btn") {
+            setShowPausedBtn(true)
+
+            setTimeout(() => {
+                setShowPausedBtn(false)
+            }, 10)
         }
     }
 
@@ -291,6 +301,12 @@ function CourseContent({ setIds, onDisappear }) {
 
             setTimeout(() => {
                 setVideoPlaying(true)
+            }, 10)
+        } else if (type === "paused-btn") {
+            setShowPausedBtn(false)
+
+            setTimeout(() => {
+                setShowPausedBtn(true)
             }, 10)
         }
     }
@@ -317,11 +333,22 @@ function CourseContent({ setIds, onDisappear }) {
     function checkAutoPaused() {
         const audio = document.querySelector(".audio-player audio")
 
+        // console.log('checkAutoPaused');
         if (isAudioRef.current) {
-            if (audio && !audio.paused) autoPausedRef.current = true
+            if (audio && !audio.paused) {
+                // console.log('audio autopaused');
+                autoPausedRef.current = true
+            } else {
+                autoPausedRef.current = false
+            }
         } else if (isVideoRef.current) {
             const video = document.querySelector(".video-player video")
-            if (video && !video.paused) autoPausedRef.current = true
+            if (video && !video.paused) {
+                // console.log('video autopaused');
+                autoPausedRef.current = true
+            } else {
+                autoPausedRef.current = false
+            }
         }
     }
 
@@ -369,11 +396,24 @@ function CourseContent({ setIds, onDisappear }) {
         SoundStore.setIsPlayingSound(false)
 
         const medColRef = mediaColRef.current
+        // console.log('*SoundStore.contentVideoEl', SoundStore.contentVideoEl);
+        // console.log('*SoundStore.contentAudioEl', SoundStore.contentAudioEl);
+
+        // if (SoundStore.contentVideoEl) {
+        //     setMakeVideoEl(true)
+        //     setMakePlayerVideoEl(true)
+        // }
+
+        // if (SoundStore.contentAudioEl) {
+        //     setMakeAudioEl(true)
+        //     // setMakePlayer
+        // }
 
         return () => {
             clearTimeouts()
             unObserve(medColRef)
             SoundStore.resetContentAudioEl()
+            SoundStore.resetContentVideoEl()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
@@ -416,6 +456,7 @@ function CourseContent({ setIds, onDisappear }) {
         setAnimateNextBtn(false)
 
         sectChanged.current = false
+        autoPausedRef.current = false
         clearTimeouts()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location])
@@ -425,13 +466,13 @@ function CourseContent({ setIds, onDisappear }) {
         setFalse("audio")
     }
 
-    const hidePausedBtn = () => {
-        setShowPausedBtn(true)
+    // useEffect(() => {
+    //     console.log('SoundStore.contentVideoEl change', SoundStore.contentVideoEl);
+    // }, [SoundStore.contentVideoEl])
 
-        setTimeout(() => {
-            setShowPausedBtn(false)
-        }, 50)
-    }
+    // useEffect(() => {
+    //     console.log('SoundStore.contentAudioEl change', SoundStore.contentAudioEl);
+    // }, [SoundStore.contentVideoEl])
 
     function handleBackClick() {
         setLeftSlide(true)
@@ -440,14 +481,25 @@ function CourseContent({ setIds, onDisappear }) {
 
         pauseMedia()
         clickSound.play()
-        hidePausedBtn()
+        setFalse("paused-btn")
 
         setIsBtnsDisabled(true)
 
         const audsrc = CourseProgressStore.prevPageAudioSrc
-        const audio = new Audio(audsrc)
-        SoundStore.setContentAudioEl(audio)
-        setMakePlayerAudioEl(true)
+
+        if (audsrc) {
+            const audio = new Audio(audsrc)
+            SoundStore.setContentAudioEl(audio)
+            setMakePlayerAudioEl(true)
+        }
+
+        const vidsrc = CourseProgressStore.prevPageVideoSrc
+        if (vidsrc) {
+            const video = document.createElement('video')
+            video.src = vidsrc
+            SoundStore.setContentVideoEl(video)
+            setMakePlayerVideoEl(true)
+        }
     }
 
     useEffect(() => {
@@ -458,15 +510,34 @@ function CourseContent({ setIds, onDisappear }) {
             setMakeAudioEl(false)
             setMakePlayerAudioEl(false)
         }
+
+        if (makePlayerVideoEl) {
+            setMakeVideoEl(true)
+            setMakePlayerVideoEl(false)
+        } else {
+            setMakeVideoEl(false)
+            setMakePlayerVideoEl(false)
+        }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [key])
 
     function handleNextClick(e) {
         const audsrc = CourseProgressStore.nextPageAudioSrc
 
-        const audio = new Audio(audsrc)
-        SoundStore.setContentAudioEl(audio)
-        setMakePlayerAudioEl(true)
+        if (audsrc) {
+            const audio = new Audio(audsrc)
+            SoundStore.setContentAudioEl(audio)
+            setMakePlayerAudioEl(true)
+        }
+
+        const vidsrc = CourseProgressStore.nextPageVideoSrc
+        if (vidsrc) {
+            const video = document.createElement('video')
+            video.src = vidsrc
+            SoundStore.setContentVideoEl(video)
+            setMakePlayerVideoEl(true)
+        }
+
 
         if (CourseProgressStore.isSlideBeforeTest) {
             e.preventDefault()
@@ -478,9 +549,10 @@ function CourseContent({ setIds, onDisappear }) {
             clickSound.play()
         }
         pauseMedia()
-        hidePausedBtn()
+        setFalse("paused-btn")
 
         setIsBtnsDisabled(true)
+        CourseProgressStore.setNewSectAudioFromContent("next")
     }
 
     function handleExited() {
@@ -502,7 +574,7 @@ function CourseContent({ setIds, onDisappear }) {
     }
 
     function onAudioPlay() {
-        setShowPausedBtn(false)
+        setFalse("paused-btn")
 
         if (isVisibleRef.current || isCircleSliderRef.current)
             setPauseAnim(false)
@@ -534,6 +606,10 @@ function CourseContent({ setIds, onDisappear }) {
         setAnimateNextBtn(true)
     }
 
+    function onVideoEnded() {
+        setAnimateNextBtn(true)
+    }
+
     return (
         <Columns
             className={`${leftSlide && "left-slide"} ${
@@ -560,8 +636,8 @@ function CourseContent({ setIds, onDisappear }) {
                             showPausedBtn={showPausedBtn}
                             makePausedBtn
                             onPausedBtnClick={() => makePlay()}
-                            makeAudioEl={makeAudioEl}
-                            audioEl={SoundStore.contentAudioEl}
+                            makeOutsideAudioEl={makeAudioEl}
+                            outsideAudioEl={SoundStore.contentAudioEl}
                         />
                     )}
                 </AudioColumn>
@@ -622,6 +698,9 @@ function CourseContent({ setIds, onDisappear }) {
                         key={key}
                         restartAnim={restartAnim}
                         sliderDelay={sliderDelay}
+                        makeOutsideVideoEl={makeVideoEl}
+                        outsideVideoEl={SoundStore.contentVideoEl}
+                        onVideoEnded={onVideoEnded}
                     />
                 </MediaColumn>
             </CSSTransition>

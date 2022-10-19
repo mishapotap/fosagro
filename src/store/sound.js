@@ -7,7 +7,7 @@ import {
     Test5Right,
 } from "../assets/audio/test"
 import CourseTestStore from "./courseTest"
-import { Instruction1, Instruction2 } from "../assets/audio"
+import { Instruction1, Instruction2, FinalAudio } from "../assets/audio"
 
 class Sound {
     play = {
@@ -31,6 +31,8 @@ class Sound {
 
     testFinalAudio = null
 
+    finalAudio = null
+
     finalTestAudios = {}
 
     introAudioEls = []
@@ -38,6 +40,8 @@ class Sound {
     instructionAudioEls = []
 
     contentAudioEl = null
+
+    contentVideoEl = null
 
     constructor() {
         makeAutoObservable(this)
@@ -51,8 +55,12 @@ class Sound {
         this.play.isPlayingUser = value
     }
 
-    setContentAudioEl(val) {
-        this.contentAudioEl = val
+    setContentAudioEl(el) {
+        this.contentAudioEl = el
+    }
+
+    setContentVideoEl(el) {
+        this.contentVideoEl = el
     }
 
     setIsPlayingSound(value) {
@@ -81,6 +89,10 @@ class Sound {
 
     resetContentAudioEl() {
         this.contentAudioEl = null
+    }
+
+    resetContentVideoEl() {
+        this.contentVideoEl = null
     }
 
     resetIntroAudios() {
@@ -127,10 +139,18 @@ class Sound {
         }
     }
 
+    restartFinalAudio() {
+        if (this.finalAudio) {
+            this.finalAudio.currentTime = 0
+        }
+    }
+
+    setFinalAudio() {
+        this.finalAudio = new Audio(FinalAudio)
+    }
+
     setInstructionAudioEls() {
-        // if (this.instructionAudioEls.length === 0) {
-            this.instructionAudioEls = [new Audio(Instruction1), new Audio(Instruction2)]
-        // }
+        this.instructionAudioEls = [new Audio(Instruction1), new Audio(Instruction2)]
     }
 }
 

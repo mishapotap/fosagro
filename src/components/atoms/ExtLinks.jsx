@@ -116,7 +116,7 @@ const StyledCursor = styled.img`
     width: 1.5vw;
 
     pointer-events: none;
-    animation: ${CursorAnim} 3.5s infinite;
+    animation: ${CursorAnim} 3.8s infinite;
     transform: translateY(60%) translateX(120%);
 
     @media ${DEVICE.laptopM} {

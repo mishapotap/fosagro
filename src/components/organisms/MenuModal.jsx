@@ -54,10 +54,10 @@ const StyledModal = styled(Modal)`
     }
 
     .content {
-        padding-top: 0;
+        padding: 0;
 
         @media ${DEVICE.laptopS} {
-            padding: 0 20px;
+            padding: 20px 20px 0;
         }
     }
 `

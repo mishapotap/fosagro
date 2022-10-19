@@ -399,8 +399,8 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                         onEnded={() => handleAudioEnded(0)}
                                         showPausedBtn={showPausedBtn}
                                         makePausedBtn={makePausedBtn}
-                                        makeAudioEl
-                                        audioEl={SoundStore.instructionAudioEls.length >=1 ? SoundStore.instructionAudioEls[0] : null}
+                                        makeOutsideAudioEl
+                                        outsideAudioEl={SoundStore.instructionAudioEls.length >=1 ? SoundStore.instructionAudioEls[0] : null}
                                     />
                                 </SlideInner>
                             </SwiperSlide>
@@ -561,8 +561,8 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                         onEnded={() => handleAudioEnded(1)}
                                         showPausedBtn={showPausedBtn}
                                         makePausedBtn={makePausedBtn}
-                                        makeAudioEl
-                                        audioEl={SoundStore.instructionAudioEls.length >= 2 ? SoundStore.instructionAudioEls[1] : null}
+                                        makeOutsideAudioEl
+                                        outsideAudioEl={SoundStore.instructionAudioEls.length >= 2 ? SoundStore.instructionAudioEls[1] : null}
                                     />
                                 </SlideInner>
                             </SwiperSlide>

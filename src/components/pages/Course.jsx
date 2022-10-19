@@ -73,9 +73,10 @@ function Course() {
                 playTitleOnInstrClose.current = true
                 return
             }
-            titleAudio.current.play()
-            disabledRef.current.classList.add("active")
-            wrapperRef.current.classList.add("active")
+            titleAudio.current.play().then(() => {
+                disabledRef.current.classList.add("active")
+                wrapperRef.current.classList.add("active")
+            })
         }, 500)
         titleAudio.current.addEventListener("ended", () => {
             disabledRef.current.classList.remove("active")
@@ -84,7 +85,12 @@ function Course() {
     }
 
     function titleSoundPlay() {
-        if (!ModalStore.isVisible.instruction && !ModalStore.isVisible.intro) {
+        if (
+            !ModalStore.isVisible.instruction &&
+            !ModalStore.isVisible.intro &&
+            !ModalStore.isVisible.menu &&
+            !ModalStore.isVisible.mail
+        ) {
             if (SoundStore.getIsPlaying()) {
                 if (playTitleOnInstrClose.current) {
                     activeTitleSound()

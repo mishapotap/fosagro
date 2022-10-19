@@ -240,6 +240,10 @@ const Container = styled.div`
 
     .progress-number {
         font-size: 0.8vw;
+
+        @media ${DEVICE.laptopS} {
+            font-size: 12px;
+        }
     }
 
     .progress {

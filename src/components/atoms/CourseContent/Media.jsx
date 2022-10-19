@@ -12,6 +12,9 @@ function Media({
     videoPlaying,
     restartAnim,
     sliderDelay,
+    makeOutsideVideoEl,
+    outsideVideoEl,
+    onVideoEnded
 }) {
     const pageData = CourseProgressStore.activePageData
 
@@ -46,7 +49,14 @@ function Media({
 
     let mediaProps = { data: mediaData }
 
-    if (video) mediaProps = { ...mediaProps, isPlaying: videoPlaying }
+    if (video)
+        mediaProps = {
+            ...mediaProps,
+            isPlaying: videoPlaying,
+            outsideVideoEl,
+            makeOutsideVideoEl,
+            onVideoEnded,
+        }
     if (circleSlider)
         mediaProps = {
             ...mediaProps,
@@ -57,9 +67,6 @@ function Media({
 
     return (
         <Container
-            className={`${
-                (animation || circleSlider) && pauseAnim ? "anim-paused" : ""
-            }`}
             video={video}
             circleSlider={circleSlider}
             animation={animation}
@@ -67,7 +74,13 @@ function Media({
             ref={mediaContRef}
         >
             <MediaColInner>
-                <StyledMedia>
+                <StyledMedia
+                    className={`${
+                        (animation || circleSlider) && pauseAnim
+                            ? "anim-paused"
+                            : ""
+                    }`}
+                >
                     {MediaComponent && (
                         <MediaComponent
                             // eslint-disable-next-line react/jsx-props-no-spreading

@@ -283,8 +283,8 @@ function IntroModal({ isOpen, onClose, items }) {
                                                         showPausedBtn={
                                                             showPausedBtn
                                                         }
-                                                        makeAudioEl
-                                                        audioEl={
+                                                        makeOutsideAudioEl
+                                                        outsideAudioEl={
                                                             SoundStore
                                                                 .introAudioEls
                                                                 .length >=
