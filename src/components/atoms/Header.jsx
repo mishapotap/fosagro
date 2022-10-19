@@ -186,7 +186,11 @@ const BackToMain = styled.div`
     }
 
     @media ${DEVICE.laptopS} {
-        display: none;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        margin: 0;
+        transform: translateY(calc(100% + 14px));
     }
 `
 

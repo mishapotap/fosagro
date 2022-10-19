@@ -11,23 +11,40 @@ import { SuccessIcon } from "../../assets/svg/static"
 import MenuButtons from "../molecules/MenuButtons"
 import { MenuBackground } from "../../assets/images"
 import { Title } from "../atoms/Content"
-import { CourseProgressStore, ModalStore } from "../../store"
+import { CourseProgressStore, ModalStore, SoundStore } from "../../store"
 import Error404 from "./Error404"
 import { FinalAudio } from "../../assets/audio"
 
 function Final() {
     const audioRef = useRef(null)
+    const finalContRef = useRef(null)
+    const autoPausedRef = useRef(null)
 
     useEffect(() => {
+        if (SoundStore.finalAudio) {
+            audioRef.current = SoundStore.finalAudio
+            if (finalContRef.current) finalContRef.current.append(audioRef.current)
+        } else {
+            audioRef.current = new Audio(FinalAudio)
+        }
+
         if (audioRef.current && audioRef.current.paused) audioRef.current.play()
         CourseProgressStore.setUserVisitedFinalPage()
+
+        return () => {
+            SoundStore.restartFinalAudio()
+        }
     }, [])
 
     useEffect(() => {
         if (audioRef.current) {
             if (ModalStore.isVisible.mail) {
-                audioRef.current.pause()
-            } else {
+                if (!audioRef.current.paused)  {
+                    audioRef.current.pause()
+                    autoPausedRef.current = true
+                }
+            } else if (autoPausedRef.current) {
+                autoPausedRef.current = false
                 audioRef.current.play()
             }
         }
@@ -38,8 +55,8 @@ function Final() {
 
     return (
         <StyledLayout page="final">
-            <Container>
-                <audio src={FinalAudio} ref={audioRef} />
+            <Container ref={finalContRef}>
+                {/* <audio src={FinalAudio} ref={audioRef} /> */}
                 <Background />
                 <ContentWrapper>
                     <Content>

@@ -21,10 +21,12 @@ function App() {
         SoundStore.setTestStartAudio()
         SoundStore.setTestFinalsAudio()
         SoundStore.setInstructionAudioEls()
+        SoundStore.setFinalAudio()
+        document.removeEventListener('click', handleDocClick2)
     }
 
     useEffect(() => {
-        document.addEventListener('click', handleDocClick2, true)
+        document.addEventListener('click', handleDocClick2)
     }, [])
 
     return (

@@ -119,6 +119,8 @@ export function fullscreen(el, goFull = () => {}, exitFull = () => {}) {
         document.webkitFullscreenElement ||
         document.mozFullScreenElement
 
+    // console.log('isInFullScreen', isInFullScreen);
+
     if (isInFullScreen) {
         if (document.exitFullscreen) {
             document.exitFullscreen().then(() => {
@@ -140,15 +142,36 @@ export function fullscreen(el, goFull = () => {}, exitFull = () => {}) {
     } else {
         // eslint-disable-next-line no-lonely-if
         if (el.requestFullscreen) {
-            el.requestFullscreen().then(() => goFull())
+            el.requestFullscreen().then(() => {
+                goFull()
+            })
         } else if (el.mozRequestFullScreen) {
-            el.mozRequestFullScreen().then(() => goFull())
+            el.mozRequestFullScreen().then(() => {
+                goFull()
+            })
         } else if (el.webkitRequestFullScreen) {
-            el.webkitRequestFullScreen().then(() => goFull())
+            el.webkitRequestFullScreen().then(() => {
+                goFull()
+            })
         } else if (el.msRequestFullscreen) {
-            el.msRequestFullscreen().then(() => goFull())
+            el.msRequestFullscreen().then(() => {
+                goFull()
+            })
         }
     }
+
+    // переход в полноэкранный режим на айфоне
+    if (!el.webkitDisplayingFullscreen) {
+        el.webkitEnterFullscreen()
+    }
+}
+
+export function isTouchDevice() {
+    return (
+        "ontouchstart" in window ||
+        navigator.maxTouchPoints > 0 ||
+        navigator.msMaxTouchPoints > 0
+    )
 }
 
 export function pauseMedia() {
@@ -161,4 +184,11 @@ export function pauseMedia() {
             el.pause()
         }
     })
+}
+
+export function getLargestArrNum(arr = [0]) {
+    const largestNum = arr.reduce((accVal, currentVal) =>
+        Math.max(accVal, currentVal)
+    )
+    return largestNum
 }

@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-no-bind */
-import React, { useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import styled, { css } from "styled-components"
 import { COLORS, DEVICE } from "../../../constants"
 import {
@@ -10,6 +11,7 @@ import {
     Fullscreen,
     Close,
 } from "../../../assets/svg"
+import { isTouchDevice } from "../../../utils"
 
 export default function VideoControls({
     progressTime,
@@ -54,8 +56,20 @@ export default function VideoControls({
     }
 
     function onBigBtnClick(e) {
-        e.stopPropagation()
         onTogglePlay()
+    }
+
+    function handleBottomControlsClick(e) {
+        if (isTouchDevice()) {
+            if (
+                !e.target.classList.contains("toggle-play-btn") &&
+                !e.target.closest(".toggle-play-btn")
+            ) {
+                e.stopPropagation()
+            }
+        } else {
+            e.stopPropagation()
+        }
     }
 
     return (
@@ -69,7 +83,11 @@ export default function VideoControls({
                 onClick={onBigBtnClick}
                 className={!isBigBtnShown && "hide"}
             >
-                <Play width="100%" />
+                {isPlaying ? (
+                    <Pause className="pause" />
+                ) : (
+                    <Play className="play" />
+                )}
             </BigPlayBtn>
 
             <PlayerTop
@@ -82,7 +100,7 @@ export default function VideoControls({
             </PlayerTop>
 
             <BottomControls
-                onClick={(e) => e.stopPropagation()}
+                onClick={handleBottomControlsClick}
                 className={(isStart || !isBottomControlsShown) && "hide"}
             >
                 <ToggleMutedBtn
@@ -99,6 +117,7 @@ export default function VideoControls({
                 <TogglePlayBtn
                     onClick={onTogglePlay}
                     isFullscreen={isFullscreen}
+                    className="toggle-play-btn"
                 >
                     {isPlaying ? <Pause width="54%" /> : <Play width="54%" />}
                 </TogglePlayBtn>
@@ -289,8 +308,23 @@ const BigPlayBtn = styled.button`
         top: 50%;
         left: 50%;
 
-        transform: translate(-42%, -50%);
-        width: 50%;
+        &.play {
+            transform: translate(-42%, -50%);
+            width: 50%;
+        }
+
+        &.pause {
+            transform: translate(-50%, -50%);
+            width: 40%;
+        }
+    }
+
+    /* &.hide {
+        pointer-events: auto!important;
+    } */
+
+    @media ${DEVICE.mobile} {
+        width: 16%;
     }
 `
 

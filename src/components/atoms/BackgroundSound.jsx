@@ -2,17 +2,20 @@ import React, { useRef, useEffect} from "react"
 import styled from "styled-components";
 import { observer } from "mobx-react-lite"
 import { FonAudio } from "../../assets/audio"
-import { SoundStore } from "../../store"
+import { CourseProgressStore, SoundStore } from "../../store"
 
 function BackgroundSound () {
     const backSound = useRef(null);
 
     useEffect(() => {
         function playSound() {
-            SoundStore.setIsPlayingSound(true);
+            if (!CourseProgressStore.isContentPage) {
+                if (backSound.current) backSound.current.play();
+                SoundStore.setIsPlayingSound(true);
+            }
+
+            if (backSound.current) backSound.current.volume = 0.1;
             SoundStore.setIsPlayingUser(true);
-            backSound.current.volume = 0.1;
-            backSound.current.play();
             window.removeEventListener("click", playSound)
         }
         window.addEventListener("click", playSound, { ones: true})

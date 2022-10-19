@@ -16,7 +16,6 @@ import { COLORS, DEVICE } from "../../constants"
 import { AudioPlayerBg } from "../../assets/svg/static"
 import { formatTime } from "../../utils"
 import PausedBtn from "./CourseContent/PausedBtn"
-import { SoundStore } from "../../store"
 
 export default function AudioPlayer({
     isPlaying = true,
@@ -32,8 +31,8 @@ export default function AudioPlayer({
     makePausedBtn = false,
     showPausedBtn = false,
     onPausedBtnClick = () => {},
-    makeAudioEl = false,
-    audioEl = null,
+    makeOutsideAudioEl = false,
+    outsideAudioEl = null,
 }) {
     const audioRef = useRef(null)
     const [isPlayingLocal, _setIsPlayingLocal] = useState(false)
@@ -77,9 +76,8 @@ export default function AudioPlayer({
         _setIsPlayingLocal(value)
     }
 
-    function addListeners() {
+    function addOutsideElListeners() {
         if (audioRef.current) {
-            // console.log("добавили слушателей")
             audioRef.current.addEventListener("play", handlePlay)
             audioRef.current.addEventListener("pause", handlePause)
             audioRef.current.addEventListener("error", handleError)
@@ -92,9 +90,8 @@ export default function AudioPlayer({
         }
     }
 
-    function removeListeners(el) {
+    function removeOutsideElListeners(el) {
         if (el) {
-            // console.log("удалили слушателей")
             el.removeEventListener("play", handlePlay)
             el.removeEventListener("pause", handlePause)
             el.removeEventListener("error", handleError)
@@ -104,12 +101,11 @@ export default function AudioPlayer({
     }
 
     useEffect(() => {
-        if (makeAudioEl) {
-            // console.log("initAudioEl", audioEl)
-            initAudioEl()
+        if (makeOutsideAudioEl) {
+            initOutsideAudioEl()
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [makeAudioEl])
+    }, [makeOutsideAudioEl])
 
     const [showPausedBtnLocal, setShowPausedBtnLocal] = useState(false)
 
@@ -144,10 +140,10 @@ export default function AudioPlayer({
         }
     }
 
-    function initAudioEl() {
-        if (audioEl) {
-            audioRef.current = audioEl
-            addListeners()
+    function initOutsideAudioEl() {
+        if (outsideAudioEl) {
+            audioRef.current = outsideAudioEl
+            addOutsideElListeners()
 
             if (audioPlayerRef.current) {
                 audioPlayerRef.current.append(audioRef.current)
@@ -155,8 +151,8 @@ export default function AudioPlayer({
         }
     }
 
-    function clearAudioEl(resetEl) {
-        removeListeners(resetEl)
+    function clearOutsideAudioEl(resetEl) {
+        removeOutsideElListeners(resetEl)
         if (resetEl) {
             resetEl.pause()
             resetEl.remove()
@@ -187,8 +183,8 @@ export default function AudioPlayer({
         return () => {
             handlePause()
             window.removeEventListener("resize", setStrokeL)
-            clearAudioEl(resetEl)
-            // if (makeAudio) clearAudioEl(resetEl)
+            clearOutsideAudioEl(resetEl)
+            // if (makeAudio) clearOutsideAudioEl(resetEl)
             // console.log("=============================destroy")
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -380,7 +376,7 @@ export default function AudioPlayer({
                 >
                     <Player>
                         <PlayerInner>
-                            {(!makeAudioEl || !audioEl) && (
+                            {(!makeOutsideAudioEl || !outsideAudioEl) && (
                                 <AudioEl
                                     src={src}
                                     ref={audioRef}

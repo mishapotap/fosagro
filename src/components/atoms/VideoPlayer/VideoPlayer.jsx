@@ -6,7 +6,12 @@ import styled from "styled-components"
 import { COLORS, DEVICE } from "../../../constants"
 import VideoControls from "./VideoControls"
 import Loader from "../Loader"
-import { formatTime, fullscreen, getElWindowPos } from "../../../utils"
+import {
+    formatTime,
+    fullscreen,
+    getElWindowPos,
+    isTouchDevice,
+} from "../../../utils"
 
 export default function VideoPlayer({
     data: { src },
@@ -15,18 +20,20 @@ export default function VideoPlayer({
     poster = null,
     isPlaying = true,
     className,
+    outsideVideoEl = null,
+    makeOutsideVideoEl = false,
 }) {
     const [isMuted, _setIsMuted] = useState(false)
     const [isFullscreen, _setIsFullscreen] = useState(false)
     const [isLoaded, _setIsLoaded] = useState(false)
     const [isError, setIsError] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
-    const [isStart, setIsStart] = useState(true)
+    const [isStart, _setIsStart] = useState(true)
     const [isMob, setIsMob] = useState(false)
 
     const [isBigBtnShown, setIsBigBtnShown] = useState(true)
-    const [isControlsShown, setIsControlsShown] = useState(true)
-    const [isBottomControlsShown, setIsBottomControlsShown] = useState(true)
+    const [isControlsShown, _setIsControlsShown] = useState(true)
+    const [isBottomControlsShown, _setIsBottomControlsShown] = useState(true)
 
     const [progressTime, _setProgressTime] = useState(0)
     const [fullTime, _setFullTime] = useState(0)
@@ -44,7 +51,7 @@ export default function VideoPlayer({
     const videoPlayerContRef = useRef(null)
     const intervalId = useRef(null)
     const mouseMoveTimeoutId = useRef(null)
-    const isPlayingLocal = useRef(false)
+    const isPlayingLocalRef = useRef(false)
 
     const isFullscreenRef = useRef(false)
     const isLoadedRef = useRef(false)
@@ -52,9 +59,29 @@ export default function VideoPlayer({
     const fullTimeRef = useRef(0)
     const isMutedRef = useRef(false)
 
+    const isStartRef = useRef(true)
+    const isBottomControlsShownRef = useRef(true)
+    const isControlsShownRef = useRef(true)
+    const [hideControls, setHideControls] = useState(false)
+
     const enteredMobFullscr = useRef(false)
 
     const errorText = "Произошла ошибка при загрузке видео"
+
+    function setIsBottomControlsShown(val) {
+        isBottomControlsShownRef.current = val
+        _setIsBottomControlsShown(val)
+    }
+
+    function setIsControlsShown(val) {
+        isControlsShownRef.current = val
+        _setIsControlsShown(val)
+    }
+
+    function setIsStart(val) {
+        isStartRef.current = val
+        _setIsStart(val)
+    }
 
     function setIsFullscreen(val) {
         isFullscreenRef.current = val
@@ -81,6 +108,14 @@ export default function VideoPlayer({
         _setIsMuted(val)
     }
 
+    useEffect(() => {
+        if (makeOutsideVideoEl) {
+            initOutsideVideoEl()
+            // console.log('init video el');
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [makeOutsideVideoEl])
+
     // устанавливаем форматированное время длительности фидео при изменении всего времени видео
     useEffect(() => {
         if (fullTime) {
@@ -90,7 +125,7 @@ export default function VideoPlayer({
     }, [fullTime])
 
     useEffect(() => {
-        isPlayingLocal.current = isPlaying
+        isPlayingLocalRef.current = isPlaying
     }, [isPlaying])
 
     useEffect(() => {
@@ -122,14 +157,53 @@ export default function VideoPlayer({
         document.addEventListener("keydown", handleKeydown)
         setValIsMob()
         window.addEventListener("resize", setValIsMob)
+        document.addEventListener("fullscreenchange", handleFullScrChange)
+
+        const resetEl = videoRef.current
 
         return () => {
             clearInterval(intervalId.current)
+            if (mouseMoveTimeoutId.current) clearTimeout(mouseMoveTimeoutId.current)
             document.removeEventListener("keydown", handleKeydown)
             window.removeEventListener("resize", setValIsMob)
+            document.removeEventListener(
+                "fullscreenchange",
+                handleFullScrChange
+            )
+            clearOutsideVideoEl(resetEl)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    function goFullFunc() {
+        setIsFullscreen(true)
+        enteredMobFullscr.current = true
+        window.screen.orientation.lock("landscape-primary")
+    }
+
+    function exitFullFunc() {
+        enteredMobFullscr.current = false
+        window.screen.orientation.unlock()
+        setIsFullscreen(false)
+    }
+
+    const handleFullScrChange = () => {
+        const isInFullScreen =
+            document.fullscreenElement ||
+            document.webkitFullscreenElement ||
+            document.mozFullScreenElement
+
+        // сделать дефолтные контролсы у видео
+        if (isInFullScreen) {
+            goFullFunc()
+            videoRef.current.controls = true
+            setHideControls(true)
+        } else {
+            exitFullFunc()
+            videoRef.current.controls = false
+            setHideControls(false)
+        }
+    }
 
     function setValIsMob() {
         if (document.documentElement.clientWidth < 1024) {
@@ -218,15 +292,17 @@ export default function VideoPlayer({
 
     // обработка события play видео
     function handleVideoPlay() {
-        isPlayingLocal.current = true
-        if (isStart) {
+        isPlayingLocalRef.current = true
+        if (isStartRef.current) {
             setIsStart(false)
         }
 
-        if (!isBottomControlsShown) setIsBottomControlsShown(true)
+        if (!isBottomControlsShownRef.current) setIsBottomControlsShown(true)
         setIsBigBtnShown(false)
 
-        handleMouseMove()
+        // handleMouseMove()
+        handleDisappear()
+
         intervalId.current = setInterval(() => {
             handleTimeChange()
         }, 50)
@@ -234,19 +310,23 @@ export default function VideoPlayer({
 
     // обработка события pause видео
     function handleVideoPause() {
-        isPlayingLocal.current = false
+        isPlayingLocalRef.current = false
         setIsBigBtnShown(true)
         clearInterval(intervalId.current)
-        if (!isControlsShown) setIsControlsShown(true)
-        if (!isBottomControlsShown) setIsBottomControlsShown(true)
+        if (!isControlsShownRef.current) {
+            setIsControlsShown(true)
+        }
+        if (!isBottomControlsShownRef.current) {
+            setIsBottomControlsShown(true)
+        }
     }
 
     // обработка события end видео
     function handleVideoEnd() {
         setIsStart(true)
-        if (!isBottomControlsShown) setIsBottomControlsShown(true)
+        if (!isBottomControlsShownRef.current) setIsBottomControlsShown(true)
         setProgressTime(0)
-        if (isFullscreen) toggleFullscreen()
+        if (isFullscreenRef.current) toggleFullscreen()
     }
 
     // при загрузке видео устанавливаем его длительность и убираем лоадер
@@ -322,9 +402,8 @@ export default function VideoPlayer({
         setTooltipTime(timeTooltip)
     }
 
-    // исчезновение контролсов при отстутствии движения мыши
-    function handleMouseMove() {
-        if (!isControlsShown) {
+    function handleDisappear() {
+        if (!isControlsShownRef.current) {
             setIsControlsShown(true)
             setIsBottomControlsShown(true)
         }
@@ -334,15 +413,30 @@ export default function VideoPlayer({
         }
 
         // используем ref, чтобы было актуальное значение в settimeout
-        if (isPlayingLocal.current && !videoRef.current.paused) {
+        if (isPlayingLocalRef.current && !videoRef.current.paused) {
             const timeoutId = setTimeout(() => {
-                if (isControlsShown && isPlayingLocal.current) {
+                if (
+                    isControlsShownRef.current &&
+                    isPlayingLocalRef.current
+                ) {
                     setIsControlsShown(false)
                     setIsBottomControlsShown(false)
+
+                }
+                if (mouseMoveTimeoutId.current) {
+                    clearTimeout(mouseMoveTimeoutId.current)
+                    mouseMoveTimeoutId.current = null
                 }
             }, 2000)
 
             mouseMoveTimeoutId.current = timeoutId
+        }
+    }
+
+    // исчезновение контролсов при отстутствии движения мыши
+    function handleMouseMove() {
+        if (!isTouchDevice()) {
+            handleDisappear()
         }
     }
 
@@ -360,7 +454,17 @@ export default function VideoPlayer({
     function togglePlay() {
         if (!isLoadedRef.current) return
 
-        if (isPlayingLocal.current && !videoRef.current.paused) {
+        if (mouseMoveTimeoutId.current) {
+            clearTimeout(mouseMoveTimeoutId.current)
+            mouseMoveTimeoutId.current = null
+        }
+
+        if (mouseMoveTimeoutId.current) {
+            clearTimeout(mouseMoveTimeoutId.current)
+            mouseMoveTimeoutId.current = null
+        }
+
+        if (isPlayingLocalRef.current && !videoRef.current.paused) {
             pause()
         } else {
             play()
@@ -380,19 +484,7 @@ export default function VideoPlayer({
 
     // смена полноэкранного режима для мобилок
     function toggleFullscreenMob() {
-        function goFullFunc() {
-            setIsFullscreen(true)
-            enteredMobFullscr.current = true
-            window.screen.orientation.lock("landscape-primary")
-        }
-
-        function exitFullFunc() {
-            enteredMobFullscr.current = false
-            window.screen.orientation.unlock()
-            setIsFullscreen(false)
-        }
-
-        fullscreen(videoPlayerContRef.current, goFullFunc, exitFullFunc)
+        fullscreen(videoRef.current, goFullFunc, exitFullFunc)
     }
 
     // смена полноэкранного режима для пк
@@ -411,7 +503,7 @@ export default function VideoPlayer({
 
     // смена полноэкранного режима
     function toggleFullscreen() {
-        if (isMob || enteredMobFullscr.current) {
+        if (isTouchDevice() || enteredMobFullscr.current) {
             toggleFullscreenMob()
         } else {
             toggleFullscreenDesktop()
@@ -419,22 +511,76 @@ export default function VideoPlayer({
     }
 
     function toggleControls() {
-        if (isControlsShown) {
+        if (isControlsShownRef.current) {
             setIsControlsShown(false)
         } else {
             setIsControlsShown(true)
+            setIsBottomControlsShown(true)
+            setIsBigBtnShown(true)
         }
     }
 
     function handleVideoContClick() {
-        if (isMob) {
-            if (isStart) {
+        const isTouch = isTouchDevice()
+
+        if (mouseMoveTimeoutId.current) {
+            clearTimeout(mouseMoveTimeoutId.current)
+            mouseMoveTimeoutId.current = null
+        }
+
+        if (isTouch) {
+            if (isStartRef.current) {
                 togglePlay()
             } else {
                 toggleControls()
             }
         } else {
             togglePlay()
+        }
+    }
+
+    // ======== для айфона
+
+    const addOutsideElListeners = () => {
+        if (videoRef.current) {
+            videoRef.current.addEventListener("play", handleVideoPlay)
+            videoRef.current.addEventListener("pause", handleVideoPause)
+            videoRef.current.addEventListener("error", handleVideoError)
+            videoRef.current.addEventListener("ended", handleVideoEnd)
+            videoRef.current.addEventListener("loadedmetadata", handleVideoLoad)
+
+            if (videoRef.current.readyState !== 0) {
+                handleVideoLoad({ target: videoRef.current })
+            }
+        }
+    }
+
+    function clearOutsideVideoEl(resetEl) {
+        removeOutsideElListeners(resetEl)
+        if (resetEl) {
+            resetEl.pause()
+            resetEl.remove()
+        }
+    }
+    const removeOutsideElListeners = (resetEl) => {
+        if (resetEl) {
+            resetEl.removeEventListener("play", handleVideoPlay)
+            resetEl.removeEventListener("pause", handleVideoPause)
+            resetEl.removeEventListener("error", handleVideoError)
+            resetEl.removeEventListener("ended", handleVideoEnd)
+            resetEl.removeEventListener("loadedmetadata", handleVideoLoad)
+        }
+    }
+
+    const initOutsideVideoEl = () => {
+        if (outsideVideoEl) {
+            videoRef.current = outsideVideoEl
+            videoRef.current.playsInline = true
+            addOutsideElListeners()
+
+            if (videoPlayerContRef.current) {
+                videoPlayerContRef.current.append(videoRef.current)
+            }
         }
     }
 
@@ -461,42 +607,46 @@ export default function VideoPlayer({
                     </VideoError>
                 ) : (
                     <>
-                        <VideoControls
-                            isPlaying={isPlayingLocal.current}
-                            isMuted={isMuted}
-                            isLoaded={isLoaded}
-                            isFullscreen={isFullscreen}
-                            isBigBtnShown={isBigBtnShown}
-                            isControlsShown={isControlsShown}
-                            isBottomControlsShown={isBottomControlsShown}
-                            isStart={isStart}
-                            onToggleMuted={toggleMuted}
-                            onToggleFullscreen={toggleFullscreen}
-                            onTogglePlay={togglePlay}
-                            onPlay={play}
-                            onPause={pause}
-                            onTimelineClick={handleTimelineClick}
-                            onTimelineMouseOver={handleTimelineMouseOver}
-                            onCloseFullscreen={toggleFullscreen}
-                            progressTime={formattedProgressTime}
-                            fullTime={formattedFullTime}
-                            tooltipTime={formattedTooltipTime}
-                            progressTimePer={progressTimePer}
-                        />
-                        <Video
-                            src={src}
-                            loop={loop}
-                            poster={poster}
-                            playsInline
-                            onPause={handleVideoPause}
-                            onPlay={handleVideoPlay}
-                            preload="metadata"
-                            onLoadedMetadata={handleVideoLoad}
-                            onEnded={handleVideoEnd}
-                            onError={handleVideoError}
-                            ref={videoRef}
-                            className={isLoaded && "loaded"}
-                        />
+                        {!hideControls && (
+                            <VideoControls
+                                isPlaying={isPlayingLocalRef.current}
+                                isMuted={isMuted}
+                                isLoaded={isLoaded}
+                                isFullscreen={isFullscreen}
+                                isBigBtnShown={isBigBtnShown}
+                                isControlsShown={isControlsShown}
+                                isBottomControlsShown={isBottomControlsShown}
+                                isStart={isStart}
+                                onToggleMuted={toggleMuted}
+                                onToggleFullscreen={toggleFullscreen}
+                                onTogglePlay={togglePlay}
+                                onPlay={play}
+                                onPause={pause}
+                                onTimelineClick={handleTimelineClick}
+                                onTimelineMouseOver={handleTimelineMouseOver}
+                                onCloseFullscreen={toggleFullscreen}
+                                progressTime={formattedProgressTime}
+                                fullTime={formattedFullTime}
+                                tooltipTime={formattedTooltipTime}
+                                progressTimePer={progressTimePer}
+                            />
+                        )}
+                        {(!outsideVideoEl || !makeOutsideVideoEl) && (
+                            <Video
+                                src={src}
+                                loop={loop}
+                                poster={poster}
+                                playsInline
+                                onPause={handleVideoPause}
+                                onPlay={handleVideoPlay}
+                                preload="metadata"
+                                onLoadedMetadata={handleVideoLoad}
+                                onEnded={handleVideoEnd}
+                                onError={handleVideoError}
+                                ref={videoRef}
+                                className={isLoaded && "loaded"}
+                            />
+                        )}
                     </>
                 )}
             </VideoPlayerContainer>
@@ -505,7 +655,7 @@ export default function VideoPlayer({
 }
 
 const Video = styled.video`
-    position: absolute;
+    /* position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -514,7 +664,7 @@ const Video = styled.video`
     width: 100%;
 
     opacity: 0;
-    transition: 0.4s;
+    transition: 0.4s; */
 `
 
 const VideoError = styled.div`
@@ -560,8 +710,21 @@ const VideoPlayerContainer = styled.div`
         border-radius: 10px;
     }
 
+    video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        height: 100%;
+        width: 100%;
+
+        opacity: 0;
+        transition: 0.4s;
+    }
+
     &.loaded {
-        ${Video} {
+        video {
             opacity: 1;
         }
     }

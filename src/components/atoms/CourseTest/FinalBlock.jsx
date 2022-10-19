@@ -103,6 +103,11 @@ function FinalBlock() {
         reset()
     }
 
+    const handleLinkClick = (id) => {
+        // CourseProgressStore.setMediaElFromTest(id)
+        // CourseProgressStore.setNewSectAudioFromTl(id)
+    }
+
     return (
         <CSSTransition
             in={CourseTestStore.showFinal}
@@ -162,7 +167,7 @@ function FinalBlock() {
                             {CourseTestStore.learnSectsData.map(
                                 ({ title, color, link = "/", id }, index) => (
                                     // eslint-disable-next-line react/no-array-index-key
-                                    <Link to={link} key={id}>
+                                    <Link to={link} key={id} onClick={() => handleLinkClick(id)}>
                                         <SectButton
                                             color={color}
                                             rotate={index * 45}

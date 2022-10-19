@@ -1,9 +1,15 @@
 /* eslint-disable class-methods-use-this */
 import { makeAutoObservable } from "mobx"
-import { coursePagesData, timelineData, menuButtonData, introModalData } from "../data"
+import {
+    coursePagesData,
+    timelineData,
+    menuButtonData,
+    introModalData,
+} from "../data"
 import { COLORS } from "../constants"
 import { sectColors, sectsProgressTypes } from "../data/coursePagesData/general"
 import SoundStore from "./sound"
+// import { getLargestArrNum } from "../utils"
 
 const initialVisitedPages = {
     1: {
@@ -89,6 +95,8 @@ class CourseProgress {
     visitedPages = initialVisitedPages
 
     isErrorPage = false
+
+    isContentPage = false
 
     constructor() {
         makeAutoObservable(this)
@@ -346,6 +354,28 @@ class CourseProgress {
         return ""
     }
 
+    get prevPageVideoSrc() {
+        // eslint-disable-next-line no-empty
+        if (
+            typeof this.prevPageData === "object" &&
+            this.prevPageData.media.type === "video"
+        ) {
+            return this.prevPageData.media.data.src
+        }
+        return ""
+    }
+
+    get nextPageVideoSrc() {
+        // eslint-disable-next-line no-empty
+        if (
+            typeof this.nextPageData === "object" &&
+            this.nextPageData.media.type === "video"
+        ) {
+            return this.nextPageData.media.data.src
+        }
+        return ""
+    }
+
     // ссылка для кнопки секции в таймлайне
     // (чтобы перенаправлять пользователя на актуальную страницу)
     timelineBtnLink(sectId, isTest) {
@@ -526,6 +556,60 @@ class CourseProgress {
         this.isErrorPage = bool
     }
 
+    setIsContentPage(bool) {
+        this.isContentPage = bool
+    }
+
+    setDataForPage(bool) {
+        this.isContentPage = bool
+    }
+
+    setMediaElFromTest(sectId) {
+        const sectData = this.activeChapterData[sectId]
+        if (sectData) {
+            const count = Object.keys(sectData.pages).length
+            const pageData = sectData.pages[count]
+
+            if (pageData) {
+                if (pageData.media.type === "video") {
+                    const videoSrc = pageData.media.data.src
+                    const video = document.createElement("video")
+                    video.src = videoSrc
+                    SoundStore.setContentVideoEl(video)
+                } else if (pageData.audioSrc) {
+                    const audio = new Audio(pageData.audioSrc)
+                    SoundStore.setContentAudioEl(audio)
+                }
+            }
+        }
+    }
+
+    setMediaElFromTl(sectId) {
+        const visPagesData = this.visitedPages[this.activeChapterId][sectId]
+        // найти данные для этой страницы
+        if (visPagesData && visPagesData.length > 0) {
+            const largestNum = visPagesData.reduce((accVal, currentVal) =>
+                Math.max(accVal, currentVal)
+            )
+            const pages = Object.entries(this.activeChapterData[sectId].pages)
+            if (pages) {
+                // eslint-disable-next-line eqeqeq
+                const pageDataArr = pages.find(([id]) => id == largestNum)
+                const pageData = pageDataArr[1]
+                if (pageData.media.type === "video") {
+                    const videoSrc = pageData.media.data.src
+                    const video = document.createElement("video")
+                    video.src = videoSrc
+                    SoundStore.setContentVideoEl(video)
+                } else if (pageData.audioSrc) {
+                    const audio = new Audio(pageData.audioSrc)
+                    SoundStore.setContentAudioEl(audio)
+                }
+            }
+        }
+        return null
+    }
+
     setNewSectAudioFromIntro() {
         const tlData = timelineData[`course${this.activeChapterId}`].timeline
         const sectItem = tlData.find((i) => i.id === 1)
@@ -536,30 +620,31 @@ class CourseProgress {
 
     setIntroAudioEls() {
         const modalData = introModalData[`introModal${this.activeChapterId}`]
-        const audios = modalData.map(i => new Audio(i.audio))
+        const audios = modalData.map((i) => new Audio(i.audio))
         SoundStore.setIntroAudioEls(audios)
     }
 
-    setNewSectAudioFromContent() {
-        // // ! если тест следующий?
-        // const tlData = timelineData[`course${this.activeChapterId}`].timeline
-        // const sectItem = tlData.find((i) => {
-        //     if (type === 'back') {
-        //         return i.id === this.activeChapterId
-        //     }
-        // })
-        // if (sectItem && sectItem.button.audio) {
-        //     SoundStore.newSectAudio = new Audio(sectItem.button.audio)
-        // }
-    }
-
-    setNewSectAudio(sectId) {
+    setNewSectAudioFromTl(sectId) {
         const tlData = timelineData[`course${this.activeChapterId}`].timeline
         const sectItem = tlData.find((i) => i.id === sectId)
 
         if (sectItem && sectItem.button.audio) {
             const audioEl = new Audio(sectItem.button.audio)
             SoundStore.newSectAudio = audioEl
+        }
+    }
+
+    setNewSectAudioFromContent(type) {
+        const addVal = type === "next" ? 1 : -1
+
+        // надо чтобы теста не было
+        const sectData = timelineData[
+            `course${this.activeChapterId}`
+        ].timeline.find((i) => i.id === +this.activeSectId + addVal)
+        if (sectData) {
+            // !!
+            // console.log('следующее аудио', sectData.button.audio);
+            // SoundStore.setNewSectAudio(sectData.button.audio)
         }
     }
 
