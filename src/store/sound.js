@@ -43,6 +43,12 @@ class Sound {
 
     contentVideoEl = null
 
+    // makePlayerOutMediaEl = false
+
+    makeVideoPlayerOutEl = false
+
+    makeAudioPlayerOutEl = false
+
     constructor() {
         makeAutoObservable(this)
     }
@@ -151,6 +157,14 @@ class Sound {
 
     setInstructionAudioEls() {
         this.instructionAudioEls = [new Audio(Instruction1), new Audio(Instruction2)]
+    }
+
+    setMakeAudioPlayerOutEl(val) {
+        this.makeAudioPlayerOutEl = val
+    }
+
+    setMakeVideoPlayerOutEl(val) {
+        this.makeVideoPlayerOutEl = val
     }
 }
 

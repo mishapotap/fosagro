@@ -81,7 +81,7 @@ export default function VideoControls({
             <BigPlayBtn
                 isFullscreen={isFullscreen}
                 onClick={onBigBtnClick}
-                className={!isBigBtnShown && "hide"}
+                className={`${!isBigBtnShown ? "hide" : ""} big-play-btn`}
             >
                 {isPlaying ? (
                     <Pause className="pause" />
@@ -286,8 +286,7 @@ const BigPlayBtn = styled.button`
     left: 50%;
 
     transform: translate(-50%, -50%);
-    /* width: ${({ isFullscreen }) => (isFullscreen ? "5.8%" : "7.7%")}; */
-    width: ${({ isFullscreen }) => (isFullscreen ? "9" : "11.5%")};
+    width: ${({ isFullscreen }) => (isFullscreen ? "6.8%" : "11.5%")};
 
     border-radius: 50%;
     background-color: rgba(0, 82, 155, 0.2);
@@ -384,6 +383,10 @@ const Tooltip = styled.div`
         opacity: 1;
     }
 
+    @media ${DEVICE.laptopM} {
+        font-size: 13px;
+    }
+
     @media ${DEVICE.laptopS} {
         display: none;
     }
@@ -425,6 +428,7 @@ const Time = styled.div`
 
     display: flex;
     align-items: center;
+    transition: 0.3s;
 
     @media ${DEVICE.laptopS} {
         bottom: 5px;

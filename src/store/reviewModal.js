@@ -32,7 +32,7 @@ class ReviewModal {
         this.isLoading = true
         this.isError = false
 
-        makePostRequest("sendmail.php", {
+        makePostRequest("/sendmail.php", {
             message: this.message,
             rating: this.ratingVal,
             email: this.email,

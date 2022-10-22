@@ -3,8 +3,6 @@ import React, { useEffect } from "react"
 import { Routes, Route } from "react-router-dom"
 import Home from "./components/pages/Home"
 import {
-    Tutorial,
-    Test,
     Course,
     Error404,
     CourseTestPage,
@@ -27,6 +25,11 @@ function App() {
 
     useEffect(() => {
         document.addEventListener('click', handleDocClick2)
+
+        return () => {
+            document.removeEventListener('click', handleDocClick2)
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
@@ -44,8 +47,6 @@ function App() {
                     path="course:id/topic:sectId/point:pageId"
                     element={<CourseContentPage />}
                 />
-                <Route path="tutorial" element={<Tutorial />} />
-                <Route path="test" element={<Test />} />
                 <Route path="final" element={<Final />} />
                 <Route path="*" element={<Error404 />} />
             </Routes>

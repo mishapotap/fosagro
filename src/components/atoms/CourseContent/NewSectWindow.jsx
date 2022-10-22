@@ -31,7 +31,6 @@ function NewSectWindow({ onExited }) {
 
     function handleEntered() {
         if (SoundStore.newSectAudio) {
-            // console.log('audio from store');
             SoundStore.newSectAudio.play()
             SoundStore.newSectAudio.addEventListener("ended", handleAudioEnded)
         } else if (audioRef.current) {

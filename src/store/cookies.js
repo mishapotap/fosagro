@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable class-methods-use-this */
 import Cookies from "js-cookie"
 import { makeAutoObservable } from "mobx"
@@ -16,13 +17,42 @@ class CookiesStore {
         return Cookies.get("userAcceptedCookies")
     }
 
+    get cookiesExpires() {
+        return Cookies.get("cookiesExpires")
+    }
+
+    setCookiesExpFromNow() {
+        const now = new Date()
+        const expires = now.getTime() + 30 * (60 * 60 * 24 * 1000)
+        // для проверки минута
+        // const expires = now.getTime() + 60000
+        Cookies.set("cookiesExpires", expires, { expires: 30 })
+    }
+
     // при загрузке страницы
     setDataFromCookies() {
         if (this.userAcceptedCookies) {
             const progressData = Cookies.get("courseProgress")
             const testsData = Cookies.get("courseTests")
+
             const userVisitedAnyChapter = Cookies.get("userVisitedAnyChapter")
             const userVisitedFinalPage = Cookies.get("userVisitedFinalPage")
+            const cookiesExpires = Cookies.get("cookiesExpires")
+
+            const now = new Date()
+
+            // console.log('expires', new Date(+cookiesExpires));
+            if (!cookiesExpires) {
+                // установить expires с сегодня + 30 дней
+                this.setCookiesExpFromNow()
+            } else if (now.getTime() > +cookiesExpires) {
+                // сбросить куки
+                this.resetCookies()
+                // а если мы пршли не на первую страницу, не будет ли проблем? вроде нет
+                // показать окошко с куки
+                ModalStore.showModal("cookie")
+                return
+            }
 
             if (progressData) {
                 CourseProgressStore.setDataFromCookies(progressData)
@@ -54,9 +84,11 @@ class CookiesStore {
             Cookies.set("userAcceptedCookies", "true", { expires: 30 })
             this.userAcceptedCookiesNow = true
         }
+
+        this.setCookiesExpFromNow()
     }
 
-    // перед перезагрузкой странице/уходе с нее
+    // перед перезагрузкой страницы/уходе с нее
     setDataInCookies() {
         if (this.userAcceptedCookies) {
             const testsVal = JSON.stringify(CourseTestStore.dataForCookies)
@@ -79,6 +111,9 @@ class CookiesStore {
             Cookies.set("courseTests", testsVal, { expires: 30 })
             Cookies.set("courseProgress", progressVal, { expires: 30 })
             Cookies.set("userAcceptedCookies", "true", { expires: 30 })
+            if (this.cookiesExpires) {
+                Cookies.set("cookiesExpires", this.cookiesExpires, { expires: 30 })
+            }
         }
     }
 
@@ -87,6 +122,8 @@ class CookiesStore {
         Cookies.remove("courseProgress")
         Cookies.remove("userAcceptedCookies")
         Cookies.remove("userVisitedAnyChapter")
+        Cookies.remove("userVisitedFinalPage")
+        Cookies.remove("cookiesExpires")
     }
 }
 

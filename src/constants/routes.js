@@ -1,5 +1,4 @@
 export const HOME = "/"
-export const TUTORIAL = "/tutorial"
 export const MENU = "/menu"
 export const COURSE01 = "/course1"
 export const COURSE02 = "/course2"

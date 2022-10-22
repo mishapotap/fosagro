@@ -31,10 +31,16 @@ function Home() {
     const supTitleSoundRef = useRef(null)
     const supTitle2SoundRef = useRef(null)
 
+    const containerRef = useRef(null)
+
     const titleRef = useRef(null)
     const supTitleRef = useRef(null)
 
     const location = useLocation()
+
+    const tmTitleIdRef = useRef(null)
+    const tmSupTitleIdRef = useRef(null)
+    const tmSupTitle2IdRef = useRef(null)
 
     useEffect(() => {
         if (location.pathname.includes("instruction")) {
@@ -46,11 +52,14 @@ function Home() {
 
     useEffect(() => {
         // eslint-disable-next-line no-unused-expressions
-        ;(!SoundStore.getIsPlaying() ||
+        if (
+            !SoundStore.getIsPlaying() ||
             ModalStore.isVisible.mail ||
-            ModalStore.isVisible.instruction) &&
+            ModalStore.isVisible.instruction
+        ) {
             // eslint-disable-next-line no-use-before-define
             removeActiveTitleSound()
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -79,6 +88,7 @@ function Home() {
             supTitleRef.current.classList.remove("active")
             setIsSupTitlePlaying(false)
         }
+
         if (isSupTitle2Playing) {
             supTitle2SoundRef.current.pause()
             setIsSupTitle2Playing(false)
@@ -86,17 +96,20 @@ function Home() {
     }
 
     function activeTitleSound() {
-        setTimeout(() => {
-            // if (titleSoundRef.current && titleRef.current) {
-                titleSoundRef.current.play()
-                setIsTitlePlaying(true)
-                titleRef.current.classList.add("active")
+        tmTitleIdRef.current = setTimeout(() => {
+            titleSoundRef.current.play()
+            setIsTitlePlaying(true)
+            titleRef.current.classList.add("active")
 
-                titleSoundRef.current.addEventListener("ended", () => {
-                    setIsTitlePlaying(false)
-                    titleRef.current.classList.remove("active")
+            titleSoundRef.current.addEventListener("ended", () => {
+                setIsTitlePlaying(false)
+                titleRef.current.classList.remove("active")
 
-                    setTimeout(() => {
+                tmSupTitleIdRef.current = setTimeout(() => {
+                    if (
+                        !ModalStore.isVisible.mail &&
+                        !ModalStore.isVisible.instruction
+                    ) {
                         supTitleSoundRef.current.play()
                         setIsSupTitlePlaying(true)
                         supTitleRef.current.classList.add("active")
@@ -107,19 +120,25 @@ function Home() {
                                 setIsSupTitlePlaying(false)
                                 supTitleRef.current.classList.remove("active")
 
-                                setTimeout(() => {
-                                    supTitle2SoundRef.current.play()
+                                tmSupTitle2IdRef.current = setTimeout(() => {
+                                    if (
+                                        !ModalStore.isVisible.mail &&
+                                        !ModalStore.isVisible.instruction
+                                    ) {
+                                        supTitle2SoundRef.current.play()
+                                        setIsSupTitle2Playing(true)
 
-                                    supTitle2SoundRef.current.addEventListener(
-                                        "ended",
-                                        () => {}
-                                    )
+                                        supTitle2SoundRef.current.addEventListener(
+                                            "ended",
+                                            () => {}
+                                        )
+                                    }
                                 }, 500)
                             }
                         )
-                    }, 500)
-                })
-            // }
+                    }
+                }, 500)
+            })
         }, 500)
     }
 
@@ -144,6 +163,13 @@ function Home() {
             window.removeEventListener("click", playTitle)
         }
         window.addEventListener("click", playTitle, { ones: true })
+
+        return () => {
+            window.removeEventListener("click", playTitle)
+            clearTimeout(tmTitleIdRef.current)
+            clearTimeout(tmSupTitleIdRef.current)
+            clearTimeout(tmSupTitle2IdRef.current)
+        }
     }, [])
 
     return (
@@ -170,7 +196,7 @@ function Home() {
                     playsInline
                 />
             </Background>
-            <Container>
+            <Container ref={containerRef}>
                 <ContentWrapper>
                     <Content>
                         <TextContainer>

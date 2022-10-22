@@ -90,7 +90,7 @@ function CourseStep({
                 }
             }
         } else if (!test) {
-            CourseProgressStore.setNewSectAudioFromTl(sectId)
+            CourseProgressStore.setNewSectWindowAudio(sectId)
             // установить видео для проигрывания
             CourseProgressStore.setMediaElFromTl(sectId)
         }

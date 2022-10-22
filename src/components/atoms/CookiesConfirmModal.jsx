@@ -28,7 +28,7 @@ function CookiesConfirmModal() {
             setShowSuccess(false)
             setShowError(false)
             setShowStartContent(true)
-        }, 100);
+        }, 600);
     }
 
     function handleSuccessClose() {
@@ -70,7 +70,6 @@ function CookiesConfirmModal() {
             isOpen={ModalStore.isVisible.cookiesConfirm}
             onClose={onClose}
             noCloseBtn
-            dontCloseOnMaskClick
         >
             <CSSTransition
                 in={showStartContent}
@@ -129,7 +128,7 @@ function CookiesConfirmModal() {
             >
                 <ErrorContent ref={errorElRef} className="error">
                     <Text>Произошла ошибка.</Text>
-                    <Text>Не удалось удалить cookies, попробуйте позже.</Text>
+                    <Text>Не удалось удалить cookies.</Text>
                     <SendButton text="Закрыть" onClick={onClose} />
                 </ErrorContent>
             </CSSTransition>

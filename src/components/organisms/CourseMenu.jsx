@@ -68,7 +68,7 @@ function CourseMenu({ dataLine, dataModal }) {
         // eslint-disable-next-line no-unused-expressions
         ref.current.scrollLeft === 0
             ? setIsFinish(false) : setIsFinish(true)
-    }   
+    }
 
     let buttonTime = 0
     let buttonInterval = null
@@ -85,7 +85,7 @@ function CourseMenu({ dataLine, dataModal }) {
         buttonInterval = setInterval(() => {
             buttonTime += 5;
             ref.current.scrollLeft += window.innerWidth/2/30;
-            if(buttonTime > 150) clearInterval(buttonInterval) 
+            if(buttonTime > 150) clearInterval(buttonInterval)
         }, 30);
 
         // eslint-disable-next-line no-unused-expressions
@@ -130,6 +130,7 @@ function CourseMenu({ dataLine, dataModal }) {
                 onMouseMove={(e) => handleMouseMove(e)}
                 onScroll={() => handleScroll()}
                 onWheel={(e) => handleWheel(e)}
+                className="course-menu"
                 >
                 <Line width={dataLine.width} ref={line}>
                     <Waves color={COLORS.white} className="waves"/>
@@ -139,14 +140,14 @@ function CourseMenu({ dataLine, dataModal }) {
                 ))}
             </MenuContainer>
             {isFinish &&
-                <Button 
+                <Button
                     className="button-prev"
                     onClick={() => handlePrew()}>
                     <Prev/>
                 </Button>
             }
-            {isStart && 
-                <Button 
+            {isStart &&
+                <Button
                     className="button-next"
                     onClick={() => handleNext()}>
                     <Next/>
@@ -208,7 +209,7 @@ const Button = styled.div`
     @media ${DEVICE.mobile} {
         display: none;
     }
-    
+
     cursor: pointer;
 
     & svg {

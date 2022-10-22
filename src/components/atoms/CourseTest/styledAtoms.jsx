@@ -5,7 +5,7 @@ import { Title } from "../Content"
 const TextBase = styled.div`
     font-size: 1.3vw;
     color: ${COLORS.black};
-    line-height: 1.5;
+    line-height: 1.3;
 
     @media ${DEVICE.laptop} {
         font-size: 20px;
@@ -28,8 +28,12 @@ const StyledTitle = styled(Title)``
 
 const Block = styled.div`
     ${StyledTitle} {
-        margin-bottom: 3.8vh;
+        margin-bottom: 3vh;
         max-width: 32.5vw;
+
+        @media ${DEVICE.laptopS} {
+            margin-bottom: 2.5vh;
+        }
 
         @media ${DEVICE.laptop} {
             margin-bottom: 30px;
@@ -42,17 +46,25 @@ const Block = styled.div`
     }
 
     ${Label} {
-        margin-bottom: 20px;
+        margin-bottom: 2vh;
         max-width: 33vw;
 
         @media ${DEVICE.laptop} {
             max-width: 450px;
         }
+
+        @media ${DEVICE.laptopS} {
+            margin-bottom: 20px;
+        }
     }
 
     ${Text} {
-        margin-bottom: 4.6vh;
+        margin-bottom: 3.5vh;
         max-width: 28vw;
+
+        @media ${DEVICE.laptopM} {
+            margin-bottom: 3vh;
+        }
 
         @media ${DEVICE.laptop} {
             margin-bottom: 30px;
