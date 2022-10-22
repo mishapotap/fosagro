@@ -104,8 +104,8 @@ function FinalBlock() {
     }
 
     const handleLinkClick = (id) => {
-        // CourseProgressStore.setMediaElFromTest(id)
-        // CourseProgressStore.setNewSectAudioFromTl(id)
+        CourseProgressStore.setMediaElFromTest(id)
+        CourseProgressStore.setNewSectWindowAudio(id)
     }
 
     return (
@@ -275,6 +275,10 @@ const SectButtons = styled.div`
     a {
         margin-bottom: 4vh;
 
+        @media ${DEVICE.laptopM} {
+            margin-bottom: 3vh;
+        }
+
         @media ${DEVICE.laptop} {
             margin-bottom: 20px;
         }
@@ -348,7 +352,6 @@ const SectButton = styled.div`
 `
 
 const FinalContent = styled.div`
-    margin-bottom: 3vh;
     max-height: 100%;
     overflow: auto;
 
@@ -376,6 +379,10 @@ const FinBottom = styled.div`
     align-items: center;
     justify-content: space-between;
     padding-bottom: 10px;
+
+    @media ${DEVICE.laptopM} {
+        padding: 0;
+    }
 
     @media ${DEVICE.laptop} {
         flex-direction: column;

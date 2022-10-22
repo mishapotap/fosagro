@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-bind */
 import React from "react"
 import styled from "styled-components"
 import { observer } from "mobx-react-lite"
@@ -11,6 +12,10 @@ import SendButton from "./SendButton"
 import { menuButtonData } from "../../data"
 
 function WelcomeBackModal() {
+    function handleMenuBtnClick() {
+        ModalStore.closeModal("welcomeBack")
+    }
+
     return (
         <StyledModal
             isOpen={ModalStore.isVisible.welcomeBack}
@@ -26,10 +31,13 @@ function WelcomeBackModal() {
                 <Content>
                     {CourseProgressStore.userPassedFullCourse ? (
                         <>
-                            <Title>Вы изучили курс «Устойчивое развитие»</Title>
+                            <Title className="title-passed">
+                                Вы изучили курс «Устойчивое развитие»
+                            </Title>
                             <MenuButtonsContainer>
                                 <MenuButtons
                                     data={CourseProgressStore.welcomeBtnsData}
+                                    onMenuBtnClick={handleMenuBtnClick}
                                 />
                             </MenuButtonsContainer>
 
@@ -58,6 +66,7 @@ function WelcomeBackModal() {
                                             data={
                                                 CourseProgressStore.welcomeBtnsData
                                             }
+                                            onMenuBtnClick={handleMenuBtnClick}
                                         />
                                     </MenuButtonsContainer>
                                     <Link to="instruction">
@@ -69,7 +78,10 @@ function WelcomeBackModal() {
                                     <Title>Вы пока ничего не изучали!</Title>
                                     <Text>Начать изучение курса:</Text>
                                     <MenuButtonsContainer>
-                                        <MenuButtons data={menuButtonData} />
+                                        <MenuButtons
+                                            data={menuButtonData}
+                                            onMenuBtnClick={handleMenuBtnClick}
+                                        />
                                     </MenuButtonsContainer>
                                     <Link to="instruction">
                                         <SendButton text="Инструкция по работе с курсом" />
@@ -106,6 +118,10 @@ const Title = styled.div`
     font-size: 1.3vw;
     color: rgba(0, 82, 155, 0.84);
     margin-bottom: 2.5vh;
+
+    &.title-passed {
+        margin-bottom: 3.5vh;
+    }
 
     @media ${DEVICE.laptop} {
         margin-bottom: 15px;

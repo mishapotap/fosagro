@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-bind */
 import React from "react"
 import styled from "styled-components"
 import { Link } from "react-router-dom"
@@ -6,25 +7,26 @@ import { observer } from "mobx-react-lite"
 import { menuButtonData } from "../../data"
 import MenuButton from "./MenuButton"
 import { MenuProgressBar } from "../atoms"
-import { ModalStore, SoundStore, CourseProgressStore } from "../../store"
-import { Click1 } from "../../assets/audio"
+import { CourseProgressStore } from "../../store"
 import { DEVICE } from "../../constants"
 
-function MenuButtons({ className, data = menuButtonData, markActiveChapter = false }) {
-    const clickSound = new Audio(Click1)
-
-    const closeModal = () => {
-        ModalStore.closeModal("menu")
-        SoundStore.setIsPlayingSound(true)
-        // eslint-disable-next-line no-unused-expressions
-        SoundStore.getIsPlaying() && clickSound.play()
-    }
-
+// eslint-disable-next-line no-unused-vars
+function MenuButtons({
+    className,
+    data = menuButtonData,
+    markActiveChapter = false,
+    onMenuBtnClick = () => {},
+}) {
     return (
-        <MenuWrap className={`${className || ''} menu-buttons`}>
+        <MenuWrap className={`${className || ""} menu-buttons`}>
             {data.map((item) => (
-                <MenuButtonContainer key={item.index} className={`menu-button-cont ${markActiveChapter ? 'with-active-chapter' : ''}`}>
-                    <Link to={item.href} onClick={() => closeModal()}>
+                <MenuButtonContainer
+                    key={item.index}
+                    className={`menu-button-cont ${
+                        markActiveChapter ? "with-active-chapter" : ""
+                    }`}
+                >
+                    <Link to={item.href} onClick={onMenuBtnClick}>
                         <MenuButton
                             index={item.index}
                             text={item.text}
@@ -32,8 +34,13 @@ function MenuButtons({ className, data = menuButtonData, markActiveChapter = fal
                             bgAnimateColor={item.bgAnimateColor}
                             rotate={item.rotate}
                             duration={item.duration}
-                            activeChapter={markActiveChapter && CourseProgressStore.activeChapterId === item.id}
-                            className={markActiveChapter && 'with-active-chapter'}
+                            activeChapter={
+                                markActiveChapter &&
+                                CourseProgressStore.activeChapterId === item.id
+                            }
+                            className={
+                                markActiveChapter && "with-active-chapter"
+                            }
                         />
                         <MenuProgressBarContainer className="progress-bar-cont">
                             <MenuProgressBar
@@ -67,7 +74,6 @@ const MenuButtonContainer = styled.div`
     }
 
     &.with-active-chapter {
-
     }
 `
 

@@ -29,7 +29,6 @@ export default function VideoPlayer({
     const [isError, setIsError] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
     const [isStart, _setIsStart] = useState(true)
-    const [isMob, setIsMob] = useState(false)
 
     const [isBigBtnShown, setIsBigBtnShown] = useState(true)
     const [isControlsShown, _setIsControlsShown] = useState(true)
@@ -111,7 +110,6 @@ export default function VideoPlayer({
     useEffect(() => {
         if (makeOutsideVideoEl) {
             initOutsideVideoEl()
-            // console.log('init video el');
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [makeOutsideVideoEl])
@@ -155,17 +153,15 @@ export default function VideoPlayer({
     // добавляем и удаляем обработчик keydown, определяем устройство по размеру экрана
     useEffect(() => {
         document.addEventListener("keydown", handleKeydown)
-        setValIsMob()
-        window.addEventListener("resize", setValIsMob)
         document.addEventListener("fullscreenchange", handleFullScrChange)
 
         const resetEl = videoRef.current
 
         return () => {
             clearInterval(intervalId.current)
-            if (mouseMoveTimeoutId.current) clearTimeout(mouseMoveTimeoutId.current)
+            if (mouseMoveTimeoutId.current)
+                clearTimeout(mouseMoveTimeoutId.current)
             document.removeEventListener("keydown", handleKeydown)
-            window.removeEventListener("resize", setValIsMob)
             document.removeEventListener(
                 "fullscreenchange",
                 handleFullScrChange
@@ -202,14 +198,6 @@ export default function VideoPlayer({
             exitFullFunc()
             videoRef.current.controls = false
             setHideControls(false)
-        }
-    }
-
-    function setValIsMob() {
-        if (document.documentElement.clientWidth < 1024) {
-            setIsMob(true)
-        } else {
-            setIsMob(false)
         }
     }
 
@@ -415,13 +403,9 @@ export default function VideoPlayer({
         // используем ref, чтобы было актуальное значение в settimeout
         if (isPlayingLocalRef.current && !videoRef.current.paused) {
             const timeoutId = setTimeout(() => {
-                if (
-                    isControlsShownRef.current &&
-                    isPlayingLocalRef.current
-                ) {
+                if (isControlsShownRef.current && isPlayingLocalRef.current) {
                     setIsControlsShown(false)
                     setIsBottomControlsShown(false)
-
                 }
                 if (mouseMoveTimeoutId.current) {
                     clearTimeout(mouseMoveTimeoutId.current)
@@ -489,7 +473,7 @@ export default function VideoPlayer({
 
     // смена полноэкранного режима для пк
     function toggleFullscreenDesktop() {
-        if (isFullscreen) {
+        if (isFullscreenRef.current) {
             exitFull()
             setIsFullscreen(false)
         } else {

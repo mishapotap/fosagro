@@ -16,7 +16,6 @@ import AudioPlayer from "./AudioPlayer"
 import ExtLinks from "./ExtLinks"
 import { CourseProgressStore, ModalStore, SoundStore } from "../../store"
 import SendButton from "./SendButton"
-import { timelineData } from "../../data"
 
 function IntroModal({ isOpen, onClose, items }) {
     function renderCustom(swiper, current, total) {
@@ -30,19 +29,22 @@ function IntroModal({ isOpen, onClose, items }) {
     const [slidesPauseAnim, setSlidesPauseAnim] = useState({})
     const [slidersAudio, setSlidersAudio] = useState({})
     const [slidersDelay, _setSlidersDelay] = useState({})
-    const [audiosEnded, setAudiosEnded] = useState({})
     const [restartSliderAnim, setRestartSliderAnim] = useState({})
 
     const [makePausedBtn, setMakePausedBtn] = useState(true)
     const [showPausedBtn, setShowPausedBtn] = useState(false)
 
+    const [dontPlayOnClose, setDontPlayOnClose] = useState(false)
+
     const activeSlideIdx = useRef(0)
 
-    const modalContent = useRef(null)
+    const modalContentRef = useRef(null)
     const swiperRef = useRef(null)
     const slidersDelayRef = useRef(null)
 
     const autoPausedAudio = useRef([])
+
+    const audiosEndedRef = useRef(false)
 
     function setSlidersDelay(val) {
         slidersDelayRef.current = val
@@ -54,28 +56,27 @@ function IntroModal({ isOpen, onClose, items }) {
         const initAudiosState = {}
         const initDelayState = {}
         const initAudioEndedState = {}
-        // const initPausedBtnState = {}
 
         items.forEach((i, index) => {
             initSlidesPauseAnim[index] = true
             initAudiosState[index] = false
             initAudioEndedState[index] = false
             initDelayState[index] = 5000
-            // initPausedBtnState[index] = false
         })
 
         setSlidersAudio(initAudiosState)
         setSlidesPauseAnim(initSlidesPauseAnim)
         setSlidersDelay(initDelayState)
-        setAudiosEnded(initAudioEndedState)
-        // setShowPausedBtn(initAudioEndedState)
+        audiosEndedRef.current = initAudioEndedState
     }
 
     useEffect(() => {
         setInitialState()
 
         return () => {
-            SoundStore.resetIntroAudios()
+            // ! неправильно
+            // console.log('сбросить аудио интро');
+            // SoundStore.resetIntroAudios()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
@@ -86,6 +87,12 @@ function IntroModal({ isOpen, onClose, items }) {
             setMakePausedBtn(true)
         } else {
             setMakePausedBtn(false)
+            if (modalContentRef.current) {
+                const audios = modalContentRef.current.querySelectorAll("audio")
+                setTimeout(() => {
+                    SoundStore.resetIntroAudios()
+                }, 700)
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isOpen])
@@ -113,11 +120,9 @@ function IntroModal({ isOpen, onClose, items }) {
 
         activeSlideIdx.current = activeIndex
 
-        // setShowPausedBtn((prevState) => ({...prevState, [previousIndex]: true, [activeIndex]: true}))
         setShowPausedBtn(true)
         setTimeout(() => {
             setShowPausedBtn(false)
-            // setShowPausedBtn((prevState) => ({...prevState, [previousIndex]: false, [activeIndex]: false}))
         }, 50)
 
         setSlidesPauseAnim((prevState) => ({
@@ -138,6 +143,7 @@ function IntroModal({ isOpen, onClose, items }) {
     }
 
     function handleStartClick() {
+        CourseProgressStore.setMediaElFromIntro()
         CourseProgressStore.setNewSectAudioFromIntro()
     }
 
@@ -151,7 +157,7 @@ function IntroModal({ isOpen, onClose, items }) {
         if (index === 0 && swiperRef.current) {
             swiperRef.current.slideNext()
         }
-        setAudiosEnded((prev) => ({ ...prev, [index]: true }))
+        audiosEndedRef.current = { ...audiosEndedRef.current, [index]: true }
         setSlidesPauseAnim((prev) => ({ ...prev, [index]: false }))
     }
 
@@ -169,20 +175,23 @@ function IntroModal({ isOpen, onClose, items }) {
     }
 
     function handleAudioPlay(index) {
-        if (audiosEnded[index]) {
+        if (audiosEndedRef.current[index]) {
             setRestartSliderAnim((prev) => ({ ...prev, [index]: true }))
             setTimeout(() => {
                 setRestartSliderAnim((prev) => ({ ...prev, [index]: false }))
             }, 100)
-            setAudiosEnded((prev) => ({ ...prev, [index]: false }))
+            audiosEndedRef.current = {
+                ...audiosEndedRef.current,
+                [index]: false,
+            }
         }
         setSlidesPauseAnim((prevVal) => ({ ...prevVal, [index]: false }))
     }
 
     useEffect(() => {
         if (ModalStore.isVisible.extLinks) {
-            if (modalContent.current) {
-                const audios = modalContent.current.querySelectorAll("audio")
+            if (modalContentRef.current) {
+                const audios = modalContentRef.current.querySelectorAll("audio")
                 audios.forEach((a) => {
                     if (!a.paused) {
                         a.pause()
@@ -190,13 +199,17 @@ function IntroModal({ isOpen, onClose, items }) {
                     }
                 })
             }
+        } else if (autoPausedAudio.current) {
+            if (!ModalStore.dontPlayOnClose) {
+                autoPausedAudio.current.forEach((a) => {
+                    a.play()
+                })
+                autoPausedAudio.current = []
+            }
+            setDontPlayOnClose(false)
+            ModalStore.setDontPlayOnClose(false)
         }
-        // } else if (autoPausedAudio) {
-        //     autoPausedAudio.current.forEach(a => {
-        //         a.play()
-        //     })
-        //     autoPausedAudio.current = []
-        // }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ModalStore.isVisible.extLinks])
 
     return (
@@ -206,7 +219,7 @@ function IntroModal({ isOpen, onClose, items }) {
             onOpenAnimEnd={handleOpenAnimEnd}
             navigateBack
         >
-            <ModalContent ref={modalContent}>
+            <ModalContent ref={modalContentRef}>
                 {items.length > 1 && (
                     <Controls>
                         <div className="pagination" />
@@ -409,7 +422,7 @@ const StyledModal = styled(CurvedModal)`
         }
 
         @media ${DEVICE.laptopS} {
-            padding: 90px 20px 0;
+            padding: 90px 0 0;
         }
     }
 
@@ -533,6 +546,10 @@ const SlideInner = styled.div`
     height: 100%;
     max-width: 100%;
     overflow: auto;
+
+    @media ${DEVICE.laptopS} {
+        padding: 0 20px;
+    }
 
     &::-webkit-scrollbar {
         width: 0;

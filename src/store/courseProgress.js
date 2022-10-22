@@ -133,6 +133,10 @@ class CourseProgress {
         return null
     }
 
+    get activeChapterTlData() {
+        return timelineData[`course${this.activeChapterId}`].timeline
+    }
+
     get activeChapterIndex() {
         return `0${this.activeChapterId}`
     }
@@ -191,7 +195,7 @@ class CourseProgress {
                 coursePagesData[this.activeChapterId][nextSectId].pages
             return sectPagesData[1]
         }
-        return "test"
+        return null
     }
 
     get prevPageData() {
@@ -218,7 +222,7 @@ class CourseProgress {
             return prevSectData.pages[pagesCount]
         }
         // это если эм нажать на первую кнопку, когда она ведет в таймлайн
-        return ""
+        return null
     }
 
     get nextPageLink() {
@@ -332,48 +336,13 @@ class CourseProgress {
         return this.startedLearnChapters.length !== 0
     }
 
-    get prevPageAudioSrc() {
-        // eslint-disable-next-line no-empty
-        if (
-            typeof this.prevPageData === "object" &&
-            this.prevPageData.audioSrc
-        ) {
-            return this.prevPageData.audioSrc
-        }
-        return ""
+    get lastSectId() {
+        return Object.keys(this.activeChapterData).length
     }
 
-    get nextPageAudioSrc() {
-        // eslint-disable-next-line no-empty
-        if (
-            typeof this.nextPageData === "object" &&
-            this.nextPageData.audioSrc
-        ) {
-            return this.nextPageData.audioSrc
-        }
-        return ""
-    }
-
-    get prevPageVideoSrc() {
-        // eslint-disable-next-line no-empty
-        if (
-            typeof this.prevPageData === "object" &&
-            this.prevPageData.media.type === "video"
-        ) {
-            return this.prevPageData.media.data.src
-        }
-        return ""
-    }
-
-    get nextPageVideoSrc() {
-        // eslint-disable-next-line no-empty
-        if (
-            typeof this.nextPageData === "object" &&
-            this.nextPageData.media.type === "video"
-        ) {
-            return this.nextPageData.media.data.src
-        }
-        return ""
+    get isLastSect() {
+        const lastSect = this.activeSectId === this.lastSectId
+        return lastSect
     }
 
     // ссылка для кнопки секции в таймлайне
@@ -564,28 +533,94 @@ class CourseProgress {
         this.isContentPage = bool
     }
 
-    setMediaElFromTest(sectId) {
-        const sectData = this.activeChapterData[sectId]
-        if (sectData) {
-            const count = Object.keys(sectData.pages).length
-            const pageData = sectData.pages[count]
+    // НАЧАЛО ---- методы для установки аудио элементов (для того, чтобы работал звук в айфоне)
 
-            if (pageData) {
-                if (pageData.media.type === "video") {
-                    const videoSrc = pageData.media.data.src
-                    const video = document.createElement("video")
-                    video.src = videoSrc
-                    SoundStore.setContentVideoEl(video)
-                } else if (pageData.audioSrc) {
-                    const audio = new Audio(pageData.audioSrc)
-                    SoundStore.setContentAudioEl(audio)
-                }
+    // получение src аудио для следующей/предыдущей страницы
+    getNextPrevPageAudioSrc(type) {
+        const data = type === "next" ? this.nextPageData : this.prevPageData
+        if (typeof data === "object" && data.audioSrc) {
+            return data.audioSrc
+        }
+        return ""
+    }
+
+    get nextPageAudioSrc() {
+        return this.getNextPrevPageAudioSrc("next")
+    }
+
+    get prevPageAudioSrc() {
+        return this.getNextPrevPageAudioSrc("prev")
+    }
+
+    // получение src видео для следующей/предыдущей страницы
+    getNextPrevPageVideoSrc(type) {
+        const data = type === "next" ? this.nextPageData : this.prevPageData
+
+        if (typeof data === "object" && data.media.type === "video") {
+            return data.media.data.src
+        }
+        return ""
+    }
+
+    get prevPageVideoSrc() {
+        return this.getNextPrevPageVideoSrc("prev")
+    }
+
+    get nextPageVideoSrc() {
+        return this.getNextPrevPageVideoSrc("next")
+    }
+
+    setNextPrevMediaEl(type) {
+        const data = type === "next" ? this.nextPageData : this.prevPageData
+        if (data) {
+            this.setContentMediaEl(data)
+        }
+    }
+
+    // создание и установка аудио или видео элемента
+    setContentMediaEl(pageData) {
+        if (pageData) {
+            if (pageData.media.type === "video") {
+                const videoSrc = pageData.media.data.src
+                const video = document.createElement("video")
+                video.src = videoSrc
+
+                SoundStore.setContentVideoEl(video)
+                SoundStore.setMakeVideoPlayerOutEl(true)
+            } else if (pageData.audioSrc) {
+                const audio = new Audio(pageData.audioSrc)
+
+                SoundStore.setContentAudioEl(audio)
+                SoundStore.setMakeAudioPlayerOutEl(true)
             }
         }
     }
 
+    // установка аудио элемента секции (видео или аудио) из теста
+    // (после прохождения теста при клике на какую-то из секций, которые надо изучить)
+    setMediaElFromTest(sectId) {
+        const sectData = this.activeChapterData[sectId]
+
+        if (sectId === "intro") {
+            this.setIntroAudioEls()
+            return
+        }
+
+        if (sectData) {
+            const pageData = sectData.pages[1]
+
+            this.setContentMediaEl(pageData)
+        }
+    }
+
+    setMediaElFromIntro() {
+        const pageData = this.activeChapterData[1].pages[1]
+        this.setContentMediaEl(pageData)
+    }
+
     setMediaElFromTl(sectId) {
         const visPagesData = this.visitedPages[this.activeChapterId][sectId]
+
         // найти данные для этой страницы
         if (visPagesData && visPagesData.length > 0) {
             const largestNum = visPagesData.reduce((accVal, currentVal) =>
@@ -596,37 +631,16 @@ class CourseProgress {
                 // eslint-disable-next-line eqeqeq
                 const pageDataArr = pages.find(([id]) => id == largestNum)
                 const pageData = pageDataArr[1]
-                if (pageData.media.type === "video") {
-                    const videoSrc = pageData.media.data.src
-                    const video = document.createElement("video")
-                    video.src = videoSrc
-                    SoundStore.setContentVideoEl(video)
-                } else if (pageData.audioSrc) {
-                    const audio = new Audio(pageData.audioSrc)
-                    SoundStore.setContentAudioEl(audio)
-                }
+                this.setContentMediaEl(pageData)
             }
         }
         return null
     }
 
-    setNewSectAudioFromIntro() {
-        const tlData = timelineData[`course${this.activeChapterId}`].timeline
-        const sectItem = tlData.find((i) => i.id === 1)
-        if (sectItem && sectItem.button.audio) {
-            SoundStore.newSectAudio = new Audio(sectItem.button.audio)
-        }
-    }
+    // ------ начало - установка аудио для NewSectWindow (чтобы включался звук на айфонах)
 
-    setIntroAudioEls() {
-        const modalData = introModalData[`introModal${this.activeChapterId}`]
-        const audios = modalData.map((i) => new Audio(i.audio))
-        SoundStore.setIntroAudioEls(audios)
-    }
-
-    setNewSectAudioFromTl(sectId) {
-        const tlData = timelineData[`course${this.activeChapterId}`].timeline
-        const sectItem = tlData.find((i) => i.id === sectId)
+    setNewSectWindowAudio(sectId) {
+        const sectItem = this.activeChapterTlData.find((i) => i.id === sectId)
 
         if (sectItem && sectItem.button.audio) {
             const audioEl = new Audio(sectItem.button.audio)
@@ -634,19 +648,38 @@ class CourseProgress {
         }
     }
 
+    setNewSectAudioFromIntro() {
+        this.setNewSectWindowAudio(1)
+    }
+
+    setNewSectAudioFromTest() {
+        this.setNewSectWindowAudio(this.lastSectId)
+    }
+
     setNewSectAudioFromContent(type) {
         const addVal = type === "next" ? 1 : -1
 
-        // надо чтобы теста не было
         const sectData = timelineData[
             `course${this.activeChapterId}`
         ].timeline.find((i) => i.id === +this.activeSectId + addVal)
-        if (sectData) {
-            // !!
-            // console.log('следующее аудио', sectData.button.audio);
-            // SoundStore.setNewSectAudio(sectData.button.audio)
+
+        // аудио теста не записываем
+        if (sectData && !this.isLastSect) {
+            const audio = new Audio(sectData.button.audio)
+            SoundStore.setNewSectAudio(audio)
         }
     }
+
+    // ------ конец - установка аудио для NewSectWindow (чтобы включался звук на айфонах)
+
+    // --- установка аудио для модального окна с введением (чтобы работало на айфоне)
+    setIntroAudioEls() {
+        const modalData = introModalData[`introModal${this.activeChapterId}`]
+        const audios = modalData.map((i) => new Audio(i.audio))
+        SoundStore.setIntroAudioEls(audios)
+    }
+
+    // НАЧАЛО ---- методы для установки аудио элементов (для того, чтобы работал звук в айфоне)
 
     setDataFromCookies(dataString) {
         const data = JSON.parse(dataString)

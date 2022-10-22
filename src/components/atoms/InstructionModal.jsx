@@ -229,6 +229,7 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                             speed={400}
                             onSlideChange={handleSlideChange}
                             onInit={handleInit}
+                            allowTouchMove={false}
                         >
                             <SwiperSlide>
                                 <SlideInner className="slide-inner">

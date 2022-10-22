@@ -261,7 +261,7 @@ const CourseNumber = styled.div`
     }
 
     @media ${DEVICE.laptopS} {
-        font-size: 40px;
+        font-size: 35px;
     }
 `
 

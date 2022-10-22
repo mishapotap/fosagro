@@ -91,7 +91,7 @@ const StyledLayout = styled(Layout)`
         ${({ type }) =>
             type === "test" &&
             css`
-                padding: "10vh 6.5vw 10px";
+                padding: 10vh 6.5vw 10px;
 
                 @media ${DEVICE.laptopS} {
                     padding: 20px;

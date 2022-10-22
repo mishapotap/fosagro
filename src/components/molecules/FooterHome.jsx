@@ -22,15 +22,11 @@ export default function FooterHome() {
 }
 
 const FooterContainer = styled.div`
-    /* position: absolute;
-    left: 0;
-    bottom: 17px; */
-
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: end;
     width: 100%;
-    padding: 0 2.3vw 0 4.3vw;
+    padding: 0 2.3vw 5px 4.3vw;
 
     font-size: 16px;
     line-height: 20px;

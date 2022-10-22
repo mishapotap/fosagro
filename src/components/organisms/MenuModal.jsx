@@ -8,12 +8,20 @@ import MenuButtons from "../molecules/MenuButtons"
 import { CourseProgressStore } from "../../store"
 
 function MenuModal({ isOpen, onClose }) {
+    function handleClick() {
+        onClose()
+
+        const courseMenu = document.querySelector('.course-menu')
+        if (courseMenu) {
+            courseMenu.scrollLeft = 0
+        }
+    }
     return (
         <StyledModal isOpen={isOpen} onClose={onClose}>
             <StyledLayout page="menu">
                 <Wrapper>
                     <MenuContainer markActiveChapter={!CourseProgressStore.isErrorPage}>
-                        <MenuButtons markActiveChapter={!CourseProgressStore.isErrorPage} />
+                        <MenuButtons markActiveChapter={!CourseProgressStore.isErrorPage} onMenuBtnClick={() => handleClick()} />
                     </MenuContainer>
                 </Wrapper>
             </StyledLayout>

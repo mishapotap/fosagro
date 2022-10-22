@@ -30,11 +30,17 @@ function Header({
     const engSiteLink = "https://esg-course.phosagro.com"
     const isRus = false
 
-    const { activeSectColor, activeSectTitle, activeChapterTitle, activeChapterIndex } = CourseProgressStore
+    const {
+        activeSectColor,
+        activeSectTitle,
+        activeChapterTitle,
+        activeChapterIndex,
+    } = CourseProgressStore
 
     const clickSound = new Audio(Click2)
 
     const closeMenuModal = () => {
+        ModalStore.closeModal("welcomeBack")
         ModalStore.closeModal("menu")
         SoundStore.setIsPlayingSound(true)
     }
@@ -51,7 +57,7 @@ function Header({
             <HeaderInner language={language}>
                 <Logo>
                     <Link to={routes.HOME} onClick={() => handleClickLogo()}>
-                        { colored ? <FosagroColored /> : <Fosagro/> }
+                        {colored ? <FosagroColored /> : <Fosagro />}
                     </Link>
                 </Logo>
                 {fosagroSite && (
@@ -172,7 +178,7 @@ const BackToMain = styled.div`
 
     a {
         font-family: "FocoBold";
-        color: ${({colored}) => colored ? COLORS.blue : COLORS.white};
+        color: ${({ colored }) => (colored ? COLORS.blue : COLORS.white)};
         font-size: 18px;
 
         &:hover,
@@ -275,7 +281,8 @@ const Container = styled.div`
         padding: 13px 23px 3px;
         height: 90px;
 
-        box-shadow: ${({makeMobShadow}) => makeMobShadow ? '0px 4px 11px 0px rgba(34, 60, 80, 0.2)' : 'none'};
+        box-shadow: ${({ makeMobShadow }) =>
+            makeMobShadow ? "0px 4px 11px 0px rgba(34, 60, 80, 0.2)" : "none"};
     }
 `
 
@@ -289,8 +296,19 @@ const LinkToFosagro = styled.div`
     }
 
     a {
-        display: flex;
+        display: inline-flex;
         align-items: flex-end;
+
+        &:hover {
+            span {
+                color: ${COLORS.blue};
+            }
+            .linkArrow {
+                path {
+                    fill: ${COLORS.blue};
+                }
+            }
+        }
     }
 
     span {
@@ -313,17 +331,6 @@ const LinkToFosagro = styled.div`
         @media ${DEVICE.mobile} {
             width: 14px;
             height: 14px;
-        }
-    }
-
-    &:hover {
-        span {
-            color: ${COLORS.blue};
-        }
-        .linkArrow {
-            path {
-                fill: ${COLORS.blue};
-            }
         }
     }
 `

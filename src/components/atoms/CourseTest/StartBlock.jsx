@@ -32,6 +32,11 @@ function StartBlock() {
         SoundStore.getIsPlaying() && clickSound.play()
     }
 
+    function handleBackClick() {
+        // установить аудио для пред страницы?
+        CourseProgressStore.setNewSectAudioFromTest()
+    }
+
     useEffect(
         () => () => {
             if (SoundStore.testStartAudio) {
@@ -98,6 +103,7 @@ function StartBlock() {
                 <Link
                     to={CourseProgressStore.prevPageLink}
                     className="prev-btn"
+                    onClick={handleBackClick}
                 >
                     <StyledPrevBtn text="Назад" />
                 </Link>

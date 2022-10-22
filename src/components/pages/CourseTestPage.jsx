@@ -48,4 +48,8 @@ const StyledLayout = styled(CourseSlideLayout)`
             margin-bottom: 60px;
         }
     }
+
+    .content {
+        padding-top: 7vh;
+    }
 `
