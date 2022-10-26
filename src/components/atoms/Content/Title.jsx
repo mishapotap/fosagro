@@ -24,10 +24,6 @@ const Container = styled.div`
     }
 
     @media ${DEVICE.laptop} {
-        font-size: 30px;
-    }
-
-    @media ${DEVICE.mobile} {
         font-size: 26px;
     }
 `

@@ -70,9 +70,14 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
         SoundStore.getIsPlaying() && clickSound.play()
     }
 
-    useEffect(() => () => {
-            SoundStore.restartInstructionEls()
-        }, [])
+    useEffect(
+        () => () => {
+            setTimeout(() => {
+                SoundStore.restartInstructionEls()
+            }, 800)
+        },
+        []
+    )
 
     useEffect(() => {
         if (isOpen) {
@@ -92,7 +97,7 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
         setShowPausedBtn(true)
         setTimeout(() => {
             setShowPausedBtn(false)
-        }, 50);
+        }, 50)
     }
 
     function handleSlideChange(swiper) {
@@ -116,7 +121,6 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
     function handleClose() {
         setPlayAudio({ 0: false, 1: false })
         setPauseAnims({ 0: true, 1: true })
-        // setShowPausedBtn(false)
         setMakePausedBtn(false)
         onClose()
     }
@@ -327,7 +331,22 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                                     </ChaptersRow>
                                                     <Slide1Center>
                                                         <Text className="text-timeline">
-                                                            Меню разделов выполнено в виде таймлайна, переключаться по разделам можно с помощью стрелок, расположенных внизу или с помощью компьютерной мыши, предварительно необходимо зафиксировать левую кнопку мыши в области таймлайна и перемещать мышь по горизонтали.
+                                                            Меню разделов
+                                                            выполнено в виде
+                                                            таймлайна,
+                                                            переключаться по
+                                                            разделам можно с
+                                                            помощью стрелок,
+                                                            расположенных внизу
+                                                            или с помощью
+                                                            компьютерной мыши,
+                                                            предварительно
+                                                            необходимо
+                                                            зафиксировать левую
+                                                            кнопку мыши в
+                                                            области таймлайна и
+                                                            перемещать мышь по
+                                                            горизонтали.
                                                         </Text>
                                                         <TimelineImgWrapper>
                                                             <img
@@ -401,7 +420,13 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                         showPausedBtn={showPausedBtn}
                                         makePausedBtn={makePausedBtn}
                                         makeOutsideAudioEl
-                                        outsideAudioEl={SoundStore.instructionAudioEls.length >=1 ? SoundStore.instructionAudioEls[0] : null}
+                                        outsideAudioEl={
+                                            SoundStore.instructionAudioEls
+                                                .length >= 1
+                                                ? SoundStore
+                                                      .instructionAudioEls[0]
+                                                : null
+                                        }
                                     />
                                 </SlideInner>
                             </SwiperSlide>
@@ -563,7 +588,13 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                         showPausedBtn={showPausedBtn}
                                         makePausedBtn={makePausedBtn}
                                         makeOutsideAudioEl
-                                        outsideAudioEl={SoundStore.instructionAudioEls.length >= 2 ? SoundStore.instructionAudioEls[1] : null}
+                                        outsideAudioEl={
+                                            SoundStore.instructionAudioEls
+                                                .length >= 2
+                                                ? SoundStore
+                                                      .instructionAudioEls[1]
+                                                : null
+                                        }
                                     />
                                 </SlideInner>
                             </SwiperSlide>
@@ -621,10 +652,6 @@ const StyledLayout = styled(Layout)`
             padding-left: 20px;
         }
     }
-/*
-    .paused-btn {
-        top: 40%;
-    } */
 `
 
 const StyledAudioPlayer = styled(AudioPlayer)`
@@ -806,8 +833,7 @@ const Container = styled.div`
     }
 `
 
-const SlideColsInner = styled.div`
-`
+const SlideColsInner = styled.div``
 
 const SlideContentWrapper = styled.div`
     display: flex;
@@ -1117,10 +1143,6 @@ const TimelineImgWrapper = styled.div`
             max-width: none;
             height: 100%;
         }
-    }
-
-    &::-webkit-scrollbar {
-        width: 0;
     }
 
     @media ${DEVICE.laptopS} {

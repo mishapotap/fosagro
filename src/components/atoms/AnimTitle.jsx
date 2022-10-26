@@ -38,14 +38,16 @@ const TitleWrapper = styled.div`
 
 const Title = styled.div`
     animation: ${showContent} 0.5s both;
+    opacity: 0;
 `
 
 const Container = styled.div`
+    position: relative;
     width: 30vw;
     /* max-width: 30vw !important; */
-    margin-bottom: 20px;
-    margin-right: 4.6vw;
-    height: 10vh!important;
+    margin-bottom: 10px;
+    margin-right: 5vw;
+    height: 13vh!important;
 
     font-family: FocoBold, sans-serif;
     font-size: 1.4vw;
@@ -65,13 +67,14 @@ const Container = styled.div`
     }
 
     @media ${DEVICE.laptop} {
-        max-width: 430px;
-        margin-right: 0;
         display: flex;
         justify-content: center;
         font-size: 18px;
 
-        height: 50px!important;
+        height: 65px!important;
         width: 100%;
+        max-width: 500px!important;
+        margin-left: auto;
+        margin-right: auto;
     }
 `

@@ -47,6 +47,7 @@ function Home() {
             ModalStore.showModal("instruction")
         } else if (ModalStore.isVisible.instruction) {
             ModalStore.closeModal("instruction")
+            ModalStore.closeModal("cookiesInfo")
         }
     }, [location])
 

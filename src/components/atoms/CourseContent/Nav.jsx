@@ -9,7 +9,7 @@ import { StepProgressBar } from "../../molecules";
 import { DEVICE } from "../../../constants";
 
 // eslint-disable-next-line no-unused-vars
-function Nav({onNextClick, onBackClick, animateNextBtn, isBtnsDisabled}) {
+function Nav({onNextClick, onBackClick, animateNextBtn, isBtnsDisabled = false}) {
 
     return (
         <StyledNav inert={isBtnsDisabled ? '' : undefined}>

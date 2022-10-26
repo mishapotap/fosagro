@@ -45,10 +45,6 @@ const Text = styled.p`
     }
 
     @media ${DEVICE.laptop} {
-        font-size: 20.5px;
-    }
-
-    @media ${DEVICE.mobile} {
         font-size: 16px;
     }
 `

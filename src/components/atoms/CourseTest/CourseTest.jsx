@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 /* eslint-disable react/jsx-no-bind */
-import React, {useEffect} from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import "wicg-inert"
 import { observer } from "mobx-react-lite"
@@ -14,17 +14,26 @@ import FinalBlock from "./FinalBlock"
 import StartBlock from "./StartBlock"
 
 function CourseTest() {
+    // eslint-disable-next-line no-unused-vars
+    const [treeKey, setTreeKey] = useState(0)
 
-    // если пользователь уходит в процессе решения теста, сбрасываем прогресс
-    useEffect(() => () => {
-        if (!CourseTestStore.userPassedTest) {
-            CourseTestStore.resetActiveTestProgress()
+    useEffect(() => {
+        SoundStore.setIsPlayingSound(false)
+
+        return () => {
+            // если пользователь уходит в процессе решения теста, сбрасываем прогресс
+            if (!CourseTestStore.userPassedTest) {
+                CourseTestStore.resetActiveTestProgress()
+            }
         }
     }, [])
 
     useEffect(() => {
-        SoundStore.setIsPlayingSound(false)
-    }, [])
+        if (CourseTestStore.restartTest) {
+            setTreeKey(prevKey => prevKey + 1)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [CourseTestStore.restartTest])
 
     return (
         <Columns>
@@ -33,8 +42,11 @@ function CourseTest() {
                 <TestBlock />
                 <FinalBlock />
             </FirstColumn>
-            <SecondColumn className={!CourseTestStore.showFinal ? "hide" : ""}>
-                <Tree/>
+            <SecondColumn
+                className={!CourseTestStore.showFinal ? "hide" : ""}
+                key={treeKey}
+            >
+                <Tree />
             </SecondColumn>
         </Columns>
     )

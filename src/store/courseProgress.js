@@ -507,6 +507,7 @@ class CourseProgress {
 
     // данные, которые надо сохранить в cookies
     get dataForCookies() {
+        // console.log('this.visitedPages', this.visitedPages);
         return {
             visitedPages: this.visitedPages,
         }
@@ -679,7 +680,7 @@ class CourseProgress {
         SoundStore.setIntroAudioEls(audios)
     }
 
-    // НАЧАЛО ---- методы для установки аудио элементов (для того, чтобы работал звук в айфоне)
+    // КОНЕЦ ---- методы для установки аудио элементов (для того, чтобы работал звук в айфоне)
 
     setDataFromCookies(dataString) {
         const data = JSON.parse(dataString)
@@ -708,6 +709,8 @@ class CourseProgress {
     }
 
     setIntroPassed() {
+        // console.log('setIntroPassed');
+        // console.log('this.activeChapterId', this.activeChapterId);
         this.visitedPages[this.activeChapterId].intro = true
     }
 
@@ -756,6 +759,7 @@ class CourseProgress {
     }
 
     setVisitedPage() {
+        // console.log('setVisitedPage');
         const visitedSectPages =
             this.visitedPages[this.activeChapterId][this.activeSectId]
 
@@ -764,6 +768,7 @@ class CourseProgress {
                 this.visitedPages[this.activeChapterId][this.activeSectId].push(
                     this.activePageId
                 )
+                // console.log('добавить страницуч', this.activePageId);
             }
         }
     }

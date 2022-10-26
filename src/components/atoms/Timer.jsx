@@ -3,7 +3,7 @@ import styled, { css, keyframes } from "styled-components"
 import { COLORS, DEVICE } from "../../constants"
 import { TimerNumberBg, TimerNumberBgTop } from "../../assets/svg/static"
 
-export default function Timer({ makeAnim = false }) {
+export default function Timer({ makeAnim = false, lang = "ru" }) {
     function getDayOfYear() {
         const now = new Date()
         const start = new Date(now.getFullYear(), 0, 0)
@@ -24,7 +24,7 @@ export default function Timer({ makeAnim = false }) {
     // TODO Сделать чтобы компонент был observable (следили за состоянием дня) Не обновляется в 00:00
     return (
         <Container className="timer" makeAnim={makeAnim}>
-            <TimerTitle>День года:</TimerTitle>
+            <TimerTitle>{lang === 'ru' ? "День года:" : "Day of year:"}</TimerTitle>
             <TimerNumbers>
                 {numbers.map(({ number, id }) => (
                     <NumberContainer key={id}>

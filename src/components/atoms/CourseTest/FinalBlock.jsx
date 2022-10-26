@@ -25,12 +25,16 @@ import { Click1 } from "../../../assets/audio"
 
 function FinalBlock() {
     const finalRef = useRef(null)
-    const restartTest = useRef(false)
-    const [ autoPausedAudio, setAutoPausedAudio] = useState(false)
+    const [autoPausedAudio, setAutoPausedAudio] = useState(false)
 
     useEffect(() => {
         if (CourseTestStore.showFinal) {
             SoundStore.setTestFinalAudio()
+
+            const content = document.querySelector('.content')
+            if (content) {
+                content.scrollTop = 0
+            }
 
             setTimeout(() => {
                 if (SoundStore.testFinalAudio) {
@@ -42,9 +46,9 @@ function FinalBlock() {
                 }
             }, 50)
         } else if (SoundStore.testFinalAudio) {
-                SoundStore.testFinalAudio.pause()
-                SoundStore.testFinalAudio.currentTime = 0
-            }
+            SoundStore.testFinalAudio.pause()
+            SoundStore.testFinalAudio.currentTime = 0
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [CourseTestStore.showFinal])
 
@@ -52,7 +56,10 @@ function FinalBlock() {
         SoundStore.setTestFinalAudio()
 
         return () => {
-            if (SoundStore.testFinalAudio) SoundStore.testFinalAudio.pause()
+            if (SoundStore.testFinalAudio) {
+                SoundStore.testFinalAudio.pause()
+                SoundStore.testFinalAudio.currentTime = 0
+            }
         }
     }, [])
 
@@ -82,8 +89,8 @@ function FinalBlock() {
     }
 
     const reset = () => {
-        if (restartTest.current) {
-            restartTest.current = false
+        if (CourseTestStore.restartTest) {
+            CourseTestStore.setRestartTest(false)
             CourseTestStore.resetActiveTestProgress()
             CourseProgressStore.resetActiveTestProgress()
             CourseTestStore.setUserPassedTest(false)
@@ -91,7 +98,7 @@ function FinalBlock() {
     }
 
     const handleRestartTest = () => {
-        restartTest.current = true
+        CourseTestStore.setRestartTest(true)
         CourseTestStore.setShowFinal(false)
 
         setTimeout(() => {
@@ -167,7 +174,11 @@ function FinalBlock() {
                             {CourseTestStore.learnSectsData.map(
                                 ({ title, color, link = "/", id }, index) => (
                                     // eslint-disable-next-line react/no-array-index-key
-                                    <Link to={link} key={id} onClick={() => handleLinkClick(id)}>
+                                    <Link
+                                        to={link}
+                                        key={id}
+                                        onClick={() => handleLinkClick(id)}
+                                    >
                                         <SectButton
                                             color={color}
                                             rotate={index * 45}
@@ -434,6 +445,11 @@ const FinalStyledBlock = styled(Block)`
 
     &.visible {
         opacity: 1 !important;
+    }
+
+    .next-chapter {
+        margin-bottom: 30px;
+        display: inline-block;
     }
 
     @media ${DEVICE.laptopS} {

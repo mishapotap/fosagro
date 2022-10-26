@@ -124,6 +124,8 @@ class CourseTest {
         },
     }
 
+    restartTest = false
+
     constructor() {
         makeAutoObservable(this)
     }
@@ -320,6 +322,10 @@ class CourseTest {
         Object.keys(this.tests).forEach((id) => {
             this.tests[id] = getInitTestCondition(id)
         })
+    }
+
+    setRestartTest(bool) {
+        this.restartTest = bool
     }
 
     setDataFromCookies(dataString) {

@@ -27,7 +27,7 @@ export default function Layout({ page = "start", children, className }) {
                     makeMobShadow
                 />
             )}
-            {page === "final" && <Header goBackToMain fosagroSite />}
+            {page === "final" && <Header goBackToMain fosagroSite pageName="final" />}
             <Content className="content">{children}</Content>
         </Container>
     )

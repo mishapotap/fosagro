@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-no-bind */
-import React, { useEffect, useRef, useState } from "react"
+import React, { useRef, useState } from "react"
 import styled, { css } from "styled-components"
 import { COLORS, DEVICE } from "../../../constants"
 import {
@@ -56,6 +56,9 @@ export default function VideoControls({
     }
 
     function onBigBtnClick(e) {
+        if (!isTouchDevice()) {
+            e.stopPropagation()
+        }
         onTogglePlay()
     }
 
@@ -173,6 +176,13 @@ const VideoPlayerBtn = styled.button`
         if (width) return width
         return isFullscreen ? "40px" : "29px"
     }};
+
+    @media ${DEVICE.laptopM} {
+        width: ${({ width, isFullscreen }) => {
+            if (width) return width
+            return isFullscreen ? "34px" : "26px"
+        }};
+    }
 
     background: transparent;
 

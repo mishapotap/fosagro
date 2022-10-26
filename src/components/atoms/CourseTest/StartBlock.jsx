@@ -118,6 +118,10 @@ const StartStyledBlock = styled(Block)`
         flex-direction: column;
         align-items: center;
     }
+
+    .prev-btn {
+        display: inline-block;
+    }
 `
 
 const StyledPrevBtn = styled(PrevButton)`

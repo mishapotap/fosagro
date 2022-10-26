@@ -23,7 +23,8 @@ function Final() {
     useEffect(() => {
         if (SoundStore.finalAudio) {
             audioRef.current = SoundStore.finalAudio
-            if (finalContRef.current) finalContRef.current.append(audioRef.current)
+            if (finalContRef.current)
+                finalContRef.current.append(audioRef.current)
         } else {
             audioRef.current = new Audio(FinalAudio)
         }
@@ -39,7 +40,7 @@ function Final() {
     useEffect(() => {
         if (audioRef.current) {
             if (ModalStore.isVisible.mail) {
-                if (!audioRef.current.paused)  {
+                if (!audioRef.current.paused) {
                     audioRef.current.pause()
                     autoPausedRef.current = true
                 }
@@ -51,12 +52,11 @@ function Final() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ModalStore.isVisible.mail])
 
-    if (!CourseProgressStore.userPassedFullCourse) return <Error404/>
+    if (!CourseProgressStore.userPassedFullCourse) return <Error404 />
 
     return (
         <StyledLayout page="final">
             <Container ref={finalContRef}>
-                {/* <audio src={FinalAudio} ref={audioRef} /> */}
                 <Background />
                 <ContentWrapper>
                     <Content>
@@ -120,6 +120,10 @@ const ContentWrapper = styled.div`
     &::-webkit-scrollbar {
         width: 0;
     }
+
+    @media ${DEVICE.laptopS} {
+        padding-top: 16px;
+    }
 `
 
 const Container = styled.div`
@@ -129,10 +133,75 @@ const Container = styled.div`
     .progress-bar-cont {
         margin-top: 30px;
     }
+
+    @media ${DEVICE.laptopM} {
+        .menu-button-wrapper {
+            width: 11.8vw;
+
+            @media ${DEVICE.laptopS} {
+                width: 21vw;
+            }
+            @media ${DEVICE.mobile} {
+                width: 34vw;
+            }
+        }
+
+        .progress-bar-cont {
+            margin-top: 20px;
+
+            .progress {
+                width: 100%;
+            }
+        }
+
+        .menu-btn-index {
+            font-size: 2.8vw;
+
+            @media ${DEVICE.laptopS} {
+                font-size: 6vw;
+            }
+
+            @media ${DEVICE.mobile} {
+                font-size: 8.1vw;
+            }
+        }
+
+        .menu-btn-text {
+            font-size: 0.83vw;
+
+            @media ${DEVICE.laptopS} {
+                font-size: 1.42vw;
+            }
+
+            @media ${DEVICE.mobile} {
+                font-size: 2.4vw;
+            }
+        }
+
+        .menu-buttons {
+            max-width: 94%;
+            margin: 0 auto;
+        }
+
+        .progress-number {
+            font-size: 1.1vw;
+
+            @media ${DEVICE.laptopS} {
+                font-size: 2.3vw;
+            }
+            @media ${DEVICE.tablet} {
+                font-size: 3.8vw;
+            }
+        }
+    }
 `
 
 const StyledTitle = styled(Title)`
     margin-bottom: 20px;
+
+    @media ${DEVICE.laptopM} {
+        margin-bottom: 15px;
+    }
 `
 
 const TextRow = styled.div`
@@ -148,6 +217,10 @@ const TextRow = styled.div`
 const TextRow1 = styled(TextRow)`
     margin-bottom: 3vh;
 
+    @media ${DEVICE.laptopM} {
+        margin-bottom: 12px;
+    }
+
     @media ${DEVICE.laptopS} {
         margin-bottom: 30px;
     }
@@ -155,13 +228,22 @@ const TextRow1 = styled(TextRow)`
 
 const TextRow2 = styled(TextRow)`
     margin-bottom: 30px;
+
+    @media ${DEVICE.laptopM} {
+        margin-bottom: 20px;
+    }
 `
 
 const Icon = styled.img`
     width: 4vw;
     margin-bottom: 20px;
 
-    @media ${DEVICE.laptop} {
+    @media ${DEVICE.laptopM} {
+        width: 3.2vw;
+        margin-bottom: 10px;
+    }
+
+    @media ${DEVICE.laptopS} {
         width: 40px;
     }
 `

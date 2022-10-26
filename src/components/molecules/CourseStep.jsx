@@ -1,12 +1,14 @@
+/* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-unused-vars */
-import React, { useState, useRef } from "react"
+import React, { useState, useRef, useEffect } from "react"
 import styled from "styled-components"
 import { observer } from "mobx-react-lite"
 import { Link } from "react-router-dom"
-import { useLocation } from "react-router"
+import { createPortal } from "react-dom"
+
 import { ModalStore, SoundStore, CourseProgressStore } from "../../store"
 import { IntroModal, CourseStepButton, CourseStepPoint } from "../atoms"
-import { getElWindowPos } from "../../utils"
+import { getElWindowPos, isTouchDevice } from "../../utils"
 
 function CourseStep({
     button,
@@ -19,11 +21,18 @@ function CourseStep({
 }) {
     const soundButton = useRef(null)
     const wrapRef = useRef(null)
-    const { pathname } = useLocation()
-
-    const course = pathname.slice(1)
-
     const [isActive, setIsАсtive] = useState(false)
+
+    useEffect(() => {
+        if (
+            isTouchDevice() &&
+            button.value.modal &&
+            !ModalStore.isVisible.intro
+        ) {
+            setIsАсtive(false)
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ModalStore.isVisible.intro])
 
     const openIntroModal = () => {
         // eslint-disable-next-line no-unused-expressions
@@ -56,15 +65,19 @@ function CourseStep({
     }
 
     function handleLinkClick(e) {
-
         if (!CourseProgressStore.isSectAvailable(stepButtonParam)) {
             e.preventDefault()
             CourseProgressStore.setNotifTimeout()
             // eslint-disable-next-line no-unused-expressions
-            SoundStore.getIsPlaying() && soundButton.current.play() && wrapRef.current.classList.add('active')
+            SoundStore.getIsPlaying() &&
+                soundButton.current.play() &&
+                wrapRef.current.classList.add("active")
 
-            soundButton.current.addEventListener('ended', () => {
-                wrapRef.current.classList.remove('active')
+            soundButton.current.addEventListener("ended", () => {
+                wrapRef.current.classList.remove("active")
+                if (isTouchDevice()) {
+                    setIsАсtive(false)
+                }
             })
 
             const stepBtn = e.currentTarget.querySelector(".course-step-btn")
@@ -74,13 +87,13 @@ function CourseStep({
                     CourseProgressStore.setNotifPos({
                         left: `0`,
                         top: `${top - 20}px`,
-                        transform: 'translateY(-100%)'
+                        transform: "translateY(-100%)",
                     })
                 } else if (right > document.documentElement.clientWidth - 115) {
                     CourseProgressStore.setNotifPos({
                         right: `0`,
                         top: `${top - 20}px`,
-                        transform: 'translateY(-100%)'
+                        transform: "translateY(-100%)",
                     })
                 } else {
                     CourseProgressStore.setNotifPos({
@@ -104,7 +117,7 @@ function CourseStep({
                         <Button onClick={() => openIntroModal()}>
                             <CourseStepButton
                                 data={button.value}
-                                className={`${className}-button`}
+                                className={`${className}-button course-intro-btn`}
                                 isActive={isActive}
                                 isCompleted={CourseProgressStore.isSectCompleted(
                                     stepButtonParam
@@ -117,13 +130,14 @@ function CourseStep({
                     <IntroModal
                         isOpen={ModalStore.isVisible.intro}
                         onClose={() => closeIntroModal()}
-                        // TODO прописать data (картинки и аудио)
                         items={dataModal}
                     />
                 </>
             ) : (
-                // eslint-disable-next-line react/jsx-no-bind
-                <Link to={ CourseProgressStore.timelineBtnLink(sectId, test) } onClick={handleLinkClick}>
+                <Link
+                    to={CourseProgressStore.timelineBtnLink(sectId, test)}
+                    onClick={handleLinkClick}
+                >
                     <CourseStepButton
                         data={button.value}
                         className={`${className}-button`}
@@ -150,7 +164,7 @@ function CourseStep({
                     />
                 ))}
             <AudioEl src={button.audio} ref={soundButton} />
-            <Wrap ref={wrapRef}/>
+            {createPortal(<Wrap ref={wrapRef} />, document.body)}
         </Container>
     )
 }
@@ -169,7 +183,7 @@ const Wrap = styled.div`
     transition: all 0.3s;
 
     &.active {
-        z-index: 10;
+        z-index: 400;
         position: fixed;
         top: 0;
         left: 0;

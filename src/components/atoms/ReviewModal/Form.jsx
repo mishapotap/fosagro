@@ -167,8 +167,8 @@ const TextareaWrapper = styled.div`
     @media ${DEVICE.mobile} {
         border-radius: 10px;
         min-height: none;
-        height: 170px;
-        max-width: 500px;
+        height: 140px;
+        max-width: 440px;
     }
 `
 
@@ -211,6 +211,7 @@ const StyledForm = styled.form`
 
     max-width: 73%;
     margin: 0 auto;
+    padding-bottom: 6px;
 
     @media ${DEVICE.mobile} {
         max-width: none;

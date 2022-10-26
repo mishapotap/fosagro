@@ -31,9 +31,11 @@ class CookiesStore {
 
     // при загрузке страницы
     setDataFromCookies() {
+        // console.log('setDataFromCookies this.userAcceptedCookies', this.userAcceptedCookies);
         if (this.userAcceptedCookies) {
             const progressData = Cookies.get("courseProgress")
             const testsData = Cookies.get("courseTests")
+            // console.log('progressData', progressData);
 
             const userVisitedAnyChapter = Cookies.get("userVisitedAnyChapter")
             const userVisitedFinalPage = Cookies.get("userVisitedFinalPage")
@@ -90,11 +92,14 @@ class CookiesStore {
 
     // перед перезагрузкой страницы/уходе с нее
     setDataInCookies() {
+        // console.log('setDataInCookies this.userAcceptedCookies', this.userAcceptedCookies);
         if (this.userAcceptedCookies) {
             const testsVal = JSON.stringify(CourseTestStore.dataForCookies)
             const progressVal = JSON.stringify(
                 CourseProgressStore.dataForCookies
             )
+            // console.log('progress', CourseProgressStore.dataForCookies);
+            // console.log('progressVal', progressVal);
 
             if (CourseProgressStore.userVisitedAnyChapter) {
                 Cookies.set(

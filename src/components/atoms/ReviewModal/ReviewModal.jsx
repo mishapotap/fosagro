@@ -123,7 +123,7 @@ function ReviewModal({ isOpen, onClose }) {
                         onExited={() => setShowSuccess(true)}
                     >
                         <Content ref={contentElRef} className="content">
-                            <Title>Ваше мнение очень важно для нас!</Title>
+                            <Title className="title">Ваше мнение очень важно для нас!</Title>
                             <Text>
                                 Оцените, пожалуйста, ваш опыт взаимодействия с
                                 нашим проектом.
@@ -163,11 +163,7 @@ const Container = styled.div`
     padding: 30px 40px 40px;
 
     @media ${DEVICE.laptopS} {
-        padding: 65px 0 10px;
-    }
-
-    @media ${DEVICE.mobile} {
-        padding-top: 60px;
+        padding: 65px 0 0;
     }
 `
 
@@ -180,6 +176,12 @@ const Content = styled.div`
 
     &.content-exit {
         opacity: 0;
+    }
+
+    .title {
+        @media ${DEVICE.mobile} {
+            line-height: 1.1;
+        }
     }
 `
 
@@ -204,6 +206,7 @@ const Title = styled.div`
 
     @media ${DEVICE.mobile} {
         font-size: 23px;
+        margin-bottom: 10px;
     }
 `
 
@@ -292,7 +295,7 @@ const ModalContent = styled.div`
     }
 
     @media ${DEVICE.mobile} {
-        padding-top: 20px;
+        padding-top: 0;
         max-width: none;
     }
 

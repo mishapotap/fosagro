@@ -57,10 +57,15 @@ function App() {
 }
 
 function handleWindowUnload() {
+    // e.preventDefault()
     CookiesStore.setDataInCookies()
+    // eslint-disable-next-line no-return-assign
+    // return e.returnValue = "Are you sure you want to exit?";
+    // console.log('handleWindowUnload');
 }
 
 function handleDocLoad() {
+    // console.log('handleDocLoad');
     CookiesStore.setDataFromCookies()
 }
 
@@ -101,6 +106,7 @@ function handleVisChange() {
 document.addEventListener("visibilitychange", handleVisChange)
 document.addEventListener("DOMContentLoaded", handleDocLoad)
 window.addEventListener("beforeunload", handleWindowUnload)
+window.addEventListener("unload", handleWindowUnload)
 document.addEventListener("click", handleDocClick)
 
 export default App

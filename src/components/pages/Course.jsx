@@ -16,7 +16,7 @@ import {
     ModalStore,
     SoundStore,
 } from "../../store"
-import { CookiesInfoModal, Notification, Layout, ExtLinkModal } from "../atoms"
+import { CookiesInfoModal, Notification, Layout } from "../atoms"
 
 function Course() {
     const { id } = useParams()
@@ -34,6 +34,7 @@ function Course() {
             if (titleAudio.current) titleAudio.current.pause()
         } else if (ModalStore.isVisible.instruction) {
             ModalStore.closeModal("instruction")
+            ModalStore.closeModal("cookiesInfo")
         }
 
         if (location.pathname.includes("intro")) {
@@ -225,7 +226,7 @@ const Wrapper = styled.div`
     transform-origin: 0 0;
     transition: all 0.3s;
     &.active {
-        transform: scale(1.2);
+        transform: scale(1.12);
 
         @media ${DEVICE.laptopS} {
             transform: scale(1.08);
@@ -240,7 +241,7 @@ const Wrapper = styled.div`
 const ContainerDisabled = styled.div`
     transition: all 0.3s;
     &.active {
-        z-index: 101;
+        z-index: 400;
         position: fixed;
         top: 0;
         left: 0;

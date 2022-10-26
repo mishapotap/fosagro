@@ -38,16 +38,24 @@ const TextContainer = styled.div`
     ${(props) => props.position === "top" &&
         css`
             bottom: calc(100% + 90px);
+
+            @media ${DEVICE.laptopM} {
+                bottom: calc(100% + 70px);
+            }
     `}
     ${(props) => props.position === "bottom" &&
         css`
             top: calc(100% + 90px);
+
+            @media ${DEVICE.laptopM} {
+                top: calc(100% + 70px);
+            }
     `}
 
     min-width: 130px;
 
     font-size: 16px;
-    line-height: 20px;
+    line-height: 1.18;
     text-align: center;
 
     color: ${props => props.color};
@@ -55,7 +63,7 @@ const TextContainer = styled.div`
     transition: all .3s;
 
     @media ${DEVICE.laptopM} {
-        font-size: 14px;
+        font-size: 13.5px;
     }
 `
 
@@ -103,6 +111,10 @@ const PointContainer = styled.div`
         height: 78px;
         background: ${props => props.defaultColor};
         transition: all .3s;
+
+        @media ${DEVICE.laptopM} {
+            height: 60px;
+        }
     }
     ${(props) => props.position === "top" &&
         css`

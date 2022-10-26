@@ -14,7 +14,7 @@ function Media({
     sliderDelay,
     makeOutsideVideoEl,
     outsideVideoEl,
-    onVideoEnded
+    onVideoEnded,
 }) {
     const pageData = CourseProgressStore.activePageData
 
@@ -320,10 +320,16 @@ const Container = styled.div`
         }
 
         & > * {
-            overflow: auto;
+            @media ${DEVICE.laptopS} {
+                overflow: auto;
 
-            &::-webkit-scrollbar {
-                width: 0;
+                &::-webkit-scrollbar {
+                    width: 0;
+                }
+            }
+
+            @media ${DEVICE.laptop} {
+                overflow: visible;
             }
         }
     }

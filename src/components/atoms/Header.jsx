@@ -1,13 +1,13 @@
 /* eslint-disable no-unused-vars */
 import React from "react"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { Link } from "react-router-dom"
 import { observer } from "mobx-react-lite"
 import * as routes from "../../constants/routes"
 import { DEVICE, COLORS } from "../../constants"
 import { Fosagro, FosagroColored, LinkArrow } from "../../assets/svg"
 import { CourseMenuButton } from "../molecules"
-import { ModalStore, CourseProgressStore, SoundStore } from "../../store"
+import { ModalStore, CourseProgressStore, SoundStore, CookiesStore } from "../../store"
 import { Click2 } from "../../assets/audio"
 
 function Header({
@@ -25,6 +25,7 @@ function Header({
     fosagroSite = false,
     makeMobShadow = false,
     chapterTitle = false,
+    pageName = ""
 }) {
     const rusSiteLink = "https://esg-course.phosagro.ru"
     const engSiteLink = "https://esg-course.phosagro.com"
@@ -53,7 +54,7 @@ function Header({
     }
 
     return (
-        <Container makeMobShadow={makeMobShadow}>
+        <Container makeMobShadow={makeMobShadow} pageName={pageName}>
             <HeaderInner language={language}>
                 <Logo>
                     <Link to={routes.HOME} onClick={() => handleClickLogo()}>
@@ -271,6 +272,25 @@ const Container = styled.div`
     padding: 3vh 2.3vw 0 4.3vw;
     height: 92px;
     z-index: 100;
+
+    ${({pageName}) => pageName === 'final' && css`
+        ${BackToMain} {
+            @media ${DEVICE.laptopS} {
+                top: 50%;
+                left: auto;
+                right: -7px;
+
+                transform: translateY(-50%);
+                max-width: 48%;
+                height: auto;
+                text-align: right;
+
+                a {
+                    font-size: 15px;
+                }
+            }
+        }
+    `}
 
     @media ${DEVICE.laptopM} {
         height: 80px;
