@@ -4,11 +4,11 @@ import styled from "styled-components"
 import { Helmet } from "react-helmet"
 import { useLocation, useNavigate, useParams } from "react-router"
 import { observer } from "mobx-react-lite"
-import timelineData from "../../data/timelineData"
-import { COLORS, DEVICE } from "../../constants"
+import { COLORS, DEVICE, ISENG } from "../../constants"
 import { MenuBackground } from "../../assets/images"
 import { Footer, CourseMenu } from "../organisms"
-import { introModalData } from "../../data"
+// !! тут когда-то из-за этого ошибка была
+import { introModalData, timelineData } from "../../data"
 import Error404 from "./Error404"
 import {
     CookiesStore,
@@ -16,7 +16,7 @@ import {
     ModalStore,
     SoundStore,
 } from "../../store"
-import { CookiesInfoModal, Notification, Layout, ExtLinkModal } from "../atoms"
+import { CookiesInfoModal, Notification, Layout } from "../atoms"
 
 function Course() {
     const { id } = useParams()
@@ -34,6 +34,7 @@ function Course() {
             if (titleAudio.current) titleAudio.current.pause()
         } else if (ModalStore.isVisible.instruction) {
             ModalStore.closeModal("instruction")
+            ModalStore.closeModal("cookiesInfo")
         }
 
         if (location.pathname.includes("intro")) {
@@ -161,6 +162,11 @@ function Course() {
                 </Helmet>
             )}
             <Notification
+                text={
+                    ISENG
+                        ? "You can move to this topic after completing the previous one"
+                        : "Эта тема станет доступной после изучения предыдущих"
+                }
                 show={CourseProgressStore.showNotification}
                 position={CourseProgressStore.notifPos}
             />
@@ -225,7 +231,7 @@ const Wrapper = styled.div`
     transform-origin: 0 0;
     transition: all 0.3s;
     &.active {
-        transform: scale(1.2);
+        transform: scale(1.12);
 
         @media ${DEVICE.laptopS} {
             transform: scale(1.08);
@@ -240,7 +246,7 @@ const Wrapper = styled.div`
 const ContainerDisabled = styled.div`
     transition: all 0.3s;
     &.active {
-        z-index: 101;
+        z-index: 400;
         position: fixed;
         top: 0;
         left: 0;

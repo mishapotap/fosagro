@@ -1,3 +1,4 @@
+import { ISENG } from "./constants"
 import { mediaDuration } from "./data"
 
 /* eslint-disable no-unused-vars */
@@ -77,6 +78,13 @@ export function getMediaDurationSec(data, key = "") {
     }
 
     const min = Math.floor(duration / 60)
+    const minTextRu = "мин"
+    const minTextEng = "min"
+    const minText = ISENG ? minTextEng : minTextRu
+
+    const secTextRu = "сек"
+    const secTextEng = "sec"
+    const secText = ISENG ? secTextEng : secTextRu
 
     const sec =
         Math.floor(duration - Math.floor(duration / 60) * 60) < 10
@@ -86,9 +94,9 @@ export function getMediaDurationSec(data, key = "") {
     let time = ""
 
     if (key === "") {
-        time = (min > 0 ? `${min} мин ` : "") + (sec > 0 ? `${sec} сек` : "")
+        time = (min > 0 ? `${min} ${minText} ` : "") + (sec > 0 ? `${sec} ${secText}` : "")
     } else {
-        time = min > 0 ? `${min} мин ` : ""
+        time = min > 0 ? `${min} ${minText} ` : ""
     }
 
     return time

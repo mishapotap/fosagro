@@ -10,7 +10,7 @@ import { CookiesStore, ModalStore } from "../../store"
 import { Title } from "./Content"
 import Modal from "./Modal"
 
-import { COLORS, DEVICE } from "../../constants"
+import { COLORS, DEVICE, ISENG } from "../../constants"
 import SendButton from "./SendButton"
 import { MenuBackground } from "../../assets/images"
 import Layout from "./Layout"
@@ -20,6 +20,51 @@ import { getElWindowPos } from "../../utils"
 import { CookiesAudio } from "../../assets/audio"
 import AudioPlayer from "./AudioPlayer"
 import { showContent } from "../../constants/animations"
+
+const langText = {
+    title1: 'About',
+    title1Accent: 'cookies',
+    text1: "This training course is designed as a website/application.",
+    text2: "A cookie is a small piece of data sent by a web server to be stored on a user’s computer.",
+    text3: "The web client (web browser) sends this data fragment to the web server as part of the HTTP request every time the user opens this project.",
+    text4: "This file stores user data to track their session progress within this training course.",
+    text5: "We also collect statistical data via the Yandex.Metrica online service.",
+    text6: "The project does not collect or share any personal data of users.",
+    text7: "In 30 days after receiving cookie consent, these files will be automatically deleted.",
+    text8: "This training course uses cookies to improve the user’s learning experience and enable progress tracking.",
+    text9: "By accepting cookies and continuing to use this training course, you consent to PhosAgro processing of the above data.",
+    text10: "If you do not wish to use cookies, please select the cookie-less course option.",
+    text11: "You can delete cookies by clicking the button below. Please note that by doing so all your progress in this course will be permanently lost.",
+    // !перевод (от меня)
+    title2: "How to delete ",
+    title2Accent: "cookies",
+    goToInstrBtn: "Go to instructions",
+    deleteCookiesBtn: "Delete cookies",
+    noCookiesText: "You do not have cookies",
+}
+const ruText = {
+    title1: 'Информация о',
+    title1Accent: '«cookies»',
+    text1: "Данный учебный курс реализован в формате веб-сайта/приложения.",
+    text2: "Файл «cookies» — небольшой фрагмент данных, отправленный веб-сервером и хранимый на компьютере пользователя.",
+    text3: "Веб-клиент (веб-браузер) всякий раз при попытке открыть данный проект пересылает этот фрагмент данных веб-серверу в составе HTTP-запроса.",
+    text4: "Файл применяется для сохранения следующих данных на стороне пользователя: - отслеживания состояния сеанса работы пользователя в учебном курсе.",
+    text5: "Также для сбора статистических сведений используется интернет-сервис «Яндекс.Метрика».",
+    text6: "Проект не собирает и не передает персональные данные пользователя.",
+    text7: "Файл «cookies» автоматически удаляется через 30 дней, после согласия пользователя использовать файл.",
+    text8: "Учебный курс использует файл «cookies» в целях повышения удобства изучения и отслеживания прогресса изучения пользователем курса.",
+    text9: "Принимая файл «cookies» и продолжая работу с данным учебным курсом, вы даете свое согласие ПАО «ФосАгро» на обработку указанных выше данных.",
+    text10: "Если вы не хотите использовать файл «cookies», воспользуйтесь вариантом курса без использования «cookies».",
+    text11: "Чтобы удалить файлы «cookies», воспользуйтесь кнопкой ниже. Обращаем ваше внимание на то, что прогресс прохождения курса будет полностью потерян.",
+    title2: "Как удалить",
+    title2Accent: "«cookies»",
+    goToInstrBtn: "Перейти в инструкцию",
+    deleteCookiesBtn: "Удалить cookies",
+    noCookiesText: "У вас нет файлов cookies",
+}
+
+// eslint-disable-next-line no-unused-vars
+const textData = ISENG ? langText : ruText
 
 function CookiesInfoModal() {
     const [showNotif, setShowNotif] = useState(false)
@@ -113,47 +158,32 @@ function CookiesInfoModal() {
                         <Columns>
                             <Column1>
                                 <StyledTitle color={COLORS.blue}>
-                                    Информация о{" "}
-                                    <TitleAccent>«cookies»</TitleAccent>
+                                    {textData.title1}{" "}
+                                    <TitleAccent>{textData.title1Accent}</TitleAccent>
                                 </StyledTitle>
                             </Column1>
                             <Column2>
                                 <TextWrapper>
                                     <Text>
-                                        Данный учебный курс реализован в формате
-                                        веб-сайта/приложения.
+                                        {textData.text1}
                                     </Text>
                                     <Text>
-                                        Файл «cookies» — небольшой фрагмент
-                                        данных, отправленный веб-сервером и
-                                        хранимый на компьютере пользователя.
+                                        {textData.text2}
                                     </Text>
                                     <Text>
-                                        Веб-клиент (веб-браузер) всякий раз при
-                                        попытке открыть данный проект пересылает
-                                        этот фрагмент данных веб-серверу в
-                                        составе HTTP-запроса.
+                                        {textData.text3}
                                     </Text>
                                     <Text>
-                                        Файл применяется для сохранения
-                                        следующих данных на стороне
-                                        пользователя: - отслеживания состояния
-                                        сеанса работы пользователя в учебном
-                                        курсе.
+                                        {textData.text4}
                                     </Text>
                                     <Text>
-                                        Также для сбора статистических сведений
-                                        используется интернет-сервис
-                                        «Яндекс.Метрика».
+                                        {textData.text5}
                                     </Text>
                                     <Text>
-                                        Проект не собирает и не передает
-                                        персональные данные пользователя.
+                                        {textData.text6}
                                     </Text>
                                     <Text>
-                                        Файл «cookies» автоматически удаляется
-                                        через 30 дней, после согласия
-                                        пользователя использовать файл.
+                                        {textData.text7}
                                     </Text>
                                 </TextWrapper>
                             </Column2>
@@ -161,44 +191,32 @@ function CookiesInfoModal() {
                             <Column3>
                                 <TextWrapper className="text-wrapper info">
                                     <Text>
-                                        Учебный курс использует файл «cookies» в
-                                        целях повышения удобства изучения и
-                                        отслеживания прогресса изучения
-                                        пользователем курса.{" "}
+                                        {textData.text8}
                                     </Text>
                                     <Text>
-                                        Принимая файл «cookies» и продолжая
-                                        работу с данным учебным курсом, вы даете
-                                        свое согласие ПАО «ФосАгро» на обработку
-                                        указанных выше данных.{" "}
+                                        {textData.text9}
                                     </Text>
                                     <Text>
-                                        Если вы не хотите использовать файл
-                                        «cookies», воспользуйтесь вариантом
-                                        курса без использования «cookies».{" "}
+                                    {textData.text10}
                                     </Text>
                                 </TextWrapper>
                                 <StyledTitle color={COLORS.blue}>
-                                    Как удалить{" "}
-                                    <TitleAccent>«cookies»</TitleAccent>
+                                {textData.title2}{" "}
+                                    <TitleAccent>{textData.title2Accent}</TitleAccent>
                                 </StyledTitle>
                                 <TextWrapper className="text-wrapper remove">
                                     <Text>
-                                        Чтобы удалить файлы «cookies»,
-                                        воспользуйтесь кнопкой ниже. Обращаем
-                                        ваше внимание на то, что прогресс
-                                        прохождения курса будет полностью
-                                        потерян.
+                                        {textData.text11}
                                     </Text>
                                 </TextWrapper>
                                 <Buttons>
                                     <StyledSendButton
-                                        text="Удалить cookies"
+                                        text={textData.deleteCookiesBtn}
                                         onClick={checkCookies}
                                     />
                                     <Link to="instruction" onClick={onClose}>
                                         <GoToInstrBtn>
-                                            Перейти в инструкцию
+                                            {textData.goToInstrBtn}
                                         </GoToInstrBtn>
                                     </Link>
                                 </Buttons>
@@ -212,7 +230,7 @@ function CookiesInfoModal() {
                     </Content>
                 </StyledLayout>
                 <Notification
-                    text="У вас нет файлов cookies"
+                    text={textData.noCookiesText}
                     show={showNotif}
                     position={notifPos}
                 />

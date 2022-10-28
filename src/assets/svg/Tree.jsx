@@ -58,6 +58,19 @@ function Tree({ className, qsCount = 5 }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [CourseTestStore.showTreeStart])
 
+    // useEffect(() => {
+    //     if (CourseTestStore.restartTest) {
+    //         wrapperRef.current = null
+    //         leavesRef.current = null
+    //         leavesCountRef.current = null
+    //         notShownItemsRef.current = null
+    //         shuffledLeavesRef.current = []
+    //         showLeaveAnimRef.current = false
+    //         leavesShowed.current = false
+    //         leavesWaitInited.current = false
+    //     }
+    // }, [CourseTestStore.restartTest])
+
     function handleInitAnimend() {
         CourseTestStore.setShowTreeInit(false)
         if (!CourseTestStore.showTreeEnd) CourseTestStore.setShowTreeWait(true)
@@ -118,11 +131,14 @@ function Tree({ className, qsCount = 5 }) {
 
             // показываем листья с анимацией
             showItems.forEach((i) => {
-                function handleAnimendHandler() {
-                    i.classList.add("visible")
-                    i.classList.remove("rise")
-                    i.removeEventListener("animationend", handleAnimendHandler)
+                function handleAnimendHandler(e) {
+                    e.target.classList.add("visible")
+                    e.target.classList.remove("rise")
+                    e.target.removeEventListener("animationend", handleAnimendHandler)
                     showLeaveAnimRef.current = false
+                    if (CourseTestStore.userPassedTest) {
+                        CourseTestStore.setShowTreeWait(true)
+                    }
                 }
 
                 i.classList.add("rise")
@@ -167,6 +183,14 @@ function Tree({ className, qsCount = 5 }) {
     }
 
     useEffect(() => {
+        leavesRef.current = null
+        leavesCountRef.current = null
+        notShownItemsRef.current = null
+        shuffledLeavesRef.current = []
+        showLeaveAnimRef.current = false
+        leavesShowed.current = false
+        leavesWaitInited.current = false
+
         // устанавливаем элементы листьев и их количество
         const leavesItems = [...wrapperRef.current.querySelectorAll(".leave")]
         const count = leavesItems.length
@@ -188,7 +212,7 @@ function Tree({ className, qsCount = 5 }) {
 
     useEffect(() => {
         // при изменении количества правильных ответов показываем анимацию листьев
-        if (CourseTestStore.treeRightAnswCount) {
+        if (CourseTestStore.treeRightAnswCount && !CourseTestStore.restartTest) {
             if (CourseTestStore.userPassedTest) {
                 if (!leavesShowed.current) {
                     showLeaves()

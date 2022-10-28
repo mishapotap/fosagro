@@ -6,10 +6,10 @@ import { CourseProgressStore } from "../../../store";
 import PrevButton from "../PrevButton";
 import NextButton from "../NextButton";
 import { StepProgressBar } from "../../molecules";
-import { DEVICE } from "../../../constants";
+import { DEVICE, ISENG } from "../../../constants";
 
 // eslint-disable-next-line no-unused-vars
-function Nav({onNextClick, onBackClick, animateNextBtn, isBtnsDisabled}) {
+function Nav({onNextClick, onBackClick, animateNextBtn, isBtnsDisabled = false}) {
 
     return (
         <StyledNav inert={isBtnsDisabled ? '' : undefined}>
@@ -18,7 +18,7 @@ function Nav({onNextClick, onBackClick, animateNextBtn, isBtnsDisabled}) {
                 className="prev-btn"
                 onClick={onBackClick}
             >
-                <PrevButton text="Назад" />
+                <PrevButton text={ISENG ? "Back" : "Назад"} />
             </Link>
             <StepProgressBar />
             <Link
@@ -26,7 +26,7 @@ function Nav({onNextClick, onBackClick, animateNextBtn, isBtnsDisabled}) {
                 className="next-btn"
                 onClick={onNextClick}
             >
-                <NextButton text="Вперед" active={animateNextBtn} />
+                <NextButton text={ISENG ? "Forward" : "Вперед"} active={animateNextBtn} />
             </Link>
         </StyledNav>
     )

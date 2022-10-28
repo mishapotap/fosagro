@@ -1,21 +1,30 @@
 import React from "react"
 import styled from "styled-components"
-import { COLORS, DEVICE } from "../../constants"
-import { MailButton, SoundButton, InstructionButton, CourseProgressBar } from "../molecules"
+import { COLORS, DEVICE, ISENG } from "../../constants"
+import {
+    MailButton,
+    SoundButton,
+    InstructionButton,
+    CourseProgressBar,
+} from "../molecules"
 
-export default function Footer({className = "timeLine"}) {
+export default function Footer({ className = "timeLine" }) {
     const background = className === "home" ? COLORS.white : COLORS.blue
     const color = className === "home" ? COLORS.blue : COLORS.white
 
-    return(
+    return (
         <Grid className={className}>
-            {
-                className === "timeLine" &&
-                <><Text>Прогресс обучения</Text><CourseProgressBar /></>
-            }
-            <InstructionButton background={background} color={color}/>
-            <SoundButton background={background} color={color}/>
-            <MailButton background={background} color={color}/>
+            {className === "timeLine" && (
+                <>
+                    <Text>
+                        {ISENG ? "Learning progress" : "Прогресс обучения"}
+                    </Text>
+                    <CourseProgressBar />
+                </>
+            )}
+            <InstructionButton background={background} color={color} />
+            <SoundButton background={background} color={color} />
+            <MailButton background={background} color={color} />
         </Grid>
     )
 }

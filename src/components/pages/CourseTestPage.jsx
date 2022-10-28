@@ -45,11 +45,15 @@ const StyledLayout = styled(CourseSlideLayout)`
 
     .back-to-chapter {
         @media ${DEVICE.laptopS} {
-            margin-bottom: 60px;
+            margin-bottom: 35px;
         }
     }
 
     .content {
         padding-top: 7vh;
+
+        @media ${DEVICE.laptopS} {
+            padding-top: 13px;
+        }
     }
 `

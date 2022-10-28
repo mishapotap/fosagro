@@ -2,12 +2,12 @@ import React from "react"
 import styled from "styled-components"
 import { AVTdigital } from "../../assets/images"
 import { Footer } from "../organisms"
-import { COLORS, DEVICE } from "../../constants"
+import { COLORS, DEVICE, ISENG } from "../../constants"
 
 export default function FooterHome() {
     return(
         <FooterContainer>
-            <CopyRight>© Группа компаний ФосАгро 2001 — 2022</CopyRight>
+            <CopyRight>{ISENG ? "© PhosAgro Group of Companies 2001–2022" : "© Группа компаний ФосАгро 2001 — 2022"}</CopyRight>
             <Footer className="home"/>
             <LinkAVT
                 href="https://avt.digital/"
@@ -15,7 +15,7 @@ export default function FooterHome() {
                 rel="noopener noreferrer"
             >
                 <img src={AVTdigital} alt="AVTdigital" />
-                Разработано AVT Digital
+                {ISENG ? "Created by AVT Digital" : "Разработано AVT Digital"}
             </LinkAVT>
         </FooterContainer>
     )

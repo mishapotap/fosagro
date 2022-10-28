@@ -8,8 +8,32 @@ import { Link } from "react-router-dom"
 import Modal from "./Modal"
 import { CookiesStore, ModalStore, CourseProgressStore, CourseTestStore } from "../../store"
 import SendButton from "./SendButton"
-import { COLORS, DEVICE } from "../../constants"
+import { COLORS, DEVICE, ISENG } from "../../constants"
 import { SuccessIcon } from "../../assets/svg/static"
+
+const engText = {
+    confirmText: "Are you sure you want to delete cookies and reset your learning progress?",
+    confirmBtnText: "Yes",
+    rejectBtnText: "Cancel",
+    successText: "Your cookies have been successfully deleted.",
+    errorText1: "Sorry, there was an error.",
+    errorText2: "Cookies were not deleted.",
+    closeBtnText: "Cancel",
+    iconSuccAlt: "success"
+}
+
+const ruText = {
+    confirmText: "Вы уверены, что хотите удалить файлы cookies и сбросить ваш прогресс обучения?",
+    confirmBtnText: "Да",
+    rejectBtnText: "Отмена",
+    successText: "Ваши cookies успешно удалены.",
+    errorText1: "Произошла ошибка.",
+    errorText2: "Не удалось удалить cookies.",
+    closeBtnText: "Закрыть",
+    iconSuccAlt: "успех"
+}
+
+const textData = ISENG ? engText : ruText
 
 function CookiesConfirmModal() {
     const [loading, setIsLoading] = useState(false)
@@ -87,16 +111,15 @@ function CookiesConfirmModal() {
                     className="start"
                 >
                     <Text>
-                        Вы уверены, что хотите удалить файлы cookies и сбросить
-                        ваш прогресс обучения?
+                        {textData.confirmText}
                     </Text>
                     <Buttons>
                         <ConfirmBtn
                             loading={loading}
-                            text="Да"
+                            text={textData.confirmBtnText}
                             onClick={handleConfirm}
                         />
-                        <RejectBtn onClick={onClose}>Отмена</RejectBtn>
+                        <RejectBtn onClick={onClose}>{textData.rejectBtnText}</RejectBtn>
                     </Buttons>
                 </StartContent>
             </CSSTransition>
@@ -110,10 +133,10 @@ function CookiesConfirmModal() {
                 nodeRef={successElRef}
             >
                 <SuccessContent ref={successElRef} className="success">
-                    <Icon src={SuccessIcon} alt="успех" />
-                    <Text>Ваши cookies успешно удалены.</Text>
+                    <Icon src={SuccessIcon} alt={textData.iconSuccAlt} />
+                    <Text>{textData.successText}</Text>
                     <Link to="/">
-                        <SendButton text="Закрыть" onClick={handleSuccessClose} />
+                        <SendButton text={textData.closeBtnText} onClick={handleSuccessClose} />
                     </Link>
                 </SuccessContent>
             </CSSTransition>
@@ -127,9 +150,9 @@ function CookiesConfirmModal() {
                 nodeRef={errorElRef}
             >
                 <ErrorContent ref={errorElRef} className="error">
-                    <Text>Произошла ошибка.</Text>
-                    <Text>Не удалось удалить cookies.</Text>
-                    <SendButton text="Закрыть" onClick={onClose} />
+                    <Text>{textData.errorText1}</Text>
+                    <Text>{textData.errorText2}</Text>
+                    <SendButton text={textData.closeBtnText} onClick={onClose} />
                 </ErrorContent>
             </CSSTransition>
         </StyledModal>

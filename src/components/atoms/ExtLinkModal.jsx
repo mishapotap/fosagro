@@ -3,10 +3,26 @@ import React from "react"
 import styled from "styled-components"
 import { observer } from "mobx-react-lite"
 
-import { COLORS, DEVICE } from "../../constants"
+import { COLORS, DEVICE, ISENG } from "../../constants"
 import Modal from "./Modal"
 import SendButton from "./SendButton"
 import { ModalStore } from "../../store"
+
+const engText = {
+    cautionText: "Caution:",
+    text: "You are being redirected to an external site.",
+    goBtn: "Go",
+    dontGoBtn: "Cancel"
+}
+
+const ruText = {
+    cautionText: "Внимание!",
+    text: "Сейчас будет выполнен переход на внешний ресурс.",
+    goBtn: "Перейти",
+    dontGoBtn: "Не переходить"
+}
+
+const textData = ISENG ? engText : ruText
 
 function ExtLinkModal() {
     function onClose () {
@@ -22,10 +38,8 @@ function ExtLinkModal() {
         <StyledModal isOpen={ModalStore.isVisible.extLinks} onClose={onClose} noCloseBtn>
             <Container>
                 <TextWrapper>
-                    <Text>Внимание!</Text>
-                    <Text>
-                        Сейчас будет выполнен переход на внешний ресурс.
-                    </Text>
+                    <Text>{textData.cautionText}</Text>
+                    <Text>{textData.text}</Text>
                 </TextWrapper>
                 <Link
                     href={ModalStore.extModalLink}
@@ -33,9 +47,9 @@ function ExtLinkModal() {
                     rel="noopener noreferrer"
                     onClick={handleGoClick}
                 >
-                    <SendButton text="Перейти" />
+                    <SendButton text={textData.goBtn} />
                 </Link>
-                <StayBtn onClick={onClose}>Не переходить</StayBtn>
+                <StayBtn onClick={onClose}>{textData.dontGoBtn}</StayBtn>
             </Container>
         </StyledModal>
     )

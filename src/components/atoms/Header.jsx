@@ -1,14 +1,15 @@
 /* eslint-disable no-unused-vars */
 import React from "react"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { Link } from "react-router-dom"
 import { observer } from "mobx-react-lite"
 import * as routes from "../../constants/routes"
-import { DEVICE, COLORS } from "../../constants"
-import { Fosagro, FosagroColored, LinkArrow } from "../../assets/svg"
+import { DEVICE, COLORS, ISENG } from "../../constants"
+import { LinkArrow } from "../../assets/svg"
 import { CourseMenuButton } from "../molecules"
 import { ModalStore, CourseProgressStore, SoundStore } from "../../store"
 import { Click2 } from "../../assets/audio"
+import { PhosagroLogo, PhosagroLogoColored } from "../../assets/images"
 
 function Header({
     // цветной ли (если нет, то все будет белое)
@@ -25,6 +26,7 @@ function Header({
     fosagroSite = false,
     makeMobShadow = false,
     chapterTitle = false,
+    pageName = ""
 }) {
     const rusSiteLink = "https://esg-course.phosagro.ru"
     const engSiteLink = "https://esg-course.phosagro.com"
@@ -53,11 +55,11 @@ function Header({
     }
 
     return (
-        <Container makeMobShadow={makeMobShadow}>
+        <Container makeMobShadow={makeMobShadow} pageName={pageName}>
             <HeaderInner language={language}>
-                <Logo>
+                <Logo isEng={ISENG}>
                     <Link to={routes.HOME} onClick={() => handleClickLogo()}>
-                        {colored ? <FosagroColored /> : <Fosagro />}
+                        {colored ? <img src={PhosagroLogoColored} alt="logo"/> : <img src={PhosagroLogo} alt="logo"/>}
                     </Link>
                 </Logo>
                 {fosagroSite && (
@@ -68,7 +70,7 @@ function Header({
                             rel="noopener noreferrer"
                         >
                             <LinkArrow className="linkArrow" />
-                            <span>Корпоративный сайт</span>
+                            <span>{ISENG ? "Corporate website" : "Корпоративный сайт"}</span>
                         </a>
                     </LinkToFosagro>
                 )}
@@ -120,7 +122,7 @@ function Header({
                 {goBackToMain && (
                     <BackToMain colored={colored}>
                         <Link to={routes.HOME} onClick={() => closeMenuModal()}>
-                            Вернуться на главную
+                            {ISENG ? "Return to the Main page" : "Вернуться на главную"}
                         </Link>
                     </BackToMain>
                 )}
@@ -158,6 +160,19 @@ const Logo = styled.div`
     flex-shrink: 0;
     width: 12.5vw;
     margin-right: 40px;
+
+    ${({isEng}) => isEng && css`
+        padding: 5px 0;
+
+        @media ${DEVICE.laptopM} {
+            padding-bottom: 7px;
+        }
+
+        @media ${DEVICE.laptopS} {
+            padding-top: 7px;
+            padding-bottom: 10px;
+        }
+    `}
 
     @media ${DEVICE.laptopS} {
         width: 150px;
@@ -271,6 +286,25 @@ const Container = styled.div`
     padding: 3vh 2.3vw 0 4.3vw;
     height: 92px;
     z-index: 100;
+
+    ${({pageName}) => pageName === 'final' && css`
+        ${BackToMain} {
+            @media ${DEVICE.laptopS} {
+                top: 50%;
+                left: auto;
+                right: -7px;
+
+                transform: translateY(-50%);
+                max-width: 48%;
+                height: auto;
+                text-align: right;
+
+                a {
+                    font-size: 15px;
+                }
+            }
+        }
+    `}
 
     @media ${DEVICE.laptopM} {
         height: 80px;

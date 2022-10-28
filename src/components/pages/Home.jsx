@@ -8,7 +8,7 @@ import { menuButtonData } from "../../data"
 import { MenuButton, FooterHome } from "../molecules"
 import { OOH } from "../../assets/svg/static"
 import { MainBG } from "../../assets/video"
-import { COLORS, DEVICE } from "../../constants"
+import { COLORS, DEVICE, ISENG } from "../../constants"
 import { Layout, CookieModal, CookiesInfoModal } from "../atoms"
 import WelcomeBackModal from "../atoms/WelcomeBackModal"
 import {
@@ -18,6 +18,22 @@ import {
     MainSupTitle2,
 } from "../../assets/audio"
 import { SoundStore, ModalStore } from "../../store"
+
+// !перевод
+// (из переводчика)
+const engMetaData = {
+    title: "PhosAgro Sustainability Training Course",
+    description:
+        "The term “sustainable development” is on everyone’s lips these days. It is a hot topic discussed at practically all levels in many industries. In this course, you will learn what the concept of sustainable development means for PhosAgro and what activities the company is taking to ensure sustainable development.",
+}
+
+const ruMetaData = {
+    title: "Учебный курс «Устойчивое развитие» компании ФосАгро",
+    description:
+        "Устойчивое развитие - термин популярный. Его обсуждают практически на всех уровнях, во многих сферах. В этом курсе вы узнаете, что означает понятие устойчивого развития для ФосАгро и какие мероприятия проводится компанией для обеспечения устойчивого развития.",
+}
+
+const metaData = ISENG ? engMetaData : ruMetaData
 
 function Home() {
     const [isTitlePlaying, setIsTitlePlaying] = useState(false)
@@ -47,6 +63,7 @@ function Home() {
             ModalStore.showModal("instruction")
         } else if (ModalStore.isVisible.instruction) {
             ModalStore.closeModal("instruction")
+            ModalStore.closeModal("cookiesInfo")
         }
     }, [location])
 
@@ -175,16 +192,8 @@ function Home() {
     return (
         <StyledLayout>
             <Helmet>
-                <title data-rh="true">
-                    Учебный курс &laquo;Устойчивое развитие&raquo; компании
-                    ФосАгро
-                </title>
-                <meta
-                    name="description"
-                    content="Устойчивое развитие - термин популярный. Его обсуждают практически
-                    на всех уровнях, во многих сферах. В этом курсе вы узнаете, что означает понятие устойчивого развития
-                    для ФосАгро и какие мероприятия проводится компанией для обеспечения устойчивого развития."
-                />
+                <title data-rh="true">{metaData.title}</title>
+                <meta name="description" content={metaData.description} />
             </Helmet>
             <Background>
                 <Video
@@ -201,17 +210,35 @@ function Home() {
                     <Content>
                         <TextContainer>
                             <Title ref={titleRef}>
-                                Курс “Устойчивое развитие”
+                                {ISENG
+                                    ? "Sustainable Development course"
+                                    : "Курс “Устойчивое развитие”"}
                             </Title>
                             <Suptitle ref={supTitleRef}>
-                                <div>
-                                    ФосАгро напрямую способствует достижению
-                                </div>
-                                <div>
-                                    <span> 11 целей</span> устойчивого развития
-                                    ООН
-                                    <img src={OOH} alt="OOH" />
-                                </div>
+                                {ISENG ? (
+                                    <>
+                                        <div>
+                                            PhosAgro directly promotes 11 UN sustainable
+
+                                        </div>
+                                        <div>
+                                             development goals
+                                            <img src={OOH} alt="OOH" />
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <div>
+                                            ФосАгро напрямую способствует
+                                            достижению
+                                        </div>
+                                        <div>
+                                            <span> 11 целей</span> устойчивого
+                                            развития ООН
+                                            <img src={OOH} alt="OOH" />
+                                        </div>
+                                    </>
+                                )}
                             </Suptitle>
                         </TextContainer>
                         <MenuContainer>
@@ -291,9 +318,18 @@ const ContentWrapper = styled.div`
     display: flex;
     padding-top: 5vh;
     align-items: center;
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+        width: 0;
+    }
+
+    @media ${DEVICE.laptop} {
+        padding-top: 0;
+    }
 
     @media ${DEVICE.laptopS} {
-        padding-top: 0;
+        overflow: visible;
     }
 `
 
@@ -378,6 +414,8 @@ const MenuContainer = styled.div`
     justify-content: space-evenly;
     align-items: center;
     flex-wrap: wrap;
+    padding-left: 13px;
+
     @media ${DEVICE.laptopS} {
         padding: 6vw;
     }
@@ -396,14 +434,14 @@ const MenuContainer = styled.div`
 
 const Title = styled.div`
     font-family: "FocoBold";
-    font-size: 3vw;
+    font-size: 2.9vw;
     line-height: 4.5vw;
     color: ${COLORS.white};
     transform-origin: 0 0;
     transition: all 0.3s;
 
     &.active {
-        transform: scale(1.05);
+        transform: scale(1.03);
     }
 
     @media ${DEVICE.laptopS} {
@@ -428,7 +466,7 @@ const Suptitle = styled.div`
     transform-origin: 0 0;
 
     &.active {
-        transform: scale(1.1);
+        transform: scale(1.08);
     }
 
     &.second {
@@ -468,7 +506,7 @@ const Suptitle = styled.div`
         }
         img {
             position: absolute;
-            height: 3.8vw;
+            height: 3.3vw;
             right: -5.5vw;
             @media ${DEVICE.laptopS} {
                 height: 7vw;

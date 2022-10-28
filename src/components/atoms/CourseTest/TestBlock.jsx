@@ -14,10 +14,24 @@ import "swiper/css/effect-fade"
 
 import { Label, Text } from "./styledAtoms"
 import NextButton from "../NextButton"
-import { DEVICE, COLORS } from "../../../constants"
+import { DEVICE, COLORS, ISENG } from "../../../constants"
 import { CourseProgressStore, CourseTestStore, SoundStore } from "../../../store"
 import { renderCustom } from "../../../utils"
 import { Click1 } from "../../../assets/audio"
+
+// !перевод
+// это от меня, перевода не нашла
+const engText = {
+    finishTestBtnText: 'Complete',
+    nextQBtnText: 'Next question',
+}
+
+const ruText = {
+    finishTestBtnText: 'Завершить',
+    nextQBtnText: 'Следующий вопрос',
+}
+
+const textData = ISENG ? engText : ruText
 
 function TestBlock() {
     const testRef = useRef(null)
@@ -73,9 +87,6 @@ function TestBlock() {
 
     function handleNextClick() {
         clickBtnSound.play()
-
-        // console.log('CourseTestStore.finalContent.audio', CourseTestStore.finalContent.audio);
-        // SoundStore.setTestFinalAudio()
 
         if (CourseTestStore.activeQInputType === "checkbox") {
             CourseTestStore.setUserAnswers(CourseTestStore.activeQId, chbAnswIds)
@@ -191,8 +202,8 @@ function TestBlock() {
                             <StyledNextButton
                                 text={
                                     CourseTestStore.showEndTestBtn
-                                        ? "Завершить"
-                                        : "Следующий вопрос"
+                                        ? textData.finishTestBtnText
+                                        : textData.nextQBtnText
                                 }
                                 inert={nextBtnDisabled}
                                 className="button-next"
@@ -223,15 +234,12 @@ const TestNav = styled.div`
     display: flex;
     justify-content: flex-end;
     position: absolute;
-    bottom: 25px;
-    right: 10px;
+    bottom: 10px;
+    right: 25px;
     z-index: 50;
 `
 
 const TestSlider = styled.div`
-    max-height: 100%;
-    height: 100%;
-
     .swiper-pagination {
         position: absolute;
         top: 0;
@@ -242,10 +250,16 @@ const TestSlider = styled.div`
         max-height: 100%;
         height: 100%;
         padding: 8vh 15px 15px;
-        padding-bottom: 60px;
+        padding-bottom: 70px;
 
         @media ${DEVICE.laptopM} {
             padding-top: 58px;
+        }
+
+        @media ${DEVICE.laptopS} {
+            max-height: none;
+            height: auto;
+            padding-bottom: 75px;
         }
     }
 
@@ -261,6 +275,10 @@ const TestSlider = styled.div`
         &::-webkit-scrollbar-thumb {
             background-color: rgba(0, 82, 155, 0.6);
             border-radius: 2em;
+        }
+
+        @media ${DEVICE.laptopS} {
+            overflow: visible;
         }
     }
 

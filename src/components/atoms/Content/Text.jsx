@@ -20,6 +20,10 @@ const Container = styled.p`
     }
 
     @media ${DEVICE.laptop} {
+        font-size: 16px;
+    }
+
+    @media ${DEVICE.laptopS} {
         font-size: 18px;
     }
 

@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { observer } from "mobx-react-lite"
 import { CourseProgressStore, ModalStore, SoundStore } from "../../store"
-import { COLORS, DEVICE } from "../../constants"
+import { COLORS, DEVICE, ISENG } from "../../constants"
 import { BurgerIcon } from "../../assets/svg"
 import { MenuModal } from "../organisms"
 import { Click1 } from "../../assets/audio"
@@ -31,7 +31,8 @@ function CourseMenuButton({ colored }) {
         <Wrapper>
             <CourseLink onClick={() => openMenu()}>
                 <CourseLinkText colored={colored}>
-                    Курс “Устойчивое развитие”
+
+                    {ISENG ? "Sustainable Development course" : "Курс “Устойчивое развитие”"}
                 </CourseLinkText>
                 <BurgerIcon colored={colored} />
             </CourseLink>

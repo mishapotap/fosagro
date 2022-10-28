@@ -12,7 +12,7 @@ import {
     Headphones,
     Spinner,
 } from "../../assets/svg"
-import { COLORS, DEVICE } from "../../constants"
+import { COLORS, DEVICE, ISENG } from "../../constants"
 import { AudioPlayerBg } from "../../assets/svg/static"
 import { formatTime } from "../../utils"
 import PausedBtn from "./CourseContent/PausedBtn"
@@ -65,6 +65,9 @@ export default function AudioPlayer({
     const controlsCircleRef = useRef(null)
 
     const audioPlayerRef = useRef(null)
+
+    // !перевод - слишком длинный, сократить?
+    const errorMessage = ISENG ? "Sorry, there was an error uploading the audio file" : "Ошибка загрузки аудио"
 
     const setFullTime = (value) => {
         fullTimeRef.current = value
@@ -361,7 +364,7 @@ export default function AudioPlayer({
             <OpenPlayerBtn onClick={toggleOpened} isError={isError}>
                 <Headphones />
             </OpenPlayerBtn>
-            {isError && <Error>Ошибка загрузки аудио</Error>}
+            {isError && <Error>{errorMessage}</Error>}
             <CSSTransition
                 in={isOpenedLocal}
                 nodeRef={playerContRef}

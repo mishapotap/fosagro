@@ -9,6 +9,7 @@ import { Link } from "react-router-dom"
 import { Pagination, Navigation, EffectFade } from "swiper"
 import { Swiper, SwiperSlide } from "swiper/react"
 import {
+    MenuBackground,
     IconAttention,
     IconBlueBtnMail,
     IconOpenCourseBtn,
@@ -28,11 +29,10 @@ import {
     TimelineBtnNextImg,
     TimelineBtnPrevImg,
     TimelineImg,
-} from "../../assets/svg/static/InstructionModal"
+} from "../../assets/images"
 
 import { Headphones, ArrowRight, ArrowLeft } from "../../assets/svg"
-import { COLORS, DEVICE } from "../../constants"
-import { MenuBackground } from "../../assets/images"
+import { COLORS, DEVICE, ISENG } from "../../constants"
 import SendButton from "./SendButton"
 import Modal from "./Modal"
 import Layout from "./Layout"
@@ -45,6 +45,58 @@ import AudioPlayer from "./AudioPlayer"
 import "swiper/css"
 // eslint-disable-next-line
 import "swiper/css/effect-fade"
+
+// ! alt для картинок
+// !TODO надо будет время разное указывать для англ и ру в анимации
+
+const langText = {
+    1: {
+        title: "Instructions for the",
+        // ! может надо с the?
+        titleAccent: "Sustainable Development course",
+        textChapters: "Dear user! Our course comprises six sections, each split into different units. You may go through these sections in any order.",
+        textTimeline: "The section menu represents a timeline. You can navigate between sections either by using your mouse – simply click and hold the mouse cursor within the timeline area and move left or right – or by using arrow keys located at the bottom.",
+        textAttention: "Units within sections are arranged in a sequence – you can move on to the next unit only after completing the previous one.",
+        textTest: "At the end of each section you will find a simple quiz to test your newly acquired knowledge."
+    },
+    2: {
+        title: "Navigating the course",
+        textNav: "You can navigate between pages by clicking on the following icons.",
+        textOpenMenu: "Click this button to access the course menu.",
+        textLinks: "Links to supplementary materials look like this.",
+        textAudioguide: "Our course features an audioguide. Click on this icon to open the audioguide control panel.",
+        textSoundBtn: "Activation/deactivation of the audioguide and background music.",
+        textMailBtn: "You can click this button to share feedback – we will be happy to receive your ideas and suggestions to improve the course content!",
+        textInstrBtn: "If you ever need to take another look at these navigation tips, simply click on this icon.",
+        textStartLearn: "Start the course"
+    },
+    cookiesInfoBtn: "About cookies"
+}
+
+const ruText = {
+    1: {
+        title: "Инструкция по прохождению курса",
+        titleAccent: "«Устойчивое развитие»",
+        textChapters: "Уважаемые пользователи, в нашем курсе 6 разделов, каждый из которых поделен на темы. Вы можете выбрать какой раздел изучать, вне зависимости от их последовательности.",
+        textTimeline: "Меню разделов выполнено в виде таймлайна, переключаться по разделам можно с помощью стрелок, расположенных внизу или с помощью компьютерной мыши, предварительно необходимо зафиксировать левую кнопку мыши в области таймлайна и перемещать мышь по горизонтали.",
+        textAttention: "Прохождение курса внутри раздела идет последовательно, Вы не можете перейти к следующей теме, не изучив предыдущую.",
+        textTest: "В конце каждого раздела Вас ждет простой тест на несколько вопросов для проверки усвоенных знаний."
+    },
+    2: {
+        title: "Краткая справка по навигации",
+        textNav: "Переход между страницами осуществляется нажатием на данные элементы.",
+        textOpenMenu: "Кнопка открытия меню курса.",
+        textLinks: "Ссылки на дополнительные материалы вынесены в виде такого элемента.",
+        textAudioguide: "В нашем курсе предполагается звуковое сопровождение, аудиогид, управление им осуществляется при нажатии на данный элемент.",
+        textSoundBtn: "Элемент включения/отключения фонового голосового и музыкального сопровождения курса.",
+        textMailBtn: "Элемент обратной связи, будем рады вашим отзывам и предложениям по улучшению контента!",
+        textInstrBtn: "Элемент вызова данной инструкции.",
+        textStartLearn: "Начать обучение"
+    },
+    cookiesInfoBtn: "Информация о cookies"
+}
+
+const textData = ISENG ? langText : ruText
 
 function InstructionModal({ isOpen, onClose, makeAnim = true }) {
     // const baseUrl = "http://localhost:3000/course01/"
@@ -70,9 +122,14 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
         SoundStore.getIsPlaying() && clickSound.play()
     }
 
-    useEffect(() => () => {
-            SoundStore.restartInstructionEls()
-        }, [])
+    useEffect(
+        () => () => {
+            setTimeout(() => {
+                SoundStore.restartInstructionEls()
+            }, 800)
+        },
+        []
+    )
 
     useEffect(() => {
         if (isOpen) {
@@ -92,7 +149,7 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
         setShowPausedBtn(true)
         setTimeout(() => {
             setShowPausedBtn(false)
-        }, 50);
+        }, 50)
     }
 
     function handleSlideChange(swiper) {
@@ -116,7 +173,6 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
     function handleClose() {
         setPlayAudio({ 0: false, 1: false })
         setPauseAnims({ 0: true, 1: true })
-        // setShowPausedBtn(false)
         setMakePausedBtn(false)
         onClose()
     }
@@ -244,27 +300,16 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                             <SlideColsInner>
                                                 <Column className="col-title">
                                                     <Title>
-                                                        Инструкция по
-                                                        прохождению курса
+                                                        {textData[1].title}
                                                         <TitleAccent>
-                                                            «Устойчивое
-                                                            развитие»
+                                                            {textData[1].titleAccent}
                                                         </TitleAccent>
                                                     </Title>
                                                 </Column>
                                                 <Column>
                                                     <ChaptersRow>
                                                         <Text className="text-chapters">
-                                                            Уважаемые
-                                                            пользователи, в
-                                                            нашем курсе 6
-                                                            разделов, каждый из
-                                                            которых поделен на
-                                                            темы. Вы можете
-                                                            выбрать какой раздел
-                                                            изучать, вне
-                                                            зависимости от их
-                                                            последовательности.
+                                                            {textData[1].textChapters}
                                                         </Text>
                                                         <ChaptersImages>
                                                             <ChaptersImagesInner>
@@ -327,7 +372,7 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                                     </ChaptersRow>
                                                     <Slide1Center>
                                                         <Text className="text-timeline">
-                                                            Меню разделов выполнено в виде таймлайна, переключаться по разделам можно с помощью стрелок, расположенных внизу или с помощью компьютерной мыши, предварительно необходимо зафиксировать левую кнопку мыши в области таймлайна и перемещать мышь по горизонтали.
+                                                            {textData[1].textTimeline}
                                                         </Text>
                                                         <TimelineImgWrapper>
                                                             <img
@@ -361,26 +406,13 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                                                 className="icon-attention"
                                                             />
                                                             <Text className="text-attention">
-                                                                Прохождение
-                                                                курса внутри
-                                                                раздела идет
-                                                                последовательно,
-                                                                Вы не можете
-                                                                перейти к
-                                                                следующей теме,
-                                                                не изучив
-                                                                предыдущую.
+                                                                {textData[1].textAttention}
                                                             </Text>
                                                         </Row>
                                                     </Slide1Center>
                                                     <TestTextWrapper>
                                                         <Text className="text-test">
-                                                            В конце каждого
-                                                            раздела Вас ждет
-                                                            простой тест на
-                                                            несколько вопросов
-                                                            для проверки
-                                                            усвоенных знаний.
+                                                            {textData[1].textTest}
                                                         </Text>
                                                     </TestTextWrapper>
                                                 </Column>
@@ -390,7 +422,7 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                     <CookiesInfoLink
                                         onClick={() => onCookiesInfoClick(0)}
                                     >
-                                        Информация о cookies
+                                        {textData.cookiesInfoBtn}
                                     </CookiesInfoLink>
                                     <StyledAudioPlayer
                                         src={Instruction1}
@@ -401,7 +433,13 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                         showPausedBtn={showPausedBtn}
                                         makePausedBtn={makePausedBtn}
                                         makeOutsideAudioEl
-                                        outsideAudioEl={SoundStore.instructionAudioEls.length >=1 ? SoundStore.instructionAudioEls[0] : null}
+                                        outsideAudioEl={
+                                            SoundStore.instructionAudioEls
+                                                .length >= 1
+                                                ? SoundStore
+                                                      .instructionAudioEls[0]
+                                                : null
+                                        }
                                     />
                                 </SlideInner>
                             </SwiperSlide>
@@ -418,18 +456,13 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                             <SlideColsInner>
                                                 <Column className="col-title">
                                                     <Title>
-                                                        Краткая справка по
-                                                        навигации
+                                                        {textData[2].title}
                                                     </Title>
                                                 </Column>
                                                 <Column>
                                                     <ColBlock>
                                                         <Text className="text-nav">
-                                                            Переход между
-                                                            страницами
-                                                            осуществляется
-                                                            нажатием на данные
-                                                            элементы.
+                                                            {textData[2].textNav}
                                                         </Text>
                                                         <NavBtnsImgsRow>
                                                             <img
@@ -451,18 +484,13 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                                     <ColBlock>
                                                         <CourseImage />
                                                         <Text className="text-open-menu-btn">
-                                                            Кнопка открытия меню
-                                                            курса.
+                                                            {textData[2].textOpenMenu}
                                                         </Text>
                                                     </ColBlock>
                                                     <ColBlock>
                                                         <LinksImage />
                                                         <Text className="text-links">
-                                                            Ссылки на
-                                                            дополнительные
-                                                            материалы вынесены в
-                                                            виде такого
-                                                            элемента.
+                                                            {textData[2].textLinks}
                                                         </Text>
                                                     </ColBlock>
                                                 </Column>
@@ -472,14 +500,7 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                                             <Headphones />
                                                         </IconHeadphones>
                                                         <Text className="text-audioguide">
-                                                            В нашем курсе
-                                                            предполагается
-                                                            звуковое
-                                                            сопровождение,
-                                                            аудиогид, управление
-                                                            им осуществляется
-                                                            при нажатии на
-                                                            данный элемент.
+                                                            {textData[2].textAudioguide}
                                                         </Text>
                                                     </IconRow>
                                                     <IconRow>
@@ -492,11 +513,7 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                                             />
                                                         </ElIcon>
                                                         <Text className="text-sound-btn">
-                                                            Элемент
-                                                            включения/отключения
-                                                            фонового голосового
-                                                            и музыкального
-                                                            сопровождения курса.
+                                                            {textData[2].textSoundBtn}
                                                         </Text>
                                                     </IconRow>
                                                     <IconRow>
@@ -509,11 +526,7 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                                             />
                                                         </ElIcon>
                                                         <Text className="text-mail-btn">
-                                                            Элемент обратной
-                                                            связи, будем рады
-                                                            вашим отзывам и
-                                                            предложениям по
-                                                            улучшению контента!
+                                                            {textData[2].textMailBtn}
                                                         </Text>
                                                     </IconRow>
                                                     <IconRow>
@@ -526,8 +539,7 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                                             />
                                                         </ElIcon>
                                                         <Text className="text-instruction-btn">
-                                                            Элемент вызова
-                                                            данной инструкции.
+                                                            {textData[2].textInstrBtn}
                                                         </Text>
                                                     </IconRow>
                                                 </Column>
@@ -543,7 +555,7 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                                 }
                                             >
                                                 <SendButton
-                                                    text="Начать обучение"
+                                                    text={textData[2].textStartLearn}
                                                     size="m"
                                                 />
                                             </Link>
@@ -552,7 +564,7 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                     <CookiesInfoLink
                                         onClick={() => onCookiesInfoClick(1)}
                                     >
-                                        Информация о cookies
+                                        {textData.cookiesInfoBtn}
                                     </CookiesInfoLink>
                                     <StyledAudioPlayer
                                         src={Instruction2}
@@ -563,7 +575,13 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                         showPausedBtn={showPausedBtn}
                                         makePausedBtn={makePausedBtn}
                                         makeOutsideAudioEl
-                                        outsideAudioEl={SoundStore.instructionAudioEls.length >= 2 ? SoundStore.instructionAudioEls[1] : null}
+                                        outsideAudioEl={
+                                            SoundStore.instructionAudioEls
+                                                .length >= 2
+                                                ? SoundStore
+                                                      .instructionAudioEls[1]
+                                                : null
+                                        }
                                     />
                                 </SlideInner>
                             </SwiperSlide>
@@ -621,10 +639,6 @@ const StyledLayout = styled(Layout)`
             padding-left: 20px;
         }
     }
-/*
-    .paused-btn {
-        top: 40%;
-    } */
 `
 
 const StyledAudioPlayer = styled(AudioPlayer)`
@@ -651,7 +665,7 @@ const NavBtnsImgsRow = styled.div`
     display: flex;
 
     > * {
-        width: 4.7vw;
+        height: 3vw;
 
         &:first-child {
             margin-right: 2.5vw;
@@ -662,7 +676,7 @@ const NavBtnsImgsRow = styled.div`
         }
 
         @media ${DEVICE.laptopS} {
-            width: 60px;
+            height: 40px;
         }
     }
 `
@@ -806,8 +820,7 @@ const Container = styled.div`
     }
 `
 
-const SlideColsInner = styled.div`
-`
+const SlideColsInner = styled.div``
 
 const SlideContentWrapper = styled.div`
     display: flex;
@@ -819,7 +832,7 @@ const SlideContentWrapper = styled.div`
     margin: 0 auto;
 
     @media ${DEVICE.laptopM} {
-        max-width: 85%;
+        max-width: 83.5%;
     }
 
     @media ${DEVICE.laptopS} {
@@ -1022,10 +1035,11 @@ const Slide2Cols = styled(SlideCols)`
             flex-direction: column;
             justify-content: center;
 
-            padding-bottom: 9vh;
+            padding-bottom: 13vh;
 
             @media ${DEVICE.laptopS} {
                 padding-top: 0;
+                padding-bottom: 9vh;
             }
         }
 
@@ -1117,10 +1131,6 @@ const TimelineImgWrapper = styled.div`
             max-width: none;
             height: 100%;
         }
-    }
-
-    &::-webkit-scrollbar {
-        width: 0;
     }
 
     @media ${DEVICE.laptopS} {

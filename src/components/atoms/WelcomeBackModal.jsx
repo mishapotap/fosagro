@@ -7,9 +7,34 @@ import { Link } from "react-router-dom"
 import Modal from "./Modal"
 import { ModalStore, CourseProgressStore } from "../../store"
 import { MenuButtons } from "../molecules"
-import { COLORS, DEVICE } from "../../constants"
+import { COLORS, DEVICE, ISENG } from "../../constants"
 import SendButton from "./SendButton"
 import { menuButtonData } from "../../data"
+
+const engText = {
+    passedCourseTitle: "You have completed the Sustainable Development course",
+    passedCourseText: "If you want to start the course from scratch, we recommend deleting cookies to have all your previous data cleared.",
+    deleteCookiesBtn: "Delete cookies",
+    learnBeforeTitle: "Welcome back!",
+    learnBeforeText: "You were learning:",
+    didntLearnTitle: "You have not started the course yet!",
+    didntLearnText: "Start the course:",
+    courseInstrBtn: "Course instructions"
+
+}
+
+const ruText = {
+    passedCourseTitle: "Вы изучили курс «Устойчивое развитие»",
+    passedCourseText: "Если вам необходимо пройти курс повторно, с самого начала и с полным прогрессом изучения, рекомендуем удалить файл «cookies», все данные удалятся.",
+    deleteCookiesBtn: "Удалить cookies",
+    learnBeforeTitle: "Вы вернулись!",
+    learnBeforeText: "Ранее вы изучали:",
+    didntLearnTitle: "Вы пока ничего не изучали!",
+    didntLearnText: "Начать изучение курса:",
+    courseInstrBtn: "Инструкция по работе с курсом",
+}
+
+const textData = ISENG ? engText : ruText
 
 function WelcomeBackModal() {
     function handleMenuBtnClick() {
@@ -32,7 +57,7 @@ function WelcomeBackModal() {
                     {CourseProgressStore.userPassedFullCourse ? (
                         <>
                             <Title className="title-passed">
-                                Вы изучили курс «Устойчивое развитие»
+                                {textData.passedCourseTitle}
                             </Title>
                             <MenuButtonsContainer>
                                 <MenuButtons
@@ -42,13 +67,10 @@ function WelcomeBackModal() {
                             </MenuButtonsContainer>
 
                             <Text>
-                                Если вам необходимо пройти курс повторно, с
-                                самого начала и с полным прогрессом изучения,
-                                рекомендуем удалить файл «cookies», все данные
-                                удалятся.
+                                {textData.passedCourseText}
                             </Text>
                             <SendButton
-                                text="Удалить cookies"
+                                text={textData.deleteCookiesBtn}
                                 onClick={() =>
                                     ModalStore.showModal("cookiesConfirm")
                                 }
@@ -59,8 +81,8 @@ function WelcomeBackModal() {
                         <>
                             {CourseProgressStore.userStartedLearnAnyChapter ? (
                                 <>
-                                    <Title>Вы вернулись!</Title>
-                                    <Text>Ранее вы изучали:</Text>
+                                    <Title>{textData.learnBeforeTitle}</Title>
+                                    <Text>{textData.learnBeforeText}</Text>
                                     <MenuButtonsContainer>
                                         <MenuButtons
                                             data={
@@ -70,13 +92,13 @@ function WelcomeBackModal() {
                                         />
                                     </MenuButtonsContainer>
                                     <Link to="instruction">
-                                        <SendButton text="Инструкция по работе с курсом" />
+                                        <SendButton text={textData.courseInstrBtn} />
                                     </Link>
                                 </>
                             ) : (
                                 <>
-                                    <Title>Вы пока ничего не изучали!</Title>
-                                    <Text>Начать изучение курса:</Text>
+                                    <Title>{textData.didntLearnTitle}</Title>
+                                    <Text>{textData.didntLearnText}</Text>
                                     <MenuButtonsContainer>
                                         <MenuButtons
                                             data={menuButtonData}
@@ -84,7 +106,7 @@ function WelcomeBackModal() {
                                         />
                                     </MenuButtonsContainer>
                                     <Link to="instruction">
-                                        <SendButton text="Инструкция по работе с курсом" />
+                                        <SendButton text={textData.courseInstrBtn} />
                                     </Link>
                                 </>
                             )}
@@ -230,7 +252,7 @@ const Container = styled.div`
             word-break: break-word;
 
             @media ${DEVICE.laptop} {
-                font-size: 9px;
+                font-size: 8.7px;
             }
         }
 

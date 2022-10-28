@@ -1,6 +1,5 @@
 import { makeAutoObservable } from "mobx"
-import { coursePagesData, courseTestsData } from "../data"
-import { sectColors } from "../data/coursePagesData/general"
+import { coursePagesData, courseTestsData, sectColors } from "../data"
 
 function getInitTestCondition(id) {
     return {
@@ -123,6 +122,8 @@ class CourseTest {
             showTreeEnd: false,
         },
     }
+
+    restartTest = false
 
     constructor() {
         makeAutoObservable(this)
@@ -320,6 +321,10 @@ class CourseTest {
         Object.keys(this.tests).forEach((id) => {
             this.tests[id] = getInitTestCondition(id)
         })
+    }
+
+    setRestartTest(bool) {
+        this.restartTest = bool
     }
 
     setDataFromCookies(dataString) {

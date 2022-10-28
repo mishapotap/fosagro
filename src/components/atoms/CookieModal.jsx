@@ -5,9 +5,32 @@ import styled from "styled-components"
 import { observer } from "mobx-react-lite"
 import Modal from "./Modal"
 import SendButton from "./SendButton"
-import { COLORS, DEVICE } from "../../constants"
+import { COLORS, DEVICE, ISENG } from "../../constants"
 import { getFullCourseDuration } from "../../utils"
 import { ModalStore, CookiesStore } from "../../store"
+
+const courseTime = getFullCourseDuration()
+
+// !перевод
+// нужен норм англ перевод
+const engText = {
+    startCourseBtn: "Start the course",
+    startNoProgressBtn: "Start the course without calculating learning progress",
+    aboutCookiesBtn: "About cookies",
+    text: "This course uses cookies to calculate and visualize course progress. Cookies are stored for 30 days.",
+    textTime: `Course learning time - ${courseTime} minutes.`
+
+}
+
+const ruText = {
+    startCourseBtn: "Начать изучение курса",
+    startNoProgressBtn: "Начать изучение курса без подсчета прогресса изучения",
+    aboutCookiesBtn: "Подробнее о cookies",
+    text: "Данный курс использует файлы cookie для подсчета и формирования визуализации прогресса изучения курса. Cookie хранятся в течение 30 дней.",
+    textTime: `Время изучения курса - ${courseTime} минуты.`
+}
+
+const textData = ISENG ? engText : ruText
 
 function CookieModal() {
     function handleClose() {
@@ -35,25 +58,23 @@ function CookieModal() {
             <ModalContent>
                 <TextWrapper>
                     <Text>
-                        Данный курс использует файлы cookie для подсчета и
-                        формирования визуализации прогресса изучения курса.
-                        Cookie хранятся в течение 30 дней.
+                        {textData.text}
                     </Text>
                     <Text>
-                        Время изучения курса - {getFullCourseDuration()} минуты.
+                        {textData.textTime}
                     </Text>
                 </TextWrapper>
                 <Buttons>
                     <SendButton
-                        text="Начать изучение курса"
+                        text={textData.startCourseBtn}
                         onClick={withCookie}
                         className="cookie"
                     />
                     <Button onClick={withOutCookie}>
-                        Начать изучение курса без подсчета прогресса изучения
+                        {textData.startNoProgressBtn}
                     </Button>
                     <Button onClick={() => ModalStore.showModal("cookiesInfo")}>
-                        Подробнее о cookies
+                        {textData.aboutCookiesBtn}
                     </Button>
                 </Buttons>
             </ModalContent>

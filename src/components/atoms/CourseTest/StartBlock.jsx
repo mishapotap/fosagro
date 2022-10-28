@@ -15,9 +15,29 @@ import {
 } from "../../../store"
 import SendButton from "../SendButton"
 import { Text, Label, Block, StyledTitle } from "./styledAtoms"
-import { COLORS, DEVICE } from "../../../constants"
+import { COLORS, DEVICE,ISENG } from "../../../constants"
 import { Click2 } from "../../../assets/audio"
 import PrevButton from "../PrevButton"
+
+const engText = {
+    title: "Test",
+    label: "We have prepared a short quiz to test your knowledge of the section.",
+    text: "Try growing your tree by answering each question correctly.",
+    // !перевод
+    // от меня, не нашла
+    backBtnText: "Back",
+    startBtnText: "Start",
+}
+
+const ruText = {
+    title: "Тест",
+    label: "Мы подготовили для Вас небольшой тест на знание пройденного раздела.",
+    text: "Попробуйте вырастить Ваше дерево, правильно ответив на все вопросы.",
+    backBtnText: "Назад",
+    startBtnText: "Начать",
+}
+
+const textData = ISENG ? engText : ruText
 
 function StartBlock() {
     const startRef = useRef(null)
@@ -90,22 +110,20 @@ function StartBlock() {
             onExited={() => CourseTestStore.setShowTest(true)}
         >
             <StartStyledBlock ref={startRef} className="start">
-                <StyledTitle color={COLORS.blue}>Тест</StyledTitle>
+                <StyledTitle color={COLORS.blue}>{textData.title}</StyledTitle>
                 <Label>
-                    Мы подготовили для Вас небольшой тест на знание пройденного
-                    раздела.
+                    {textData.label}
                 </Label>
                 <Text>
-                    Попробуйте вырастить Ваше дерево, правильно ответив на все
-                    вопросы.
+                    {textData.text}
                 </Text>
-                <SendButton text="Начать" onClick={handleStartClick} />
+                <SendButton text={textData.startBtnText} onClick={handleStartClick} />
                 <Link
                     to={CourseProgressStore.prevPageLink}
                     className="prev-btn"
                     onClick={handleBackClick}
                 >
-                    <StyledPrevBtn text="Назад" />
+                    <StyledPrevBtn text={textData.backBtnText} />
                 </Link>
             </StartStyledBlock>
         </CSSTransition>
@@ -117,6 +135,10 @@ const StartStyledBlock = styled(Block)`
         display: flex;
         flex-direction: column;
         align-items: center;
+    }
+
+    .prev-btn {
+        display: inline-block;
     }
 `
 

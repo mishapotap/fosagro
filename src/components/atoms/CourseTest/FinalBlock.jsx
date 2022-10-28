@@ -13,7 +13,7 @@ import {
     SoundStore,
     CourseProgressStore,
 } from "../../../store"
-import { COLORS, DEVICE } from "../../../constants"
+import { COLORS, DEVICE, ISENG } from "../../../constants"
 import { borderAnimationM } from "../../../constants/animations"
 import { Letter } from "../../../assets/svg"
 
@@ -23,14 +23,37 @@ import SendButton from "../SendButton"
 import { Text, Label, Block, StyledTitle } from "./styledAtoms"
 import { Click1 } from "../../../assets/audio"
 
+const engText = {
+    // !перевод
+    finishLearnBtn: "Complete the course",
+    goNextChapterBtn: "Next section",
+    feedbackText: "If you have suggestions, please use the feedback form.",
+    takeTestAgainBtn: "Try again",
+    continueLearnBtn: "Continue learning"
+}
+
+const ruText = {
+    finishLearnBtn: "Завершить обучение",
+    goNextChapterBtn: "Перейти к следующему разделу",
+    feedbackText: "Если у Вас есть предложения, воспользуйтесь формой обратной связи",
+    takeTestAgainBtn: "Пройти тест снова",
+    continueLearnBtn: "Продолжить изучение"
+}
+
+const textData = ISENG ? engText : ruText
+
 function FinalBlock() {
     const finalRef = useRef(null)
-    const restartTest = useRef(false)
-    const [ autoPausedAudio, setAutoPausedAudio] = useState(false)
+    const [autoPausedAudio, setAutoPausedAudio] = useState(false)
 
     useEffect(() => {
         if (CourseTestStore.showFinal) {
             SoundStore.setTestFinalAudio()
+
+            const content = document.querySelector('.content')
+            if (content) {
+                content.scrollTop = 0
+            }
 
             setTimeout(() => {
                 if (SoundStore.testFinalAudio) {
@@ -42,9 +65,9 @@ function FinalBlock() {
                 }
             }, 50)
         } else if (SoundStore.testFinalAudio) {
-                SoundStore.testFinalAudio.pause()
-                SoundStore.testFinalAudio.currentTime = 0
-            }
+            SoundStore.testFinalAudio.pause()
+            SoundStore.testFinalAudio.currentTime = 0
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [CourseTestStore.showFinal])
 
@@ -52,7 +75,10 @@ function FinalBlock() {
         SoundStore.setTestFinalAudio()
 
         return () => {
-            if (SoundStore.testFinalAudio) SoundStore.testFinalAudio.pause()
+            if (SoundStore.testFinalAudio) {
+                SoundStore.testFinalAudio.pause()
+                SoundStore.testFinalAudio.currentTime = 0
+            }
         }
     }, [])
 
@@ -82,8 +108,8 @@ function FinalBlock() {
     }
 
     const reset = () => {
-        if (restartTest.current) {
-            restartTest.current = false
+        if (CourseTestStore.restartTest) {
+            CourseTestStore.setRestartTest(false)
             CourseTestStore.resetActiveTestProgress()
             CourseProgressStore.resetActiveTestProgress()
             CourseTestStore.setUserPassedTest(false)
@@ -91,7 +117,7 @@ function FinalBlock() {
     }
 
     const handleRestartTest = () => {
-        restartTest.current = true
+        CourseTestStore.setRestartTest(true)
         CourseTestStore.setShowFinal(false)
 
         setTimeout(() => {
@@ -147,7 +173,7 @@ function FinalBlock() {
                                         SoundStore.setIsPlayingSound(true)
                                     }
                                 >
-                                    <SendButton text="Завершить обучение" />
+                                    <SendButton text={textData.finishLearnBtn} />
                                 </Link>
                             ) : (
                                 <Link
@@ -157,7 +183,7 @@ function FinalBlock() {
                                         SoundStore.setIsPlayingSound(true)
                                     }
                                 >
-                                    <SendButton text="Перейти к следующему разделу" />
+                                    <SendButton text={textData.goNextChapterBtn} />
                                 </Link>
                             )}
                         </>
@@ -167,7 +193,11 @@ function FinalBlock() {
                             {CourseTestStore.learnSectsData.map(
                                 ({ title, color, link = "/", id }, index) => (
                                     // eslint-disable-next-line react/no-array-index-key
-                                    <Link to={link} key={id} onClick={() => handleLinkClick(id)}>
+                                    <Link
+                                        to={link}
+                                        key={id}
+                                        onClick={() => handleLinkClick(id)}
+                                    >
                                         <SectButton
                                             color={color}
                                             rotate={index * 45}
@@ -184,15 +214,14 @@ function FinalBlock() {
                         </SectButtons>
                     )}
                     <SendButton
-                        text="Пройти тест снова"
+                        text={textData.takeTestAgainBtn}
                         onClick={handleRestartTest}
                     />
                 </FinalContent>
                 <FinBottom>
                     <Feedback>
                         <FeedbackText>
-                            Если у Вас есть предложения, воспользуйтесь формой
-                            обратной связи
+                            {textData.feedbackText}
                         </FeedbackText>
                         <AnimatedBlueButton
                             size="s"
@@ -211,14 +240,14 @@ function FinalBlock() {
                             (CourseProgressStore.userPassedFullCourse &&
                                 CourseProgressStore.activeChapterId === 6) ? (
                                 <Link to="/final" className="continue-learn">
-                                    <NextButton text="Завершить обучение" />
+                                    <NextButton text={textData.finishLearnBtn} />
                                 </Link>
                             ) : (
                                 <Link
                                     to={CourseTestStore.nextCourseLink}
                                     className="continue-learn"
                                 >
-                                    <NextButton text="Продолжить изучение" />
+                                    <NextButton text={textData.continueLearnBtn} />
                                 </Link>
                             )}
                         </>
@@ -434,6 +463,11 @@ const FinalStyledBlock = styled(Block)`
 
     &.visible {
         opacity: 1 !important;
+    }
+
+    .next-chapter {
+        margin-bottom: 30px;
+        display: inline-block;
     }
 
     @media ${DEVICE.laptopS} {

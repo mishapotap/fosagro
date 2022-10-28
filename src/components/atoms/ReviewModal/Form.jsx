@@ -6,7 +6,22 @@ import { observer } from "mobx-react-lite"
 import isEmail from "validator/lib/isEmail"
 import SendReviewBtn from "./SendReviewBtn"
 import { ReviewModalStore } from "../../../store"
-import { COLORS, DEVICE } from "../../../constants"
+import { COLORS, DEVICE, ISENG } from "../../../constants"
+
+const engText = {
+    // !перевод
+    emailPlaceholder: "Email",
+    emailErr: "Please enter a valid email",
+    messagePlaceholder: "Message"
+}
+
+const ruText = {
+    emailPlaceholder: "Введите ваш email",
+    emailErr: "Введите корректный email",
+    messagePlaceholder: "Введите ваше сообщение"
+}
+
+const textData = ISENG ? engText : ruText
 
 function Form() {
     const textareaRef = useRef(null)
@@ -70,19 +85,19 @@ function Form() {
                 <MailInputWrapper>
                     <MailInput
                         type="email"
-                        placeholder="Введите ваш Email"
+                        placeholder={textData.emailPlaceholder}
                         onChange={handleEmailInpChange}
                         onBlur={(e) => handleEmailBlur(e)}
                         className="email-input"
                     />
-                    <InpError className={showErrMess && "show"}>Введите корректный email</InpError>
+                    <InpError className={showErrMess && "show"}>{textData.emailErr}</InpError>
                 </MailInputWrapper>
                 <TextareaWrapper className="textarea-wrapper">
                     <Textarea
                         ref={textareaRef}
                         onChange={handleTextareaChange}
                         disabled={ReviewModalStore.isLoading}
-                        placeholder="Введите ваше сообщение"
+                        placeholder={textData.messagePlaceholder}
                     />
                 </TextareaWrapper>
                 <SendReviewBtn />
@@ -167,8 +182,8 @@ const TextareaWrapper = styled.div`
     @media ${DEVICE.mobile} {
         border-radius: 10px;
         min-height: none;
-        height: 170px;
-        max-width: 500px;
+        height: 140px;
+        max-width: 440px;
     }
 `
 
@@ -211,6 +226,7 @@ const StyledForm = styled.form`
 
     max-width: 73%;
     margin: 0 auto;
+    padding-bottom: 6px;
 
     @media ${DEVICE.mobile} {
         max-width: none;

@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from "react"
 import styled from "styled-components"
 import { observer } from "mobx-react-lite"
 
-import { COLORS, DEVICE } from "../../constants"
+import { COLORS, DEVICE, ISENG } from "../../constants"
 import { Layout } from "../atoms"
 import { MailButton } from "../molecules"
 import { SuccessIcon } from "../../assets/svg/static"
@@ -15,6 +15,24 @@ import { CourseProgressStore, ModalStore, SoundStore } from "../../store"
 import Error404 from "./Error404"
 import { FinalAudio } from "../../assets/audio"
 
+const engText = {
+    title: "Congratulations!",
+    text1: "You have completed the Sustainable Development course!",
+    text2: "You now have an understanding of the UN Sustainable Development Goals and PhosAgro’s contribution to achieving them.",
+    text3: "The next step is up to you! It is only together that we can truly make a difference and protect our planet.",
+    text4: "We would really appreciate your feedback."
+}
+
+const ruText = {
+    title: "Поздравляем!",
+    text1: "Вы завершили обучение курса “Устойчивое развитие”.",
+    text2: "Теперь Вы знакомы с Целями устойчивого развития ООН и усилиями, которые вкладывает наша Компания в их достижение.",
+    text3: "Следующий шаг за Вами! Ведь каждый из нас вносит вклад в улучшение благосостояния и защиту нашей планеты.",
+    text4: "А мы будем рады Вашей обратной связи!"
+}
+
+const textData = ISENG ? engText : ruText
+
 function Final() {
     const audioRef = useRef(null)
     const finalContRef = useRef(null)
@@ -23,7 +41,8 @@ function Final() {
     useEffect(() => {
         if (SoundStore.finalAudio) {
             audioRef.current = SoundStore.finalAudio
-            if (finalContRef.current) finalContRef.current.append(audioRef.current)
+            if (finalContRef.current)
+                finalContRef.current.append(audioRef.current)
         } else {
             audioRef.current = new Audio(FinalAudio)
         }
@@ -39,7 +58,7 @@ function Final() {
     useEffect(() => {
         if (audioRef.current) {
             if (ModalStore.isVisible.mail) {
-                if (!audioRef.current.paused)  {
+                if (!audioRef.current.paused) {
                     audioRef.current.pause()
                     autoPausedRef.current = true
                 }
@@ -51,38 +70,32 @@ function Final() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ModalStore.isVisible.mail])
 
-    if (!CourseProgressStore.userPassedFullCourse) return <Error404/>
+    if (!CourseProgressStore.userPassedFullCourse) return <Error404 />
 
     return (
         <StyledLayout page="final">
             <Container ref={finalContRef}>
-                {/* <audio src={FinalAudio} ref={audioRef} /> */}
                 <Background />
                 <ContentWrapper>
                     <Content>
                         <Icon src={SuccessIcon} />
                         <StyledTitle color={COLORS.blue}>
-                            Поздравляем!
+                            {textData.title}
                         </StyledTitle>
                         <TextRow1>
                             <Text>
-                                Вы завершили обучение курса “Устойчивое
-                                развитие”.
+                                {textData.text1}
                             </Text>
                             <Text>
-                                Теперь Вы знакомы с Целями устойчивого развития
-                                ООН и усилиями, которые вкладывает наша Компания
-                                в их достижение.
+                                {textData.text2}
                             </Text>
                         </TextRow1>
                         <TextRow2>
                             <LightText>
-                                Следующий шаг за Вами! Ведь каждый из нас вносит
-                                вклад в улучшение благосостояния и защиту нашей
-                                планеты.
+                                {textData.text3}
                             </LightText>
                             <LightText>
-                                А мы будем рады Вашей обратной связи!
+                                {textData.text4}
                             </LightText>
                         </TextRow2>
                         <MailButton />
@@ -120,6 +133,10 @@ const ContentWrapper = styled.div`
     &::-webkit-scrollbar {
         width: 0;
     }
+
+    @media ${DEVICE.laptopS} {
+        padding-top: 16px;
+    }
 `
 
 const Container = styled.div`
@@ -129,10 +146,75 @@ const Container = styled.div`
     .progress-bar-cont {
         margin-top: 30px;
     }
+
+    @media ${DEVICE.laptopM} {
+        .menu-button-wrapper {
+            width: 11.8vw;
+
+            @media ${DEVICE.laptopS} {
+                width: 21vw;
+            }
+            @media ${DEVICE.mobile} {
+                width: 34vw;
+            }
+        }
+
+        .progress-bar-cont {
+            margin-top: 20px;
+
+            .progress {
+                width: 100%;
+            }
+        }
+
+        .menu-btn-index {
+            font-size: 2.8vw;
+
+            @media ${DEVICE.laptopS} {
+                font-size: 6vw;
+            }
+
+            @media ${DEVICE.mobile} {
+                font-size: 8.1vw;
+            }
+        }
+
+        .menu-btn-text {
+            font-size: 0.83vw;
+
+            @media ${DEVICE.laptopS} {
+                font-size: 1.42vw;
+            }
+
+            @media ${DEVICE.mobile} {
+                font-size: 2.4vw;
+            }
+        }
+
+        .menu-buttons {
+            max-width: 94%;
+            margin: 0 auto;
+        }
+
+        .progress-number {
+            font-size: 1.1vw;
+
+            @media ${DEVICE.laptopS} {
+                font-size: 2.3vw;
+            }
+            @media ${DEVICE.tablet} {
+                font-size: 3.8vw;
+            }
+        }
+    }
 `
 
 const StyledTitle = styled(Title)`
     margin-bottom: 20px;
+
+    @media ${DEVICE.laptopM} {
+        margin-bottom: 15px;
+    }
 `
 
 const TextRow = styled.div`
@@ -148,6 +230,10 @@ const TextRow = styled.div`
 const TextRow1 = styled(TextRow)`
     margin-bottom: 3vh;
 
+    @media ${DEVICE.laptopM} {
+        margin-bottom: 12px;
+    }
+
     @media ${DEVICE.laptopS} {
         margin-bottom: 30px;
     }
@@ -155,13 +241,22 @@ const TextRow1 = styled(TextRow)`
 
 const TextRow2 = styled(TextRow)`
     margin-bottom: 30px;
+
+    @media ${DEVICE.laptopM} {
+        margin-bottom: 20px;
+    }
 `
 
 const Icon = styled.img`
     width: 4vw;
     margin-bottom: 20px;
 
-    @media ${DEVICE.laptop} {
+    @media ${DEVICE.laptopM} {
+        width: 3.2vw;
+        margin-bottom: 10px;
+    }
+
+    @media ${DEVICE.laptopS} {
         width: 40px;
     }
 `

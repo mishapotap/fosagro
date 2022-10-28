@@ -114,7 +114,7 @@ export default function BubbleContainer({ children, makeBubbles = false }) {
         if (right + 140 > document.documentElement.clientWidth) {
             $bubble.style.top = `${okTop}px`
             $bubble.style.right = `5px`
-        } else if (right - 140 < 0) {
+        } else if (right - 140 < 0 && document.documentElement.clientWidth < 1024) {
             $bubble.style.top = `${okTop}px`
             $bubble.style.left = `5px`
         } else {

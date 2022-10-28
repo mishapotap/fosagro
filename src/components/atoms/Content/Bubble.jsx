@@ -23,7 +23,7 @@ export default function Bubble({ data = {}, style }) {
 const StyledBubble = styled.div`
     position: fixed;
     z-index: 200;
-    transform: translate(5px, calc(-60%)) scale(0.7);
+    transform: translate(15px, calc(-60%)) scale(0.7);
 
     width: 17.2vw;
     height: 17.2vw;
@@ -40,7 +40,7 @@ const StyledBubble = styled.div`
 
     &.shown {
         opacity: 1;
-        transform: translate(5px, calc(-60%)) scale(1);
+        transform: translate(15px, calc(-60%)) scale(1);
 
         @media ${DEVICE.laptopS} {
             transform: translate(5px, calc(-100% - 10px)) scale(1);
