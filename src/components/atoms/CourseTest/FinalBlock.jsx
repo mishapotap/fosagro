@@ -13,7 +13,7 @@ import {
     SoundStore,
     CourseProgressStore,
 } from "../../../store"
-import { COLORS, DEVICE } from "../../../constants"
+import { COLORS, DEVICE, ISENG } from "../../../constants"
 import { borderAnimationM } from "../../../constants/animations"
 import { Letter } from "../../../assets/svg"
 
@@ -22,6 +22,25 @@ import AnimatedBlueButton from "../AnimatedBlueButton"
 import SendButton from "../SendButton"
 import { Text, Label, Block, StyledTitle } from "./styledAtoms"
 import { Click1 } from "../../../assets/audio"
+
+const engText = {
+    // !перевод
+    finishLearnBtn: "Complete the course",
+    goNextChapterBtn: "Next section",
+    feedbackText: "If you have suggestions, please use the feedback form.",
+    takeTestAgainBtn: "Try again",
+    continueLearnBtn: "Continue learning"
+}
+
+const ruText = {
+    finishLearnBtn: "Завершить обучение",
+    goNextChapterBtn: "Перейти к следующему разделу",
+    feedbackText: "Если у Вас есть предложения, воспользуйтесь формой обратной связи",
+    takeTestAgainBtn: "Пройти тест снова",
+    continueLearnBtn: "Продолжить изучение"
+}
+
+const textData = ISENG ? engText : ruText
 
 function FinalBlock() {
     const finalRef = useRef(null)
@@ -154,7 +173,7 @@ function FinalBlock() {
                                         SoundStore.setIsPlayingSound(true)
                                     }
                                 >
-                                    <SendButton text="Завершить обучение" />
+                                    <SendButton text={textData.finishLearnBtn} />
                                 </Link>
                             ) : (
                                 <Link
@@ -164,7 +183,7 @@ function FinalBlock() {
                                         SoundStore.setIsPlayingSound(true)
                                     }
                                 >
-                                    <SendButton text="Перейти к следующему разделу" />
+                                    <SendButton text={textData.goNextChapterBtn} />
                                 </Link>
                             )}
                         </>
@@ -195,15 +214,14 @@ function FinalBlock() {
                         </SectButtons>
                     )}
                     <SendButton
-                        text="Пройти тест снова"
+                        text={textData.takeTestAgainBtn}
                         onClick={handleRestartTest}
                     />
                 </FinalContent>
                 <FinBottom>
                     <Feedback>
                         <FeedbackText>
-                            Если у Вас есть предложения, воспользуйтесь формой
-                            обратной связи
+                            {textData.feedbackText}
                         </FeedbackText>
                         <AnimatedBlueButton
                             size="s"
@@ -222,14 +240,14 @@ function FinalBlock() {
                             (CourseProgressStore.userPassedFullCourse &&
                                 CourseProgressStore.activeChapterId === 6) ? (
                                 <Link to="/final" className="continue-learn">
-                                    <NextButton text="Завершить обучение" />
+                                    <NextButton text={textData.finishLearnBtn} />
                                 </Link>
                             ) : (
                                 <Link
                                     to={CourseTestStore.nextCourseLink}
                                     className="continue-learn"
                                 >
-                                    <NextButton text="Продолжить изучение" />
+                                    <NextButton text={textData.continueLearnBtn} />
                                 </Link>
                             )}
                         </>

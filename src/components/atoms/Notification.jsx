@@ -4,7 +4,7 @@ import { CSSTransition } from "react-transition-group"
 import { DEVICE, COLORS } from "../../constants"
 
 export default function Notification({
-    text = "Эта тема станет доступной после изучения предыдущих",
+    text = "Уведомление",
     show = false,
     position = {},
 }) {

@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { CSSTransition } from "react-transition-group"
 import DocsLink from "./DocsLink"
 import { LinkIcon } from "../../assets/svg"
-import { COLORS, DEVICE } from "../../constants"
+import { COLORS, DEVICE, ISENG } from "../../constants"
 import { LinkCursor } from "../../assets/svg/static"
 import { CursorAnim } from "../../constants/animations"
 
@@ -33,9 +33,9 @@ export default function ExtLinks({ links, className, showCursor = true }) {
                     onClick={() => setIsLinksOpened(!isLinksOpened)}
                 >
                     <StyledLinkIcon />
-                    Посмотреть документы
+                    {ISENG ? "View documents" : "Посмотреть документы"}
                     {showCursor && (
-                        <StyledCursor src={LinkCursor} alt="курсор" />
+                        <StyledCursor src={LinkCursor} alt={ISENG ? "cursor" : "курсор"} />
                     )}
                 </OpenLinksBtn>
             </OpenBtnContainer>

@@ -10,7 +10,7 @@ import { Link } from "react-router-dom"
 import CurvedModal from "./CurvedModal"
 import { ArrowLeft, ArrowRight } from "../../assets/svg"
 import Slider from "./Slider"
-import { COLORS, DEVICE } from "../../constants"
+import { COLORS, DEVICE, ISENG } from "../../constants"
 import { ContentBlock, Title, Text, Note } from "./Content"
 import AudioPlayer from "./AudioPlayer"
 import ExtLinks from "./ExtLinks"
@@ -212,6 +212,9 @@ function IntroModal({ isOpen, onClose, items }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ModalStore.isVisible.extLinks])
 
+    // !перевод
+    const startBtnText = ISENG ? "Start learning the section" : "Начать изучение раздела"
+
     return (
         <StyledModal
             isOpen={isOpen}
@@ -316,7 +319,7 @@ function IntroModal({ isOpen, onClose, items }) {
                                                 <StyledTitle
                                                     color={COLORS.orange}
                                                 >
-                                                    Введение
+                                                    {ISENG ? "Introduction" : "Введение"}
                                                 </StyledTitle>
                                             </SlideCol>
 
@@ -345,7 +348,7 @@ function IntroModal({ isOpen, onClose, items }) {
                                                         className="start-link start-link-1"
                                                     >
                                                         <SendButton
-                                                            text="Начать изучение курса"
+                                                            text={startBtnText}
                                                             color={
                                                                 COLORS.orange
                                                             }
@@ -384,7 +387,7 @@ function IntroModal({ isOpen, onClose, items }) {
                                                         className="start-link start-link-2"
                                                     >
                                                         <SendButton
-                                                            text="Начать изучение раздела"
+                                                            text={startBtnText}
                                                             color={
                                                                 COLORS.orange
                                                             }

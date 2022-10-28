@@ -5,9 +5,10 @@ import {
     timelineData,
     menuButtonData,
     introModalData,
+    sectColors,
+    sectsProgressTypes
 } from "../data"
 import { COLORS } from "../constants"
-import { sectColors, sectsProgressTypes } from "../data/coursePagesData/general"
 import SoundStore from "./sound"
 // import { getLargestArrNum } from "../utils"
 
@@ -109,6 +110,7 @@ class CourseProgress {
         )
 
         return !notPassedChapter
+        // return true
     }
 
     get activeChapterData() {

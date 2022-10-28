@@ -8,12 +8,35 @@ import "wicg-inert"
 
 import CurvedModal from "../CurvedModal"
 import { Flower } from "../../../assets/svg"
-import { COLORS, DEVICE } from "../../../constants"
+import { COLORS, DEVICE, ISENG } from "../../../constants"
 import SendButton from "../SendButton"
 import { ReviewModalStore } from "../../../store"
 import Rating from "./Rating"
 import Form from "./Form"
-import { FeedBack, Click2, FormSuccess } from "../../../assets/audio"
+import { Click2, FormSuccess, FeedBack } from "../../../assets/audio"
+
+const engText = {
+    title: "Your opinion matters",
+    text1: "How would you rate your experience with our project?",
+    text2: "Sustainability is like a sport: going the extra mile is what we always try to achieve. But where exactly should we go? Your opinion is valuable to us, as it helps shape our sustainable approach to work and life.",
+    successTitle: "Thank you.",
+    successText: " Your feedback has been successfully submitted.",
+    // !перевод
+    closeBtnText: "Close",
+    errorMessage: "Sorry, there was a problem with your request",
+}
+
+const ruText = {
+    title: "Ваше мнение очень важно для нас!",
+    text1: "Оцените, пожалуйста, ваш опыт взаимодействия с нашим проектом.",
+    text2: "Устойчивое развитие похоже на спорт: сегодня это было хорошо, а что можно сделать еще лучше? Нам очень важен ваш взгляд, так формируется устойчивый подход к работе и жизни.",
+    successTitle: "Спасибо!",
+    successText: "Ваш отзыв успешно отправлен.",
+    closeBtnText: "Закрыть",
+    errorMessage: "Ошибка отправки",
+}
+
+const textData = ISENG ? engText : ruText
 
 function ReviewModal({ isOpen, onClose }) {
     const successElRef = useRef(null)
@@ -93,7 +116,7 @@ function ReviewModal({ isOpen, onClose }) {
                     }`}
                 >
                     {ReviewModalStore.isError && (
-                        <ErrorMessage>Ошибка отправки</ErrorMessage>
+                        <ErrorMessage>{textData.errorMessage}</ErrorMessage>
                     )}
                     <CSSTransition
                         in={showSuccess}
@@ -108,9 +131,9 @@ function ReviewModal({ isOpen, onClose }) {
                             style={{ opacity: `${sucIsVisible ? "1" : "0"}` }}
                         >
                             <StyledFlower active />
-                            <Title>Спасибо!</Title>
-                            <Text>Ваш отзыв успешно отправлен.</Text>
-                            <SendButton text="Закрыть" onClick={closeModal} />
+                            <Title>{textData.successTitle}</Title>
+                            <Text>{textData.successText}</Text>
+                            <SendButton text={textData.closeBtnText} onClick={closeModal} />
                         </Success>
                     </CSSTransition>
 
@@ -123,17 +146,13 @@ function ReviewModal({ isOpen, onClose }) {
                         onExited={() => setShowSuccess(true)}
                     >
                         <Content ref={contentElRef} className="content">
-                            <Title className="title">Ваше мнение очень важно для нас!</Title>
+                            <Title className="title">{textData.title}</Title>
                             <Text>
-                                Оцените, пожалуйста, ваш опыт взаимодействия с
-                                нашим проектом.
+                                {textData.text1}
                             </Text>
                             <StyledRating />
                             <Text>
-                                Устойчивое развитие похоже на спорт: сегодня это
-                                было хорошо, а что можно сделать еще лучше? Нам
-                                очень важен ваш взгляд, так формируется
-                                устойчивый подход к работе и жизни.
+                                {textData.text2}
                             </Text>
                             <Form />
                         </Content>

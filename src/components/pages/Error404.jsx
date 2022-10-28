@@ -1,11 +1,27 @@
 import React, { useEffect } from "react"
 import styled from "styled-components"
 import { Link } from "react-router-dom"
-import { COLORS, DEVICE } from "../../constants"
+import { COLORS, DEVICE, ISENG } from "../../constants"
 import { Layout, SendButton } from "../atoms"
 import * as routes from "../../constants/routes"
 import { InteractiveCircle, AnimateLine } from "../../assets/svg"
 import { CourseProgressStore } from "../../store"
+
+const engText = {
+    title: "Oops!",
+    text1: "Page not found",
+    text2: "The page you were looking for no longer exists",
+    backToMainBtn: "Return to the Main page"
+}
+
+const ruText = {
+    title: "Ой!",
+    text1: "Мы не можем найти эту страницу",
+    text2: "Похоже, запрашиваемая Вами страница не существует",
+    backToMainBtn: "Вернуться на главную"
+}
+
+const textData = ISENG ? engText : ruText
 
 export default function Error404() {
     useEffect(() => {
@@ -25,15 +41,15 @@ export default function Error404() {
                     </InterCircleWrapper>
                     <Content>
                         <Number>404</Number>
-                        <Title>Ой!</Title>
+                        <Title>{textData.title}</Title>
                         <TextRegular>
-                            Мы не можем найти эту страницу
+                            {textData.text1}
                         </TextRegular>
                         <TextLight>
-                            Похоже, запрашиваемая Вами страница не существует
+                            {textData.text2}
                         </TextLight>
                         <Link to={routes.HOME}>
-                            <SendButton text="Вернуться на главную" />
+                            <SendButton text={textData.backToMainBtn} />
                         </Link>
                     </Content>
                 </Inner>

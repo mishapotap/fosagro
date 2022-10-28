@@ -4,11 +4,12 @@ import styled, { css } from "styled-components"
 import { Link } from "react-router-dom"
 import { observer } from "mobx-react-lite"
 import * as routes from "../../constants/routes"
-import { DEVICE, COLORS } from "../../constants"
-import { Fosagro, FosagroColored, LinkArrow } from "../../assets/svg"
+import { DEVICE, COLORS, ISENG } from "../../constants"
+import { LinkArrow } from "../../assets/svg"
 import { CourseMenuButton } from "../molecules"
-import { ModalStore, CourseProgressStore, SoundStore, CookiesStore } from "../../store"
+import { ModalStore, CourseProgressStore, SoundStore } from "../../store"
 import { Click2 } from "../../assets/audio"
+import { PhosagroLogo, PhosagroLogoColored } from "../../assets/images"
 
 function Header({
     // цветной ли (если нет, то все будет белое)
@@ -56,9 +57,9 @@ function Header({
     return (
         <Container makeMobShadow={makeMobShadow} pageName={pageName}>
             <HeaderInner language={language}>
-                <Logo>
+                <Logo isEng={ISENG}>
                     <Link to={routes.HOME} onClick={() => handleClickLogo()}>
-                        {colored ? <FosagroColored /> : <Fosagro />}
+                        {colored ? <img src={PhosagroLogoColored} alt="logo"/> : <img src={PhosagroLogo} alt="logo"/>}
                     </Link>
                 </Logo>
                 {fosagroSite && (
@@ -69,7 +70,7 @@ function Header({
                             rel="noopener noreferrer"
                         >
                             <LinkArrow className="linkArrow" />
-                            <span>Корпоративный сайт</span>
+                            <span>{ISENG ? "Corporate website" : "Корпоративный сайт"}</span>
                         </a>
                     </LinkToFosagro>
                 )}
@@ -121,7 +122,7 @@ function Header({
                 {goBackToMain && (
                     <BackToMain colored={colored}>
                         <Link to={routes.HOME} onClick={() => closeMenuModal()}>
-                            Вернуться на главную
+                            {ISENG ? "Return to the Main page" : "Вернуться на главную"}
                         </Link>
                     </BackToMain>
                 )}
@@ -159,6 +160,19 @@ const Logo = styled.div`
     flex-shrink: 0;
     width: 12.5vw;
     margin-right: 40px;
+
+    ${({isEng}) => isEng && css`
+        padding: 5px 0;
+
+        @media ${DEVICE.laptopM} {
+            padding-bottom: 7px;
+        }
+
+        @media ${DEVICE.laptopS} {
+            padding-top: 7px;
+            padding-bottom: 10px;
+        }
+    `}
 
     @media ${DEVICE.laptopS} {
         width: 150px;

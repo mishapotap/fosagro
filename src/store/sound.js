@@ -5,9 +5,11 @@ import {
     Test12Right,
     Test34Right,
     Test5Right,
-} from "../assets/audio/test"
+    Instruction1,
+    Instruction2,
+    FinalAudio,
+} from "../assets/audio"
 import CourseTestStore from "./courseTest"
-import { Instruction1, Instruction2, FinalAudio } from "../assets/audio"
 
 class Sound {
     play = {
@@ -138,7 +140,7 @@ class Sound {
 
     restartInstructionEls() {
         if (this.instructionAudioEls) {
-            this.instructionAudioEls.forEach(el => {
+            this.instructionAudioEls.forEach((el) => {
                 // eslint-disable-next-line no-param-reassign
                 el.currentTime = 0
             })
@@ -156,7 +158,10 @@ class Sound {
     }
 
     setInstructionAudioEls() {
-        this.instructionAudioEls = [new Audio(Instruction1), new Audio(Instruction2)]
+        this.instructionAudioEls = [
+            new Audio(Instruction1),
+            new Audio(Instruction2),
+        ]
     }
 
     setMakeAudioPlayerOutEl(val) {

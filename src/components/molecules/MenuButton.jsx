@@ -1,6 +1,6 @@
 import React from "react"
 import styled, { keyframes } from "styled-components"
-import { COLORS, DEVICE } from "../../constants"
+import { COLORS, DEVICE, ISENG } from "../../constants"
 import { borderAnimationM } from "../../constants/animations"
 import { ArrowDown } from "../../assets/svg/static"
 
@@ -43,9 +43,9 @@ export default function MenuButton({
             {activeChapter && (
                 <ActiveChapter>
                     <ActiveChapterMessage>
-                        Вы сейчас изучаете
+                        {ISENG ? "You are learning" : "Вы сейчас изучаете"}
                     </ActiveChapterMessage>
-                    <ActiveChapterIcon src={ArrowDown} alt="стрелка вниз" />
+                    <ActiveChapterIcon src={ArrowDown} alt={ISENG ? "arrow down" : "стрелка вниз"} />
                 </ActiveChapter>
             )}
         </Wrapper>

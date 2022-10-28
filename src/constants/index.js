@@ -1,10 +1,11 @@
 import { COLORS, SIZES, FONTS, DEVICE } from "./theme"
-// import dummyData from "./dummyData"
+
+const ISENG = false
 
 export {
     COLORS,
     SIZES,
     FONTS,
     DEVICE,
-    // dummyData,
+    ISENG,
 }

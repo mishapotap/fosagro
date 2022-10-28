@@ -4,7 +4,7 @@
 /* eslint-disable react/jsx-no-bind */
 import React, { useEffect, useRef, useState } from "react"
 import { useLocation } from "react-router"
-import styled from "styled-components"
+import styled, { keyframes } from "styled-components"
 import { CSSTransition } from "react-transition-group"
 import { observer } from "mobx-react-lite"
 
@@ -445,20 +445,6 @@ function CourseContent({ setIds, onDisappear }) {
         setFalse("audio")
     }
 
-    function handleBackClick() {
-        setLeftSlide(true)
-        setRightSlide(false)
-        setShowSlide(false)
-
-        pauseMedia()
-        clickSound.play()
-        setFalse("paused-btn")
-        setIsNavBtnsDisabled(true)
-
-        CourseProgressStore.setNextPrevMediaEl("prev")
-        CourseProgressStore.setNewSectAudioFromContent("prev")
-    }
-
     useEffect(() => {
         if (SoundStore.makeAudioPlayerOutEl) {
             setMakeAudioEl(true)
@@ -495,16 +481,32 @@ function CourseContent({ setIds, onDisappear }) {
         CourseProgressStore.setNewSectAudioFromContent("next")
     }
 
-    function handleExited() {
-        setKey((prevKey) => prevKey + 1)
-        setIds()
-        CourseProgressStore.setVisitedPage()
-        setShowSlide(true)
+    function handleBackClick() {
+        setRightSlide(false)
+        setLeftSlide(true)
+        setShowSlide(false)
 
-        const slideContent = document.querySelector(".slide-content")
-        if (slideContent) {
-            slideContent.scrollTop = 0
-        }
+        pauseMedia()
+        clickSound.play()
+        setFalse("paused-btn")
+        setIsNavBtnsDisabled(true)
+
+        CourseProgressStore.setNextPrevMediaEl("prev")
+        CourseProgressStore.setNewSectAudioFromContent("prev")
+    }
+
+    function handleExited() {
+        // setTimeout(() => {
+            setKey((prevKey) => prevKey + 1)
+            setIds()
+            CourseProgressStore.setVisitedPage()
+            setShowSlide(true)
+
+            const slideContent = document.querySelector(".slide-content")
+            if (slideContent) {
+                slideContent.scrollTop = 0
+            }
+        // }, 50)
     }
 
     function handleEntered() {
@@ -599,7 +601,10 @@ function CourseContent({ setIds, onDisappear }) {
                 onExited={handleExited}
                 onEntered={handleEntered}
             >
-                <ContentColumn ref={contentColRef} className="slide">
+                <ContentColumn
+                    ref={contentColRef}
+                    className="slide content-col"
+                >
                     <Content />
                 </ContentColumn>
             </CSSTransition>
@@ -744,91 +749,144 @@ const TitleColumn = styled.div`
     }
 `
 
+const slideRightEnter = keyframes`
+    0% {
+        transform: translate(25vw);
+        opacity: 0;
+    }
+    100% {
+        transform: none;
+        opacity: 1;
+    }
+`
+const appear = keyframes`
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+`
+const slideRightExit = keyframes`
+    0% {
+        transform: none;
+        opacity: 1;
+    }
+    100% {
+        transform:  translate(-25vw);
+        opacity: 0;
+    }
+`
+
+const slideLeftExit = keyframes`
+    0% {
+        transform: none;
+        opacity: 1;
+    }
+    100% {
+        transform: translate(25vw);
+        opacity: 0;
+    }
+`
+
+const slideLeftEnter = keyframes`
+    0% {
+        transform:  translate(-25vw);
+        opacity: 0;
+    }
+    100% {
+        transform: none;
+        opacity: 1;
+    }
+`
+
 const Columns = styled.div`
     display: grid;
     grid-template: 18vh auto 105px / 7% 40% 53%;
     height: 100%;
-
     @media ${DEVICE.laptopM} {
         grid-template: 16.6vh auto 105px / 7% 40% 53%;
     }
-
     @media ${DEVICE.laptopS} {
         grid-template: repeat(5, auto) / 100%;
     }
-
     .slide {
-        transition: 0.45s ease-in-out;
+        animation-duration: 0.5s;
+        animation-fill-mode: both;
+        animation-timing-function: ease-in-out;
 
+        &.no-anim {
+            animation: none !important;
+        }
         @media ${DEVICE.laptopS} {
-            transition-duration: 0.25s;
+            animation-duration: 0.5s;
         }
     }
-
+    .nav-col {
+        animation: none;
+    }
     &.right-slide {
-        .slide-enter:not(.nav-col) {
-            transform: translate(25vw);
-            opacity: 0;
+        .slide-enter-active {
+            animation-name: ${slideRightEnter};
         }
-
-        .slide-exit:not(.nav-col) {
-            transform: translate(-25vw);
-            opacity: 0;
+        .slide-exit-active {
+            animation-name: ${slideRightExit};
         }
-
         @media ${DEVICE.laptopS} {
-            .slide-enter,
-            .slide-enter.nav-col {
-                transform: none!important;
-                opacity: 0;
+            .slide-enter-active {
+                animation-name: ${appear};
             }
-
-            .slide-exit,
-            .slide-exit.nav-col {
-                transform: none!important;
-                opacity: 0;
+            .slide-exit-active {
+                animation-name: ${appear};
+                animation-direction: reverse;
+            }
+            .nav-col {
+                animation-name: ${appear};
+                animation-direction: reverse;
+                animation-duration: 0.5s;
             }
         }
     }
-
     &.left-slide {
-        .slide-enter:not(.nav-col) {
-            transform: translate(-25vw);
-            opacity: 0;
+        .slide-enter-active {
+            animation-name: ${slideLeftEnter}!important;
         }
-
-        .slide-exit:not(.nav-col) {
-            transform: translate(25vw);
-            opacity: 0;
+        .slide-exit-active {
+            animation-name: ${slideLeftExit}!important;
         }
-
         @media ${DEVICE.laptopS} {
-            .slide-enter,
-            .slide-enter.nav-col {
-                transform: none!important;
-                opacity: 0 !important;
+            .slide-enter-active {
+                animation-name: ${appear}!important;
             }
-
-            .slide-exit,
-            .slide-exit.nav-col {
-                transform: none!important;
-                opacity: 0 !important;
+            .slide-exit-active {
+                animation-name: ${appear}!important;
+                animation-direction: reverse;
+            }
+            .nav-col {
+                animation-name: ${appear}!important;
+                animation-direction: reverse;
+                animation-duration: 0.5s;
             }
         }
     }
-
+    .slide {
+        opacity: 1;
+    }
+    .slide-enter-done {
+        opacity: 1;
+    }
+    .slide-exit-done {
+        opacity: 0 !important;
+    }
     .title {
         max-width: 43vw;
         height: 14vh;
-
         @media ${DEVICE.laptopM} {
             max-width: 34vw;
         }
-
         @media ${DEVICE.laptop} {
             max-width: 410px;
         }
-
         @media ${DEVICE.laptopS} {
             max-width: none;
             height: auto;

@@ -1,6 +1,5 @@
 import { makeAutoObservable } from "mobx"
-import { coursePagesData, courseTestsData } from "../data"
-import { sectColors } from "../data/coursePagesData/general"
+import { coursePagesData, courseTestsData, sectColors } from "../data"
 
 function getInitTestCondition(id) {
     return {

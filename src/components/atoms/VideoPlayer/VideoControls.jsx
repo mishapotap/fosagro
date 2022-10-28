@@ -147,13 +147,11 @@ export default function VideoControls({
                             {tooltipTime}
                         </Tooltip>
                     </TimeLineWrapper>
-                    {/* {isFullscreen && ( */}
                     <Time isFullscreen={isFullscreen}>
                         <ProgressTime>{progressTime}</ProgressTime>
                         <span />
                         <FullTime>{fullTime}</FullTime>
                     </Time>
-                    {/* )} */}
                 </PlayerProgress>
 
                 <FullscreenBtn

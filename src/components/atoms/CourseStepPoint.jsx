@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import { COLORS, DEVICE } from "../../constants";
 
 export default function CourseStepPoint({data, className, isActiveParent, isCompleted}) {
-    const { color, year, text, position, top, left } = data
+    const { color, year, text, position, top, left, width } = data
     const [isActive, setIsАсtive] = useState(isActiveParent);
 
     useEffect(() => {
@@ -24,7 +24,7 @@ export default function CourseStepPoint({data, className, isActiveParent, isComp
                 <PointContainer defaultColor={ COLORS.white } position={position}>
                     <Point/>
                 </PointContainer>
-                <TextContainer position={position} color={ COLORS.blue }>
+                <TextContainer position={position} color={ COLORS.blue } width={width}>
                     { year && <Year>{year}</Year> }
                     <Text>{text}</Text>
                 </TextContainer>
@@ -52,7 +52,16 @@ const TextContainer = styled.div`
             }
     `}
 
-    min-width: 130px;
+    ${(props) => props.position === "bottom" &&
+        css`
+            top: calc(100% + 90px);
+
+            @media ${DEVICE.laptopM} {
+                top: calc(100% + 70px);
+            }
+    `}
+
+    min-width: ${({ width }) => width ? `${width}px` : '128px'};
 
     font-size: 16px;
     line-height: 1.18;

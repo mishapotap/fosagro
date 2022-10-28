@@ -4,11 +4,11 @@ import styled from "styled-components"
 import { Helmet } from "react-helmet"
 import { useLocation, useNavigate, useParams } from "react-router"
 import { observer } from "mobx-react-lite"
-import timelineData from "../../data/timelineData"
-import { COLORS, DEVICE } from "../../constants"
+import { COLORS, DEVICE, ISENG } from "../../constants"
 import { MenuBackground } from "../../assets/images"
 import { Footer, CourseMenu } from "../organisms"
-import { introModalData } from "../../data"
+// !! тут когда-то из-за этого ошибка была
+import { introModalData, timelineData } from "../../data"
 import Error404 from "./Error404"
 import {
     CookiesStore,
@@ -162,6 +162,11 @@ function Course() {
                 </Helmet>
             )}
             <Notification
+                text={
+                    ISENG
+                        ? "You can move to this topic after completing the previous one"
+                        : "Эта тема станет доступной после изучения предыдущих"
+                }
                 show={CourseProgressStore.showNotification}
                 position={CourseProgressStore.notifPos}
             />

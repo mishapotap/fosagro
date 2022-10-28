@@ -3,7 +3,7 @@
 /* eslint-disable react/jsx-no-bind */
 import React, { useState, useEffect, useRef } from "react"
 import styled from "styled-components"
-import { COLORS, DEVICE } from "../../../constants"
+import { COLORS, DEVICE, ISENG } from "../../../constants"
 import VideoControls from "./VideoControls"
 import Loader from "../Loader"
 import {
@@ -65,7 +65,9 @@ export default function VideoPlayer({
 
     const enteredMobFullscr = useRef(false)
 
-    const errorText = "Произошла ошибка при загрузке видео"
+    const errorText = ISENG
+        ? "Sorry, there was an error uploading the video file "
+        : "Произошла ошибка при загрузке видео"
 
     function setIsBottomControlsShown(val) {
         isBottomControlsShownRef.current = val

@@ -4,18 +4,21 @@ import { Link } from "react-router-dom"
 import { InteractiveCircle, AnimateLine, ArrowUp } from "../../assets/svg"
 import Layout from "./Layout"
 import { MailButton } from "../molecules"
-import { COLORS, DEVICE } from "../../constants"
+import { COLORS, DEVICE, ISENG } from "../../constants"
 import { CourseProgressStore, SoundStore } from "../../store"
 
 export default function CourseSlideLayout({ className, type, children }) {
-
     const { activeSectColor, activeChapterId } = CourseProgressStore
-    const color = type === 'test' ? COLORS.blue : activeSectColor
+    const color = type === "test" ? COLORS.blue : activeSectColor
 
     const backChapterLink = `/course${activeChapterId}`
 
     return (
-        <StyledLayout page={type === 'test' ? "test" : "section"} className={className} type={type}>
+        <StyledLayout
+            page={type === "test" ? "test" : "section"}
+            className={className}
+            type={type}
+        >
             <InterCircleCont>
                 <StyledInterCircle color={color} />
             </InterCircleCont>
@@ -23,12 +26,20 @@ export default function CourseSlideLayout({ className, type, children }) {
                 <AnimateLine color={color} />
             </WavesContainer>
             <Content className="slide-content">
-                <Link to={backChapterLink} className="back-to-chapter" onClick={() => SoundStore.setIsPlayingSound(true)}>
+                <Link
+                    to={backChapterLink}
+                    className="back-to-chapter"
+                    onClick={() => SoundStore.setIsPlayingSound(true)}
+                >
                     <BackToChapter>
                         <BackToChapterIcon>
                             <ArrowUp />
                         </BackToChapterIcon>
-                        <BackToChapterText>Вернуться в раздел</BackToChapterText>
+                        <BackToChapterText>
+                            {ISENG
+                                ? "Back to the section page"
+                                : "Вернуться в раздел"}
+                        </BackToChapterText>
                     </BackToChapter>
                 </Link>
                 {children}

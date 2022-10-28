@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Navigation } from "swiper"
 import { objectSliderData } from "../../data"
-import { COLORS, DEVICE } from "../../constants"
+import { COLORS, DEVICE, ISENG } from "../../constants"
 // import { ArrowSlider, SliderIcons, LinkIcon } from "../../assets/svg"
 import { ArrowSlider, SliderIcons } from "../../assets/svg"
 
@@ -14,13 +14,18 @@ import "swiper/css/navigation"
 
 export default function ObjectSlider({
     data: { type = "OOH" } = {},
-    color = COLORS.green_dark
+    color = COLORS.green_dark,
 }) {
+    const siteEngName = type === "OOH" ? "UN" : "PhosAgro"
+    const siteRuName = type === "OOH" ? "ООН" : "ФосАгро"
+    const siteName = ISENG ? siteEngName : siteRuName
+
     return (
         <Container>
             <SliderTitle>
-                Нажмите на интересующую цель, чтобы узнать подробнее на сайте{" "}
-                {type === "OOH" ? "OOH" : "ФосАгро"}
+                {ISENG
+                    ? `Click on a goal to learn more about it on the ${siteName} website.`
+                    : `Нажмите на интересующую цель, чтобы узнать подробнее на сайте ${siteName}`}
             </SliderTitle>
             <Swiper
                 modules={[Navigation]}

@@ -132,7 +132,6 @@ function Tree({ className, qsCount = 5 }) {
             // показываем листья с анимацией
             showItems.forEach((i) => {
                 function handleAnimendHandler(e) {
-                    console.log('add visible');
                     e.target.classList.add("visible")
                     e.target.classList.remove("rise")
                     e.target.removeEventListener("animationend", handleAnimendHandler)

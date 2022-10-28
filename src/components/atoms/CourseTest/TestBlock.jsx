@@ -14,10 +14,24 @@ import "swiper/css/effect-fade"
 
 import { Label, Text } from "./styledAtoms"
 import NextButton from "../NextButton"
-import { DEVICE, COLORS } from "../../../constants"
+import { DEVICE, COLORS, ISENG } from "../../../constants"
 import { CourseProgressStore, CourseTestStore, SoundStore } from "../../../store"
 import { renderCustom } from "../../../utils"
 import { Click1 } from "../../../assets/audio"
+
+// !перевод
+// это от меня, перевода не нашла
+const engText = {
+    finishTestBtnText: 'Complete',
+    nextQBtnText: 'Next question',
+}
+
+const ruText = {
+    finishTestBtnText: 'Завершить',
+    nextQBtnText: 'Следующий вопрос',
+}
+
+const textData = ISENG ? engText : ruText
 
 function TestBlock() {
     const testRef = useRef(null)
@@ -73,9 +87,6 @@ function TestBlock() {
 
     function handleNextClick() {
         clickBtnSound.play()
-
-        // console.log('CourseTestStore.finalContent.audio', CourseTestStore.finalContent.audio);
-        // SoundStore.setTestFinalAudio()
 
         if (CourseTestStore.activeQInputType === "checkbox") {
             CourseTestStore.setUserAnswers(CourseTestStore.activeQId, chbAnswIds)
@@ -191,8 +202,8 @@ function TestBlock() {
                             <StyledNextButton
                                 text={
                                     CourseTestStore.showEndTestBtn
-                                        ? "Завершить"
-                                        : "Следующий вопрос"
+                                        ? textData.finishTestBtnText
+                                        : textData.nextQBtnText
                                 }
                                 inert={nextBtnDisabled}
                                 className="button-next"
