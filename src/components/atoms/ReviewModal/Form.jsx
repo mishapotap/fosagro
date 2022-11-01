@@ -84,7 +84,7 @@ function Form() {
             <StyledForm onSubmit={handleSubmit}>
                 <MailInputWrapper>
                     <MailInput
-                        type="email"
+                        type="text"
                         placeholder={textData.emailPlaceholder}
                         onChange={handleEmailInpChange}
                         onBlur={(e) => handleEmailBlur(e)}

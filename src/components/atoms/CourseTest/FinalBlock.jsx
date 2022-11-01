@@ -282,7 +282,7 @@ const SectButtonCircle = styled.div`
     }
 
     @media ${DEVICE.laptop} {
-        font-size: 14px;
+        font-size: 13px;
     }
 
     @media ${DEVICE.mobile} {
@@ -301,6 +301,10 @@ const SectButtons = styled.div`
         max-width: none;
     }
 
+    @media ${DEVICE.laptopS} {
+        justify-content: center;
+    }
+
     a {
         margin-bottom: 4vh;
 
@@ -317,6 +321,13 @@ const SectButtons = styled.div`
         flex: 0 1 33%;
         padding-left: 20px;
         padding-right: 20px;
+
+        @media ${DEVICE.laptop} {
+            width: 130px;
+            flex: none;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
 
         @media ${DEVICE.tablet} {
             flex: 0 1 50%;
@@ -413,12 +424,9 @@ const FinBottom = styled.div`
         padding: 0;
     }
 
-    @media ${DEVICE.laptop} {
-        flex-direction: column;
-    }
-
     @media ${DEVICE.laptopS} {
         position: relative;
+        flex-direction: column;
     }
 `
 
@@ -430,7 +438,7 @@ const Feedback = styled.div`
         flex-shrink: 0;
     }
 
-    @media ${DEVICE.laptop} {
+    @media ${DEVICE.laptopS} {
         margin-bottom: 30px;
         justify-content: space-around;
         width: 100%;
@@ -440,7 +448,7 @@ const Feedback = styled.div`
 const FeedbackText = styled.p`
     font-family: "CalibriLight", sans-serif;
     font-size: 1vw;
-    line-height: 1.3;
+    line-height: 1.2;
     text-align: left;
 
     max-width: 18.4vw;
@@ -448,7 +456,7 @@ const FeedbackText = styled.p`
 
     @media ${DEVICE.laptop} {
         max-width: 250px;
-        font-size: 18px;
+        font-size: 16px;
     }
 `
 

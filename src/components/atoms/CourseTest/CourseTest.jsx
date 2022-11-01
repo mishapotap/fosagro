@@ -59,6 +59,8 @@ const Columns = styled.div`
 
     @media ${DEVICE.laptopS} {
         flex-direction: column;
+        /* height: auto;
+        max-height: none; */
     }
 
     .tree {
@@ -142,7 +144,9 @@ const SecondColumn = styled.div`
     @media ${DEVICE.laptopS} {
         order: 1;
         justify-content: center;
-        min-height: 470px;
+        min-height: 440px;
+        width: 60%;
+        margin: 0 auto;
 
         flex: 0 1 100%;
         height: auto;
@@ -152,6 +156,10 @@ const SecondColumn = styled.div`
         &.hide {
             display: none;
         }
+    }
+
+    @media ${DEVICE.mobile} {
+        width: 96%;
     }
 `
 

@@ -406,7 +406,8 @@ const PlayerProgress = styled.div`
     flex: 0 1 100%;
     display: flex;
     align-items: center;
-    height: 58px;
+    /* height: 58px; */
+    height: 100%;
 `
 
 const ProgressTime = styled.div`
@@ -432,7 +433,7 @@ const FullTime = styled.div`
 const Time = styled.div`
     position: absolute;
     right: 0;
-    bottom: 0;
+    top: ${({isFullscreen}) => isFullscreen ? '55%' : '65%'};
 
     display: flex;
     align-items: center;
@@ -455,11 +456,6 @@ const Time = styled.div`
     ${({ isFullscreen }) =>
         !isFullscreen &&
         css`
-            bottom: 8px;
-
-            @media ${DEVICE.mobile} {
-                bottom: 13px;
-            }
 
             ${ProgressTime} {
                 font-family: FocoLight, sans-serif !important;

@@ -8,7 +8,7 @@ import { CourseProgressStore } from "../../store"
 function AnimTitle({ data = {} }) {
     return (
         <Container color={CourseProgressStore.activeSectColor}>
-            {Object.entries(data).map(([time, text], index) => (
+            {Object.entries(data).map(([time, idata], index) => (
                 <TitleWrapper
                     // eslint-disable-next-line react/no-array-index-key
                     key={index}
@@ -18,11 +18,12 @@ function AnimTitle({ data = {} }) {
                                   animationDelay: `${
                                       +Object.keys(data)[index + 1] - 1
                                   }s`,
+                                  top: typeof idata === 'object' && `${idata.top}%`
                               }
-                            : { animation: "none" }
+                            : { animation: "none", top: typeof idata === 'object' && `${idata.top}%` }
                     }
                 >
-                    <Title style={{ animationDelay: `${time}s` }}>{text}</Title>
+                    <Title style={{ animationDelay: `${time}s` }}>{typeof idata === 'object' ? idata.text : idata}</Title>
                 </TitleWrapper>
             ))}
         </Container>
@@ -34,6 +35,10 @@ export default observer(AnimTitle)
 const TitleWrapper = styled.div`
     position: absolute;
     animation: ${showContent} 0.5s forwards reverse;
+
+    @media ${DEVICE.laptopS} {
+        top: 0!important;
+    }
 `
 
 const Title = styled.div`
@@ -44,7 +49,6 @@ const Title = styled.div`
 const Container = styled.div`
     position: relative;
     width: 30vw;
-    /* max-width: 30vw !important; */
     margin-bottom: 10px;
     margin-right: 5vw;
     height: 13vh!important;
@@ -56,7 +60,7 @@ const Container = styled.div`
     color: ${({ color }) => color || COLORS.green};
 
     transition: 0.4s;
-    overflow: hidden;
+    /* overflow: hidden; */
 
     &.paused {
         animation-play-state: paused !important;
@@ -66,15 +70,16 @@ const Container = styled.div`
         }
     }
 
-    @media ${DEVICE.laptop} {
+    @media ${DEVICE.laptopS} {
         display: flex;
         justify-content: center;
         font-size: 18px;
 
         height: 65px!important;
         width: 100%;
-        max-width: 500px!important;
+        max-width: 450px!important;
         margin-left: auto;
         margin-right: auto;
     }
+
 `

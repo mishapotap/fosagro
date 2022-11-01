@@ -8,11 +8,7 @@ const TextBase = styled.div`
     line-height: 1.3;
 
     @media ${DEVICE.laptop} {
-        font-size: 20px;
-    }
-
-    @media ${DEVICE.mobile} {
-        font-size: 18px;
+        font-size: 16px;
     }
 `
 

@@ -4,7 +4,7 @@ import { COLORS } from "../../constants"
 import { showContent } from "../../constants/animations"
 import { CourseProgressStore } from "../../store"
 
-export default function Lamp({ className, makeAnim = false }) {
+export default function Lamp({ className, makeAnim = false, isIntro = false }) {
 
     const intervalId = useRef(null)
     const containerRef = useRef(null)
@@ -28,6 +28,7 @@ export default function Lamp({ className, makeAnim = false }) {
             className={`${dontAnimate ? 'no-anim' : ""} ${className || ''}`}
             makeAnim={makeAnim}
             color={CourseProgressStore.activeSectColor}
+            isIntro={isIntro}
             ref={containerRef}
             key={key}
             viewBox="0 0 53 53"
@@ -143,6 +144,6 @@ const Container = styled.svg`
         `}
 
     ${Line} {
-        fill: ${({color}) => color || COLORS.green_light}
+        fill: ${({color, isIntro}) => isIntro ? COLORS.orange : color };
     }
 `

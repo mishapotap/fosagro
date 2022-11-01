@@ -46,6 +46,22 @@ function CourseContent({ setIds, onDisappear }) {
     const wasFirstPlay = useRef(false)
 
     const [showSlide, setShowSlide] = useState(true)
+    const [showNav, setShowNav] = useState(true)
+    const [makeNavAnim, setMakeNavAnim] = useState(true)
+
+    useEffect(() => {
+        // if (showSlide && document.documentElement.clientWidth < 1024) {
+        //     setMakeNavAnim(true)
+        // } else {
+        //     setShowNav(false)
+        // }
+        if (showSlide) {
+            if (makeNavAnim) setShowNav(true)
+        } else if (makeNavAnim) {
+            setShowNav(false)
+        }
+    }, [showSlide])
+
     const [leftSlide, setLeftSlide] = useState(false)
     const [rightSlide, setRightSlide] = useState(false)
     const [animateNextBtn, setAnimateNextBtn] = useState(false)
@@ -388,6 +404,9 @@ function CourseContent({ setIds, onDisappear }) {
         SoundStore.setIsPlayingSound(false)
 
         const medColRef = mediaColRef.current
+        if (document.documentElement.clientWidth < 1024) {
+            setMakeNavAnim(true)
+        }
 
         return () => {
             clearTimeouts()
@@ -496,23 +515,26 @@ function CourseContent({ setIds, onDisappear }) {
     }
 
     function handleExited() {
-        // setTimeout(() => {
-            setKey((prevKey) => prevKey + 1)
-            setIds()
-            CourseProgressStore.setVisitedPage()
-            setShowSlide(true)
+        setIds()
+        CourseProgressStore.setVisitedPage()
 
-            const slideContent = document.querySelector(".slide-content")
-            if (slideContent) {
-                slideContent.scrollTop = 0
-            }
-        // }, 50)
+        const slideContent = document.querySelector(".slide-content")
+        if (slideContent) {
+            slideContent.scrollTop = 0
+        }
+        setTimeout(() => {
+            setKey((prevKey) => prevKey + 1)
+            setShowSlide(true)
+        }, 5)
     }
 
     function handleEntered() {
-        setLeftSlide(false)
-        setRightSlide(false)
-        setIsNavBtnsDisabled(false)
+        // setTimeout(() => {
+
+            setLeftSlide(false)
+            setRightSlide(false)
+            setIsNavBtnsDisabled(false)
+        // }, 10);
     }
 
     function onAudioPlay() {
@@ -557,7 +579,7 @@ function CourseContent({ setIds, onDisappear }) {
         >
             <CSSTransition
                 in={showSlide}
-                timeout={450}
+                timeout={500}
                 classNames="slide"
                 nodeRef={audioColRef}
             >
@@ -582,7 +604,7 @@ function CourseContent({ setIds, onDisappear }) {
 
             <CSSTransition
                 in={showSlide}
-                timeout={450}
+                timeout={500}
                 classNames="slide"
                 nodeRef={titleColRef}
             >
@@ -595,7 +617,7 @@ function CourseContent({ setIds, onDisappear }) {
 
             <CSSTransition
                 in={showSlide}
-                timeout={450}
+                timeout={500}
                 classNames="slide"
                 nodeRef={contentColRef}
                 onExited={handleExited}
@@ -610,8 +632,9 @@ function CourseContent({ setIds, onDisappear }) {
             </CSSTransition>
 
             <CSSTransition
-                in={showSlide}
-                timeout={450}
+                // in={showSlide}
+                in={showNav}
+                timeout={500}
                 classNames="slide"
                 nodeRef={navColRef}
             >
@@ -627,7 +650,7 @@ function CourseContent({ setIds, onDisappear }) {
 
             <CSSTransition
                 in={showSlide}
-                timeout={450}
+                timeout={500}
                 classNames="slide"
                 nodeRef={mediaColRef}
             >

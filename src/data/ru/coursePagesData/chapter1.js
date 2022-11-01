@@ -72,15 +72,15 @@ const chapter1Data = {
                     data: [
                         {
                             source: CourseSliderOne21,
-                            alt: "image1",
+                            alt: "Человек с машиной в воде, наводнение",
                         },
                         {
                             source: CourseSliderOne22,
-                            alt: "image2",
+                            alt: "Пожар в лесу",
                         },
                         {
                             source: CourseSliderOne23,
-                            alt: "image3",
+                            alt: "извержение вулкана",
                         },
                     ],
                 },
@@ -117,15 +117,15 @@ const chapter1Data = {
                     data: [
                         {
                             source: CourseSliderOne31,
-                            alt: "image1",
+                            alt: "иллюстрация человек за столом с молотком и книгой, весы и лес на фоне",
                         },
                         {
                             source: CourseSliderOne32,
-                            alt: "image2",
+                            alt: "иллюстрация человек собирает урожай",
                         },
                         {
                             source: CourseSliderOne33,
-                            alt: "image3",
+                            alt: "иллюстрация рука человека, которая держит деревья, тучи, живых существ",
                         },
                     ],
                 },

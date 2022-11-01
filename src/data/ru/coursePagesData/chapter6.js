@@ -208,15 +208,15 @@ const chapter6Data = {
                     data: [
                         {
                             source: CourseSliderSix11,
-                            alt: "image1",
+                            alt: "девушка в наушниках с микрофоном улыбается",
                         },
                         {
                             source: CourseSliderSix12,
-                            alt: "image2",
+                            alt: "две девушки сидят и говорят друг с другом",
                         },
                         {
                             source: CourseSliderSix13,
-                            alt: "image3",
+                            alt: "раздел контактов на сайте ФосАгро",
                         },
                     ],
                 },
@@ -368,15 +368,15 @@ const chapter6Data = {
                     data: [
                         {
                             source: CourseSliderSix21,
-                            alt: "image1",
+                            alt: "группа молодых людей с синими платками и значками ФосАгро",
                         },
                         {
                             source: CourseSliderSix22,
-                            alt: "image2",
+                            alt: "взрослый мужчина оценивает работу молодой девушки в ноутбуке",
                         },
                         {
                             source: CourseSliderSix23,
-                            alt: "image3",
+                            alt: "счастливая девушка с синим платком что-то пишет на доске маркером",
                         },
                     ],
                 },
@@ -424,15 +424,15 @@ const chapter6Data = {
                     data: [
                         {
                             source: CourseSliderSix24,
-                            alt: "image1",
+                            alt: "женщина в медицинской форме улыбается пациенту",
                         },
                         {
                             source: CourseSliderSix25,
-                            alt: "image2",
+                            alt: "мужчина и женщина смотрят электронный стенд",
                         },
                         {
                             source: CourseSliderSix26,
-                            alt: "image3",
+                            alt: "новые яркие дома с логотипом ФосАгро",
                         },
                     ],
                 },
@@ -531,15 +531,15 @@ const chapter6Data = {
                     data: [
                         {
                             source: CourseSliderSix41,
-                            alt: "image1",
+                            alt: "здание центр образования номер 29 ",
                         },
                         {
                             source: CourseSliderSix42,
-                            alt: "image2",
+                            alt: "зал для физических занятий с логотипом ФосАгро",
                         },
                         {
                             source: CourseSliderSix43,
-                            alt: "image3",
+                            alt: "спортзал с волейбольной сеткой, на стене логотип ФосАгро",
                         },
                     ],
                 },
@@ -574,21 +574,21 @@ const chapter6Data = {
                     data: [
                         {
                             source: CourseSliderSix44,
-                            alt: "image1",
+                            alt: "детская площадка на фоне нового дома",
                         },
                         {
                             source: CourseSliderSix45,
-                            alt: "image2",
+                            alt: "красивый новый дом",
                         },
                         {
                             source: CourseSliderSix46,
-                            alt: "image3",
+                            alt: "здание с буквами ФосАгро Апатит",
                         },
                     ],
                 },
             },
             3: {
-                title: "Школа-ВУЗ-предприятие",
+                title: "Школа-колледж/вуз-предприятие",
                 audioSrc: Speaker43,
                 content: [
                     {
@@ -600,7 +600,7 @@ const chapter6Data = {
                     {
                         component: "Text",
                         data: {
-                            text: "Эта программа&nbsp;&nbsp;- логическое продолжение многолетнего проекта «ФосАгро классы». Профориентационная работа теперь проводится с младших классов. Компания расширила материальную помощь школам, участвующим в проекте.",
+                            text: "Эта программа&nbsp;&nbsp;- логическое продолжение многолетнего проекта «ФосАгро-классы». Профориентационная работа теперь проводится с младших классов. Компания расширила материальную помощь школам, участвующим в проекте.",
                         },
                     },
                 ],
@@ -610,15 +610,15 @@ const chapter6Data = {
                     data: [
                         {
                             source: CourseSliderSix47,
-                            alt: "image1",
+                            alt: "девочка в галстуке Фосагро ДРОЗД поднимает руку на занятии",
                         },
                         {
                             source: CourseSliderSix48,
-                            alt: "image2",
+                            alt: "девушки-подростки с синими платками слушают говорящего",
                         },
                         {
                             source: CourseSliderSix49,
-                            alt: "image3",
+                            alt: "учебный класс, на стене логотип ФосАгро",
                         },
                     ],
                 },
@@ -646,15 +646,15 @@ const chapter6Data = {
                     data: [
                         {
                             source: CourseSliderSix410,
-                            alt: "image1",
+                            alt: "дети в белых футболках с надписью ДРОЗД и баскетбольными мячами улыбаются и смотрят в камеру",
                         },
                         {
                             source: CourseSliderSix411,
-                            alt: "image2",
+                            alt: "дети в хоккейной форме, на фоне логотип ДРОЗД",
                         },
                         {
                             source: CourseSliderSix412,
-                            alt: "image3",
+                            alt: "дети в спортивных футболках ДРОЗД Балаково на занятии",
                         },
                     ],
                 },
@@ -672,7 +672,7 @@ const chapter6Data = {
                     {
                         component: "Text",
                         data: {
-                            text: "Компания «ФосАгро» оказывает постоянную благотворительную помощь в восстановлении и строительстве православных святынь, как в России, так и за рубежом, реализует проекты по поддержке традиционных культурных и духовных ценностей.",
+                            text: "Компания ФосАгро оказывает постоянную благотворительную помощь в восстановлении и строительстве православных святынь, как в России, так и за рубежом, реализует проекты по поддержке традиционных культурных и духовных ценностей.",
                         },
                     },
                 ],
@@ -682,15 +682,15 @@ const chapter6Data = {
                     data: [
                         {
                             source: CourseSliderSix413,
-                            alt: "image1",
+                            alt: "икока в деревянной церкви",
                         },
                         {
                             source: CourseSliderSix414,
-                            alt: "image2",
+                            alt: "красивые разноцветные стены и купол с люстрой в цервки",
                         },
                         {
                             source: CourseSliderSix415,
-                            alt: "image3",
+                            alt: "деревянная церковь",
                         },
                     ],
                 },
@@ -718,15 +718,15 @@ const chapter6Data = {
                     data: [
                         {
                             source: CourseSliderSix416,
-                            alt: "image1",
+                            alt: "мать с дочкой смотрят витрину Карбонаты",
                         },
                         {
                             source: CourseSliderSix417,
-                            alt: "image2",
+                            alt: "комната с самоварами",
                         },
                         {
                             source: CourseSliderSix418,
-                            alt: "image3",
+                            alt: "обзорная площадка",
                         },
                     ],
                 },
@@ -754,15 +754,15 @@ const chapter6Data = {
                     data: [
                         {
                             source: CourseSliderSix419,
-                            alt: "image1",
+                            alt: "молодая девушка помогает женщине в возрасте",
                         },
                         {
                             source: CourseSliderSix420,
-                            alt: "image2",
+                            alt: "молодая девушка помогает мужчине в возрасте",
                         },
                         {
                             source: CourseSliderSix421,
-                            alt: "image3",
+                            alt: "молодая женщина помогает женщине в возрасте, обе в масках",
                         },
                     ],
                 },
@@ -788,7 +788,7 @@ const chapter6Data = {
                                 },
                                 {
                                     id: 2,
-                                    text: "Российская шахматная федерация;",
+                                    text: "Федерация шахмат России;",
                                 },
                                 {
                                     id: 3,
@@ -812,15 +812,15 @@ const chapter6Data = {
                     data: [
                         {
                             source: CourseSliderSix422,
-                            alt: "image1",
+                            alt: "девушки гимнастки в форме и с обручами улыбаются, на фоне логотип ФосАгро",
                         },
                         {
                             source: CourseSliderSix423,
-                            alt: "image2",
+                            alt: "мужчина рассказывает о шахматах, рядом большая шахматная доска",
                         },
                         {
                             source: CourseSliderSix424,
-                            alt: "image3",
+                            alt: "молодые люди в оранжевой форме играют в баскетбол, на фоне логотип ФосАгро",
                         },
                     ],
                 },

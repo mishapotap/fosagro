@@ -28,6 +28,6 @@ const Container = styled.div`
     }
 
     @media ${DEVICE.laptopS} {
-        font-size: 26px;
+        font-size: 24px;
     }
 `

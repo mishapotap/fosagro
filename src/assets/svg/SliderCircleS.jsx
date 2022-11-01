@@ -5,7 +5,7 @@ import { DEVICE } from "../../constants"
 
 export default function SliderCircleS({ color, time, activePathItem }) {
     return (
-        <Container>
+        <Container className="slider-circle">
             <Wrapper
                 width="100%"
                 height="100%"

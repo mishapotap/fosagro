@@ -161,19 +161,6 @@ const Logo = styled.div`
     width: 12.5vw;
     margin-right: 40px;
 
-    ${({isEng}) => isEng && css`
-        padding: 5px 0;
-
-        @media ${DEVICE.laptopM} {
-            padding-bottom: 7px;
-        }
-
-        @media ${DEVICE.laptopS} {
-            padding-top: 7px;
-            padding-bottom: 10px;
-        }
-    `}
-
     @media ${DEVICE.laptopS} {
         width: 150px;
     }
@@ -185,7 +172,7 @@ const Logo = styled.div`
 const BackToMain = styled.div`
     flex-shrink: 0;
     margin-right: 100px;
-    margin-top: 20px;
+    margin-top: 6px;
 
     @media ${DEVICE.laptopM} {
         margin-right: 80px;
@@ -211,21 +198,21 @@ const BackToMain = styled.div`
         bottom: 0;
         left: 0;
         margin: 0;
-        transform: translateY(calc(100% + 14px));
+        transform: translateY(calc(100% + 24px));
     }
 `
 
 const HeaderSectTitle = styled.div`
     position: absolute;
     bottom: 0;
-    transform: translateY(calc(100% + 3vh));
+    transform: translateY(calc(100% + 3.5vh));
 
     @media ${DEVICE.laptopM} {
-        transform: translateY(calc(100% + 2.3vh));
+        transform: translateY(calc(100% + 3.6vh));
     }
 
     @media ${DEVICE.laptopS} {
-        transform: translateY(calc(100% + 8px));
+        transform: translateY(calc(100% + 20px));
     }
 `
 
@@ -267,7 +254,7 @@ const HeaderInner = styled.div`
 
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
 
     width: 100%;
 
@@ -312,7 +299,7 @@ const Container = styled.div`
     }
 
     @media ${DEVICE.laptopS} {
-        padding: 13px 23px 3px;
+        padding: 17px 23px 3px;
         height: 90px;
 
         box-shadow: ${({ makeMobShadow }) =>
@@ -326,7 +313,7 @@ const LinkToFosagro = styled.div`
     @media ${DEVICE.laptopS} {
         position: absolute;
         bottom: 0;
-        transform: translateY(calc(100% + 11px));
+        transform: translateY(calc(100% + 22px));
     }
 
     a {
@@ -351,7 +338,7 @@ const LinkToFosagro = styled.div`
         font-family: "CalibriBold";
         font-weight: 700;
         font-size: 16px;
-        line-height: 20px;
+        line-height: 1;
 
         color: ${COLORS.white};
         transition: all 0.3s;

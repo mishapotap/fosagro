@@ -4,12 +4,12 @@ import { Lamp } from "../../../assets/svg"
 import { COLORS, DEVICE } from "../../../constants"
 
 // синее примечание с лампочкой
-export default function Note({ data, className }) {
+export default function Note({ data, className, isIntro = false }) {
     const { text } = data
 
     return (
         <Container className={className}>
-            <StyledLamp makeAnim />
+            <StyledLamp isIntro={isIntro} makeAnim />
             <Text>{text}</Text>
         </Container>
     )

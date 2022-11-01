@@ -1,12 +1,11 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 /* eslint-disable react/jsx-no-bind */
 import React, { useRef, useState, useEffect } from "react"
-import styled, { keyframes } from "styled-components"
+import styled from "styled-components"
 import { CSSTransition } from "react-transition-group"
 import { observer } from "mobx-react-lite"
 import CourseStepButton from "../CourseStepButton"
 import { CourseProgressStore, SoundStore } from "../../../store"
-import { showContent } from "../../../constants/animations"
 import { DEVICE } from "../../../constants"
 
 function NewSectWindow({ onExited }) {
@@ -66,8 +65,6 @@ function NewSectWindow({ onExited }) {
                     <audio
                         ref={audioRef}
                         src={sectBtnData.audio}
-                        // onCanPlay={() => alert('canplay')}
-                        // onLoadedMetadata={() => alert('loadedmetadata')}
                         onEnded={handleAudioEnded}
                         preload="metadata"
                     />
@@ -79,18 +76,6 @@ function NewSectWindow({ onExited }) {
 }
 
 export default observer(NewSectWindow)
-
-const scaleBtn = keyframes`
-    0% {
-        opacity: 0;
-        transform: scale(1.75);
-    }
-
-    100% {
-        opacity: 1;
-        transform: scale(2.3);
-    }
-`
 
 const Container = styled.div`
     display: flex;
@@ -109,12 +94,13 @@ const Container = styled.div`
         position: static;
         pointer-events: none;
         width: 10vw;
+        transition: 0.5s;
 
         @media ${DEVICE.laptop} {
             width: 100px;
 
             .course-step-btn-title {
-                font-size: 14px;
+                font-size: 13px;
             }
         }
     }
@@ -126,39 +112,30 @@ const Container = styled.div`
         width: 100%;
         height: 100%;
 
+        transition: 0.5s;
         background: rgba(248, 250, 253, 0.5);
         content: "";
     }
 
-    &.new-sect-enter-active {
+    &.new-sect {
         &:after {
-            animation: ${showContent} 0.5s both;
+            opacity: 0;
         }
 
         .course-step-btn {
-            animation: ${scaleBtn} 0.5s ease-in-out both;
+            opacity: 0;
+            transform: scale(1.75);
         }
     }
 
-    &.new-sect-exit-active {
-        &:after {
-            animation: ${showContent} 0.5s both reverse !important;
-        }
-
-        .course-step-btn {
-            animation: ${scaleBtn} 0.5s ease-in-out both reverse !important;
-        }
-    }
-
-    &.new-sect-enter-done,
-    &.new-sect-exit {
+    &.new-sect-enter-done {
         &:after {
             opacity: 1;
         }
 
         .course-step-btn {
+            opacity: 1;
             transform: scale(2.3);
-            opacity: 1;
         }
     }
 

@@ -72,9 +72,6 @@ const MenuButtonContainer = styled.div`
     @media ${DEVICE.laptopS} {
         margin-bottom: 5vw;
     }
-
-    &.with-active-chapter {
-    }
 `
 
 const MenuProgressBarContainer = styled.div`

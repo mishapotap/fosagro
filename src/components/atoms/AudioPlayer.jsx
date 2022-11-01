@@ -171,15 +171,19 @@ export default function AudioPlayer({
 
     function setStrokeL() {
         setTimeout(() => {
-            const length = baseCircleRef.current.getTotalLength()
-            setStrokeLength(length)
+            if (baseCircleRef.current) {
+                const length = baseCircleRef.current.getTotalLength()
+                setStrokeLength(length)
+            }
         }, 400)
     }
 
     useEffect(() => {
         window.addEventListener("resize", setStrokeL)
-        const length = baseCircleRef.current.getTotalLength()
-        setStrokeLength(length)
+        if (baseCircleRef.current) {
+            const length = baseCircleRef.current.getTotalLength()
+            setStrokeLength(length)
+        }
 
         const resetEl = audioRef.current
 
@@ -592,6 +596,10 @@ const Error = styled.div`
 
     border-radius: 5px;
     background: ${COLORS.white};
+
+    @media ${DEVICE.laptopM} {
+        font-size: 12px;
+    }
 `
 
 const AudioEl = styled.audio``

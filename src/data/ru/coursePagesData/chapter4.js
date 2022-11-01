@@ -147,7 +147,7 @@ const chapter4Data = {
                     {
                         component: "Text",
                         data: {
-                            text: "Основная цель программы - обеспечение основных технологических процессов <span>сокращения выбросов парниковых газов охвата 2 до 794,7 тыс. т СО<sub>2</sub> - эквивалента</span> к 2028 году за счет повышения энергетической и экологической эффективности ",
+                            text: "Основная цель программы&nbsp;&nbsp;- обеспечение основных технологических процессов <span>сокращения выбросов парниковых газов охвата 2 до 794,7 тыс. т СО<sub>2</sub> - эквивалента</span> к 2028 году за счет повышения энергетической и экологической эффективности ",
                         },
                     },
                 ],
@@ -413,15 +413,15 @@ const chapter4Data = {
                     data: [
                         {
                             source: CourseSliderFour11,
-                            alt: "image1",
+                            alt: "совещание людей в костюмах за столом",
                         },
                         {
                             source: CourseSliderFour12,
-                            alt: "image2",
+                            alt: "сертификат соответствия требованиям ISO 45001:2018",
                         },
                         {
                             source: CourseSliderFour13,
-                            alt: "image3",
+                            alt: "судейский молоток на белом фоне",
                         },
                     ],
                 },
@@ -456,15 +456,15 @@ const chapter4Data = {
                     data: [
                         {
                             source: CourseSliderFour21,
-                            alt: "image1",
+                            alt: "экомаркировка листок жизни",
                         },
                         {
                             source: CourseSliderFour22,
-                            alt: "image2",
+                            alt: "комплексное удобрение Apaviva",
                         },
                         {
                             source: CourseSliderFour23,
-                            alt: "image3",
+                            alt: "экомаркировка листок жизни с удобрением Apaviva",
                         },
                     ],
                 },
@@ -493,15 +493,15 @@ const chapter4Data = {
                     data: [
                         {
                             source: CourseSliderFour31,
-                            alt: "image1",
+                            alt: "оборудование большого размера",
                         },
                         {
                             source: CourseSliderFour32,
-                            alt: "image2",
+                            alt: "оборудование большого размера, внизу идет человек",
                         },
                         {
                             source: CourseSliderFour33,
-                            alt: "image3",
+                            alt: "женщина в каске и форме ФосАгро пишет что-то в книге, на фоне мешки Apaviva",
                         },
                     ],
                 },

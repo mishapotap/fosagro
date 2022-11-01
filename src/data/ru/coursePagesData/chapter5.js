@@ -133,15 +133,15 @@ const chapter5Data = {
                     data: [
                         {
                             source: CourseSliderFive21,
-                            alt: "image1",
+                            alt: "синяя вода с волнами, вид сверху",
                         },
                         {
                             source: CourseSliderFive22,
-                            alt: "image2",
+                            alt: "извержение вулкана",
                         },
                         {
                             source: CourseSliderFive23,
-                            alt: "image3",
+                            alt: "планета Земля в кубе льда",
                         },
                     ],
                 },
@@ -163,15 +163,15 @@ const chapter5Data = {
                     data: [
                         {
                             source: CourseSliderFive24,
-                            alt: "image1",
+                            alt: "портрет Жозефа Фурье, французского математика и физика",
                         },
                         {
                             source: CourseSliderFive25,
-                            alt: "image2",
+                            alt: "много машин стоят в пробке",
                         },
                         {
                             source: CourseSliderFive26,
-                            alt: "image3",
+                            alt: "фабрики с трубами, из которых выходит дым",
                         },
                     ],
                 },
@@ -308,15 +308,15 @@ const chapter5Data = {
                     data: [
                         {
                             source: CourseSliderFive31,
-                            alt: "image1",
+                            alt: "айсберг посреди воды",
                         },
                         {
                             source: CourseSliderFive32,
-                            alt: "image2",
+                            alt: "закат в горах",
                         },
                         {
                             source: CourseSliderFive33,
-                            alt: "image3",
+                            alt: "два медведя среди травы",
                         },
                     ],
                 },
@@ -352,15 +352,15 @@ const chapter5Data = {
                     data: [
                         {
                             source: CourseSliderFive34,
-                            alt: "image1",
+                            alt: "мальчик сидит на разрушенной тумбе и читает книгу",
                         },
                         {
                             source: CourseSliderFive35,
-                            alt: "image2",
+                            alt: "большая толпа людей",
                         },
                         {
                             source: CourseSliderFive36,
-                            alt: "image3",
+                            alt: "министр Тувалу говорит речь в воде",
                         },
                     ],
                 },
@@ -394,15 +394,15 @@ const chapter5Data = {
                     data: [
                         {
                             source: CourseSliderFive37,
-                            alt: "image1",
+                            alt: "стройка, оборудование",
                         },
                         {
                             source: CourseSliderFive38,
-                            alt: "image2",
+                            alt: "порт",
                         },
                         {
                             source: CourseSliderFive39,
-                            alt: "image3",
+                            alt: "человек смотрит презентацию по изменению продаж",
                         },
                     ],
                 },
@@ -445,15 +445,15 @@ const chapter5Data = {
                     data: [
                         {
                             source: CourseSliderFive41,
-                            alt: "image1",
+                            alt: "глобус",
                         },
                         {
                             source: CourseSliderFive42,
-                            alt: "image2",
+                            alt: "фабрика, вид сверху",
                         },
                         {
                             source: CourseSliderFive43,
-                            alt: "image3",
+                            alt: "планета земля, солнечные батареи",
                         },
                     ],
                 },
