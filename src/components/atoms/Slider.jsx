@@ -121,6 +121,7 @@ export default function Slider({
 const Container = styled.div`
     max-width: ${({ width }) => width};
     transition: 0.5s;
+    /* height: 100%; */
 
     &.restart {
         animation: none !important;
@@ -145,8 +146,9 @@ const SlidesWrapper = styled.div`
     position: absolute;
     top: 50%;
     left: 50%;
-
     transform: translate(-50%, -50%);
+
+    max-height: 90%;
     width: 83%;
 
     &::after {
@@ -186,6 +188,12 @@ const ImgWrapper = styled.div`
         display: block;
         border-radius: 50%;
         object-fit: contain;
+        max-height: 100%;
+    }
+
+    @media ${DEVICE.mobile} {
+        display: flex;
+        justify-content: center;
     }
 `
 
@@ -193,6 +201,7 @@ const SliderContainer = styled.div`
     position: relative;
     max-width: 100%;
     max-height: 100%;
+    height: 100%;
     width: 100%;
     overflow: hidden;
 
@@ -222,4 +231,13 @@ const SliderContainer = styled.div`
                 }
             }
         `}
+
+    .slider-circle {
+        max-height: 100%;
+        height: 100%;
+
+        svg {
+            max-height: 100%;
+        }
+    }
 `

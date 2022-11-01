@@ -46,22 +46,6 @@ function CourseContent({ setIds, onDisappear }) {
     const wasFirstPlay = useRef(false)
 
     const [showSlide, setShowSlide] = useState(true)
-    const [showNav, setShowNav] = useState(true)
-    const [makeNavAnim, setMakeNavAnim] = useState(true)
-
-    useEffect(() => {
-        // if (showSlide && document.documentElement.clientWidth < 1024) {
-        //     setMakeNavAnim(true)
-        // } else {
-        //     setShowNav(false)
-        // }
-        if (showSlide) {
-            if (makeNavAnim) setShowNav(true)
-        } else if (makeNavAnim) {
-            setShowNav(false)
-        }
-    }, [showSlide])
-
     const [leftSlide, setLeftSlide] = useState(false)
     const [rightSlide, setRightSlide] = useState(false)
     const [animateNextBtn, setAnimateNextBtn] = useState(false)
@@ -404,11 +388,11 @@ function CourseContent({ setIds, onDisappear }) {
         SoundStore.setIsPlayingSound(false)
 
         const medColRef = mediaColRef.current
-        if (document.documentElement.clientWidth < 1024) {
-            setMakeNavAnim(true)
-        }
+
+        // document.addEventListener('animationstart', handleAnimStart);
 
         return () => {
+            // document.removeEventListener('animationstart', handleAnimStart);
             clearTimeouts()
             unObserve(medColRef)
             SoundStore.resetContentAudioEl()
@@ -515,26 +499,23 @@ function CourseContent({ setIds, onDisappear }) {
     }
 
     function handleExited() {
-        setIds()
-        CourseProgressStore.setVisitedPage()
-
-        const slideContent = document.querySelector(".slide-content")
-        if (slideContent) {
-            slideContent.scrollTop = 0
-        }
-        setTimeout(() => {
+        // setTimeout(() => {
             setKey((prevKey) => prevKey + 1)
+            setIds()
+            CourseProgressStore.setVisitedPage()
             setShowSlide(true)
-        }, 5)
+
+            const slideContent = document.querySelector(".slide-content")
+            if (slideContent) {
+                slideContent.scrollTop = 0
+            }
+        // }, 50)
     }
 
     function handleEntered() {
-        // setTimeout(() => {
-
-            setLeftSlide(false)
-            setRightSlide(false)
-            setIsNavBtnsDisabled(false)
-        // }, 10);
+        setLeftSlide(false)
+        setRightSlide(false)
+        setIsNavBtnsDisabled(false)
     }
 
     function onAudioPlay() {
@@ -621,19 +602,20 @@ function CourseContent({ setIds, onDisappear }) {
                 classNames="slide"
                 nodeRef={contentColRef}
                 onExited={handleExited}
+                // onEnter={() => console.log('enter')}
                 onEntered={handleEntered}
             >
                 <ContentColumn
                     ref={contentColRef}
                     className="slide content-col"
+                    // onAnimationStart={() => console.log('animationstart')}
                 >
                     <Content />
                 </ContentColumn>
             </CSSTransition>
 
             <CSSTransition
-                // in={showSlide}
-                in={showNav}
+                in={showSlide}
                 timeout={500}
                 classNames="slide"
                 nodeRef={navColRef}
@@ -823,6 +805,16 @@ const slideLeftEnter = keyframes`
     }
 `
 
+const disappear = keyframes`
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+`
+
 const Columns = styled.div`
     display: grid;
     grid-template: 18vh auto 105px / 7% 40% 53%;
@@ -850,22 +842,27 @@ const Columns = styled.div`
     }
     &.right-slide {
         .slide-enter-active {
-            animation-name: ${slideRightEnter};
+            animation-name: ${slideRightEnter}!important;
         }
         .slide-exit-active {
-            animation-name: ${slideRightExit};
+            animation-name: ${slideRightExit}!important;
         }
         @media ${DEVICE.laptopS} {
             .slide-enter-active {
-                animation-name: ${appear};
+                animation-name: ${appear}!important;
             }
             .slide-exit-active {
-                animation-name: ${appear};
-                animation-direction: reverse;
+                animation-name: ${disappear}!important;
+                /* animation-direction: reverse; */
             }
-            .nav-col {
+            .nav-col.slide-enter-active {
+                /* animation-name: ${appear}!important; */
                 animation-name: ${appear};
-                animation-direction: reverse;
+                animation-duration: 0.5s;
+            }
+            .nav-col.slide-exit-active {
+                /* animation-name: ${disappear}!important; */
+                animation-name: ${disappear};
                 animation-duration: 0.5s;
             }
         }
@@ -882,12 +879,20 @@ const Columns = styled.div`
                 animation-name: ${appear}!important;
             }
             .slide-exit-active {
-                animation-name: ${appear}!important;
-                animation-direction: reverse;
+                animation-name: ${disappear}!important;
+                /* animation-direction: reverse; */
             }
-            .nav-col {
-                animation-name: ${appear}!important;
-                animation-direction: reverse;
+            /* .nav-col { */
+                /* animation-name: ${appear}!important; */
+                /* animation-direction: reverse; */
+                /* animation-duration: 0.5s; */
+            /* } */
+            .nav-col.slide-enter-active {
+                animation-name: ${appear};
+                animation-duration: 0.5s;
+            }
+            .nav-col.slide-exit-active {
+                animation-name: ${disappear};
                 animation-duration: 0.5s;
             }
         }

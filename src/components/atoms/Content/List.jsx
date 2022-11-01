@@ -68,8 +68,8 @@ const ListText = styled.div`
         font-size: 1.2vw;
     }
 
-    @media ${DEVICE.laptopS} {
-        font-size: 17px;
+    @media ${DEVICE.laptop} {
+        font-size: 16px;
     }
 
     span:not(.bubble-trigger) {

@@ -175,11 +175,15 @@ export function fullscreen(el, goFull = () => {}, exitFull = () => {}) {
 }
 
 export function isTouchDevice() {
-    return (
-        "ontouchstart" in window ||
-        navigator.maxTouchPoints > 0 ||
-        navigator.msMaxTouchPoints > 0
-    )
+    // console.log('isTouchDevice', "ontouchstart" in window ||
+    // navigator.maxTouchPoints > 0 ||
+    // navigator.msMaxTouchPoints > 0);
+    // return (
+    //     "ontouchstart" in window ||
+    //     navigator.maxTouchPoints > 0 ||
+    //     navigator.msMaxTouchPoints > 0
+    // )
+    return document.documentElement.clientWidth < 1024
 }
 
 export function pauseMedia() {

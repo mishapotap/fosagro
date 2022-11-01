@@ -186,7 +186,7 @@ const Slide = styled.div`
 
 const CustomLink = styled.a`
     position: relative;
-    background-color: ${COLORS.white};
+    /* background-color: ${COLORS.white}; */
 
     &.OOH {
         transition: all 0.3s linear;
@@ -268,6 +268,8 @@ const LinkContant = styled.div`
 
     border: 2px solid ${(props) => props.border};
     border-radius: 12px;
+    overflow: hidden;
+    background-color: ${COLORS.white};
 
     transition: all 0.3s linear;
 

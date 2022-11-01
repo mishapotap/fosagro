@@ -1578,7 +1578,9 @@ const timelineData = {
                         value: {
                             color: COLORS.brown,
                             position: "bottom",
-                            text: "Школа - ВУЗ - предприятие",
+                            // text: "Школа - ВУЗ - предприятие",
+                            // ! точно правильно заменила?
+                            text: "Школа-колледж/вуз-предприятие",
                             top: "calc(50% - 150px + 115px)",
                             left: "1800px",
                         },

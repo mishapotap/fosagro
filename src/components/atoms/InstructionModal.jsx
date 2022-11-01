@@ -300,7 +300,7 @@ function InstructionModal({ isOpen, onClose, makeAnim = true }) {
                                             <SlideColsInner>
                                                 <Column className="col-title">
                                                     <Title>
-                                                        {textData[1].title}
+                                                        {textData[1].title}{"  "}
                                                         <TitleAccent>
                                                             {textData[1].titleAccent}
                                                         </TitleAccent>
@@ -624,7 +624,12 @@ const CookiesInfoLink = styled.button`
     @media ${DEVICE.laptopS} {
         position: static;
         transform: none;
-        margin-bottom: 20px;
+        margin-left: 7.7vw;
+        margin-bottom: 25px;
+    }
+
+    @media ${DEVICE.mobile} {
+        margin-left: 0;
     }
 `
 
@@ -663,6 +668,10 @@ const SlideInner = styled.div`
 
 const NavBtnsImgsRow = styled.div`
     display: flex;
+
+    @media ${DEVICE.laptopS} {
+        justify-content: center;
+    }
 
     > * {
         height: 3vw;
@@ -938,8 +947,6 @@ const Column = styled.div`
 `
 
 const TitleAccent = styled.span`
-    display: inline-block;
-    margin-left: 10px;
     color: ${COLORS.white};
 `
 
@@ -1039,7 +1046,7 @@ const Slide2Cols = styled(SlideCols)`
 
             @media ${DEVICE.laptopS} {
                 padding-top: 0;
-                padding-bottom: 9vh;
+                padding-bottom: 0;
             }
         }
 
@@ -1072,6 +1079,10 @@ const ChaptersImagesInner = styled.div`
         flex-wrap: wrap;
     }
 
+    @media ${DEVICE.mobile} {
+        justify-content: space-between;
+    }
+
     > * {
         flex: 0 1 16.6%;
 
@@ -1080,7 +1091,8 @@ const ChaptersImagesInner = styled.div`
         }
 
         @media ${DEVICE.mobile} {
-            flex: 0 1 50%;
+            flex: 0 1 47%;
+            margin-bottom: 10px;
         }
     }
 `
@@ -1121,6 +1133,10 @@ const TimelineImgWrapper = styled.div`
     margin: 0 auto;
     max-width: 90%;
     overflow: hidden;
+
+    @media ${DEVICE.laptop} {
+        max-width: 78%;
+    }
 
     @media ${DEVICE.laptopS} {
         max-width: 100%;
@@ -1209,6 +1225,10 @@ const Slide1Center = styled.div`
 const TestTextWrapper = styled.div`
     display: flex;
     justify-content: center;
+
+    @media ${DEVICE.laptopS} {
+        justify-content: flex-start;
+    }
 
     ${Text} {
         width: auto;

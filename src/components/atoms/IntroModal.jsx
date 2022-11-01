@@ -336,6 +336,7 @@ function IntroModal({ isOpen, onClose, items }) {
                                                             data={{
                                                                 text: note,
                                                             }}
+                                                            isIntro
                                                         />
                                                     )}
                                                 </StyledContentBlock>
@@ -507,8 +508,8 @@ const Controls = styled.div`
 const StyledContentBlock = styled(ContentBlock)`
     flex: 0 1 100%;
 
-    .content > * {
-        margin-bottom: 23px;
+    .block-content > * {
+        margin-bottom: 12px;
 
         &:last-child {
             margin-bottom: 0;

@@ -64,6 +64,7 @@ export default function VideoPlayer({
     const [hideControls, setHideControls] = useState(false)
 
     const enteredMobFullscr = useRef(false)
+    // const canPlayRef = useRef(false)
 
     const errorText = ISENG
         ? "Sorry, there was an error uploading the video file "
@@ -525,6 +526,10 @@ export default function VideoPlayer({
         }
     }
 
+    // function handleCanPlay() {
+    //     canPlayRef.current = true
+    // }
+
     // ======== для айфона
 
     const addOutsideElListeners = () => {
@@ -629,6 +634,7 @@ export default function VideoPlayer({
                                 onLoadedMetadata={handleVideoLoad}
                                 onEnded={handleVideoEnd}
                                 onError={handleVideoError}
+                                // onCanPlay={handleCanPlay}
                                 ref={videoRef}
                                 className={isLoaded && "loaded"}
                             />

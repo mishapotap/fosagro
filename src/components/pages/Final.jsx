@@ -20,7 +20,7 @@ const engText = {
     text1: "You have completed the Sustainable Development course!",
     text2: "You now have an understanding of the UN Sustainable Development Goals and PhosAgro’s contribution to achieving them.",
     text3: "The next step is up to you! It is only together that we can truly make a difference and protect our planet.",
-    text4: "We would really appreciate your feedback."
+    text4: "We would really appreciate your feedback.",
 }
 
 const ruText = {
@@ -28,7 +28,7 @@ const ruText = {
     text1: "Вы завершили обучение курса “Устойчивое развитие”.",
     text2: "Теперь Вы знакомы с Целями устойчивого развития ООН и усилиями, которые вкладывает наша Компания в их достижение.",
     text3: "Следующий шаг за Вами! Ведь каждый из нас вносит вклад в улучшение благосостояния и защиту нашей планеты.",
-    text4: "А мы будем рады Вашей обратной связи!"
+    text4: "А мы будем рады Вашей обратной связи!",
 }
 
 const textData = ISENG ? engText : ruText
@@ -83,20 +83,12 @@ function Final() {
                             {textData.title}
                         </StyledTitle>
                         <TextRow1>
-                            <Text>
-                                {textData.text1}
-                            </Text>
-                            <Text>
-                                {textData.text2}
-                            </Text>
+                            <Text>{textData.text1}</Text>
+                            <Text>{textData.text2}</Text>
                         </TextRow1>
                         <TextRow2>
-                            <LightText>
-                                {textData.text3}
-                            </LightText>
-                            <LightText>
-                                {textData.text4}
-                            </LightText>
+                            <LightText>{textData.text3}</LightText>
+                            <LightText>{textData.text4}</LightText>
                         </TextRow2>
                         <MailButton />
                     </Content>
@@ -194,6 +186,26 @@ const Container = styled.div`
         .menu-buttons {
             max-width: 94%;
             margin: 0 auto;
+            justify-content: center;
+
+            @media ${DEVICE.mobile} {
+                max-width: 100%;
+                justify-content: space-around;
+            }
+
+            .menu-button-cont {
+                margin-left: 20px;
+                margin-right: 20px;
+
+                @media ${DEVICE.laptopS} {
+                    margin-bottom: 40px;
+                }
+
+                @media ${DEVICE.mobile} {
+                    margin-right: 7px;
+                    margin-left: 7px;
+                }
+            }
         }
 
         .progress-number {
@@ -203,6 +215,9 @@ const Container = styled.div`
                 font-size: 2.3vw;
             }
             @media ${DEVICE.tablet} {
+                font-size: 2.7vw;
+            }
+            @media ${DEVICE.mobile} {
                 font-size: 3.8vw;
             }
         }

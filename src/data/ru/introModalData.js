@@ -7,7 +7,7 @@ import {
     IntroModalOne23,
     Intro1Speaker1,
     Intro1Speaker2,
-} from "../../assets/_ru/Course1/Into"
+} from "../../assets/_ru/Course1/Intro"
 import {
     IntroModalTwo11,
     IntroModalTwo12,
@@ -54,19 +54,19 @@ import {
 const introModalData = {
     introModal1: [
         {
-            text: `Устойчивое развитие&nbsp;&nbsp;- термин <span>популярный</span>. Его обсуждают практически на всех уровнях, во многих сферах. Что означает понятие устойчивого развития для "ФосАгро"?`,
+            text: `Устойчивое развитие&nbsp;&nbsp;- термин <span>популярный</span>. Его обсуждают практически на всех уровнях, во многих сферах. Что означает понятие устойчивого развития для ФосАгро?`,
             images: [
                 {
                     source: IntroModalOne11,
-                    alt: "image1",
+                    alt: "человек на фоне гор",
                 },
                 {
                     source: IntroModalOne12,
-                    alt: "image2",
+                    alt: "рука природы тянется к руке человека",
                 },
                 {
                     source: IntroModalOne13,
-                    alt: "image3",
+                    alt: "поле",
                 },
             ],
             audio: Intro1Speaker1,
@@ -76,15 +76,15 @@ const introModalData = {
             images: [
                 {
                     source: IntroModalOne21,
-                    alt: "image1",
+                    alt: "машина в поле",
                 },
                 {
                     source: IntroModalOne22,
-                    alt: "image2",
+                    alt: "машина в поле",
                 },
                 {
                     source: IntroModalOne23,
-                    alt: "image3",
+                    alt: "земля и трава",
                 },
             ],
             audio: Intro1Speaker2,
@@ -96,15 +96,15 @@ const introModalData = {
             images: [
                 {
                     source: IntroModalTwo11,
-                    alt: "image1",
+                    alt: "черно-белая старая фотография фабрики",
                 },
                 {
                     source: IntroModalTwo12,
-                    alt: "image2",
+                    alt: "черно-белая старая фотография фабрики, женщины шьют",
                 },
                 {
                     source: IntroModalTwo13,
-                    alt: "image3",
+                    alt: "черно-белая старая фотография фабрики, машина",
                 },
             ],
             audio: Intro2Speaker1,
@@ -114,15 +114,15 @@ const introModalData = {
             images: [
                 {
                     source: IntroModalTwo21,
-                    alt: "image1",
+                    alt: "портрет ученого Томаса Мальтуса",
                 },
                 {
                     source: IntroModalTwo22,
-                    alt: "image2",
+                    alt: "сильный дым, исходящий из вулкана",
                 },
                 {
                     source: IntroModalTwo23,
-                    alt: "image3",
+                    alt: "наводнение, дома и машины в воде",
                 },
             ],
             audio: Intro2Speaker2,
@@ -134,15 +134,15 @@ const introModalData = {
             images: [
                 {
                     source: IntroModalThree11,
-                    alt: "image1",
+                    alt: "оборудование на фабрике, и люди в форме ФосАгро",
                 },
                 {
                     source: IntroModalThree12,
-                    alt: "image2",
+                    alt: "женщина в белом халате с логотипом ФосАгро использует специальное оборудование",
                 },
                 {
                     source: IntroModalThree13,
-                    alt: "image3",
+                    alt: "мужчина в каске улыбается и смотрит в камеру",
                 },
             ],
             audio: Intro3Speaker1,
@@ -155,15 +155,15 @@ const introModalData = {
             images: [
                 {
                     source: IntroModalFour11,
-                    alt: "image1",
+                    alt: "вырубленый лес",
                 },
                 {
                     source: IntroModalFour12,
-                    alt: "image2",
+                    alt: "машины, копающие землю",
                 },
                 {
                     source: IntroModalFour13,
-                    alt: "image3",
+                    alt: "пожар в лесу",
                 },
             ],
             audio: Intro4Speaker1,
@@ -180,15 +180,15 @@ const introModalData = {
             images: [
                 {
                     source: IntroModalFour21,
-                    alt: "image1",
+                    alt: "разлив нефти",
                 },
                 {
                     source: IntroModalFour22,
-                    alt: "image2",
+                    alt: "лес сверху",
                 },
                 {
                     source: IntroModalFour23,
-                    alt: "image3",
+                    alt: "женщина с контейнером для переработки материалов",
                 },
             ],
             audio: Intro4Speaker2,
@@ -207,15 +207,15 @@ const introModalData = {
             images: [
                 {
                     source: IntroModalFive11,
-                    alt: "image1",
+                    alt: "Земля из космоса",
                 },
                 {
                     source: IntroModalFive12,
-                    alt: "image2",
+                    alt: "Земля из космоса со звездами",
                 },
                 {
                     source: IntroModalFive13,
-                    alt: "image3",
+                    alt: "сухие деревья в пустыне",
                 },
             ],
             audio: Intro5Speaker1,
@@ -227,15 +227,15 @@ const introModalData = {
             images: [
                 {
                     source: IntroModalSix11,
-                    alt: "image1",
+                    alt: "женщина в каске и форме ФосАгро улыбается и смотрит в камеру",
                 },
                 {
                     source: IntroModalSix12,
-                    alt: "image2",
+                    alt: "работники ФосАгро общаются между собой",
                 },
                 {
                     source: IntroModalSix13,
-                    alt: "image3",
+                    alt: "волейбольная команда в форме с логотипом ФосАгро",
                 },
             ],
             audio: Intro6Speaker1,

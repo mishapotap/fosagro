@@ -60,15 +60,15 @@ const chapter3Data = {
                     data: [
                         {
                             source: CourseSliderThree11,
-                            alt: "image1",
+                            alt: "большая толпа людей",
                         },
                         {
                             source: CourseSliderThree12,
-                            alt: "image2",
+                            alt: "дорога в городе с большим количеством машин",
                         },
                         {
                             source: CourseSliderThree13,
-                            alt: "image3",
+                            alt: "сухое дерево посреди сухой земли",
                         },
                     ],
                 },
@@ -114,15 +114,15 @@ const chapter3Data = {
                     data: [
                         {
                             source: CourseSliderThree21,
-                            alt: "image1",
+                            alt: "зеленый вагон поезда, на котором написано фосагро",
                         },
                         {
                             source: CourseSliderThree22,
-                            alt: "image2",
+                            alt: "сбор урожая машинами, вид сверху",
                         },
                         {
                             source: CourseSliderThree23,
-                            alt: "image3",
+                            alt: "женщина в каске и форме фосагро улыбается",
                         },
                     ],
                 },
@@ -447,15 +447,15 @@ const chapter3Data = {
                     data: [
                         {
                             source: CourseSliderThree81,
-                            alt: "image1",
+                            alt: "групповое фото улыбающихся людей",
                         },
                         {
                             source: CourseSliderThree82,
-                            alt: "image2",
+                            alt: "здание института НИУИФ",
                         },
                         {
                             source: CourseSliderThree83,
-                            alt: "image3",
+                            alt: "женщина в шапочке белом халате с логотипом ФосАгро использует специальное оборудование",
                         },
                     ],
                 },

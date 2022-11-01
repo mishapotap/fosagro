@@ -148,9 +148,6 @@ const Container = styled.div`
                 opacity: 0.5;
             }
             ${Circle} {
-                background-image: url(${props.image});
-                background-repeat: no-repeat;
-                background-size: contain;
                 background-color: unset;
 
                 &:after {
@@ -162,8 +159,12 @@ const Container = styled.div`
                     width: 100%;
                     height: 100%;
                     border-radius: 50%;
-                    background-color: black;
-                    opacity: 0.3;
+
+                    background-image: url(${props.image});
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                    background-color: unset;
+                    filter: brightness(0.7);
                 }
             }
             ${CircleContent} {
@@ -232,6 +233,10 @@ const Time = styled.div`
     align-items: center;
     img {
         height: 30px;
+
+        @media ${DEVICE.laptop} {
+            width: 20px;
+        }
     }
 `
 
@@ -244,5 +249,10 @@ const TimeText = styled.span`
 
     @media ${DEVICE.laptopM} {
         font-size: 13px;
+    }
+
+    @media ${DEVICE.laptop} {
+        font-size: 11.5px;
+        margin-left: 10px;
     }
 `

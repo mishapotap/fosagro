@@ -86,13 +86,21 @@ function Home() {
     ])
 
     useEffect(() => {
-        if (ModalStore.isVisible.instruction || ModalStore.isVisible.mail) {
+        if (
+            ModalStore.isVisible.instruction ||
+            ModalStore.isVisible.mail ||
+            ModalStore.isVisible.cookiesInfo
+        ) {
             SoundStore.setIsPlayingSound(false)
         } else {
             SoundStore.setIsPlayingSound(true)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ModalStore.isVisible.instruction, ModalStore.isVisible.mail])
+    }, [
+        ModalStore.isVisible.instruction,
+        ModalStore.isVisible.mail,
+        ModalStore.isVisible.cookiesInfo,
+    ])
 
     function removeActiveTitleSound() {
         if (isTitlePlaying) {
@@ -218,11 +226,11 @@ function Home() {
                                 {ISENG ? (
                                     <>
                                         <div>
-                                            PhosAgro directly promotes 11 UN sustainable
-
+                                            PhosAgro directly promotes 11 UN
+                                            sustainable
                                         </div>
                                         <div>
-                                             development goals
+                                            development goals
                                             <img src={OOH} alt="OOH" />
                                         </div>
                                     </>

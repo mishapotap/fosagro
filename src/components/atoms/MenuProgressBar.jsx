@@ -14,8 +14,6 @@ export default function MenuProgressBar({ value, max, color, width = "15vw" }) {
 }
 
 const Container = styled.div`
-    /* width: fit-content; */
-    /* height: fit-content; */
     progress {
         color: ${props => props.color};
     }
@@ -31,16 +29,9 @@ const Container = styled.div`
     /* Значение  */
     progress[value]{
 
-        /* width: ${props => props.width}; */
         -webkit-appearance: none;
         appearance: none;
         width: 100%;
-        /* @media ${DEVICE.laptopS} {
-            width: 23vw;
-        }
-        @media ${DEVICE.mobile} {
-            width: 33vw;
-        } */
     }
     /* Задний фон */
     progress[value]::-webkit-progress-bar {
@@ -61,14 +52,15 @@ const Persent = styled.div`
     font-family: 'FocoBold';
     font-size: 1.3vw;
     line-height: 1.28;
-    /* font-size: 5.3vw;
-    line-height: 5.67vw; */
     color: ${props => props.color};
 
     @media ${DEVICE.laptopS} {
         font-size: 2.3vw;
     }
     @media ${DEVICE.tablet} {
+        font-size: 2.7vw;
+    }
+    @media ${DEVICE.mobile} {
         font-size: 3.8vw;
     }
 `

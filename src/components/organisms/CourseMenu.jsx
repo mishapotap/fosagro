@@ -19,7 +19,6 @@ function CourseMenu({ dataLine, dataModal }) {
     const clickSound = new Audio(Click2)
 
     const handleMouseDown = (e) => {
-        // console.log(e.target)
         if(e.target === line.current) {
             setIsDown(true);
             ref.current.classList.add('active');
@@ -205,6 +204,16 @@ const Line = styled.div`
 const Button = styled.div`
     position: fixed;
     bottom: 15vh;
+    width: 3.3vw;
+
+    @media ${DEVICE.laptopM} {
+        bottom: 12vh;
+        width: 3.5vw;
+    }
+
+    @media ${DEVICE.laptopS} {
+        width: 50px;
+    }
 
     @media ${DEVICE.mobile} {
         display: none;
@@ -213,6 +222,7 @@ const Button = styled.div`
     cursor: pointer;
 
     & svg {
+        max-width: 100%;
         transition: all 0.3s;
     }
 

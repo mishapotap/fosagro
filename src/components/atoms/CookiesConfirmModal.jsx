@@ -52,7 +52,7 @@ function CookiesConfirmModal() {
             setShowSuccess(false)
             setShowError(false)
             setShowStartContent(true)
-        }, 600);
+        }, 700);
     }
 
     function handleSuccessClose() {

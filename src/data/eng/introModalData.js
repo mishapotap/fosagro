@@ -7,7 +7,7 @@ import {
     IntroModalOne23,
     Intro1Speaker1,
     Intro1Speaker2,
-} from "../../assets/_eng/Course1/Into"
+} from "../../assets/_eng/Course1/Intro"
 import {
     IntroModalTwo11,
     IntroModalTwo12,

@@ -30,7 +30,7 @@ function Media({
     const objectSlider = mediaType === "objectSlider"
 
     const resetSettId = useRef(null)
-    const mediaContRef = useRef(null)
+    const mediaRef = useRef(null)
 
     function resetAnimation(el) {
         el.classList.add("restart")
@@ -43,7 +43,7 @@ function Media({
 
     useEffect(() => {
         if (restartAnim && !resetSettId.current) {
-            resetAnimation(mediaContRef.current)
+            resetAnimation(mediaRef.current)
         }
     }, [restartAnim])
 
@@ -71,7 +71,6 @@ function Media({
             circleSlider={circleSlider}
             animation={animation}
             objectSlider={objectSlider}
-            ref={mediaContRef}
         >
             <MediaColInner>
                 <StyledMedia
@@ -80,6 +79,7 @@ function Media({
                             ? "anim-paused"
                             : ""
                     }`}
+                    ref={mediaRef}
                 >
                     {MediaComponent && (
                         <MediaComponent
@@ -115,6 +115,17 @@ const StyledMedia = styled.div`
     display: flex;
     max-height: 100%;
     max-width: 100%;
+    transition: 0.5s;
+
+    &.restart {
+        animation: none !important;
+
+        opacity: 0;
+
+        * {
+            animation: none !important;
+        }
+    }
 
     .video-player {
         width: 94% !important;
@@ -129,17 +140,6 @@ const StyledMedia = styled.div`
 const Container = styled.div`
     width: 100%;
     height: 100%;
-    transition: 0.5s;
-
-    &.restart {
-        animation: none !important;
-
-        opacity: 0;
-
-        * {
-            animation: none !important;
-        }
-    }
 
     ${({ video }) =>
         video &&
@@ -242,7 +242,7 @@ const Container = styled.div`
                 }
 
                 @media ${DEVICE.laptopS} {
-                    width: 80%;
+                    width: 70%;
                     margin: 0 auto;
                     padding-right: 0;
                     padding-bottom: 0;
@@ -317,20 +317,6 @@ const Container = styled.div`
         @media ${DEVICE.mobile} {
             max-width: 660px;
             width: 100%;
-        }
-
-        & > * {
-            @media ${DEVICE.laptopS} {
-                overflow: auto;
-
-                &::-webkit-scrollbar {
-                    width: 0;
-                }
-            }
-
-            @media ${DEVICE.laptop} {
-                overflow: visible;
-            }
         }
     }
 `
